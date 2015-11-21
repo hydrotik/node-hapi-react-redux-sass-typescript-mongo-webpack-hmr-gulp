@@ -29,3 +29,15 @@ Thumbs.db
 # IDE generated files #
 #######################
 .idea
+
+# --------------------
+# MongoDB
+# --------------------
+data/
+
+
+
+node_modules/*
+public/*
+test/artifacts/*
+/config.js
