@@ -12,7 +12,7 @@ import { Footer } from '../Footer/Footer';
 
 
 import { connect } from 'react-redux';
-import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions';
+import { /*onScroll, */fetchContentIfNeeded, EDITORIAL } from '../../actions/actions';
 
 import * as Scroll from 'react-scroll';
 
@@ -23,6 +23,7 @@ interface IAppState {
     editorial?: any;
     isFetching?: boolean;
     lastUpdated?: number;
+    scrollTop?: number;
 }
 
 interface IApp {
@@ -34,7 +35,18 @@ interface IApp {
     scrollTop?: number;
 }
 
-function select(state: { editorialContent: IAppState }): IAppState {
+function selectScroll(state: { scroll: IAppState }): IAppState {
+    const { scroll }: { scroll: any; } = state;
+    const {
+        scrollTop
+    }: IAppState = scroll;
+
+    return {
+        scrollTop
+    };
+}
+
+function selectEditorial(state: { editorialContent: IAppState }): IAppState {
     const { editorialContent }: { editorialContent: any; } = state;
     const {
         isFetching,
@@ -49,34 +61,33 @@ function select(state: { editorialContent: IAppState }): IAppState {
     };
 }
 
-@connect(select)
+@connect(selectScroll)
+@connect(selectEditorial)
 export class App extends React.Component<IApp, {}> {
 
-    public constructor() {
-        super();
+    public constructor(props: any) {
+        super(props);
     }
 
-    public handleScroll(event: any): void {
-
+    public handleScroll: any = (event: any) => {
         let scrollTop: number = event.srcElement.body.scrollTop,
-            itemTranslate: number = Math.min(0, scrollTop / 3 - 60);
-
-        this.props.scrollTop = itemTranslate;
-
+            itemTranslate: number = Math.min(0, scrollTop / -1);
+        // const {dispatch}: IApp = this.props;
+        // dispatch(onScroll(itemTranslate));
         console.log(itemTranslate);
-    }
+    };
 
     public componentDidMount(): void {
         const {dispatch}: IApp = this.props;
         dispatch(fetchContentIfNeeded(EDITORIAL));
 
         // if (ExecutionEnvironment.canUseDOM) {
-        window.addEventListener('scroll', this.handleScroll);
+        // window.addEventListener('scroll', this.handleScroll);
         // }
     }
 
     public componentWillUnmount(): void {
-        window.removeEventListener('scroll', this.handleScroll);
+        // window.removeEventListener('scroll', this.handleScroll);
     }
 
     public render(): React.ReactElement<{}> {

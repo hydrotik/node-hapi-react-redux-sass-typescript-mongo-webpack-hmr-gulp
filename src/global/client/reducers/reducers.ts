@@ -3,6 +3,11 @@
 import * as lodash from 'lodash';
 import { Reducer, combineReducers } from 'redux';
 import {
+
+    /* carouselContent */
+    IScrollAction,
+    ON_SCROLL,
+
     /* carouselContent */
     ICarouselAction,
     REQUEST_SLIDES,
@@ -15,6 +20,21 @@ import {
 
 
 } from '../actions/actions';
+
+
+/* editorialContent */
+export function scroll(state: any = { scrollTop: 0 }, action: IScrollAction): any {
+    let delta: Object;
+    switch (action.type) {
+        case ON_SCROLL:
+            delta = lodash.assign(state, {
+                scrollTop: action.scrollTop
+            });
+            return delta;
+        default:
+            return state;
+    }
+}
 
 /* carouselContent */
 export function carouselContent(state: any = { isFetching: false, slides: [], lastUpdated: 0 }, action: ICarouselAction): any {
@@ -64,6 +84,7 @@ export function editorialContent(state: any = { isFetching: false, editorial: []
 
 
 export const rootReducer: Reducer = combineReducers({
+    scroll,
     carouselContent,
     editorialContent
 });
