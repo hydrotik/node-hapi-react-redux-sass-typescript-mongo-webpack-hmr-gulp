@@ -1,0 +1,8 @@
+FROM mongo
+
+COPY mongo-setup.sh /
+RUN chmod +x /mongo-setup.sh
+RUN /mongo-setup.sh
+
+ENTRYPOINT ["/usr/bin/mongod"]
+CMD ["--dbpath=/containerdb"]
