@@ -9,8 +9,6 @@ export const RECEIVE_SLIDES: string = 'RECEIVE_SLIDES';
 export const REQUEST_EDITORIAL: string = 'REQUEST_EDITORIAL';
 export const RECEIVE_EDITORIAL: string = 'RECEIVE_EDITORIAL';
 
-export const ON_SCROLL: string = 'ON_SCROLL';
-
 export const fixture: any = {
     name: 'Contemporary',
     description: 'Contemporary description content',
@@ -127,16 +125,6 @@ export const fixture: any = {
         ]
     ]
 };
-
-/* **************** Scroll ********************* */
-export interface IScrollAction {
-    type: string;
-    scrollTop?: number;
-}
-
-export function onScroll(scrollTop: number): IScrollAction {
-    return { type: RECEIVE_SLIDES, scrollTop: scrollTop };
-}
 
 /* **************** Carousel Content ********************* */
 export interface ICarouselAction {
