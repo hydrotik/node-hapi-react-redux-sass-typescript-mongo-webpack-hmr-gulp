@@ -1,0 +1,11 @@
+@import "toolkit";
+@import "susybase";
+.app {
+    font-size: inherit;
+    width: 100%;
+    overflow: hidden;
+    @include container;
+    margin : 0;
+    padding : 0;
+    /*max-width: 960px;*/
+}

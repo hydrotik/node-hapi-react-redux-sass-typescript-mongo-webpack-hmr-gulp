@@ -1,0 +1,16 @@
+@import "susybase";
+@import "toolkit";
+
+.columncontainer {
+    background-color: red;
+    font-size: inherit;
+    margin: 0;
+    padding: 0;
+
+    @include span(4 of 4);
+
+    @include breakpoint($basic) {
+    	@include span(2 of 4);
+	}
+   
+}

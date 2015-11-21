@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target" : "ES5",
+    "jsx" : "react",
+    "sourceMap": true,
+    "emitRequireType": false,
+    "experimentalDecorators": true,
+    "module" : "commonjs"
+  },
+  "exclude" : ["node_modules", "config", "dev_server.js"]
+}

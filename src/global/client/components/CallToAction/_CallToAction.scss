@@ -1,0 +1,75 @@
+@import "susybase";
+@import "~btns/sass/btns";
+@import "toolkit";
+
+/* TODO Clean this up and use proper BEM */
+
+.wrapper {
+    position: absolute;
+    margin: -20px 0 0 0;
+    padding: 0;
+    top: 50%;
+    //@include breakpoint($breakpoint-lte-medium) {
+        top: 50%;
+    //}
+    span {
+        margin: 0 auto;
+        text-align: center;
+        padding: 12px;
+        margin-top: 6px;
+        display: inline-block;
+        //visibility: hidden;
+        color: #f4f4f4;
+        text-shadow: 0 0 3px black;
+        @include breakpoint($breakpoint-lte-medium) {
+            //visibility: visible;
+        }
+    }
+
+    &--left {
+        text-align: center;
+        @include span(1 of 2);
+    }
+
+    &--right {
+        text-align: center;
+        @include span(1 of 2);
+        @include push(1 of 2);
+    }
+
+    &--center {
+        text-align: center;
+        width: 100%;
+    }
+
+
+}
+
+
+
+.button {
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.btn--saks-border:link,
+.btn--saks-border:visited,
+{
+    background-color: rgba(20, 20, 20, 0.4);
+    border-color: #f4f4f4;
+    border-width: 1px;
+    color: #f4f4f4;
+}
+
+.btn--saks-border:hover {
+    background-color: rgba(20, 20, 20, 1);
+    border-color: #fff;
+    color: #fff;
+}
+
+.btn--saks-border:active {
+    background-color: #ccc;
+    border-color: #ccc;
+    color: #444;
+}
+

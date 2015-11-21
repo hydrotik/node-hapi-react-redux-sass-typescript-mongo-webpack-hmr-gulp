@@ -1,0 +1,8 @@
+# node modules directory is ignored by default
+# ignore artifacts
+dist
+# ignore ES5 files
+# could look into providing different configurations per file type.
+# https://groups.google.com/forum/#!topic/eslint/PF2BlgSH3Jk
+**/*.js
+src/global/server/views

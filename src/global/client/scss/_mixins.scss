@@ -1,0 +1,13 @@
+/* _mixins.scss */
+
+@mixin my-padding-mixin($some-number) {
+  padding: $some-number;
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

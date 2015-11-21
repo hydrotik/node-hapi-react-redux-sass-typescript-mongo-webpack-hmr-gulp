@@ -1,0 +1,24 @@
+/* _variables.scss */
+
+$border-color: #efefef;
+
+
+@import "breakpoint-sass/stylesheets/breakpoint";
+
+@include breakpoint-set('no query fallbacks', true);
+
+$breakpoint-lte-small: max-width 320px;
+$breakpoint-gte-small: min-width 320px;
+
+$breakpoint-lte-medium: max-width 768px;
+$breakpoint-gte-medium: min-width 768px;
+
+
+$breakpoint-lte-large: max-width 1024px;
+$breakpoint-gte-large: min-width 1024px;
+
+
+$layout-mobile: layout(auto 4 0 inside fluid isolate);
+
+// Set default layout to desktop.
+$susy: $layout-mobile;

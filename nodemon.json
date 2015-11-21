@@ -1,0 +1,14 @@
+{
+    "restartable": "rs",
+    "ignore": [
+        ".git",
+        "node_modules/**/node_modules",
+        "assets/*",
+        "build/*"
+    ],
+    "ext": "js jsx es6 scss json",
+    "watch": [
+        "server.js",
+        "src/global/server/views/*"
+    ]
+}
