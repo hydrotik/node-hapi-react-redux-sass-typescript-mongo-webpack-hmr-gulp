@@ -95,20 +95,20 @@ export class App extends React.Component<IApp, {}> {
         const {editorial, scrollTop}: IApp = this.props;
 
         return (<div className = 'app'>
-            <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp;|&nbsp;
-            <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp;|&nbsp;
-            <Link to='test3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>&nbsp;{scrollTop}
+            <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
+            <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
+            <Link to='test3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>&nbsp; {scrollTop}
             <Header />
             <Element name='test1' className='element'>
                 <Carousel />
-            </Element>
+                </Element>
             <Element name='test2' className='element'>
                 { map(editorial, this.renderEditorialRowContainer) }
-            </Element>
+                </Element>
             <Element name='test3' className='element'>
                 <Footer />
-            </Element>
-        </div>
+                </Element>
+            </div>
         );
     }
 
