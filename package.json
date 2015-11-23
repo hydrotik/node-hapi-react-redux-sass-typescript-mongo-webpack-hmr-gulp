@@ -72,7 +72,8 @@
     "superagent": "^1.4.0",
     "susy": "^2.2.6",
     "vision": "^3.0.0",
-    "visionary": "^3.0.1"
+    "visionary": "^3.0.1",
+    "react-track" : "git://github.com/hydrotik/react-track.git"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.3",

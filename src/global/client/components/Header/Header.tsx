@@ -59,7 +59,7 @@ export class Header extends React.Component<IHeader, {}> {
                     <Motion style={{ x: spring(on ? 400 : 0) }}>
                         {({x}: { x: number }) =>
                             // children is a callback which should accept the current value of
-                            // `style`
+                            // `style` es6 string interpolation
                             <div className='demo0'>
                                 <div className='demo0-block' style={{
                                     WebkitTransform: `translate3d(${x}px, 0, 0)`,
