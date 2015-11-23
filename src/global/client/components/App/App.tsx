@@ -10,7 +10,6 @@ import { RowContainer } from '../RowContainer/RowContainer';
 
 import { Footer } from '../Footer/Footer';
 
-
 import { connect } from 'react-redux';
 import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions';
 
@@ -33,7 +32,7 @@ interface IApp {
     store?: any;
 }
 
-function selectEditorial(state: { editorialContent: IAppState }): IAppState {
+function select(state: { editorialContent: IAppState; }): IAppState {
     const { editorialContent }: { editorialContent: any; } = state;
     const {
         isFetching,
@@ -48,7 +47,7 @@ function selectEditorial(state: { editorialContent: IAppState }): IAppState {
     };
 }
 
-@connect(selectEditorial)
+@connect(select)
 export class App extends React.Component<IApp, {}> {
 
     public constructor(props: any) {
@@ -80,8 +79,6 @@ export class App extends React.Component<IApp, {}> {
 
     public render(): React.ReactElement<{}> {
 
-        const {editorial}: IApp = this.props;
-
         return (<div className = 'app'>
             <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
             <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
@@ -91,7 +88,7 @@ export class App extends React.Component<IApp, {}> {
                 <Carousel />
                 </Element>
             <Element name='test2' className='element'>
-                { map(editorial, this.renderEditorialRowContainer) }
+                { map(this.props.editorial, this.renderEditorialRowContainer) }
                 </Element>
             <Element name='test3' className='element'>
                 <Footer />

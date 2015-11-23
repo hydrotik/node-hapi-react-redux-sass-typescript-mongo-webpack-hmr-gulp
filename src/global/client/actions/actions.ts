@@ -9,6 +9,8 @@ export const RECEIVE_SLIDES: string = 'RECEIVE_SLIDES';
 export const REQUEST_EDITORIAL: string = 'REQUEST_EDITORIAL';
 export const RECEIVE_EDITORIAL: string = 'RECEIVE_EDITORIAL';
 
+export const ON_TOGGLE: string = 'ON_TOGGLE';
+
 export const fixture: any = {
     name: 'Contemporary',
     description: 'Contemporary description content',
@@ -125,6 +127,16 @@ export const fixture: any = {
         ]
     ]
 };
+
+/* **************** Animation Toggle ********************* */
+export interface IToggleAction {
+    type: string;
+    on?: boolean;
+}
+
+export function onToggle(on: boolean): IToggleAction {
+    return { type: ON_TOGGLE, on: on};
+}
 
 /* **************** Carousel Content ********************* */
 export interface ICarouselAction {

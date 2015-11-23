@@ -8,3 +8,4 @@
 /// <reference path="lodash/lodash.d.ts" />
 /// <reference path="react-addons-create-fragment/react-addons-create-fragment.d.ts" />
 /// <reference path="react-scroll/react-scroll.d.ts" />
+/// <reference path="react-motion/react-motion.d.ts" />
