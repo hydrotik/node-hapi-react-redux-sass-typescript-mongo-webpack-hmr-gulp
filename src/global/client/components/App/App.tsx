@@ -15,6 +15,9 @@ import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions';
 
 import * as Scroll from 'react-scroll';
 
+// import { TrackDocument/*, Track*/ } from '../../animation/react-track';
+// import { getDocumentRect/*, getDocumentElement*/ } from '../../animation/react-track-formulas';
+
 const Link: any = Scroll.Link;
 const Element: any = Scroll.Element;
 
@@ -24,7 +27,7 @@ interface IAppState {
     lastUpdated?: number;
 }
 
-interface IApp {
+interface IAppProps {
     dispatch?: (func: any) => void;
     isFetching?: boolean;
     lastUpdated?: number;
@@ -48,7 +51,7 @@ function select(state: { editorialContent: IAppState; }): IAppState {
 }
 
 @connect(select)
-export class App extends React.Component<IApp, {}> {
+export class App extends React.Component<IAppProps, {}> {
 
     public constructor(props: any) {
         super(props);
@@ -65,12 +68,16 @@ export class App extends React.Component<IApp, {}> {
     };
 
     public componentDidMount(): void {
-        const {dispatch}: IApp = this.props;
+        const {dispatch}: IAppProps = this.props;
         dispatch(fetchContentIfNeeded(EDITORIAL));
 
         // if (ExecutionEnvironment.canUseDOM) {
         // window.addEventListener('scroll', this.handleScroll);
         // }
+
+        window.addEventListener('scroll', (event: any) => {
+            this.setState({ rect: document.documentElement.getBoundingClientRect() });
+        });
     }
 
     public componentWillUnmount(): void {
@@ -80,20 +87,26 @@ export class App extends React.Component<IApp, {}> {
     public render(): React.ReactElement<{}> {
 
         return (<div className = 'app'>
-            <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
-            <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
-            <Link to='test3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>
-            <Header />
-            <Element name='test1' className='element'>
-                <Carousel />
+            {/*<TrackDocument formulas={[getDocumentRect]}>
+                { ( rect: any ) =>
+                    <div>
+                        The height of documentElement is {rect.height}
+                    </div> }*/}
+                <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
+                <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
+                <Link to='test3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>
+                <Header />
+                <Element name='test1' className='element'>
+                    <Carousel />
+                    </Element>
+                <Element name='test2' className='element'>
+                    { map(this.props.editorial, this.renderEditorialRowContainer) }
+                    </Element>
+                <Element name='test3' className='element'>
+                    <Footer />
                 </Element>
-            <Element name='test2' className='element'>
-                { map(this.props.editorial, this.renderEditorialRowContainer) }
-                </Element>
-            <Element name='test3' className='element'>
-                <Footer />
-                </Element>
-            </div>
+            {/* </TrackDocument> */}
+        </div>
         );
     }
 

@@ -13,6 +13,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
     "watch-client": "node ./webpack.server.client-hot.js --verbose --colors --display-error-details --config webpack.config.client-hot.js --projectpath $PROJECTPATH",
+    "lint-ts": "tslint --config tslint.json --ext .ts,.tsx",
     "lint-jsc": "jscs . --config .jscsrc",
     "lint-es": "eslint --config .eslintrc --ignore-path .eslintignore --ext .js,.jsx,.es6 .",
     "watch": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run lint-es\" \"npm run watch-client\" \"npm run start\""
@@ -72,8 +73,7 @@
     "superagent": "^1.4.0",
     "susy": "^2.2.6",
     "vision": "^3.0.0",
-    "visionary": "^3.0.1",
-    "react-track" : "git://github.com/hydrotik/react-track.git"
+    "visionary": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.3",
