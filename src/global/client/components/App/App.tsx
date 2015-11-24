@@ -12,6 +12,7 @@ import { Footer } from '../Footer/Footer';
 
 import { connect } from 'react-redux';
 import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions';
+import { IEditorialReducer } from '../../reducers/reducers';
 
 import * as Scroll from 'react-scroll';
 
@@ -21,12 +22,6 @@ import * as Scroll from 'react-scroll';
 const Link: any = Scroll.Link;
 const Element: any = Scroll.Element;
 
-interface IAppState {
-    editorial?: any;
-    isFetching?: boolean;
-    lastUpdated?: number;
-}
-
 interface IAppProps {
     dispatch?: (func: any) => void;
     isFetching?: boolean;
@@ -35,13 +30,19 @@ interface IAppProps {
     store?: any;
 }
 
-function select(state: { editorialContent: IAppState; }): IAppState {
-    const { editorialContent }: { editorialContent: any; } = state;
+interface IAppState {
+    editorial?: any;
+    isFetching?: boolean;
+    lastUpdated?: number;
+}
+
+function select(state: { editorialContent: IEditorialReducer; }): IAppState {
+    const { editorialContent }: { editorialContent: IEditorialReducer; } = state;
     const {
         isFetching,
         lastUpdated,
         editorial
-    }: IAppState = editorialContent;
+    }: IEditorialReducer = editorialContent;
 
     return {
         editorial,
@@ -51,7 +52,7 @@ function select(state: { editorialContent: IAppState; }): IAppState {
 }
 
 @connect(select)
-export class App extends React.Component<IAppProps, {}> {
+export class App extends React.Component<IAppProps, IAppState> {
 
     public constructor(props: any) {
         super(props);
@@ -75,9 +76,9 @@ export class App extends React.Component<IAppProps, {}> {
         // window.addEventListener('scroll', this.handleScroll);
         // }
 
-        window.addEventListener('scroll', (event: any) => {
-            this.setState({ rect: document.documentElement.getBoundingClientRect() });
-        });
+        // window.addEventListener('scroll', (event: any) => {
+        //    this.setState({ rect: document.documentElement.getBoundingClientRect() });
+        // });
     }
 
     public componentWillUnmount(): void {

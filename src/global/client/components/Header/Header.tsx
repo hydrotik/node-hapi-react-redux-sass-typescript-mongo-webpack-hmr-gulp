@@ -5,25 +5,26 @@ import { Motion, spring } from 'react-motion';
 
 import { connect } from 'react-redux';
 import { onToggle } from '../../actions/actions';
+import { IToggleReducer } from '../../reducers/reducers';
 
 import './_Header.scss';
 
-interface IHeaderState {
-    on?: boolean;
-}
-
-interface IHeader {
+interface IHeaderProps {
     dispatch?: (func: any) => void;
     store?: any;
     on?: boolean;
 }
 
-function select(state: { toggle: IHeaderState }): IHeaderState {
-    const { toggle }: { toggle: IHeaderState; } = state;
+interface IHeaderState {
+    on?: boolean;
+}
+
+function select(state: { toggle: IToggleReducer }): IHeaderState {
+    const { toggle }: { toggle: IToggleReducer; } = state;
 
     const {
         on
-    }: IHeaderState = toggle;
+    }: IToggleReducer = toggle;
 
     return {
         on
@@ -31,22 +32,22 @@ function select(state: { toggle: IHeaderState }): IHeaderState {
 }
 
 @connect(select)
-export class Header extends React.Component<IHeader, {}> {
+export class Header extends React.Component<IHeaderProps, IHeaderState> {
 
     public handleToggleMouseDown: any = (event: any) => {
         event.preventDefault();
-        const {dispatch, on}: IHeader = this.props;
+        const {dispatch, on}: IHeaderProps = this.props;
         dispatch(onToggle(!on));
     };
 
     public componentDidMount(): void {
-        const {dispatch}: IHeader = this.props;
+        const {dispatch}: IHeaderProps = this.props;
         dispatch(onToggle(false));
     }
 
     public render(): React.ReactElement<{}> {
 
-        const {on}: IHeader = this.props;
+        const {on}: IHeaderProps = this.props;
 
         return (
             <div className='header'>

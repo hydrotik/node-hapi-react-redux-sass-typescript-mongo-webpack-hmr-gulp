@@ -22,6 +22,11 @@ import {
 } from '../actions/actions';
 
 /* animation */
+
+export interface IToggleReducer {
+    on?: boolean;
+}
+
 export function toggle(state: any = { on: false }, action: IToggleAction): any {
     let delta: Object;
     switch (action.type) {
@@ -36,6 +41,12 @@ export function toggle(state: any = { on: false }, action: IToggleAction): any {
 }
 
 /* carouselContent */
+export interface ICarouselReducer {
+    slides?: any;
+    isFetching?: boolean;
+    lastUpdated?: number;
+}
+
 export function carouselContent(state: any = { isFetching: false, slides: [], lastUpdated: 0 }, action: ICarouselAction): any {
     let delta: Object;
     switch (action.type) {
@@ -58,6 +69,12 @@ export function carouselContent(state: any = { isFetching: false, slides: [], la
 
 
 /* editorialContent */
+export interface IEditorialReducer {
+    editorial?: any;
+    isFetching?: boolean;
+    lastUpdated?: number;
+}
+
 export function editorialContent(state: any = { isFetching: false, editorial: [], lastUpdated: 0 }, action: IEditorialAction): any {
     let delta: Object;
     switch (action.type) {

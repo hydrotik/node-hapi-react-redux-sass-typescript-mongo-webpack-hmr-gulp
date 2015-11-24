@@ -16,25 +16,11 @@ import '../../../../../node_modules/slick-carousel/slick/slick-theme.scss';
 
 import { connect } from 'react-redux';
 import { fetchContentIfNeeded, CAROUSEL } from '../../actions/actions';
+import { ICarouselReducer } from '../../reducers/reducers';
 
 const Slider: any = Slick.Slider;
 
-const settings: Object = {
-    arrows: true,
-    dots: true,
-    infinite: true,
-    speed: 300,
-    slidesToShow: 1,
-    centerMode: true
-};
-
-interface ICarouselState {
-    slides?: any;
-    isFetching?: boolean;
-    lastUpdated?: number;
-}
-
-interface ICarousel {
+interface ICarouselProps {
     dispatch?: (func: any) => void;
     isFetching?: boolean;
     lastUpdated?: number;
@@ -42,13 +28,19 @@ interface ICarousel {
     store?: any;
 }
 
-function select(state: { carouselContent: ICarouselState }): ICarouselState {
-    const { carouselContent }: { carouselContent: any; } = state;
+interface ICarouselState {
+    slides?: any;
+    isFetching?: boolean;
+    lastUpdated?: number;
+}
+
+function select(state: { carouselContent: ICarouselReducer }): ICarouselState {
+    const { carouselContent }: { carouselContent: ICarouselReducer; } = state;
     const {
         isFetching,
         lastUpdated,
         slides
-    }: ICarouselState = carouselContent;
+    }: ICarouselReducer = carouselContent;
 
     return {
         slides,
@@ -62,7 +54,7 @@ function select(state: { carouselContent: ICarouselState }): ICarouselState {
  * @augments {React.Component}
  */
 @connect(select)
-export class Carousel extends React.Component<ICarousel, {}> {
+export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
 
     public constructor(props: any) {
         super(props);
@@ -70,13 +62,24 @@ export class Carousel extends React.Component<ICarousel, {}> {
     }
 
     public componentDidMount(): void {
-        const {dispatch}: ICarousel = this.props;
+        const {dispatch}: ICarouselProps = this.props;
         dispatch(fetchContentIfNeeded(CAROUSEL));
     }
 
     public render(): React.ReactElement<{}> {
 
         const {slides, isFetching, lastUpdated }: ICarouselState = this.props;
+
+        /* tslint:disable:no-unused-variable */
+        const settings: Object = {
+            arrows: true,
+            dots: true,
+            infinite: true,
+            speed: 300,
+            slidesToShow: 1,
+            centerMode: true
+        };
+        /* tslint:enable:no-unused-variable */
 
         return (
             <div className='carousel'>
@@ -93,21 +96,16 @@ export class Carousel extends React.Component<ICarousel, {}> {
                     </a>
                   }
                 </p>
-
-                <Slider {... this.getSettings()}>
+                <Slider {... settings}>
                     {map(slides, this.renderCarouselSlide)}
                 </Slider>
             </div>
         );
     }
 
-    private getSettings(): any {
-        return settings;
-    }
-
     private handleRefreshClick(e: any): void {
         e.preventDefault();
-        const {dispatch}: ICarousel = this.props;
+        const {dispatch}: ICarouselProps = this.props;
         dispatch(fetchContentIfNeeded(CAROUSEL, true));
     }
 
