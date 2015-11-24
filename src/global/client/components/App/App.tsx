@@ -19,6 +19,9 @@ import * as Scroll from 'react-scroll';
 // import { TrackDocument/*, Track*/ } from '../../animation/react-track';
 // import { getDocumentRect/*, getDocumentElement*/ } from '../../animation/react-track-formulas';
 
+// import { TrackDocument/*, Track*/ } from 'react-track';
+// import { getDocumentRect/*, getDocumentElement*/ } from 'react-track/tracking-formulas';
+
 const Link: any = Scroll.Link;
 const Element: any = Scroll.Element;
 
@@ -88,11 +91,11 @@ export class App extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<{}> {
 
         return (<div className = 'app'>
-            {/*<TrackDocument formulas={[getDocumentRect]}>
+            { /*<TrackDocument formulas={[getDocumentRect]}>
                 { ( rect: any ) =>
                     <div>
                         The height of documentElement is {rect.height}
-                    </div> }*/}
+                    </div> } */ }
                 <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
                 <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
                 <Link to='test3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>
@@ -106,7 +109,7 @@ export class App extends React.Component<IAppProps, IAppState> {
                 <Element name='test3' className='element'>
                     <Footer />
                 </Element>
-            {/* </TrackDocument> */}
+            { /* </TrackDocument> */ }
         </div>
         );
     }
