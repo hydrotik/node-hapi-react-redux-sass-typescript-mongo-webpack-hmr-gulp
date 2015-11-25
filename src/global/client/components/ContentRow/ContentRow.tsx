@@ -14,8 +14,7 @@ const propTypes = {
 };
 */
 
-interface IContentRow {
-    children?: Function;
+export interface IContentRowProps {
     layouttype?: string;
     type?: any;
     key?: number;
@@ -26,7 +25,7 @@ interface IContentRow {
  * @class ContentRow
  * @augments {React.Component}
  */
-export class ContentRow extends React.Component<IContentRow, {}> {
+export class ContentRow extends React.Component<IContentRowProps, {}> {
 
     public render(): React.ReactElement<{}> {
 

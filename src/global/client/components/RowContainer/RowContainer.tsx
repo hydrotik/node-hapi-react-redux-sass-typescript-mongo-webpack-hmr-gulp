@@ -7,7 +7,7 @@ import { map } from 'lodash';
 
 import './_RowContainer.scss';
 
-interface IRowContainer {
+interface IRowContainerProps {
     children?: any;
     key?: number;
     columns?: any;
@@ -17,10 +17,10 @@ interface IRowContainer {
  * @class ContentRow
  * @augments {React.Component}
  */
-export class RowContainer extends React.Component<IRowContainer, {}> {
+export class RowContainer extends React.Component<IRowContainerProps, {}> {
 
     public render(): React.ReactElement<{}> {
-        const {columns}: IRowContainer = this.props;
+        const {columns}: IRowContainerProps = this.props;
 
         return (
             <div className='rowcontainer'>

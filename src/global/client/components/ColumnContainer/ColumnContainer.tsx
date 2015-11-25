@@ -2,12 +2,12 @@
 /// <reference path="../../../../../typings/react-picture/react-picture.d.ts" />
 
 import * as React from 'react';
-import { ContentRow } from '../ContentRow/ContentRow';
+import { ContentRow, IContentRowProps } from '../ContentRow/ContentRow';
 import { map } from 'lodash';
 
 import './_ColumnContainer.scss';
 
-interface IColumnContainer {
+interface IColumnContainerProps {
     children?: Function;
     key?: number;
     rows?: any;
@@ -17,10 +17,10 @@ interface IColumnContainer {
  * @class CarouselItem
  * @augments {React.Component}
  */
-export class ColumnContainer extends React.Component<IColumnContainer, {}> {
+export class ColumnContainer extends React.Component<IColumnContainerProps, {}> {
 
     public render(): React.ReactElement<{}> {
-        const {rows}: IColumnContainer = this.props;
+        const {rows}: IColumnContainerProps = this.props;
 
         return (
             <div className='columncontainer'>
@@ -30,7 +30,7 @@ export class ColumnContainer extends React.Component<IColumnContainer, {}> {
     }
 
     private renderEditorialContentContainer(item: any, i: number): React.ReactElement<{}> {
-        const { type }: { type: any; } = item;
+        const { type }: IContentRowProps = item;
 
         return (
             <ContentRow type={type} key={i} contents={item} />);
