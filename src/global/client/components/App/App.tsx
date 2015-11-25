@@ -7,6 +7,11 @@ import 'react-addons-create-fragment';
 import { Header } from '../Header/Header';
 import { Carousel } from '../Carousel/Carousel';
 import { RowContainer } from '../RowContainer/RowContainer';
+// import { ColumnContainer } from '../ColumnContainer/ColumnContainer';
+// import { ContentRow } from '../ContentRow/ContentRow';
+// import { CallToAction } from '../CallToAction/CallToAction';
+// import * as ReactPicture from 'react-picture';
+// const Img: any = ReactPicture.BaseImage;
 
 import { Footer } from '../Footer/Footer';
 
@@ -102,10 +107,97 @@ export class App extends React.Component<IAppProps, IAppState> {
                 <Header />
                 <Element name='test1' className='element'>
                     <Carousel />
-                    </Element>
+                </Element>
                 <Element name='test2' className='element'>
                     { map(this.props.editorial, this.renderEditorialRowContainer) }
-                    </Element>
+
+                    <RowContainer>
+                        <div>HELLO RowContainer Children 1</div>
+                        <div>HELLO RowContainer Children 2</div>
+                        <div>HELLO RowContainer Children 3</div>
+                        <div>HELLO RowContainer Children 4</div>
+                    </RowContainer>
+                    { /*}
+                    <RowContainer>
+                        <ContentRow type='full'>
+                          <CallToAction position='left' href='http://www.google.com' target='_blank' description='Full Row' />
+                          <Img alt='Your picture description' srcSet={
+                              '//farm1.staticflickr.com/485/20356020016_4a5b357270_c.jpg 600w, ' +
+                              '//farm1.staticflickr.com/485/20356020016_f9c816c270_h.jpg 800w, ' +
+                              '//farm1.staticflickr.com/485/20356020016_e3e67db2ad_k.jpg 1000w'
+                          } extra={{ width: '100%', height: '100%' }} />
+                        </ContentRow>
+                    </RowContainer>
+                    <RowContainer>
+                        <ContentRow type='wrap'>
+                          <CallToAction position='center' href='http://www.google.com' target='_blank' description='Wrap Item 1' />
+                          <Img alt='Your picture description' srcSet={
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759.jpg 600w, ' +
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759_z.jpg 800w, ' +
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759_b.jpg 1000w'
+                          } extra={{ width: '100%', height: '100%' }} />
+                            </ContentRow>
+                        <ContentRow type='wrap'>
+                          <CallToAction position='center' href='http://www.google.com' target='_blank' description='Wrap Item 2' />
+                          <Img alt='Your picture description' srcSet={
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759.jpg 600w, ' +
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759_z.jpg 800w, ' +
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759_b.jpg 1000w'
+                          } extra={{ width: '100%', height: '100%' }} />
+                            </ContentRow>
+                        </RowContainer>
+                      <RowContainer>
+                        <ContentRow type='wrap'>
+                          <CallToAction position='center' href='http://www.google.com' target='_blank' description='Wrap Item 3' />
+                          <Img alt='Your picture description' srcSet={
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759.jpg 600w, ' +
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759_z.jpg 800w, ' +
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759_b.jpg 1000w'
+                          } extra={{ width: '100%', height: '100%' }} />
+                            </ContentRow>
+                        <ContentRow type='wrap'>
+                          <CallToAction position='center' href='http://www.google.com' target='_blank' description='Wrap Item 4' />
+                          <Img alt='Your picture description' srcSet={
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759.jpg 600w, ' +
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759_z.jpg 800w, ' +
+                              '//farm6.staticflickr.com/5206/5342326688_2fc0e21759_b.jpg 1000w'
+                          } extra={{ width: '100%', height: '100%' }} />
+                            </ContentRow>
+                          </RowContainer>
+                    <RowContainer>
+                      <ColumnContainer>
+                        <ContentRow type='column'>
+                          <CallToAction position='center' href='http://www.google.com' target='_blank' description='' />
+                          <Img alt='Your picture description' srcSet={
+                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa.jpg 600w, ' +
+                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_z.jpg 800w, ' +
+                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_b.jpg 1000w'
+                          } extra={{ width: '100%', height: '100%' }} />
+                            </ContentRow>
+                        <ContentRow type='column'>
+                          <CallToAction position='center' href='http://www.google.com'
+                              target='_blank' description='Lorem ipsum here in the descripsum to explain sum.' />
+                          <Img alt='Your picture description' srcSet={
+                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa.jpg 600w, ' +
+                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_z.jpg 800w, ' +
+                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_b.jpg 1000w'
+                          } extra={{ width: '100%', height: '100%' }} />
+                            </ContentRow>
+                          </ColumnContainer>
+                      <ColumnContainer>
+                        <ContentRow type='column'>
+                          <CallToAction position='center' href='http://www.google.com'
+                              target='_blank' description='Lorem ipsum here in the descripsum to explain sum.' />
+                          <Img alt='Your picture description' srcSet={
+                              '//farm9.staticflickr.com/8301/7794118424_1330cf491d.jpg 600w, ' +
+                              '//farm9.staticflickr.com/8301/7794118424_1330cf491d_c.jpg 800w, ' +
+                              '//farm9.staticflickr.com/8301/7794118424_1330cf491d_b.jpg 1000w'
+                          } extra={{ width: '100%', height: '100%' }} />
+                            </ContentRow>
+                          </ColumnContainer>
+                        </RowContainer>
+                    */}
+                </Element>
                 <Element name='test3' className='element'>
                     <Footer />
                 </Element>
@@ -116,7 +208,6 @@ export class App extends React.Component<IAppProps, IAppState> {
 
     private renderEditorialRowContainer(item: any, i: number): React.ReactElement<{}> {
         let columns: any = item;
-
         return (<RowContainer key={i} columns={columns} />);
     }
 

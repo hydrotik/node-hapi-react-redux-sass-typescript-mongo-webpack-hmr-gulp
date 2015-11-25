@@ -20,13 +20,17 @@ interface IRowContainerProps {
 export class RowContainer extends React.Component<IRowContainerProps, {}> {
 
     public render(): React.ReactElement<{}> {
-        const {columns}: IRowContainerProps = this.props;
 
-        return (
-            <div className='rowcontainer'>
-                {this.checkColumnCount(columns) }
-            </div>
-        );
+        let output: React.ReactElement<{}> = null;
+
+        if (!this.props.columns) {
+            output = (<div className='rowcontainer'>{ this.props.children }</div>);
+        } else {
+            const {columns}: IRowContainerProps = this.props;
+            output = (<div className='rowcontainer'>{ this.checkColumnCount(columns) }</div>);
+        }
+
+        return output;
     }
 
     private renderEditorialColumnContainer(item: any, i: number): React.ReactElement<{}> {

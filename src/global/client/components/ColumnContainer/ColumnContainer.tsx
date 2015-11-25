@@ -20,19 +20,22 @@ interface IColumnContainerProps {
 export class ColumnContainer extends React.Component<IColumnContainerProps, {}> {
 
     public render(): React.ReactElement<{}> {
+        let output: React.ReactElement<{}> = null;
+
         const {rows}: IColumnContainerProps = this.props;
 
-        return (
-            <div className='columncontainer'>
-                {map(rows, this.renderEditorialContentContainer) }
-            </div>
-        );
+        if ( this.props.children && this.props.children.length > 0 ) {
+            output = (<div className='columncontainer'>{ this.props.children }</div>);
+        } else {
+            output = (<div className='columncontainer'>{ map(rows, this.renderEditorialContentContainer) }</div>);
+        }
+
+        return output;
     }
 
     private renderEditorialContentContainer(item: any, i: number): React.ReactElement<{}> {
         const { type }: IContentRowProps = item;
 
-        return (
-            <ContentRow type={type} key={i} contents={item} />);
+        return (<ContentRow type={type} key={i} contents={item} />);
     }
 }
