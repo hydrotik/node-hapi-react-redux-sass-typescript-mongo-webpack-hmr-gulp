@@ -15,6 +15,7 @@ const propTypes = {
 */
 
 export interface IContentRowProps {
+    children?: any;
     layouttype?: string;
     type?: any;
     key?: number;
@@ -29,59 +30,66 @@ export class ContentRow extends React.Component<IContentRowProps, {}> {
 
     public render(): React.ReactElement<{}> {
 
-        const base: string = 'contentrow',
-            layouttype: string = this.props.layouttype;
-        let mod: string;
+        let output: any = null;
+        const base: string = 'contentrow';
+        // console.log(Array.isArray(this.props.children)); // => false
 
-        switch (layouttype) {
+        if (!this.props.contents) {
+            output = (<div className={base}>{ this.props.children }</div>); // createFragment();
+        } else {
 
-            case 'column':
-                mod = 'contentrow__doublecolumn';
-                break;
+            const layouttype: string = this.props.layouttype;
+            let mod: string;
 
-            case 'wrap':
-                mod = 'contentrow__singlecoumn';
-                break;
+            switch (layouttype) {
 
-            case 'full':
-                mod = 'contentrow__full';
-                break;
+                case 'column':
+                    mod = 'contentrow__doublecolumn';
+                    break;
 
-            default:
-                mod = 'contentrow__full';
-        }
+                case 'wrap':
+                    mod = 'contentrow__singlecoumn';
+                    break;
 
-        const cn: string = base + ' ' + mod;
+                case 'full':
+                    mod = 'contentrow__full';
+                    break;
 
-        const {
-            position,
-            href,
-            target,
-            description,
-            images
-        }: {
-            position: string;
-            href: string;
-            target: string;
-            description: string;
-            images: any[]
-        } = this.props.contents;
+                default:
+                    mod = 'contentrow__full';
+            }
 
-        let imgs: string = '';
+            const cn: string = base + ' ' + mod;
 
-        for (let i: number = 0; i < images.length; i++) {
-            imgs = imgs + images[0].src + ' ' + images[0].width + ((i < images.length - 1) ? ', ' : '');
-        }
+            const {
+                position,
+                href,
+                target,
+                description,
+                images
+            }: {
+                position: string;
+                href: string;
+                target: string;
+                description: string;
+                images: any[]
+            } = this.props.contents;
 
-        return (
-            <div className={cn}>
+            let imgs: string = '';
+
+            for (let i: number = 0; i < images.length; i++) {
+                imgs = imgs + images[0].src + ' ' + images[0].width + ((i < images.length - 1) ? ', ' : '');
+            }
+            output = (<div className={cn}>
                 <CallToAction
                     position={position}
                     href={href}
                     target={target}
                     description={description} />
                 <Img alt='Your picture description' srcSet={imgs} extra={{ width: '100%', height: '100%' }} />
-            </div>
-        );
+            </div>);
+        }
+
+        return output;
     }
 }
