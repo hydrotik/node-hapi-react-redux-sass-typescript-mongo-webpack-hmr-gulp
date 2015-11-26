@@ -31,35 +31,34 @@ export class ContentRow extends React.Component<IContentRowProps, {}> {
     public render(): React.ReactElement<{}> {
 
         let output: any = null;
-        const base: string = 'contentrow';
+        const base: string = 'contentrow',
+            layouttype: string = this.props.layouttype;
+        let mod: string;
+
+        switch (layouttype) {
+
+            case 'column':
+                mod = 'contentrow__doublecolumn';
+                break;
+
+            case 'wrap':
+                mod = 'contentrow__singlecoumn';
+                break;
+
+            case 'full':
+                mod = 'contentrow__full';
+                break;
+
+            default:
+                mod = 'contentrow__full';
+        }
+
+        const cn: string = base + ' ' + mod;
         // console.log(Array.isArray(this.props.children)); // => false
 
         if (!this.props.contents) {
-            output = (<div className={base}>{ this.props.children }</div>); // createFragment();
+            output = (<div className={cn}>{ this.props.children }</div>); // createFragment();
         } else {
-
-            const layouttype: string = this.props.layouttype;
-            let mod: string;
-
-            switch (layouttype) {
-
-                case 'column':
-                    mod = 'contentrow__doublecolumn';
-                    break;
-
-                case 'wrap':
-                    mod = 'contentrow__singlecoumn';
-                    break;
-
-                case 'full':
-                    mod = 'contentrow__full';
-                    break;
-
-                default:
-                    mod = 'contentrow__full';
-            }
-
-            const cn: string = base + ' ' + mod;
 
             const {
                 position,

@@ -24,9 +24,12 @@ export class ColumnContainer extends React.Component<IColumnContainerProps, {}> 
 
         const {rows}: IColumnContainerProps = this.props;
 
-        if ( this.props.children && this.props.children.length > 0 ) {
+        if ( this.props.children ) {
+            console.warn('Explicit');
+            console.warn(this.props.children);
             output = (<div className='columncontainer'>{ this.props.children }</div>);
         } else {
+            console.warn('Dynamic');
             output = (<div className='columncontainer'>{ map(rows, this.renderEditorialContentContainer) }</div>);
         }
 
