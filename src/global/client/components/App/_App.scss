@@ -8,6 +8,7 @@
     margin : 0;
     padding : 0;
     /*max-width: 960px;*/
+    overflow-x: hidden;
 }
 
 .hero {
@@ -65,4 +66,13 @@
   z-index: 2;
   left: 50%;
   margin-left: -180px;
+}
+
+
+/* misc */
+.fade1 {
+  opacity: .5;
+}
+.fade2 {
+  opacity: .3;
 }

@@ -112,6 +112,9 @@ export class App extends React.Component<IAppProps, IAppState> {
 
         return (
             <div className = 'app'>
+                <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
+                <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
+                <Link to='test3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>
                 <TrackDocument formulas={[getDocumentElement, getDocumentRect, calculateScrollY,
                     topTop, topBottom, topCenter, centerCenter, bottomBottom, bottomTop]}>
 
@@ -181,12 +184,6 @@ export class App extends React.Component<IAppProps, IAppState> {
 
                           </div>
                   }</TrackDocument>
-
-
-
-                <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
-                <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
-                <Link to='test3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>
                 <Header />
                 <Element name='test1' className='element'>
                     <Carousel />
