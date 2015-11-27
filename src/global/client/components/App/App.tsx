@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { map } from 'lodash';
 import './_App.scss';
-import 'react-addons-create-fragment';
 import { Header } from '../Header/Header';
 import { Carousel } from '../Carousel/Carousel';
 import { RowContainer } from '../RowContainer/RowContainer';
@@ -21,11 +20,27 @@ import { IEditorialReducer } from '../../reducers/reducers';
 
 import * as Scroll from 'react-scroll';
 
+import * as cx from 'classnames';
+import { Easer } from 'functional-easing';
+import { Track, TrackedDiv, TrackDocument } from 'react-track';
+import { tween, combine } from 'react-imation';
+import { topTop,
+    topBottom,
+    centerCenter,
+    topCenter,
+    bottomBottom,
+    bottomTop,
+    getDocumentRect,
+    getDocumentElement,
+    calculateScrollY } from 'react-track/lib/tracking-formulas';
+import { rgb, rgba, scale, rotate,
+px, percent, translate3d } from 'react-imation/tween-value-factories';
+
+const easeOutBounce: any = new Easer().using('out-bounce');
+
 // import { TrackDocument/*, Track*/ } from '../../animation/react-track';
 // import { getDocumentRect/*, getDocumentElement*/ } from '../../animation/react-track-formulas';
 
-import { TrackDocument/*, Track*/ } from 'react-track';
-import { getDocumentRect/*, getDocumentElement*/ } from 'react-track/lib/tracking-formulas';
 
 const Link: any = Scroll.Link;
 const Element: any = Scroll.Element;
@@ -97,12 +112,78 @@ export class App extends React.Component<IAppProps, IAppState> {
 
         return (
             <div className = 'app'>
-                <TrackDocument formulas={[getDocumentRect]}>
-                    { ( rect: any ) =>
-                    <div>
-                        The height of documentElement is {rect.height}
-                    </div> }
-                </TrackDocument>
+                <TrackDocument formulas={[getDocumentElement, getDocumentRect, calculateScrollY,
+                    topTop, topBottom, topCenter, centerCenter, bottomBottom, bottomTop]}>
+
+                  {(documentElement: any, documentRect: any, scrollY: any, topTop: any,
+                        topBottom: any, topCenter: any, centerCenter: any, bottomBottom: any, bottomTop: any) =>
+                      <div style={{ minHeight: '5000px' }}>
+
+                      <TrackedDiv className='hero' formulas={[topTop]}>
+                      { (posTopTop: any) =>
+                          <div>
+                              <div className='down-arrow'
+                              style={tween(scrollY, [
+                                            [posTopTop, { opacity: 1, transform: translate3d(0, 0, 0) }],
+                                            [posTopTop + 200, { opacity: 0, transform: translate3d(0, -150, 0) }]
+                              ]) }>v</div>
+                              </div>
+                      }</TrackedDiv>
+
+                      {/* fade */}
+                      <Track component='h2' formulas={[topBottom, centerCenter]}>
+                      {(H2: any, posTopBottom: any, posCenterCenter: any) =>
+                          <H2
+                              style={tween(scrollY, [
+                                  [posTopBottom, { opacity: 0 }],
+                                  [posCenterCenter, { opacity: 1 }]
+                              ]) }>fade</H2>
+                      }</Track>
+
+                      {/* parallax */}
+
+                      <a href='https://www.flickr.com/photos/rafagarcia_/15262287738/in/pool-83823859@N00/'>
+                        <Track component='div' formulas={[topBottom, bottomTop]}>
+                        {(Div: any, posTopBottom: any, posBottomTop: any) =>
+                            <Div className='parallax-cont'>
+                            <div className='parallax-shadow' />
+
+                            <div
+                                className='parallax-img'
+                                style={tween(scrollY, [
+                                    [posTopBottom, { transform: translate3d(0, 0, 0) }],
+                                    [posBottomTop, { transform: translate3d(0, -80, 0) }]
+                                ]) }></div>
+
+                            <h3
+                                className='parallax-txt fade2'
+                        style={tween(scrollY, [
+                                    [posTopBottom, { transform: combine(scale(0.8), translate3d(0, 120, 0)) }],
+                                    [posBottomTop, { transform: combine(scale(0.8), translate3d(0, -120, 0)) }]
+                                ]) }>parallax</h3>
+
+                            <h3
+                                className='parallax-txt fade1'
+                                style={tween(scrollY, [
+                                    [posTopBottom, { transform: combine(scale(0.9), translate3d(0, 160, 0)) }],
+                                    [posBottomTop, { transform: combine(scale(0.9), translate3d(0, -160, 0)) }]
+                                ]) }>parallax</h3>
+
+                            <h3
+                                className='parallax-txt'
+                                style={tween(scrollY, [
+                                    [posTopBottom, { transform: translate3d(0, 200, 0) }],
+                                    [posBottomTop, { transform: translate3d(0, -200, 0) }]
+                                ]) }>parallax</h3>
+                                </Div>
+                        }</Track>
+                          </a>
+
+                          </div>
+                  }</TrackDocument>
+
+
+
                 <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
                 <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
                 <Link to='test3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>
