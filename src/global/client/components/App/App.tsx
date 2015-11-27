@@ -95,12 +95,13 @@ export class App extends React.Component<IAppProps, IAppState> {
 
     public render(): React.ReactElement<{}> {
 
-        return (<div className = 'app'>
-            <TrackDocument formulas={[getDocumentRect]}>
-                { ( rect: any ) =>
+        return (
+            <div className = 'app'>
+                <TrackDocument formulas={[getDocumentRect]}>
+                    { ( rect: any ) =>
                     <div>
                         The height of documentElement is {rect.height}
-                        </div> }
+                    </div> }
                 </TrackDocument>
                 <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
                 <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
@@ -120,46 +121,45 @@ export class App extends React.Component<IAppProps, IAppState> {
                               '//farm1.staticflickr.com/485/20356020016_f9c816c270_h.jpg 800w, ' +
                               '//farm1.staticflickr.com/485/20356020016_e3e67db2ad_k.jpg 1000w'
                           } extra={{ width: '100%', height: '100%' }} />
-                            </ContentRow>
+                        </ContentRow>
                     </RowContainer>
                     <RowContainer>
-                      <ColumnContainer>
-                        <ContentRow type='column'>
-                          <CallToAction position='center' href='http://www.google.com' target='_blank' description='EXPLICIT' />
-                          <Img alt='Your picture description' srcSet={
-                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa.jpg 600w, ' +
-                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_z.jpg 800w, ' +
-                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_b.jpg 1000w'
-                          } extra={{ width: '100%', height: '100%' }} />
+                        <ColumnContainer>
+                            <ContentRow type='column'>
+                                <CallToAction position='center' href='http://www.google.com' target='_blank' description='EXPLICIT' />
+                                <Img alt='Your picture description' srcSet={
+                                    '//farm3.staticflickr.com/2646/4092034117_203c35f9fa.jpg 600w, ' +
+                                    '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_z.jpg 800w, ' +
+                                    '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_b.jpg 1000w'
+                                } extra={{ width: '100%', height: '100%' }} />
                             </ContentRow>
-                        <ContentRow type='column'>
-                          <CallToAction position='center' href='http://www.google.com'
-                                target='_blank' description='EXPLICIT Lorem ipsum here in the descripsum to explain sum.' />
-                          <Img alt='Your picture description' srcSet={
-                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa.jpg 600w, ' +
-                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_z.jpg 800w, ' +
-                              '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_b.jpg 1000w'
-                          } extra={{ width: '100%', height: '100%' }} />
+                            <ContentRow type='column'>
+                                <CallToAction position='center' href='http://www.google.com'
+                                    target='_blank' description='EXPLICIT Lorem ipsum here in the descripsum to explain sum.' />
+                                <Img alt='Your picture description' srcSet={
+                                    '//farm3.staticflickr.com/2646/4092034117_203c35f9fa.jpg 600w, ' +
+                                    '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_z.jpg 800w, ' +
+                                    '//farm3.staticflickr.com/2646/4092034117_203c35f9fa_b.jpg 1000w'
+                                } extra={{ width: '100%', height: '100%' }} />
                             </ContentRow>
-                     </ColumnContainer>
-                      <ColumnContainer>
-                        <ContentRow type='column'>
-                          <CallToAction position='center' href='http://www.google.com'
-                                target='_blank' description='EXPLICIT 1 and 2 Lorem ipsum here in the descripsum to explain sum.' />
-                          <Img alt='Your picture description' srcSet={
-                                '//farm9.staticflickr.com/8301/7794118424_1330cf491d.jpg 600w, ' +
-                            '//farm9.staticflickr.com/8301/7794118424_1330cf491d_c.jpg 800w, ' +
-                            '//farm9.staticflickr.com/8301/7794118424_1330cf491d_b.jpg 1000w'
-                          } extra={{ width: '100%', height: '100%' }} />
+                        </ColumnContainer>
+                        <ColumnContainer>
+                            <ContentRow type='column'>
+                                <CallToAction position='center' href='http://www.google.com'
+                                    target='_blank' description='EXPLICIT 1 and 2 Lorem ipsum here in the descripsum to explain sum.' />
+                                <Img alt='Your picture description' srcSet={
+                                    '//farm9.staticflickr.com/8301/7794118424_1330cf491d.jpg 600w, ' +
+                                    '//farm9.staticflickr.com/8301/7794118424_1330cf491d_c.jpg 800w, ' +
+                                    '//farm9.staticflickr.com/8301/7794118424_1330cf491d_b.jpg 1000w'
+                                } extra={{ width: '100%', height: '100%' }} />
                             </ContentRow>
-                    </ColumnContainer>
-
-                  </RowContainer>
+                        </ColumnContainer>
+                    </RowContainer>
                 </Element>
                 <Element name='test3' className='element'>
                     <Footer />
                 </Element>
-        </div>
+            </div>
         );
     }
 
