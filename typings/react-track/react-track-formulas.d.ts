@@ -7,7 +7,7 @@
 
 
 
-declare module "react-track/tracking-formulas" {
+declare module "react-track/lib/tracking-formulas" {
 
 	export const topTop:any;
 

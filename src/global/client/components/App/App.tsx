@@ -1,5 +1,5 @@
 /// <reference path='../../../../../typings/tsd.d.ts' />
-
+/* tslint:disable:no-unused-variable */
 import * as React from 'react';
 import { map } from 'lodash';
 import './_App.scss';
@@ -24,8 +24,8 @@ import * as Scroll from 'react-scroll';
 // import { TrackDocument/*, Track*/ } from '../../animation/react-track';
 // import { getDocumentRect/*, getDocumentElement*/ } from '../../animation/react-track-formulas';
 
-// import { TrackDocument/*, Track*/ } from 'react-track';
-// import { getDocumentRect/*, getDocumentElement*/ } from 'react-track/tracking-formulas';
+import { TrackDocument/*, Track*/ } from 'react-track';
+import { getDocumentRect/*, getDocumentElement*/ } from 'react-track/lib/tracking-formulas';
 
 const Link: any = Scroll.Link;
 const Element: any = Scroll.Element;
@@ -96,11 +96,12 @@ export class App extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<{}> {
 
         return (<div className = 'app'>
-            { /*<TrackDocument formulas={[getDocumentRect]}>
+            <TrackDocument formulas={[getDocumentRect]}>
                 { ( rect: any ) =>
                     <div>
                         The height of documentElement is {rect.height}
-                    </div> } */ }
+                        </div> }
+                </TrackDocument>
                 <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
                 <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
                 <Link to='test3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>
@@ -158,7 +159,6 @@ export class App extends React.Component<IAppProps, IAppState> {
                 <Element name='test3' className='element'>
                     <Footer />
                 </Element>
-            { /* </TrackDocument> */ }
         </div>
         );
     }
@@ -167,5 +167,5 @@ export class App extends React.Component<IAppProps, IAppState> {
         let columns: any = item;
         return (<RowContainer key={i} columns={columns} />);
     }
-
+/* tslint:enable:no-unused-variable */
 }

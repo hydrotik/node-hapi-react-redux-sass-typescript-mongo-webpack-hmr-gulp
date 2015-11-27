@@ -25,8 +25,6 @@ export class ColumnContainer extends React.Component<IColumnContainerProps, {}> 
         const {rows}: IColumnContainerProps = this.props;
 
         if ( this.props.children ) {
-            console.warn('Explicit');
-            console.warn(this.props.children);
             output = (<div className='columncontainer'>{ this.props.children }</div>);
         } else {
             console.warn('Dynamic');
