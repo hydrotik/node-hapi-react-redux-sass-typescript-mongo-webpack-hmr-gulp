@@ -26,6 +26,25 @@
 }
 
 
+
+h1,h2 {
+  font-size: 76px;
+  display: block;
+  text-align: center;
+  margin-bottom: 150px;
+}
+
+h1 {
+  margin:0;
+  padding: 50px 0 0 0;
+  pointer-events: none;
+}
+
+h3 {
+  font-size: 88px;
+}
+
+
 /* parallax */
 
 .parallax-cont {
@@ -54,7 +73,7 @@
 }
 
 .parallax-img {
-  background: url(require('bg.jpg'));
+  background: url('./bg.jpg');
   height: 800px;
   position: absolute;
   width: 100%;

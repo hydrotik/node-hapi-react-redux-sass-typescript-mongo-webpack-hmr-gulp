@@ -79,7 +79,6 @@ export class App extends React.Component<IAppProps, IAppState> {
 
     public constructor(props: any) {
         super(props);
-        throw new Error('HERE\'S AN ERROR');
     }
 
     // fat arrow function for maintaining scope for accessing this.props
@@ -121,7 +120,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
                   {(documentElement: any, documentRect: any, scrollY: any, topTop: any,
                         topBottom: any, topCenter: any, centerCenter: any, bottomBottom: any, bottomTop: any) =>
-                      <div style={{ minHeight: '5000px' }}>
+                      <div style={{ minHeight: '1000px' }}>
 
                       <TrackedDiv className='hero' formulas={[topTop]}>
                       { (posTopTop: any) =>
@@ -155,29 +154,45 @@ export class App extends React.Component<IAppProps, IAppState> {
                             <div
                                 className='parallax-img'
                                 style={tween(scrollY, [
-                                    [posTopBottom, { transform: translate3d(0, 0, 0) }],
-                                    [posBottomTop, { transform: translate3d(0, -80, 0) }]
+                                    [posTopBottom, {
+                                        '-webkit-transform': translate3d(0, 0, 0)
+                                    }],
+                                    [posBottomTop, {
+                                        '-webkit-transform': translate3d(0, -80, 0)
+                                    }]
                                 ]) }></div>
 
                             <h3
                                 className='parallax-txt fade2'
                         style={tween(scrollY, [
-                                    [posTopBottom, { transform: combine(scale(0.8), translate3d(0, 120, 0)) }],
-                                    [posBottomTop, { transform: combine(scale(0.8), translate3d(0, -120, 0)) }]
+                                    [posTopBottom, {
+                                        '-webkit-transform': combine(scale(0.8), translate3d(0, 120, 0))
+                                    }],
+                                    [posBottomTop, {
+                                        '-webkit-transform': combine(scale(0.8), translate3d(0, -120, 0))
+                                    }]
                                 ]) }>parallax</h3>
 
                             <h3
                                 className='parallax-txt fade1'
                                 style={tween(scrollY, [
-                                    [posTopBottom, { transform: combine(scale(0.9), translate3d(0, 160, 0)) }],
-                                    [posBottomTop, { transform: combine(scale(0.9), translate3d(0, -160, 0)) }]
+                                    [posTopBottom, {
+                                        '-webkit-transform': combine(scale(0.9), translate3d(0, 160, 0))
+                                    }],
+                                    [posBottomTop, {
+                                        '-webkit-transform': combine(scale(0.9), translate3d(0, -160, 0))
+                                    }]
                                 ]) }>parallax</h3>
 
                             <h3
                                 className='parallax-txt'
                                 style={tween(scrollY, [
-                                    [posTopBottom, { transform: translate3d(0, 200, 0) }],
-                                    [posBottomTop, { transform: translate3d(0, -200, 0) }]
+                                    [posTopBottom, {
+                                        '-webkit-transform': translate3d(0, 200, 0)
+                                    }],
+                                    [posBottomTop, {
+                                        '-webkit-transform': translate3d(0, -200, 0)
+                                    }]
                                 ]) }>parallax</h3>
                                 </Div>
                         }</Track>
