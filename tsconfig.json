@@ -2,10 +2,13 @@
   "compilerOptions": {
     "target" : "ES5",
     "jsx" : "react",
-    "sourceMap": true,
     "emitRequireType": false,
     "experimentalDecorators": true,
-    "module" : "commonjs"
+    "module" : "commonjs",
+    "inlineSourceMap": true,
+    "inlineSources": false,
+    "sourceMap": false,
+    "sourceRoot" : "global/client/"
   },
   "exclude" : ["node_modules", "config", "dev_server.js"]
 }

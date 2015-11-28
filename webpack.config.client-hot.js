@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 var pkg = require('./package.json');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -15,6 +16,7 @@ var TEST = process.env.NODE_ENV === 'test';
 
 var cssBundle = path.join('css', util.format('app.%s.css', pkg.version));
 var jsBundle = path.join('js', util.format('app.%s.js', pkg.version));
+var jsMapBundle = path.join('js', 'index.js.map');
 
 var jsxLoader;
 var sassLoader;
@@ -57,8 +59,7 @@ cssLoader = [
 
 
 module.exports = {
-    devtool: 'eval-source-map',
-    debug: true,
+    devtool: 'inline-source-map',
     entry: [
         'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/only-dev-server',
@@ -68,7 +69,10 @@ module.exports = {
     output: {
         path: buildDir,
         filename: jsBundle,
-        publicPath: "http://localhost:8080/"
+        sourceMapFilename: jsMapBundle,
+        publicPath: "http://localhost:8080/",
+        devtoolModuleFilenameTemplate: "../[resource-path]",
+        devtoolFallbackModuleFilenameTemplate:"../[resource-path]"
     },
     plugins: [
         new ExtractTextPlugin(cssBundle, {
@@ -76,7 +80,11 @@ module.exports = {
             publicPath: 'http://localhost:8080/'
         }),
         new webpack.optimize.DedupePlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.SourceMapDevToolPlugin({
+          filename: jsMapBundle
+        }),
+        new ForkCheckerPlugin()
     ],
     resolve: {
         extensions: ['', '.js', '.json', '.jsx', '.ts', '.tsx'],

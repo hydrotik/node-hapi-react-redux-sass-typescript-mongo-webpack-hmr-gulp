@@ -79,6 +79,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
     public constructor(props: any) {
         super(props);
+        throw new Error('HERE\'S AN ERROR');
     }
 
     // fat arrow function for maintaining scope for accessing this.props
