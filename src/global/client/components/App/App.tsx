@@ -117,7 +117,6 @@ export class App extends React.Component<IAppProps, IAppState> {
                 <Link to='test3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>
                 <TrackDocument formulas={[getDocumentElement, getDocumentRect, calculateScrollY,
                     topTop, topBottom, topCenter, centerCenter, bottomBottom, bottomTop]}>
-
                   {(documentElement: any, documentRect: any, scrollY: any, topTop: any,
                         topBottom: any, topCenter: any, centerCenter: any, bottomBottom: any, bottomTop: any) =>
                       <div style={{ minHeight: '1000px' }}>
