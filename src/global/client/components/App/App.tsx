@@ -119,7 +119,7 @@ export class App extends React.Component<IAppProps, IAppState> {
                     topTop, topBottom, topCenter, centerCenter, bottomBottom, bottomTop]}>
                   {(documentElement: any, documentRect: any, scrollY: any, topTop: any,
                         topBottom: any, topCenter: any, centerCenter: any, bottomBottom: any, bottomTop: any) =>
-                      <div style={{ minHeight: '1000px' }}>
+                      <div style={{ minHeight: '1400px' }}>
 
                       <TrackedDiv className='hero' formulas={[topTop]}>
                       { (posTopTop: any) =>
@@ -144,7 +144,6 @@ export class App extends React.Component<IAppProps, IAppState> {
 
                       {/* parallax */}
 
-                      <a href='https://www.flickr.com/photos/rafagarcia_/15262287738/in/pool-83823859@N00/'>
                         <Track component='div' formulas={[topBottom, bottomTop]}>
                         {(Div: any, posTopBottom: any, posBottomTop: any) =>
                             <Div className='parallax-cont'>
@@ -153,49 +152,32 @@ export class App extends React.Component<IAppProps, IAppState> {
                             <div
                                 className='parallax-img'
                                 style={tween(scrollY, [
-                                    [posTopBottom, {
-                                        '-webkit-transform': translate3d(0, 0, 0)
-                                    }],
-                                    [posBottomTop, {
-                                        '-webkit-transform': translate3d(0, -80, 0)
-                                    }]
+                                    [posTopBottom, this.transformPrefixHelper(translate3d(0, 0, 0))],
+                                    [posBottomTop, this.transformPrefixHelper(translate3d(0, -80, 0))]
                                 ]) }></div>
 
                             <h3
                                 className='parallax-txt fade2'
                         style={tween(scrollY, [
-                                    [posTopBottom, {
-                                        '-webkit-transform': combine(scale(0.8), translate3d(0, 120, 0))
-                                    }],
-                                    [posBottomTop, {
-                                        '-webkit-transform': combine(scale(0.8), translate3d(0, -120, 0))
-                                    }]
+                                    [posTopBottom, this.transformPrefixHelper(combine(scale(0.8), translate3d(0, 120, 0)))],
+                                    [posBottomTop, this.transformPrefixHelper(combine(scale(0.8), translate3d(0, -120, 0)))]
                                 ]) }>parallax</h3>
 
                             <h3
                                 className='parallax-txt fade1'
                                 style={tween(scrollY, [
-                                    [posTopBottom, {
-                                        '-webkit-transform': combine(scale(0.9), translate3d(0, 160, 0))
-                                    }],
-                                    [posBottomTop, {
-                                        '-webkit-transform': combine(scale(0.9), translate3d(0, -160, 0))
-                                    }]
+                                    [posTopBottom, this.transformPrefixHelper(combine(scale(0.9), translate3d(0, 160, 0)))],
+                                    [posBottomTop, this.transformPrefixHelper(combine(scale(0.9), translate3d(0, -160, 0)))]
                                 ]) }>parallax</h3>
 
                             <h3
                                 className='parallax-txt'
                                 style={tween(scrollY, [
-                                    [posTopBottom, {
-                                        '-webkit-transform': translate3d(0, 200, 0)
-                                    }],
-                                    [posBottomTop, {
-                                        '-webkit-transform': translate3d(0, -200, 0)
-                                    }]
+                                    [posTopBottom, this.transformPrefixHelper(translate3d(0, 200, 0))],
+                                    [posBottomTop, this.transformPrefixHelper(translate3d(0, -200, 0))]
                                 ]) }>parallax</h3>
                                 </Div>
                         }</Track>
-                          </a>
 
                           </div>
                   }</TrackDocument>
@@ -259,6 +241,20 @@ export class App extends React.Component<IAppProps, IAppState> {
     private renderEditorialRowContainer(item: any, i: number): React.ReactElement<{}> {
         let columns: any = item;
         return (<RowContainer key={i} columns={columns} />);
+    }
+
+    private transformPrefixHelper(f: string): any {
+        let output: Object = {};
+        let prefixes: string[] = [
+            '',
+            '-webkit-',
+            '-ms-'
+        ];
+
+        for (var i: number = 0; i < prefixes.length; i = i + 1) {
+            output[prefixes[i] + 'transform'] = f;
+        }
+        return output;
     }
 /* tslint:enable:no-unused-variable */
 }
