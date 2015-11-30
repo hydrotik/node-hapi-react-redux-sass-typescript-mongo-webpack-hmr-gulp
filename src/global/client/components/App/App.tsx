@@ -109,7 +109,6 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
 
     public render(): React.ReactElement<{}> {
-
         return (
             <div className = 'app'>
                 <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
@@ -119,18 +118,35 @@ export class App extends React.Component<IAppProps, IAppState> {
                     topTop, topBottom, topCenter, centerCenter, bottomBottom, bottomTop]}>
                   {(documentElement: any, documentRect: any, scrollY: any, topTop: any,
                         topBottom: any, topCenter: any, centerCenter: any, bottomBottom: any, bottomTop: any) =>
-                      <div style={{ minHeight: '1400px' }}>
+                    <div style={{ minHeight: '1400px' }}>
 
-                      <TrackedDiv className='hero' formulas={[topTop]}>
-                      { (posTopTop: any) =>
-                          <div>
-                              <div className='down-arrow'
-                              style={tween(scrollY, [
-                                            [posTopTop, { opacity: 1, transform: translate3d(0, 0, 0) }],
-                                            [posTopTop + 200, { opacity: 0, transform: translate3d(0, -150, 0) }]
-                              ]) }>v</div>
-                              </div>
-                      }</TrackedDiv>
+                        <RowContainer>
+                            <ContentRow type='full'>
+                                <CallToAction position='left' href='http://www.google.com' target='_blank' description='EXPLICIT ROW' />
+                                <TrackedDiv className='hero' formulas={[topTop]}>
+                                    { (posTopTop: any) => (
+                                        <div>
+                                            <Track component='div' formulas={[topBottom, bottomTop]}>
+                                            {(Div: any, posTopBottom: any, posBottomTop: any) =>
+                                                <Div className='hero-cont'>
+                                                            <div
+                                                                className='hero-img'
+                                                                style={tween(scrollY, [
+                                                                    [posTopBottom, this.transformPrefixHelper(translate3d(0, 0, 0))],
+                                                                    [posBottomTop, this.transformPrefixHelper(translate3d(0, -80, 0))]
+                                                                ]) }></div>
+                                                    </Div>
+                                            }</Track>
+                                          <div className='down-arrow'
+                                              style={tween(scrollY, [
+                                                  [posTopTop, { opacity: 1, transform: translate3d(0, 0, 0) }],
+                                                  [posTopTop + 200, { opacity: 0, transform: translate3d(0, -150, 0) }]
+                                              ]) }>v</div>
+                                        </div>
+                                    ) }
+                                </TrackedDiv>
+                            </ContentRow>
+                        </RowContainer>
 
                       {/* fade */}
                       <Track component='h2' formulas={[topBottom, centerCenter]}>

@@ -23,6 +23,7 @@
   margin-left: -22px;
   font-size: 100px;
   color: #7ea54e;
+  z-index: 2;
 }
 
 
@@ -70,6 +71,20 @@ h3 {
   -moz-box-shadow: inset 0px 0px 35px 0px rgba(0,0,0,0.75);
   box-shadow: inset 0px 0px 35px 0px rgba(0,0,0,0.75);
 
+}
+
+.hero-cont {
+  position: relative;
+  overflow: hidden;
+  height: 800px;
+}
+
+.hero-img {
+  background: url('//farm1.staticflickr.com/485/20356020016_e3e67db2ad_k.jpg');
+  height: 1000px;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
 }
 
 .parallax-img {
