@@ -118,6 +118,7 @@
     "jsdoc-babel": "^0.1.0",
     "json-loader": "^0.5.3",
     "jsx-loader": "^0.13.2",
+    "node-inspector": "^0.12.3",
     "node-sass": "^3.3.3",
     "opn": "^3.0.2",
     "perfjankie": "^2.1.0",
