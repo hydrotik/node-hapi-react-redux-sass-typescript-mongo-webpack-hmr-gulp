@@ -96,6 +96,7 @@
     "babel-preset-react": "^6.0.15",
     "babel-runtime": "^6.0.14",
     "browser-perf": "^1.4.2",
+    "chrome-remote-interface": "^0.11.0",
     "command-line-args": "^2.0.2",
     "concurrently": "^0.1.1",
     "css-loader": "^0.20.2",
