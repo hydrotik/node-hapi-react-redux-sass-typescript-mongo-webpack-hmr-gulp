@@ -1,5 +1,9 @@
 # Watts
-The F√©k $#!† St∆ck
+The F√©k $#!† St∆ck. **This is a VERY rough and in progress project in it's early stages, but it does already bring a number of technologies together for proving compatibility.**
+
+At the moment I am using awesome-typescript-loader, but I plan on testing ts-loader as well. A big portion of my work at the moment is centered around animation and rendering performance. Once that is complete, I will continue to incorporate backend and micro service based communication between front and back. If you are considering running this project, feel free to reach out to me as docs are lacking and the struggle is real.
+
+**At the moment this project needs mongo running. To do this you can install and setup a new aqua project and copy the data folder over into this project.** 
 
 #### Run
 

@@ -10,7 +10,11 @@
     "node": ">=4.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "sh ./script/performance.sh",
+    "test-selenium-start" : "sh ./script/selenium.sh start",
+    "test-selenium-stop" : "sh ./script/selenium.sh stop",
+    "test-chromedriver-start" : "sh ./script/chromedriver.sh start",
+    "test-chromedriver-stop" : "sh ./script/chromedriver.sh stop",
     "start": "nodemon server.js",
     "watch-client": "node ./webpack.server.client-hot.js --verbose --colors --display-error-details --config webpack.config.client-hot.js --projectpath $PROJECTPATH",
     "lint-ts": "tslint --config tslint.json --ext .ts,.tsx",
