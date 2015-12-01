@@ -132,6 +132,7 @@
     "tslint-eslint-rules": "^0.3.0",
     "tslint-loader": "^1.0.2",
     "typescript": "^1.8.0-dev.20151128",
+    "webdriverio": "^3.3.0",
     "webpack": "^1.12.3",
     "webpack-dev-server": "^1.12.1",
     "webpack-error-notification": "^0.1.4",
