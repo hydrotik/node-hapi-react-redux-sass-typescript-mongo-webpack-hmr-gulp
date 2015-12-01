@@ -41,7 +41,6 @@ const easeOutBounce: any = new Easer().using('out-bounce');
 // import { TrackDocument/*, Track*/ } from '../../animation/react-track';
 // import { getDocumentRect/*, getDocumentElement*/ } from '../../animation/react-track-formulas';
 
-
 const Link: any = Scroll.Link;
 const Element: any = Scroll.Element;
 
