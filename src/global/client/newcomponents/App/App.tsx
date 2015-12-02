@@ -22,9 +22,9 @@ const Img = ReactPicture.BaseImage;
 
 //import { Provider } from 'react-redux';
 
-import configureStore from '../../stores/configureStore.es6';
+//import configureStore from '../../stores/configureStore.es6';
 
-const store = configureStore();
+//const store = configureStore();
 
 const displayName = 'App';
 
@@ -43,7 +43,7 @@ class App extends Component {
         return (
             <div className = "app">
             <Header />
-            <Carousel store={store} />
+            {/*<Carousel store={store} />*/}
             <SectionContainer
         { ... {
             fullWidth: true,
