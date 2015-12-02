@@ -64,7 +64,8 @@ module.exports = {
         'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/only-dev-server',
         /*path.resolve(__dirname, './app/views/Index'),*/
-        path.resolve(__dirname, './src/global/client/index')
+        //path.resolve(__dirname, './src/global/client/index'),
+        path.resolve(__dirname, './src/global/client/app')
     ],
     output: {
         path: buildDir,

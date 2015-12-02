@@ -1,0 +1,12 @@
+@import "susybase";
+@import "toolkit";
+
+.section-container {
+   display: block;
+   margin: 0 auto;
+   overflow: hidden;
+   padding: 0;
+   position: relative;
+   width: 100%;
+   @include clearfix;
+}

@@ -1,0 +1,32 @@
+@import "susybase";
+@import "toolkit";
+
+.contentrow {
+    position : relative;
+}
+
+.contentrow__full {
+    @include span(4 of 4);
+}
+
+.contentrow__doublecolumn {
+    @include span(4 of 4);
+}
+
+.contentrow__singlecoumn {
+
+    //@include span(4 of 4);
+
+    //@include breakpoint($breakpoint-lte-medium) {
+    	@include span(4 of 4);
+	//}
+}
+
+
+.contentrow {
+	img {
+    	display: block;
+    	top : 0;
+    	left : 0;
+	}
+}

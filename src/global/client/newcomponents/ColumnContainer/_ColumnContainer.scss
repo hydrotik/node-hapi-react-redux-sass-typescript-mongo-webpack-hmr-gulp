@@ -1,0 +1,16 @@
+@import "susybase";
+@import "toolkit";
+
+$breakpoint-non-mobile: min-width 780px;
+
+.columncontainer {
+    display: block;
+    overflow: hidden;
+    position: relative;
+
+    @include breakpoint($breakpoint-non-mobile) {
+        display: table-cell;
+        vertical-align: top;
+    }
+}
+

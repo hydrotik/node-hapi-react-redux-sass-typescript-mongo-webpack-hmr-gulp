@@ -1,0 +1,41 @@
+@import "susybase";
+@import "toolkit";
+
+.parallax-container {
+	position: relative;
+
+	.background-ratio-adjustment {
+		content: "";
+		display: block;
+		width: 100%;
+	}
+
+	> .background-image-container {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.background-image-container {
+		height: 100%;
+		line-height: 14px;
+		overflow: hidden;
+
+		.background-image {
+			background-position: center center;
+			background-size: cover;
+			height: 100%;
+			opacity: .5;
+			width: 100%;
+		}
+
+        .react-parallax{
+            background-position: center center;
+            background-size: cover;
+            height: 100%;
+            width: 100%;
+        }
+	}
+}

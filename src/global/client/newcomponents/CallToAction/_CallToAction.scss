@@ -1,0 +1,135 @@
+@import "susybase";
+@import "~btns/sass/btns";
+@import "toolkit";
+
+$copy-spacing: 5%;
+$breakpoint-non-mobile: min-width 780px;
+$default-color-mobile: #000;
+$default-color-desktop: #fff;
+
+@mixin center-align {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    //-webkit-transform:translate(-50%, -50%);
+    //-ms-transform:translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+@mixin horizontal-align {
+    left: 50%;
+    position: absolute;
+    //-webkit-transform:translateX(-50%);
+    //-ms-transform:translateX(-50%);
+    transform: translateX(-50%);
+}
+
+@mixin vertical-align {
+    position: absolute;
+    top: 50%;
+    //-webkit-transform:translateY(-50%);
+    //-ms-transform:translateY(-50%);
+    transform: translateY(-50%);
+}
+
+%translate-reset {
+    //-webkit-transform: translate(0%, 0%);
+    //-ms-transform: translate(0%, 0%);
+    transform: translate(0%, 0%);
+}
+
+// TODO Clean this up and use proper BEM
+
+.cta-container {
+    height: 100%;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+
+    @include breakpoint($breakpoint-non-mobile) {
+        position: absolute;
+    }
+}
+
+.hit-area {
+    display: block;
+    height: 100%;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+}
+
+.cta-button {
+    margin: 0;
+    padding: 0;
+}
+
+.call-to-action {
+    box-sizing: border-box;
+    color: $default-color-mobile;
+    display: block;
+    padding: 20px 20px 30px;
+    position: relative;
+    text-align: center;
+
+    @include breakpoint($breakpoint-non-mobile) {
+        color: $default-color-desktop;
+        display: inline-block;
+        padding: 5%;
+        position: absolute;
+        width: 100%;
+
+        a {
+            color: $default-color-desktop;
+        }
+
+        &.top {
+            bottom: initial;
+            top: $copy-spacing;
+        }
+
+        &.bottom {
+            bottom: $copy-spacing;
+            top: initial;
+        }
+
+        &.right {
+            left: initial;
+            right: $copy-spacing;
+            text-align: right;
+            width: 90%;
+        }
+
+        &.left {
+            left: $copy-spacing;
+            right: initial;
+            text-align: left;
+            width: 90%;
+        }
+
+        &.center {
+            text-align: center;
+
+            &.middle {
+                @include center-align;
+            }
+        }
+
+        &.middle {
+            @include vertical-align;
+        }
+    }
+
+    a {
+        color: $default-color-mobile;
+    }
+    .cta-button{
+        background-color: #fff;
+        color: #333;
+        display: inline-block;
+        padding: 12px;
+        margin: 0 0 20px;
+    }
+}
