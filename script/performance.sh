@@ -7,13 +7,13 @@ if [[ ! -d "$IMPORT_PATH" ]]; then IMPORT_PATH="$PWD"; fi
 source "$IMPORT_PATH/helpers.sh"
 
 # Start Slenium server.
-run "npm run test-selenium-start"
+run "npm run test-selenium-start --silent"
 
 # Start Chromedriver server.
-run "npm run test-chromedriver-start"
+run "npm run test-chromedriver-start --silent"
 
 # Start Test.
-run "node ./test/render.js" &
+run "node ./test/webdriver.js" &
 PERF_PID=$!
 echo $?
 

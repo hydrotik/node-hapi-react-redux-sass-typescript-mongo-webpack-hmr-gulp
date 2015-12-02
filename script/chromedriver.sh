@@ -1,8 +1,8 @@
 #!/bin/bash
 
-CHROMEDRIVER=./chromedriver
-LOG=./chromedriver.log
-PIDFILE=./chromedriver.pid
+CHROMEDRIVER=../chromedriver
+LOG=../chromedriver.log
+PIDFILE=../chromedriver.pid
 
 ARG=$1
 

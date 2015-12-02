@@ -110,9 +110,9 @@ export class App extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<{}> {
         return (
             <div className = 'app'>
-                <Link to='test1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
-                <Link to='test2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
-                <Link to='test3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>
+                <Link to='test1' id='element-link-1' spy={true} smooth={true} offset={50} duration={2000}>Carousel</Link>&nbsp; |&nbsp;
+                <Link to='test2' id='element-link-2' spy={true} smooth={true} offset={50} duration={2000}>Editorial</Link>&nbsp; |&nbsp;
+                <Link to='test3' id='element-link-3' spy={true} smooth={true} offset={50} duration={2000}>Footer</Link>
                 <TrackDocument formulas={[getDocumentElement, getDocumentRect, calculateScrollY,
                     topTop, topBottom, topCenter, centerCenter, bottomBottom, bottomTop]}>
                   {(documentElement: any, documentRect: any, scrollY: any, topTop: any,
