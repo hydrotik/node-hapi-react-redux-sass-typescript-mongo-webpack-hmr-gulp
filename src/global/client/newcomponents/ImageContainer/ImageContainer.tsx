@@ -1,25 +1,22 @@
+/// <reference path="../../../../../typings/tsd.d.ts" />
+
 import './_ImageContainer.scss';
-import React from 'react';
+import * as React from 'react';
 
-const { Component, PropTypes } = React;
-
-const propTypes = {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired,
-    gutter: PropTypes.number
-};
-
-const displayName = 'ImageContainer';
-
+export interface IImageContainerProps {
+    width: number;
+    height: number;
+    url: string;
+    gutter?: number;
+}
 
 /**
- * @class ImageContainer
+ * @class ContentRow
  * @augments {React.Component}
  */
-export default class ImageContainer extends Component {
+export class ImageContainer extends React.Component<IImageContainerProps, {}> {
 
-    render() {
+    public render(): React.ReactElement<{}> {
 
         const contextTypes = {
             a: React.PropTypes.string
@@ -61,8 +58,4 @@ export default class ImageContainer extends Component {
         );
     }
 }
-
-ImageContainer.displayName = displayName;
-ImageContainer.propTypes = propTypes;
-ImageContainer.defaultProps = {gutter: 0};
 
