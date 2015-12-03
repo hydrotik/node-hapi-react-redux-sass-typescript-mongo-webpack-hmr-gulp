@@ -1,21 +1,22 @@
+/// <reference path="../../../../../typings/tsd.d.ts" />
+
 import './_ContentRow.scss';
-import React from 'react';
+import * as React from 'react';
 
 const { Component, PropTypes } = React;
 
-const displayName = 'ContentRow';
-
-const propTypes = {
-    children: PropTypes.node
-};
+export interface IContentRowProps {
+    children?: any;
+    layouttype?: string;
+}
 
 /**
  * @class ContentRow
  * @augments {React.Component}
  */
-class ContentRow extends Component {
+export class ContentRow extends React.Component<IContentRowProps, {}> {
 
-    render() {
+    public render(): React.ReactElement<{}> {
 
         const base = 'contentrow',
             layouttype = this.props.layouttype;
@@ -48,8 +49,3 @@ class ContentRow extends Component {
         );
     }
 }
-
-ContentRow.displayName = displayName;
-ContentRow.propTypes = propTypes;
-
-export default ContentRow;

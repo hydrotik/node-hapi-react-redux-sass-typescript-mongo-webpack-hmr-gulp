@@ -8,12 +8,6 @@ import './_ContentRow.scss';
 
 const Img: any = ReactPicture.BaseImage;
 
-/*
-const propTypes = {
-    children: PropTypes.node
-};
-*/
-
 export interface IContentRowProps {
     children?: any;
     layouttype?: string;
