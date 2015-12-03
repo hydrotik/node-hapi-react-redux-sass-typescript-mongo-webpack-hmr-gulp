@@ -1,31 +1,38 @@
+/// <reference path="../../../../../typings/tsd.d.ts" />
+
 import './_SectionContainer.scss';
-import React from 'react';
+import * as React from 'react';
+import * as lodash from 'lodash';
 
-const { Component, PropTypes, Context} = React;
-
-const displayName = 'SectionContainer';
-
-const propTypes = {
-    fullWidth: PropTypes.bool,
-    gutter: PropTypes.number,
-    gutterBottom: PropTypes.number,
-    children: React.PropTypes.node
-};
-
-
+interface ISectionContainerProps {
+    children?: any;
+    fullWidth: boolean;
+    gutter: number;
+    gutterBottom: number;
+}
 
 /**
- * @class SectionContainer
+ * @class ContentRow
  * @augments {React.Component}
  */
-export default class SectionContainer extends Component {
+export class SectionContainer extends React.Component<ISectionContainerProps, {}> {
 
-    render() {
+    public constructor(props: ISectionContainerProps) {
+        super(props);
 
-        let gutter = this.props.gutter ? {'marginBottom': this.props.gutter + this.props.gutterBottom + 'px','marginTop': this.props.gutter / 2 + 'px'} : {'marginBottom': this.props.gutterBottom + 'px'};
-        let width = this.props.fullWidth ? {'maxWidth': '100%'} : {'maxWidth': 960 + this.props.gutter+ 'px'};
+        this.props = { gutter: 0, gutterBottom: 0, fullWidth: false };
+    }
 
-        Object.assign(gutter, width);
+    public render(): React.ReactElement<{}> {
+
+        let gutter:any = this.props.gutter ?
+            {'marginBottom': this.props.gutter + this.props.gutterBottom + 'px','marginTop': this.props.gutter / 2 + 'px'} :
+            {'marginBottom': this.props.gutterBottom + 'px'};
+        let width:any = this.props.fullWidth ?
+            {'maxWidth': '100%'} :
+            {'maxWidth': 960 + this.props.gutter+ 'px'};
+
+        gutter = lodash.assign({}, gutter, width);
 
         return (
             <div style={gutter} className="section-container">
@@ -34,7 +41,3 @@ export default class SectionContainer extends Component {
         );
     }
 }
-
-SectionContainer.displayName = displayName;
-SectionContainer.propTypes = propTypes;
-SectionContainer.defaultProps = {gutter: 0, gutterBottom: 0, fullWidth: false};

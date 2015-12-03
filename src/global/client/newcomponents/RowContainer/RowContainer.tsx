@@ -1,20 +1,18 @@
+/// <reference path="../../../../../typings/tsd.d.ts" />
+import * as React from 'react';
+
 import './_RowContainer.scss';
-import React from 'react';
 
-const { Component } = React;
-
-const displayName = 'RowContainer';
-
-const propTypes = {
-    children: React.PropTypes.node
-};
+interface IRowContainerProps {
+    children?: any;
+}
 
 /**
  * @class ContentRow
  * @augments {React.Component}
  */
-export default class RowContainer extends Component {
-    render() {
+export class RowContainer extends React.Component<IRowContainerProps, {}> {
+    public render(): React.ReactElement<{}> {
         return (
             <div className="rowcontainer">
                 {this.props.children}
@@ -22,7 +20,3 @@ export default class RowContainer extends Component {
         );
     }
 }
-
-RowContainer.displayName = displayName;
-RowContainer.propTypes = propTypes;
-
