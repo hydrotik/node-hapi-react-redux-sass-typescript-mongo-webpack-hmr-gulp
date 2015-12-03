@@ -10,6 +10,13 @@ export interface IImageContainerProps {
     gutter?: number;
 }
 
+interface IGutter {
+    left?: string;
+    right?: string;
+    bottom?: string;
+    top?: string;
+}
+
 /**
  * @class ContentRow
  * @augments {React.Component}
@@ -18,39 +25,24 @@ export class ImageContainer extends React.Component<IImageContainerProps, {}> {
 
     public render(): React.ReactElement<{}> {
 
-        const contextTypes = {
-            a: React.PropTypes.string
-        };
+        let ratioadjustment: number = (( this.props.height / this.props.width ) * 100);
 
-        const childContextTypes = {
-            b: React.PropTypes.string
-        };
-
-        let getChildContext = function getChildContext() {
-            return {
-                b: this.props.b
-            };
-        };
-
-        let ratioadjustment = (( this.props.height / this.props.width ) * 100);
-        let gutter = this.props.gutter ? {
+        let gutterstyle: IGutter = this.props.gutter ? {
             'left': this.props.gutter / 2 + 'px',
             'right': this.props.gutter / 2 + 'px',
             'bottom': this.props.gutter / 2 + 'px',
             'top': this.props.gutter / 2 + 'px'
         } : {};
 
-        const containernames = 'image-container';
+        const containernames: string = 'image-container';
 
         return (
             <div className={containernames}>
                 <div className='background-ratio-adjustment' style={{ 'paddingTop':ratioadjustment + '%' }}></div>
-                <div className='background-image-container' style={gutter}>
-                    <div className='gutter-spacing' /*style={ gutter }*/>
-                        <div className='background-image' style={{ 'backgroundImage':'url(' + this.props.url +')' }}>
+                <div className='background-image-container' style={gutterstyle}>
+                    <div className='gutter-spacing' /*style={ gutter }*/ >
+                        <div className='background-image' style={{ 'backgroundImage':'url(' + this.props.url + ')' }}>
                             {this.props.width} x {this.props.height}
-                            {this.context.a}
-                            {this.context.b}
                         </div>
                     </div>
                 </div>

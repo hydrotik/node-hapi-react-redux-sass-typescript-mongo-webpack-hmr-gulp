@@ -16,7 +16,7 @@ export class ColumnContainer extends React.Component<IColumnContainerProps, {}> 
 
     public render(): React.ReactElement<{}> {
         return (
-            <div className="columncontainer">
+            <div className='columncontainer'>
                 {this.props.children}
             </div>
         );

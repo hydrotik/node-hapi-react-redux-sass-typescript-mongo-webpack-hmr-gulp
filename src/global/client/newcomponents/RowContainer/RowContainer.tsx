@@ -14,7 +14,7 @@ interface IRowContainerProps {
 export class RowContainer extends React.Component<IRowContainerProps, {}> {
     public render(): React.ReactElement<{}> {
         return (
-            <div className="rowcontainer">
+            <div className='rowcontainer'>
                 {this.props.children}
             </div>
         );

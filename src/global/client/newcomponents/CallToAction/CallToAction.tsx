@@ -26,11 +26,11 @@ export class CallToAction extends React.Component<ICallToActionProps, {}> {
     }
 
     public render(): React.ReactElement<{}> {
-        const containernames = 'call-to-action';
-        const ctacontainer = 'cta-container';
-        const button = 'cta-button';
-        const hitArea = 'hit-area';
-        const actionAll = (
+        const containernames: string = 'call-to-action';
+        const ctacontainer: string = 'cta-container';
+        const button: string = 'cta-button';
+        const hitArea: string = 'hit-area';
+        const actionAll: React.ReactElement<{}> = (
             <div className={ctacontainer}>
                 <a className={hitArea} href={this.props.href}>
                     <div className={containernames + ' ' + this.props.position + ' ' + this.props.color}>
@@ -40,7 +40,7 @@ export class CallToAction extends React.Component<ICallToActionProps, {}> {
                 </a>
             </div>
         );
-        const actionLink = (
+        const actionLink: React.ReactElement<{}> = (
             <div className={ctacontainer}>
                 <div className={containernames + ' ' + this.props.position + ' ' + this.props.color}>
                     <a href={this.props.href} className={button} target={this.props.target}>{this.props.label}</a><br />

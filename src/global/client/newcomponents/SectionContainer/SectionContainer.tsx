@@ -25,17 +25,17 @@ export class SectionContainer extends React.Component<ISectionContainerProps, {}
 
     public render(): React.ReactElement<{}> {
 
-        let gutter:any = this.props.gutter ?
-            {'marginBottom': this.props.gutter + this.props.gutterBottom + 'px','marginTop': this.props.gutter / 2 + 'px'} :
+        let gutter: any = this.props.gutter ?
+            {'marginBottom': this.props.gutter + this.props.gutterBottom + 'px', 'marginTop': this.props.gutter / 2 + 'px'} :
             {'marginBottom': this.props.gutterBottom + 'px'};
-        let width:any = this.props.fullWidth ?
+        let width: any = this.props.fullWidth ?
             {'maxWidth': '100%'} :
-            {'maxWidth': 960 + this.props.gutter+ 'px'};
+            {'maxWidth': 960 + this.props.gutter + 'px'};
 
         gutter = lodash.assign({}, gutter, width);
 
         return (
-            <div style={gutter} className="section-container">
+            <div style={gutter} className='section-container'>
                 {this.props.children}
             </div>
         );
