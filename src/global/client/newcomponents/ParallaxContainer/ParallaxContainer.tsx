@@ -19,6 +19,11 @@ export interface IParallaxContainerProps {
  */
 export class ParallaxContainer extends React.Component<IParallaxContainerProps, {}> {
 
+    public constructor(props: IParallaxContainerProps) {
+        super(props);
+
+    }
+
     public render(): React.ReactElement<{}> {
 
         const contextTypes = {
