@@ -76,7 +76,7 @@ function select(state: { editorialContent: IEditorialReducer; }): IAppState {
 @connect(select)
 export class App extends React.Component<IAppProps, IAppState> {
 
-    public constructor(props: any) {
+    public constructor(props: IAppProps) {
         super(props);
     }
 

@@ -1,22 +1,29 @@
+/// <reference path="../../../../../typings/tsd.d.ts" />
+
+import * as React from 'react';
 import './_CallToAction.scss';
-import React from 'react';
 
-const { Component, PropTypes } = React;
-
-const propTypes = {
-    position: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    color: PropTypes.string,
-    clickAreaAll: PropTypes.bool
-};
-
-const displayName = 'CallToAction';
+interface ICallToActionProps {
+    position?: string;
+    href?: string;
+    target?: string;
+    description?: string;
+    label?: string;
+    color?: string;
+    clickAreaAll?: boolean;
+}
 
 /**
  * @class CallToAction
  * @augments {React.Component}
  */
-export default class CallToAction extends Component {
+export class CallToAction extends React.Component<ICallToActionProps, {}> {
+
+    public constructor(props: ICallToActionProps) {
+        super(props);
+
+        this.props = { position: 'center middle', color: 'light', label: 'Shop Now', clickAreaAll: false };
+    }
 
     render() {
 
@@ -43,10 +50,6 @@ export default class CallToAction extends Component {
             </div>
         );
 
-        return this.props.clickAreaAll ? ( actionAll ) : ( actionLink );
+        return this.props.clickAreaAll ? (actionAll) : (actionLink);
     }
 }
-
-CallToAction.displayName = displayName;
-CallToAction.propTypes = propTypes;
-CallToAction.defaultProps = {position: 'center middle', color: 'light', label: 'Shop Now', clickAreaAll: false};
