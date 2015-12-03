@@ -1,28 +1,25 @@
+/// <reference path="../../../../../typings/tsd.d.ts" />
+
 import './_ParallaxContainer.scss';
 import Parallax from 'react-parallax';
 import React from 'react';
 
 import SparkScroll from 'react-spark-scroll';
 
-const { Component, PropTypes } = React;
-
-const propTypes = {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired,
-    gutter: PropTypes.number
-};
-
-const displayName = 'ParallaxContainer';
+export interface IParallaxContainerProps {
+    width: number;
+    height: number;
+    url: string;
+    gutter?: number;
+}
 
 /**
- * @class ParallaxContainer
+ * @class ContentRow
  * @augments {React.Component}
  */
+export class ParallaxContainer extends React.Component<IParallaxContainerProps, {}> {
 
-export default class ParallaxContainer extends Component {
-
-    render() {
+    public render(): React.ReactElement<{}> {
 
         const contextTypes = {
             a: React.PropTypes.string
@@ -63,8 +60,3 @@ export default class ParallaxContainer extends Component {
         );
     }
 }
-
-ParallaxContainer.displayName = displayName;
-ParallaxContainer.propTypes = propTypes;
-ParallaxContainer.defaultProps = {gutter: 0};
-
