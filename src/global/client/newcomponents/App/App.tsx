@@ -1,42 +1,116 @@
+/// <reference path='../../../../../typings/tsd.d.ts' />
+/* tslint:disable:no-unused-variable */
+import * as React from 'react';
+import { map } from 'lodash';
 import './_App.scss';
+import { Header } from '../../components/Header/Header';
+import { Carousel } from '../../components/Carousel/Carousel';
+import { RowContainer } from '../RowContainer/RowContainer';
+import { ColumnContainer } from '../ColumnContainer/ColumnContainer';
+import { ContentRow } from '../ContentRow/ContentRow';
+import { CallToAction } from '../CallToAction/CallToAction';
 
-import React, { Component } from 'react';
-//import AppActions from '../../actions/AppActions';
-//import SlidesStore from '../../stores/SlidesStore';
-import ReactPicture from 'react-picture';
+import * as ReactPicture from 'react-picture';
+const Img: any = ReactPicture.BaseImage;
+
+import { Footer } from '../../components/Footer/Footer';
+
+import { connect } from 'react-redux';
+import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions';
+import { IEditorialReducer } from '../../reducers/reducers';
+
+import * as Scroll from 'react-scroll';
+
+import * as cx from 'classnames';
+import { Easer } from 'functional-easing';
+import { Track, TrackedDiv, TrackDocument } from 'react-track';
+import { tween, combine } from 'react-imation';
+import { topTop,
+    topBottom,
+    centerCenter,
+    topCenter,
+    bottomBottom,
+    bottomTop,
+    getDocumentRect,
+    getDocumentElement,
+    calculateScrollY } from 'react-track/lib/tracking-formulas';
+import { rgb, rgba, scale, rotate,
+px, percent, translate3d } from 'react-imation/tween-value-factories';
+
+const easeOutBounce: any = new Easer().using('out-bounce');
 
 
-/* App Components */
-import Header from '../Header/Header';
-import CallToAction from '../CallToAction/CallToAction';
-import Carousel from '../Carousel/Carousel';
-import ColumnContainer from '../ColumnContainer/ColumnContainer';
-import ImageContainer from '../ImageContainer/ImageContainer';
-//import ParallaxContainer from '../ParallaxContainer/ParallaxContainer';
-import ContentRow from '../ContentRow/ContentRow';
-import Footer from '../Footer/Footer';
-import RowContainer from '../RowContainer/RowContainer';
 import SectionContainer from '../SectionContainer/SectionContainer';
+import ImageContainer from '../ImageContainer/ImageContainer';
 
-const Img = ReactPicture.BaseImage;
+const Link: any = Scroll.Link;
+const Element: any = Scroll.Element;
 
-//import { Provider } from 'react-redux';
+interface IAppProps {
+    dispatch?: (func: any) => void;
+    isFetching?: boolean;
+    lastUpdated?: number;
+    editorial?: any;
+    store?: any;
+}
 
-//import configureStore from '../../stores/configureStore.es6';
+interface IAppState {
+    editorial?: any;
+    isFetching?: boolean;
+    lastUpdated?: number;
+}
 
-//const store = configureStore();
+function select(state: { editorialContent: IEditorialReducer; }): IAppState {
+    const { editorialContent }: { editorialContent: IEditorialReducer; } = state;
+    const {
+        isFetching,
+        lastUpdated,
+        editorial
+    }: IEditorialReducer = editorialContent;
 
-const displayName = 'App';
+    return {
+        editorial,
+        isFetching,
+        lastUpdated
+    };
+}
 
-class App extends Component {
+@connect(select)
+export class App extends React.Component<IAppProps, IAppState> {
 
-    componentDidMount() {
+    public constructor(props: any) {
+        super(props);
     }
 
-    componentWillUnmount() {
+    // fat arrow function for maintaining scope for accessing this.props
+    // non performant to pass scrollTop to state.
+    public handleScroll: any = (event: any) => {
+        let scrollTop: number = event.srcElement.body.scrollTop,
+            itemTranslate: number = Math.min(0, scrollTop / -1);
+        // const {dispatch}: IApp = this.props;
+        // dispatch(onScroll(itemTranslate));
+        console.log(itemTranslate);
+    };
+
+    public componentDidMount(): void {
+        const {dispatch}: IAppProps = this.props;
+        dispatch(fetchContentIfNeeded(EDITORIAL));
+
+        // if (ExecutionEnvironment.canUseDOM) {
+        // window.addEventListener('scroll', this.handleScroll);
+        // }
+
+        // window.addEventListener('scroll', (event: any) => {
+        //    this.setState({ rect: document.documentElement.getBoundingClientRect() });
+        // });
     }
 
-    render() {
+    public componentWillUnmount(): void {
+        // window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    public render(): React.ReactElement<{}> {
+        return (
 
         let gutter = 20;
 
@@ -337,8 +411,24 @@ class App extends Component {
             </div>
     );
     }
+
+    private renderEditorialRowContainer(item: any, i: number): React.ReactElement<{}> {
+        let columns: any = item;
+        return (<RowContainer key={i} columns={columns} />);
+    }
+
+    private transformPrefixHelper(f: string): any {
+        let output: Object = {};
+        let prefixes: string[] = [
+            '',
+            '-webkit-',
+            '-ms-'
+        ];
+
+        for (var i: number = 0; i < prefixes.length; i = i + 1) {
+            output[prefixes[i] + 'transform'] = f;
+        }
+        return output;
+    }
+    /* tslint:enable:no-unused-variable */
 }
-
-App.displayName = displayName;
-
-export default App;
