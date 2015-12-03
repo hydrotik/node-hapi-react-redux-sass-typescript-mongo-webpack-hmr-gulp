@@ -3,7 +3,7 @@
 import * as React from 'react';
 import './_CallToAction.scss';
 
-interface ICallToAction {
+interface ICallToActionProps {
     position?: string;
     href?: string;
     target?: string;
@@ -14,7 +14,7 @@ interface ICallToAction {
  * @class CallToAction
  * @augments {React.Component}
  */
-export class CallToAction extends React.Component<ICallToAction, {}> {
+export class CallToAction extends React.Component<ICallToActionProps, {}> {
 
     public render(): React.ReactElement<{}> {
 

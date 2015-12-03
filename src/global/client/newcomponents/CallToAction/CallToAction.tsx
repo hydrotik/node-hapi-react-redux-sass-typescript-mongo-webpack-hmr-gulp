@@ -25,8 +25,7 @@ export class CallToAction extends React.Component<ICallToActionProps, {}> {
         this.props = { position: 'center middle', color: 'light', label: 'Shop Now', clickAreaAll: false };
     }
 
-    render() {
-
+    public render(): React.ReactElement<{}> {
         const containernames = 'call-to-action';
         const ctacontainer = 'cta-container';
         const button = 'cta-button';

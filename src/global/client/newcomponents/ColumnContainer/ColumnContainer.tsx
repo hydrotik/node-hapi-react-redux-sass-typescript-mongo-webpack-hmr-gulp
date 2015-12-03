@@ -1,20 +1,20 @@
+/// <reference path="../../../../../typings/tsd.d.ts" />
+
+import * as React from 'react';
+
 import './_ColumnContainer.scss';
-import React from 'react';
 
-const { Component } = React;
-
-const displayName = 'ColumnContainer';
-
-const propTypes = {
-    children: React.PropTypes.node
-};
+interface IColumnContainerProps {
+    children?: Function;
+}
 
 /**
- * @class ColumnContainer
+ * @class CarouselItem
  * @augments {React.Component}
  */
-export default class ColumnContainer extends Component {
-    render() {
+export class ColumnContainer extends React.Component<IColumnContainerProps, {}> {
+
+    public render(): React.ReactElement<{}> {
         return (
             <div className="columncontainer">
                 {this.props.children}
@@ -22,6 +22,3 @@ export default class ColumnContainer extends Component {
         );
     }
 }
-
-ColumnContainer.displayName = displayName;
-ColumnContainer.propTypes = propTypes;
