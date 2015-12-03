@@ -5,6 +5,8 @@ import './_RowContainer.scss';
 
 interface IRowContainerProps {
     children?: any;
+    key?: number;
+    columns?: number;
 }
 
 /**

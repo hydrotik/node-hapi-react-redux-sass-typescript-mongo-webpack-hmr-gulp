@@ -113,7 +113,7 @@ export class App extends React.Component<IAppProps, IAppState> {
         return (
                 <div className = 'app'>
                 <Header />
-                {/*<Carousel store={store} />*/}
+                <Carousel />
                 <SectionContainer
             { ... {
                 fullWidth: true,
@@ -145,6 +145,7 @@ export class App extends React.Component<IAppProps, IAppState> {
                     url: 'http://unsplash.it/2000/3000?random=5'
             } } />
         <CallToAction
+            label='Shop'
             position='left middle'
             href='http://www.google.com'
             target='_blank'
@@ -206,7 +207,7 @@ export class App extends React.Component<IAppProps, IAppState> {
                     url: 'http://unsplash.it/2000/3000?random=4'
             } } />
         <CallToAction
-            llabel='Shop Now'
+            label='Shop Now'
             position='bottom center'
             href='http://www.google.com'
             target='_blank'

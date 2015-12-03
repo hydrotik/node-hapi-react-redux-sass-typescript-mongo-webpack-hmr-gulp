@@ -6,9 +6,9 @@ import * as lodash from 'lodash';
 
 interface ISectionContainerProps {
     children?: any;
-    fullWidth: boolean;
-    gutter: number;
-    gutterBottom: number;
+    fullWidth?: boolean;
+    gutter?: number;
+    gutterBottom?: number;
 }
 
 /**
