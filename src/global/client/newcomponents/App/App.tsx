@@ -116,7 +116,7 @@ export class App extends React.Component<IAppProps, IAppState> {
                 <Carousel />
                 <SectionContainer
             { ... {
-                fullWidth: true,
+                fullWidth: false,
                     gutter:20
             } }>
         <RowContainer>
