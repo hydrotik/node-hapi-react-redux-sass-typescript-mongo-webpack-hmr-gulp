@@ -119,6 +119,7 @@
     "html-loader": "^0.3.0",
     "html-webpack-plugin": "^1.6.2",
     "inert": "^3.1.0",
+    "isparta-loader": "^2.0.0",
     "jscs": "^2.5.0",
     "jsdoc": "^3.3.3",
     "jsdoc-babel": "^0.1.0",
