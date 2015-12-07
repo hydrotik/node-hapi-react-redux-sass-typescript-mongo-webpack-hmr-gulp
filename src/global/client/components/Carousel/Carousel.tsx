@@ -9,14 +9,14 @@ import { map } from 'lodash';
 
 import * as Slick from 'react-slick';
 
-import { CarouselItem } from './CarouselItem';
+import { CarouselItem } from './CarouselItem.tsx';
 
 import '../../../../../node_modules/slick-carousel/slick/slick.scss';
 import '../../../../../node_modules/slick-carousel/slick/slick-theme.scss';
 
 import { connect } from 'react-redux';
-import { fetchContentIfNeeded, CAROUSEL } from '../../actions/actions';
-import { ICarouselReducer } from '../../reducers/reducers';
+import { fetchContentIfNeeded, CAROUSEL } from '../../actions/actions.ts';
+import { ICarouselReducer } from '../../reducers/reducers.ts';
 
 const Slider: any = Slick.Slider;
 

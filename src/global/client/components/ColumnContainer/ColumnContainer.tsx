@@ -2,7 +2,7 @@
 /// <reference path="../../../../../typings/react-picture/react-picture.d.ts" />
 
 import * as React from 'react';
-import { ContentRow, IContentRowProps } from '../ContentRow/ContentRow';
+import { ContentRow, IContentRowProps } from '../ContentRow/ContentRow.tsx';
 import { map } from 'lodash';
 
 import './_ColumnContainer.scss';

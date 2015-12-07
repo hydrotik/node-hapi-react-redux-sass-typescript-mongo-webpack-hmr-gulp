@@ -1,7 +1,7 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
 import * as React from 'react';
-import { CallToAction } from '../CallToAction/CallToAction';
+import { CallToAction } from '../CallToAction/CallToAction.tsx';
 import * as ReactPicture from 'react-picture';
 
 import './_ContentRow.scss';

@@ -3,20 +3,20 @@
 import * as React from 'react';
 import { map } from 'lodash';
 import './_App.scss';
-import { Header } from '../Header/Header';
-import { Carousel } from '../Carousel/Carousel';
-import { RowContainer } from '../RowContainer/RowContainer';
-import { ColumnContainer } from '../ColumnContainer/ColumnContainer';
-import { ContentRow } from '../ContentRow/ContentRow';
-import { CallToAction } from '../CallToAction/CallToAction';
+import { Header } from '../Header/Header.tsx';
+import { Carousel } from '../Carousel/Carousel.tsx';
+import { RowContainer } from '../RowContainer/RowContainer.tsx';
+import { ColumnContainer } from '../ColumnContainer/ColumnContainer.tsx';
+import { ContentRow } from '../ContentRow/ContentRow.tsx';
+import { CallToAction } from '../CallToAction/CallToAction.tsx';
 import * as ReactPicture from 'react-picture';
 const Img: any = ReactPicture.BaseImage;
 
-import { Footer } from '../Footer/Footer';
+import { Footer } from '../Footer/Footer.tsx';
 
 import { connect } from 'react-redux';
-import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions';
-import { IEditorialReducer } from '../../reducers/reducers';
+import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions.ts';
+import { IEditorialReducer } from '../../reducers/reducers.ts';
 
 import * as Scroll from 'react-scroll';
 

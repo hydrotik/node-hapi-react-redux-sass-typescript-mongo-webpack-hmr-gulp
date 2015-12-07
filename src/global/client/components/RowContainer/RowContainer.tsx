@@ -1,8 +1,8 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
 import * as React from 'react';
-import { ColumnContainer } from '../ColumnContainer/ColumnContainer';
-import { ContentRow } from '../ContentRow/ContentRow';
+import { ColumnContainer } from '../ColumnContainer/ColumnContainer.tsx';
+import { ContentRow } from '../ContentRow/ContentRow.tsx';
 import { map } from 'lodash';
 
 import './_RowContainer.scss';
