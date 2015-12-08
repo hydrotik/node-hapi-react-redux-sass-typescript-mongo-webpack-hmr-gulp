@@ -1,15 +1,15 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
 import './_ParallaxContainer.scss';
-import Parallax from 'react-parallax';
+// import Parallax from 'react-parallax';
 import React from 'react';
 
-import SparkScroll from 'react-spark-scroll';
+// import SparkScroll from 'react-spark-scroll';
 
 export interface IParallaxContainerProps {
-    width: number;
-    height: number;
-    url: string;
+    width?: number;
+    height?: number;
+    url?: string;
     gutter?: number;
 }
 
@@ -25,7 +25,7 @@ export class ParallaxContainer extends React.Component<IParallaxContainerProps, 
     }
 
     public render(): React.ReactElement<{}> {
-
+        /*
         const contextTypes = {
             a: React.PropTypes.string
         };
@@ -51,16 +51,15 @@ export class ParallaxContainer extends React.Component<IParallaxContainerProps, 
         } : {};
         //let gutter3 = this.props.gutterBottom;
 
-        const containernames = 'parallax-container';
-
+        */
         return (
-            <div className={containernames}>
+            <div className='parallax-container'> {/*}
                 <div className='background-ratio-adjustment' style={{ 'paddingTop':ratioadjustment + '%' }}></div>
                 <div className='background-image-container' style={gutter2}>
-                    <div className='gutter-spacing' /*style={ gutter }*/>
+                    <div className='gutter-spacing' style={ gutter }>
                         <div className='background-image' style={{ 'backgroundImage':'url(' + this.props.url +')' }}></div>
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     }
