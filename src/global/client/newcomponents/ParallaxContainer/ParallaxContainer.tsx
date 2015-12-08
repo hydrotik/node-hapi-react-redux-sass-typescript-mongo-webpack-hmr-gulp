@@ -2,7 +2,7 @@
 
 import './_ParallaxContainer.scss';
 // import Parallax from 'react-parallax';
-import React from 'react';
+import * as React from 'react';
 
 // import SparkScroll from 'react-spark-scroll';
 

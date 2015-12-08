@@ -88,7 +88,11 @@ module.exports = {
     ],
     resolve: {
         extensions: ['', '.js', '.json', '.jsx', '.ts', '.tsx'],
-        root: ['${__dirname}/src/global/client/']
+        root: ['${__dirname}/src/global/client/'],
+        fallback: path.join(__dirname, "node_modules")
+    },
+    resolveLoader: {
+        root: path.join(__dirname, "node_modules")
     },
     module: {
         loaders: [{
