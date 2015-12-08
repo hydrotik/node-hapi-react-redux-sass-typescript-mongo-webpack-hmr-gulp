@@ -13,7 +13,7 @@ var baseConfiguration = {
                 timeout: 15000
             }
         },
-        // Enable color output
+        
         colors: true,
 
         coverageReporter: {

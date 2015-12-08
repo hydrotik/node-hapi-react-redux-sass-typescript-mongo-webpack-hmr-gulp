@@ -3,18 +3,18 @@
 import * as React from 'react';
 import { map } from 'lodash';
 import './_App.scss';
-import { Header } from '../../components/Header/Header';
-import { Carousel } from '../../components/Carousel/Carousel';
-import { RowContainer } from '../RowContainer/RowContainer';
-import { ColumnContainer } from '../ColumnContainer/ColumnContainer';
-import { ContentRow } from '../ContentRow/ContentRow';
-import { CallToAction } from '../CallToAction/CallToAction';
+import { Header } from '../../components/Header/Header.tsx';
+import { Carousel } from '../../components/Carousel/Carousel.tsx';
+import { RowContainer } from '../RowContainer/RowContainer.tsx';
+import { ColumnContainer } from '../ColumnContainer/ColumnContainer.tsx';
+import { ContentRow } from '../ContentRow/ContentRow.tsx';
+import { CallToAction } from '../CallToAction/CallToAction.tsx';
 
-import { Footer } from '../../components/Footer/Footer';
+import { Footer } from '../../components/Footer/Footer.tsx';
 
 import { connect } from 'react-redux';
-import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions';
-import { IEditorialReducer } from '../../reducers/reducers';
+import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions.ts';
+import { IEditorialReducer } from '../../reducers/reducers.ts';
 
 import * as Scroll from 'react-scroll';
 
@@ -37,8 +37,8 @@ px, percent, translate3d } from 'react-imation/tween-value-factories';
 const easeOutBounce: any = new Easer().using('out-bounce');
 
 
-import { SectionContainer } from '../SectionContainer/SectionContainer';
-import { ImageContainer } from '../ImageContainer/ImageContainer';
+import { SectionContainer } from '../SectionContainer/SectionContainer.tsx';
+import { ImageContainer } from '../ImageContainer/ImageContainer.tsx';
 
 const Link: any = Scroll.Link;
 const Element: any = Scroll.Element;

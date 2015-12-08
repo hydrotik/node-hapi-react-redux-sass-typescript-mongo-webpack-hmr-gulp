@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { App } from './newcomponents/app/App.tsx';
+import { App } from './components/app/App.tsx';
 
 import './scss/app.scss';
 

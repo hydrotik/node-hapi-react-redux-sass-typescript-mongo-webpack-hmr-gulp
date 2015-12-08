@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">91.3% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>21/23</span>
+        <span class='fraction'>32/32</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">75% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>4/4</span>
+        <span class='fraction'>5/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">90.91% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>20/22</span>
+        <span class='fraction'>31/31</span>
       </div>
     </div>
   </div>
@@ -87,7 +87,29 @@
 42
 43
 44
-45</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -113,7 +135,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -122,13 +156,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
@@ -149,30 +193,52 @@ var _Dom = require('../../../../../../test/utils/Dom.es6');
 &nbsp;
 var _App = require('../App.tsx');
 &nbsp;
-var _App2 = _interopRequireDefault(_App);
-&nbsp;
 var _lodash = require('lodash');
 &nbsp;
-var _App3 = require('./fixtures/App.json');
+var _App2 = require('./fixtures/App.json');
 &nbsp;
-var _App4 = _interopRequireDefault(_App3);
+var _App3 = _interopRequireDefault(_App2);
+&nbsp;
+var _redux = require('redux');
+&nbsp;
+var _reactRedux = require('react-redux');
+&nbsp;
+var _reducers = require('../../../reducers/reducers.ts');
+&nbsp;
+var _reduxLogger = require('../../../utils/redux-logger.ts');
+&nbsp;
+var _reduxThunk = require('../../../utils/redux-thunk.ts');
 &nbsp;
 function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? <span class="branch-0 cbranch-no" title="branch not covered" >obj </span>: { default: obj }; }
 &nbsp;
+var logger = (0, _reduxLogger.createLogger)();
+&nbsp;
 var renderIntoDocument = _reactAddonsTestUtils2.default.renderIntoDocument;
+&nbsp;
+var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk.thunkMiddleware, logger)(_redux.createStore);
+&nbsp;
+function configureStore() {
+    return createStoreWithMiddleware(_reducers.rootReducer);
+}
+&nbsp;
+var store = configureStore();
 &nbsp;
 describe('AppTest', function () {
     var component = undefined,
         fixture = undefined;
 &nbsp;
     before(function () {
-        fixture = (0, _lodash.clone)(_App4.default);
+        fixture = (0, _lodash.clone)(_App3.default);
     });
 &nbsp;
-    it('should render with `editorial-template-test` class names by default', function () {
-        component = renderIntoDocument(_react2.default.createElement(_App2.default, fixture));
-<span class="cstat-no" title="statement not covered" >        var element = _reactDom2.default.findDOMNode(component);</span>
-<span class="cstat-no" title="statement not covered" >        expect((0, _Dom.hasClass)(element, 'editorial-template-test')).to.be.true;</span>
+    it('should render with `app` class names by default', function () {
+        component = renderIntoDocument(_react2.default.createElement(
+            _reactRedux.Provider,
+            { store: store },
+            _react2.default.createElement(_App.App, null)
+        ));
+        var element = _reactDom2.default.findDOMNode(component);
+        expect((0, _Dom.hasClass)(element, 'app')).to.be.true;
     });
 });
 &nbsp;</pre></td></tr>
@@ -181,7 +247,7 @@ describe('AppTest', function () {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 08 2015 00:32:34 GMT-0500 (EST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 08 2015 12:51:43 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../../../../../prettify.js"></script>
