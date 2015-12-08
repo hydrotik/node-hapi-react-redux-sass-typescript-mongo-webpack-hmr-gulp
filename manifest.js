@@ -59,6 +59,8 @@ var manifest = {
             autoIndex: Config.get('/hapiMongoModels/autoIndex')
         },
         */
+        // BUILD
+        './global/server/misc/build': {},
         // ASSETS
         './global/server/misc/assets': {},
         // ROUTES

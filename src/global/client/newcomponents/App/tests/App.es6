@@ -4,11 +4,8 @@ import ReactTestUtils from 'react-addons-test-utils';
 
 import { hasClass } from '../../../../../../test/utils/Dom.es6';
 import { App } from '../App.tsx';
-import { clone } from 'lodash';
 
-import MockResponse from './fixtures/App.json';
-
-import { Store, createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware} from 'redux';
 import { Provider } from 'react-redux';
 
 import { rootReducer } from '../../../reducers/reducers.ts';
@@ -29,11 +26,7 @@ function configureStore() {
 const store = configureStore();
 
 describe('AppTest', () => {
-    let component, fixture;
-
-    before(() => {
-        fixture = clone(MockResponse);
-    });
+    let component;
 
     it('should render with `app` class names by default', () => {
         component = renderIntoDocument(
