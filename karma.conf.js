@@ -4,10 +4,48 @@ var webpack = require('webpack');
 var baseResolve = require('./webpack.config.client-hot').resolve;
 
 
+var baseConfiguration = {
+        browsers: ['PhantomJS'],
+        client: {
+            mocha: {
+                ui: 'bdd',
+                // To avoid TIMEOUT errors in Windows.
+                timeout: 15000
+            }
+        },
+        // Enable color output
+        colors: true,
 
-module.exports = function(config) {
-    config.set({
-        // ... normal karma configuration
+        coverageReporter: {
+            reporters: [{
+                type: 'html',
+                dir: 'build/reports/coverage'
+            }],
+            check: {
+                global: {
+                    statements: 50,
+                    branches: 50,
+                    functions: 50,
+                    lines: 50,
+                    excludes: []
+                },
+                each: {
+                    statements: 50,
+                    branches: 50,
+                    functions: 50,
+                    lines: 50,
+                    excludes: [
+                    ],
+                    overrides: {}
+                }
+            },
+            watermarks: {
+                statements: [50, 90],
+                functions: [50, 85],
+                branches: [50, 60],
+                lines: [50, 90]
+            }
+        },
 
         files: [
             // all files ending in "_test"
@@ -19,6 +57,12 @@ module.exports = function(config) {
             // add webpack as preprocessor
             './src/global/client/**/tests/**/*.es6': ['webpack']
         },
+
+        frameworks: ['mocha', 'chai-sinon'],
+
+        singleRun: true,
+
+        reporters: ['dots', 'coverage'],
 
         webpack: {
             // karma watches the test entry points
@@ -60,14 +104,26 @@ module.exports = function(config) {
         },
 
         webpackMiddleware: {
-            // webpack-dev-middleware configuration
-            // i. e.
-            noInfo: false
+            noInfo: true
         },
 
         plugins: [
-            require("karma-webpack")
-        ]
+            require('karma-chrome-launcher'),
+            require('karma-coverage'),
+            require('karma-mocha'),
+            require('karma-notify-reporter'),
+            require('karma-phantomjs-launcher'),
+            require('karma-chai-sinon'),
+            require('karma-webpack')
+        ],
 
-    });
+        browserDisconnectTimeout: 10000,    // Default 2000
+        browserDisconnectTolerance: 1,      // Default 0
+        browserNoActivityTimeout: 60000     // Default 10000
 };
+
+module.exports = function (config) {
+    config.set(baseConfiguration);
+};
+
+module.exports.baseConfiguration = baseConfiguration;

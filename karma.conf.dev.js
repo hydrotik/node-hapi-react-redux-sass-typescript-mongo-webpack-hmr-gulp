@@ -2,7 +2,7 @@ var assign = require('lodash').assign;
 var baseConfiguration = require('./karma.conf').baseConfiguration;
 
 var devConfiguration = {
-    browsers: ['Safari'],
+    browsers: ['PhantomJS2'],
     plugins: ['karma-phantomjs2-launcher'].concat(baseConfiguration.plugins),
     reporters: ['progress', 'notify', 'coverage'],
     singleRun: false

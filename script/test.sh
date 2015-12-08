@@ -9,4 +9,8 @@ source "$IMPORT_PATH/helpers.sh"
 # Remove previously generated artifacts.
 #run "rimraf $COVERAGE_OUTPUT"
 
-run "env NODE_ENV=test karma start --single-run"
+# Monitor source files and run unit tests when files are modified.
+run "env NODE_ENV=test karma start karma.conf.dev.js" &
+KARMA_PID=$!
+
+wait $KARMA_PID

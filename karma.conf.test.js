@@ -3,7 +3,7 @@ var baseConfiguration = {
     basePath: '',
     // Start these browsers
     // Available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Safari'], //['PhantomJS']
+    browsers: ['PhantomJS'],
     client: {
         mocha: {
             ui: 'bdd',
