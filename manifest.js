@@ -44,6 +44,7 @@ var manifest = {
             path: "./src/global/server/views/"
         },
         // Models
+        /*
         'hapi-mongo-models': {
             mongodb: Config.get('/hapiMongoModels/mongodb'),
             models: {
@@ -57,6 +58,7 @@ var manifest = {
             },
             autoIndex: Config.get('/hapiMongoModels/autoIndex')
         },
+        */
         // ASSETS
         './global/server/misc/assets': {},
         // ROUTES
