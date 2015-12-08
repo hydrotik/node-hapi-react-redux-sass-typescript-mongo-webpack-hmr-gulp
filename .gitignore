@@ -13,7 +13,7 @@ npm-cache
 
 # Compiled Files #
 ##################
-dist
+build
 devserver/public/
 
 # OS generated files #
@@ -35,9 +35,6 @@ Thumbs.db
 # --------------------
 data/
 
-
-
-node_modules/*
 public/*
 test/artifacts/*
 /config.js
