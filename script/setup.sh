@@ -121,7 +121,20 @@ else
     echo "tsd found $(echo_if 1)"
 fi
 
+# Install NCU Definition Utility globally if not already installed.
+if [ ! -x "$(command -v ncu)" ]; then
+    echo "WARNING: ncu command not found, installing globally. $(echo_if 0)"
+    run "sudo npm install -g npm-check-updates" &
+    NCU_PID=$!
+
+    wait $NCU_PID
+else
+    echo "ncu found $(echo_if 1)"
+fi
+
 run "npm install"
+
+run "npm link"
 
 run "npm run setup-config" &
 SETUP_PID=$!
