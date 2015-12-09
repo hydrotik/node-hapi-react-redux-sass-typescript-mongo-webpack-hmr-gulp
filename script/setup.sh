@@ -82,23 +82,16 @@ NPM_VERSION="$(npm --version | sed 's/[^0-9.]*//g')"
 DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #cd "${DIR}"
 
-echo "node:     ${NODE_VERSION} $(echo_if 1)"
-echo "npm:     ${NPM_VERSION} $(echo_if 1)"
-
-
-
-echo "node: $(vercomp ${NODE_VERSION} ${TARGET_NODE_VERSION})"
-
 #
 # Check if Node is installed and at the right version
 #
 echo "Checking for Node version ${TARGET_NODE_VERSION}"
 if [[ "$(vercomp ${NODE_VERSION} ${TARGET_NODE_VERSION})" == "2" ]]; then
-    echo "Node version does NOT meet requirements"
+    echo "Node version does NOT meet requirements $(echo_if 0)"
     echo "Please install nvm and use node ${TARGET_NODE_VERSION} or greater"
     exit 0
 else
-    echo "Node version meets requirements"
+    echo "Node version meets requirements $(echo_if 1)"
 fi
 
 #
@@ -106,11 +99,11 @@ fi
 #
 echo "Checking for NPM version ${NPM_VERION}"
 if [[ "$(vercomp ${NPM_VERSION} ${TARGET_NPM_VERSION})" == "2" ]]; then
-    echo "NPM version does NOT meet requirements"
+    echo "NPM version does NOT meet requirements $(echo_if 0)"
     echo "Please install nvm and use npm ${TARGET_NPM_VERSION} or greater"
     exit 0
 else
-    echo "NPM version meets requirements"
+    echo "NPM version meets requirements $(echo_if 1)"
 fi
 
 
@@ -121,45 +114,49 @@ run "npm prune"
 
 # Install Nodemon globally if not already installed.
 if [ ! -x "$(command -v nodemon)" ]; then
-    echo "WARNING: nodemon command not found, installing globally."
+    echo "WARNING: nodemon command not found, installing globally. $(echo_if 0)"
     run "sudo npm install -g nodemon" &
     NODEMON_PID=$!
     wait $NODEMON_PID
 else
-    echo "nodemon found"
+    echo "nodemon found $(echo_if 1)"
 fi
 
 # Install Karma globally if not already installed.
 if [ ! -x "$(command -v karma)" ]; then
-    echo "WARNING: karma-cli command not found, installing globally."
+    echo "WARNING: karma-cli command not found, installing globally. $(echo_if 0)"
     run "sudo npm install -g karma-cli" &
     KARMA_PID=$!
     wait $KARMA_PID
 else
-    echo "karma-cli found"
+    echo "karma-cli found $(echo_if 1)"
 fi
 
 # Install Typescript globally if not already installed.
 if [ ! -x "$(command -v tsc)" ]; then
-    echo "WARNING: tsc command not found, installing globally."
+    echo "WARNING: tsc command not found, installing globally. $(echo_if 0)"
     run "sudo npm install -g typescript" &
     TSC_PID=$!
     wait $TSC_PID
 else
-    echo "tsc found"
+    echo "tsc found $(echo_if 1)"
 fi
 
 # Install Typescript Definition Utility globally if not already installed.
 if [ ! -x "$(command -v tsd)" ]; then
-    echo "WARNING: tsd command not found, installing globally."
+    echo "WARNING: tsd command not found, installing globally. $(echo_if 0)"
     run "sudo npm install -g tsd" &
     TSD_PID=$!
 
     wait $TSD_PID
 else
-    echo "tsd found"
+    echo "tsd found $(echo_if 1)"
 fi
 
 run "npm install"
 
-run "npm run setup-config"
+run "npm run setup-config" &
+SETUP_PID=$!
+
+wait $SETUP_PID
+echo "SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!"
