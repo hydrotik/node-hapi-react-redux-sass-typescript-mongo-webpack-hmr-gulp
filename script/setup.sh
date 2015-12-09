@@ -23,7 +23,7 @@ if [[ $(node --version | awk '{print $2}') > ${NODE_VERSION} ]]; then
     echo "Please install nvm and use node ${NODE_VERSION} or greater"
     exit 0
 else
-    echo "Node version {print $2} meets requirements"
+    echo "Node version ${2} meets requirements"
 fi
 
 #
@@ -35,7 +35,7 @@ if [[ $(npm --version | awk '{print $2}') > ${NPM_VERSION} ]]; then
     echo "Please install nvm and use npm ${NPM_VERSION} or greater"
     exit 0
 else
-    echo "NPM version {print $2} meets requirements"
+    echo "NPM version ${2} meets requirements"
 fi
 
 
