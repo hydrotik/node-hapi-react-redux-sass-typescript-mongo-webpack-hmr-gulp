@@ -10,6 +10,8 @@
     "node": ">=4.0.0"
   },
   "scripts": {
+    "setup" : "sh ./script/setup.sh",
+    "setup-config" : "./setup.js",
     "test": "sh ./script/test.sh",
     "test-performance": "sh ./script/performance.sh",
     "test-chrometools": "sh ./script/chrometools.sh",
