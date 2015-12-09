@@ -87,7 +87,7 @@ DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Check if Node is installed and at the right version
 #
 echo "Checking for Node version ${TARGET_NODE_VERSION}"
-if [[ "$( vercomp "${NODE_VERSION} ${TARGET_NODE_VERSION}" )" == "2" ]]; then
+if [[ "$( vercomp "${NODE_VERSION} ${TARGET_NODE_VERSION}" )" == 2 || "$( vercomp "${NODE_VERSION} ${TARGET_NODE_VERSION}" )" == 0 ]]; then
     echo "Node version does NOT meet requirements $(echo_if 0)"
     echo "Please install nvm and use node ${TARGET_NODE_VERSION} or greater"
     exit 0
@@ -99,7 +99,7 @@ fi
 # Check if Node Package Manager is installed and at the right version
 #
 echo "Checking for NPM version ${NPM_VERION}"
-if [[ "$( vercomp "${NPM_VERSION} ${TARGET_NPM_VERSION}" )" == "2" ]]; then
+if [[ "$( vercomp "${NPM_VERSION} ${TARGET_NPM_VERSION}" )" == 2 || "$( vercomp "${NPM_VERSION} ${TARGET_NPM_VERSION}" )" == 0 ]]; then
     echo "NPM version does NOT meet requirements $(echo_if 0)"
     echo "Please install nvm and use npm ${TARGET_NPM_VERSION} or greater"
     exit 0
