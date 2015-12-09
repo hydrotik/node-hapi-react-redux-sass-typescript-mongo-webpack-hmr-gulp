@@ -6,36 +6,9 @@ IMPORT_PATH="${BASH_SOURCE%/*}"
 if [[ ! -d "$IMPORT_PATH" ]]; then IMPORT_PATH="$PWD"; fi
 source "$IMPORT_PATH/helpers.sh"
 
-vercomp () {
-    if [[ $1 == $2 ]]
-    then
-        return 0
-    fi
-    local IFS=.
-    local i ver1=($1) ver2=($2)
-    # fill empty fields in ver1 with zeros
-    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
-    do
-        ver1[i]=0
-    done
-    for ((i=0; i<${#ver1[@]}; i++))
-    do
-        if [[ -z ${ver2[i]} ]]
-        then
-            # fill empty fields in ver2 with zeros
-            ver2[i]=0
-        fi
-        if ((10#${ver1[i]} > 10#${ver2[i]}))
-        then
-            return 1
-        fi
-        if ((10#${ver1[i]} < 10#${ver2[i]}))
-        then
-            return 2
-        fi
-    done
-    return 0
-}
+# Save script's current directory
+DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#cd "${DIR}"
 
 ## each separate version number must be less than 3 digit wide !
 function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
@@ -77,32 +50,12 @@ TARGET_NPM_VERSION=3.3.0
 
 NODE_VERSION="$(node --version | sed 's/[^0-9.]*//g')"
 NPM_VERSION="$(npm --version | sed 's/[^0-9.]*//g')"
-echo $NODE_VERSION
-echo $NPM_VERSION
-
-if [ "$(version "$TARGET_NODE_VERSION")" -gt "$(version "$NODE_VERSION")" ]; then
-     echo "$TARGET_NODE_VERSION is greater than $NODE_VERSION !"
-else
-    echo "$TARGET_NODE_VERSION is less than $NODE_VERSION !"
-fi
-
-if [ "$(version "$TARGET_NPM_VERSION")" -gt "$(version "$NPM_VERSION")" ]; then
-     echo "$TARGET_NPM_VERSION is greater than $NPM_VERSION !"
-else
-    echo "$TARGET_NPM_VERSION is less than $NPM_VERSION !"
-fi
-
-exit 0
-
-# Save script's current directory
-DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-#cd "${DIR}"
 
 #
 # Check if Node is installed and at the right version
 #
-echo "Checking for Node version ${TARGET_NODE_VERSION}"
-if [[ "$( vercomp "${NODE_VERSION} ${TARGET_NODE_VERSION}" )" == "2" ]]; then
+echo "Checking for Node version ${TARGET_NODE_VERSION} or greater"
+if [ "$(version "$TARGET_NODE_VERSION")" -gt "$(version "$NODE_VERSION")" ]; then
     echo "Node version does NOT meet requirements $(echo_if 0)"
     echo "Please install nvm and use node ${TARGET_NODE_VERSION} or greater"
     exit 0
@@ -113,15 +66,14 @@ fi
 #
 # Check if Node Package Manager is installed and at the right version
 #
-echo "Checking for NPM version ${NPM_VERION}"
-if [[ "$( vercomp "${NPM_VERSION} ${TARGET_NPM_VERSION}" )" == "2" ]]; then
-    echo "NPM version does NOT meet requirements $(echo_if 0)"
-    echo "Please install nvm and use npm ${TARGET_NPM_VERSION} or greater"
+echo "Checking for NPM version ${TARGET_NPM_VERSION} or greater"
+if [ "$(version "$TARGET_NPM_VERSION")" -gt "$(version "$NPM_VERSION")" ]; then
+    echo "Node version does NOT meet requirements $(echo_if 0)"
+    echo "Please install nvm and use node ${TARGET_NODE_VERSION} or greater"
     exit 0
 else
     echo "NPM version ${NPM_VERSION} meets requirements $(echo_if 1)"
 fi
-
 
 run 'npm config set registry http://registry.npmjs.org/'
 
