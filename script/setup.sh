@@ -77,7 +77,8 @@ TARGET_NPM_VERSION=3.3.0
 
 NODE_VERSION="$(node --version | sed 's/[^0-9.]*//g')"
 NPM_VERSION="$(npm --version | sed 's/[^0-9.]*//g')"
-
+echo $NODE_VERSION
+echo $NPM_VERSION
 # Save script's current directory
 DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #cd "${DIR}"
