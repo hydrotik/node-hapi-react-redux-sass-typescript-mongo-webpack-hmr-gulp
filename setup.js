@@ -109,13 +109,14 @@ Async.auto({
             Fs.writeFile(configPath, configTemplate(results), done);
         });
     }],
+    /*
     setupRootUser: ['createConfig', function (done, results) {
 
         var BaseModel = require('hapi-mongo-models').BaseModel;
-        var User = require('./server/models/user');
-        var Admin = require('./server/models/admin');
-        var AdminGroup = require('./server/models/admin-group');
-        var Account = require('./server/models/account');
+        var User = require('./src/global/server/models/user');
+        var Admin = require('./src/global//server/models/admin');
+        var AdminGroup = require('./src/global//server/models/admin-group');
+        var Account = require('./src/global//server/models/account');
 
         Async.auto({
             connect: function (done) {
@@ -194,6 +195,7 @@ Async.auto({
             done(null, true);
         });
     }]
+    */
 }, function (err, results) {
 
     if (err) {
