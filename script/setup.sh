@@ -9,7 +9,6 @@ source "$IMPORT_PATH/helpers.sh"
 vercomp () {
     if [[ $1 == $2 ]]
     then
-        echo "equal"
         return 0
     fi
     local IFS=.
@@ -28,12 +27,10 @@ vercomp () {
         fi
         if ((10#${ver1[i]} > 10#${ver2[i]}))
         then
-            echo "greater"
             return 1
         fi
         if ((10#${ver1[i]} < 10#${ver2[i]}))
         then
-            echo "less than"
             return 2
         fi
     done
