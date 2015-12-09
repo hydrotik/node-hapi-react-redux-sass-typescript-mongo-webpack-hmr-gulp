@@ -91,7 +91,7 @@ if [[ "$(vercomp ${NODE_VERSION} ${TARGET_NODE_VERSION})" == "2" ]]; then
     echo "Please install nvm and use node ${TARGET_NODE_VERSION} or greater"
     exit 0
 else
-    echo "Node version meets requirements $(echo_if 1)"
+    echo "Node version ${NODE_VERSION} meets requirements $(echo_if 1)"
 fi
 
 #
@@ -103,7 +103,7 @@ if [[ "$(vercomp ${NPM_VERSION} ${TARGET_NPM_VERSION})" == "2" ]]; then
     echo "Please install nvm and use npm ${TARGET_NPM_VERSION} or greater"
     exit 0
 else
-    echo "NPM version meets requirements $(echo_if 1)"
+    echo "NPM version ${NPM_VERSION} meets requirements $(echo_if 1)"
 fi
 
 
