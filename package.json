@@ -166,7 +166,7 @@
     "tslint": "^3.0.0",
     "tslint-eslint-rules": "^0.3.0",
     "tslint-loader": "^1.0.2",
-    "typescript": "^1.8.0-dev.20151128",
+    "typescript": "^1.6.0",
     "webdriverio": "^3.3.0",
     "webdriverrtc": "^0.1.0",
     "webpack": "^1.12.3",
