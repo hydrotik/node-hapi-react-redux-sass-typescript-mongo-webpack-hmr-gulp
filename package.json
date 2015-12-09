@@ -7,8 +7,10 @@
     "doc": "docs"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=4.2.0",
+    "npm" : ">=3.3.0"
   },
+  "engineStrict": true,
   "scripts": {
     "setup" : "sh ./script/setup.sh",
     "setup-config" : "./setup.js",
