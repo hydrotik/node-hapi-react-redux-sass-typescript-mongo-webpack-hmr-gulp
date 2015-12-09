@@ -37,6 +37,9 @@ vercomp () {
     return 0
 }
 
+## each separate version number must be less than 3 digit wide !
+function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
+
 # display a message in red with a cross by it
 # example
 # echo echo_fail "No"
@@ -77,8 +80,19 @@ NPM_VERSION="$(npm --version | sed 's/[^0-9.]*//g')"
 echo $NODE_VERSION
 echo $NPM_VERSION
 
-echo "$( vercomp "${NODE_VERSION} ${TARGET_NODE_VERSION}" )"
-echo "$( vercomp "${NPM_VERSION} ${TARGET_NPM_VERSION}" )"
+if [ "$(version "$TARGET_NODE_VERSION")" -gt "$(version "$NODE_VERSION")" ]; then
+     echo "$TARGET_NODE_VERSION is greater than $NODE_VERSION !"
+else
+    echo "$TARGET_NODE_VERSION is less than $NODE_VERSION !"
+fi
+
+if [ "$(version "$TARGET_NPM_VERSION")" -gt "$(version "$NPM_VERSION")" ]; then
+     echo "$TARGET_NPM_VERSION is greater than $NPM_VERSION !"
+else
+    echo "$TARGET_NPM_VERSION is less than $NPM_VERSION !"
+fi
+
+exit 0
 
 # Save script's current directory
 DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
