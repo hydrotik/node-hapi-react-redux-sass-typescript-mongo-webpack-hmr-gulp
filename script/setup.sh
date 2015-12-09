@@ -6,7 +6,40 @@ IMPORT_PATH="${BASH_SOURCE%/*}"
 if [[ ! -d "$IMPORT_PATH" ]]; then IMPORT_PATH="$PWD"; fi
 source "$IMPORT_PATH/helpers.sh"
 
-# Install dependencies
+NODE_VERSION=4.2.0
+NPM_VERSION=3.3.0
+
+# Save script's current directory
+DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#cd "${DIR}"
+
+
+#
+# Check if Node is installed and at the right version
+#
+echo "Checking for Node version ${NODE_VERSION}"
+if [[ $(node --version | awk '{print $2}') > ${NODE_VERSION} ]]; then
+    echo "Node version does NOT meet requirements"
+    echo "Please install nvm and use node ${NODE_VERSION} or greater"
+    exit 0
+else
+    echo "Node version ${NODE_VERSION} meets requirements"
+fi
+
+#
+# Check if Node Package Manager is installed and at the right version
+#
+echo "Checking for NPM version ${NPM_VERION}"
+if [[ $(npm --version | awk '{print $2}') > ${NPM_VERSION} ]]; then
+    echo "NPM version does NOT meet requirements"
+    echo "Please install nvm and use npm ${NPM_VERSION} or greater"
+    exit 0
+else
+    echo "NPM version ${NPM_VERSION} meets requirements"
+fi
+
+
+# Clean dependencies
 run "npm prune"
 
 # Install Nodemon globally if not already installed.
