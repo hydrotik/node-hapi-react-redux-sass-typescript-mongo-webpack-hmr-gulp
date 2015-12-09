@@ -44,8 +44,8 @@ Async.auto({
 
         Promptly.prompt('MongoDB URL: (mongodb://localhost:27017/aqua)', promptOptions, done);
     }],
+    /*
     testMongo: ['rootPassword', function (done, results) {
-
         Mongodb.MongoClient.connect(results.mongodbUrl, {}, function (err, db) {
 
             if (err) {
@@ -57,6 +57,7 @@ Async.auto({
             done(null, true);
         });
     }],
+    */
     rootEmail: ['mongodbUrl', function (done, results) {
 
         Promptly.prompt('Root user email:', done);
