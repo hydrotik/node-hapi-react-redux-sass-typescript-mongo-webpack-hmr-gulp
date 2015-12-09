@@ -5,29 +5,15 @@ At the moment I am using awesome-typescript-loader, but I plan on testing ts-loa
 
 **At the moment this project needs mongo running. To do this you can install and setup a new aqua project and copy the data folder over into this project.** 
 
+**Requirements**
+* Node 4 or greater
+* NPM 3.2 or greater
+
 #### Run
 
 ```
-npm install
-npm start
-```
-
-#### Develop
-
-Webpack auto-watches client assets.
-Nodemon auto-watches server assets.
-
-```
-npm install
-npm run dev
-```
-
-#### Build
-
-Bundle the assets for production.
-
-```
-npm run build
+npm run setup
+npm run watch
 ```
 
 

@@ -38,6 +38,7 @@ else
     echo "NPM version meets requirements"
 fi
 
+run 'npm config set registry http://registry.npmjs.org/'
 
 # Clean dependencies
 run "npm prune"
