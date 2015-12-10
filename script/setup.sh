@@ -109,7 +109,7 @@ fi
 #
 echo "$(echo_cause)Checking for NPM version ${TARGET_NPM_VERSION} or greater$(echo_clear)"
 if [ "$(version "$TARGET_NPM_VERSION")" -gt "$(version "$NPM_VERSION")" ]; then
-    echo "$(echo_warn)Node version does NOT meet requirements $(echo_if 0)$(echo_clear)"
+    echo "$(echo_warn)NPM version does NOT meet requirements $(echo_if 0)$(echo_clear)"
     echo "Please install nvm and use node ${TARGET_NODE_VERSION} or greater$(echo_clear)"
     exit 0
 else
