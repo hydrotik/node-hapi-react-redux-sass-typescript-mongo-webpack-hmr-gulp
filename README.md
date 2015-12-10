@@ -11,8 +11,21 @@ At the moment I am using awesome-typescript-loader, but I plan on testing ts-loa
 
 #### Run
 
-```
+```bash
 npm run setup
+```
+
+**Before you run locally there is a bug in react-slick with exporting for Typescript** https://github.com/akiran/react-slick/issues/173
+In node_modules/react-slick/lib/index
+```js
+module.exports = require('./slider');
+```
+To
+```js
+module.exports.Slider = require('./slider');
+```
+
+```bash
 npm run watch
 ```
 
