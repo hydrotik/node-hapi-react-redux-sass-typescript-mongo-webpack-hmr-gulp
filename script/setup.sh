@@ -19,6 +19,8 @@ TARGET_NPM_VERSION=3.3.0
 
 
 
+
+
 #########################################################################################
 ## each separate version number must be less than 3 digit wide !
 function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
@@ -76,6 +78,19 @@ NPM_VERSION="$(npm --version | sed 's/[^0-9.]*//g')"
 
 
 
+echo "$(echo_cause)Starting installation tool$(echo_clear)"
+
+
+read -p "Run global installs with sudo? " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    RUN_SUDO="sudo "
+else
+    RUN_SUDO=""
+fi
+
+
 #########################################################################################
 #
 # Check if Node is installed and at the right version
@@ -105,7 +120,7 @@ fi
 echo "$(echo_cause)Checking for Nodemon$(echo_clear)"
 if [ ! -x "$(command -v nodemon)" ]; then
     echo "$(echo_warn)WARNING: nodemon command not found, installing globally. $(echo_if 0)$(echo_clear)"
-    run "sudo npm install -g nodemon" &
+    run "${RUN_SUDO}npm install -g nodemon" &
     NODEMON_PID=$!
     wait $NODEMON_PID
     echo "$(echo_effect)Nodemon installed globally $(echo_if 1)$(echo_clear)"
@@ -117,7 +132,7 @@ fi
 echo "$(echo_cause)Checking for Karma testing CLI$(echo_clear)"
 if [ ! -x "$(command -v karma)" ]; then
     echo "$(echo_warn)WARNING: karma-cli command not found, installing globally. $(echo_if 0)$(echo_clear)"
-    run "sudo npm install -g karma-cli" &
+    run "${RUN_SUDO}npm install -g karma-cli" &
     KARMA_PID=$!
     wait $KARMA_PID
     echo "$(echo_effect)Karma installed globally $(echo_if 1)$(echo_clear)"
@@ -129,7 +144,7 @@ fi
 echo "$(echo_cause)Checking for Typescript$(echo_clear)"
 if [ ! -x "$(command -v tsc)" ]; then
     echo "$(echo_warn)WARNING: tsc command not found, installing globally. $(echo_if 0)$(echo_clear)"
-    run "sudo npm install -g typescript" &
+    run "${RUN_SUDO}npm install -g typescript" &
     TSC_PID=$!
     wait $TSC_PID
     echo "$(echo_effect)TSD installed globally $(echo_if 1)$(echo_clear)"
@@ -141,7 +156,7 @@ fi
 echo "$(echo_cause)Checking for Typescript Definitions CLI$(echo_clear)"
 if [ ! -x "$(command -v tsd)" ]; then
     echo "$(echo_warn)WARNING: tsd command not found, installing globally. $(echo_if 0)$(echo_clear)"
-    run "sudo npm install -g tsd" &
+    run "${RUN_SUDO}npm install -g tsd" &
     TSD_PID=$!
     wait $TSD_PID
     echo "$(echo_effect)Typescript installed globally $(echo_if 1)$(echo_clear)"
@@ -153,7 +168,7 @@ fi
 echo "$(echo_cause)Checking for NCU package utility for NPM$(echo_clear)"
 if [ ! -x "$(command -v ncu)" ]; then
     echo "$(echo_warn)WARNING: ncu command not found, installing globally. $(echo_if 0)$(echo_clear)"
-    run "sudo npm install -g npm-check-updates" &
+    run "${RUN_SUDO}npm install -g npm-check-updates" &
     NCU_PID=$!
     wait $NCU_PID
     echo "$(echo_effect)NCU installed globally $(echo_if 1)$(echo_clear)"
@@ -177,6 +192,9 @@ run "npm link"
 echo "$(echo_effect)NPM module install complete $(echo_if 1)$(echo_clear)"
 
 
+
+
+
 #########################################################################################
 # Config Setup using Promptly in ./setup.js
 echo "$(echo_cause)Starting config setup$(echo_clear)"
@@ -192,3 +210,14 @@ echo "$(echo_effect)Config setup complete $(echo_if 1)$(echo_clear)"
 echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)"
 
 
+
+read -p "Would you like to start the local instance? " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)"
+    echo "$(echo_cause)Starting local instance...$(echo_clear)"
+    run "npm run watch"
+else
+    echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)"
+fi
