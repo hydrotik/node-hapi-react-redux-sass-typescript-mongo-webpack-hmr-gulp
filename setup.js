@@ -16,8 +16,8 @@ if (process.env.NODE_ENV === 'test') {
     var source = Fs.readFileSync(configTemplatePath, options);
     var configTemplate = Handlebars.compile(source);
     var context = {
-        projectName: 'Aqua',
-        mongodbUrl: 'mongodb://localhost:27017/aqua',
+        projectName: 'WattsProject',
+        mongodbUrl: 'mongodb://localhost:27017/watts',
         rootEmail: 'root@root',
         rootPassword: 'root',
         systemEmail: 'sys@tem',
@@ -34,15 +34,15 @@ if (process.env.NODE_ENV === 'test') {
 Async.auto({
     projectName: function (done) {
 
-        Promptly.prompt('Project name: (Aqua)', { default: 'Aqua' }, done);
+        Promptly.prompt('Project name: (WattsProject)', { default: 'WattsProject' }, done);
     },
     mongodbUrl: ['projectName', function (done, results) {
 
         var promptOptions = {
-            default: 'mongodb://localhost:27017/aqua'
+            default: 'mongodb://localhost:27017/watts'
         };
 
-        Promptly.prompt('MongoDB URL: (mongodb://localhost:27017/aqua)', promptOptions, done);
+        Promptly.prompt('MongoDB URL: (mongodb://localhost:27017/watts)', promptOptions, done);
     }],
     /*
     testMongo: ['rootPassword', function (done, results) {
