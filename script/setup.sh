@@ -186,8 +186,15 @@ run 'npm config set registry http://registry.npmjs.org/'
 run "npm prune"
 # NPM Install
 run "npm install"
+
 # NPM Link
-run "npm link"
+read -p "Run NPM link command? (No recommended for yosemite users or with permission problems) " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    run "npm link"
+fi
+
 # NPM Complete
 echo "$(echo_effect)NPM module install complete $(echo_if 1)$(echo_clear)"
 
