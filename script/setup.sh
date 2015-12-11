@@ -78,9 +78,52 @@ NPM_VERSION="$(npm --version | sed 's/[^0-9.]*//g')"
 
 
 
-echo "$(echo_cause)Starting installation tool$(echo_clear)"
+#########################################################################################
+#
+# WELCOME!
+echo "\n$(echo_cause)"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \*
+echo "Starting installation tool$(echo_clear)"
 
 
+
+
+
+#########################################################################################
+#
+# Check NVM globally if not already installed.
+echo "\n$(echo_cause)Checking NVM path$(echo_clear)"
+if [ ! -f ~/.nvm/nvm.sh ]; then
+    echo "$(echo_warn)WARNING: NVM not found. $(echo_if 0)$(echo_clear)"
+    echo "$(echo_warn)Please run:$(echo_clear)"
+    echo "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash"
+    echo "$(echo_warn)Then in ~/.bash_profile add:$(echo_clear)"
+    echo 'export NVM_DIR="$HOME/.nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm"\n\n'
+    exit 0
+else
+    . ~/.nvm/nvm.sh
+    NVM_VERSION="$(nvm --version | sed 's/[^0-9.]*//g')"
+    echo "$(echo_effect)NVM version ${NVM_VERSION} found $(echo_if 1)$(echo_clear)"
+fi
+
+
+# NOT WORKING????????
+# Check NVM globally if not already installed.
+#echo "\n$(echo_cause)Checking for NVM$(echo_clear)"
+#if [ ! -x "$(nvm)" ]; then
+#    echo "$(echo_warn)WARNING: Check NVM version if issues persist$(echo_clear)"
+#    #run "${RUN_SUDO}npm install -g karma-cli" &
+#    #KARMA_PID=$!
+#    #wait $KARMA_PID
+#    #echo "$(echo_effect)Karma installed globally $(echo_if 1)$(echo_clear)"
+#else
+#    echo "$(echo_effect)NVM found $(echo_if 1)$(echo_clear)"
+#fi
+
+#########################################################################################
+#
+# Prompt for sudo
+echo ""
 read -p "Run global installs with sudo? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -90,12 +133,10 @@ else
     RUN_SUDO=""
 fi
 
-
 #########################################################################################
 #
 # Check if Node is installed and at the right version
-#
-echo "$(echo_cause)Checking for Node version ${TARGET_NODE_VERSION} or greater$(echo_clear)"
+echo "\n$(echo_cause)Checking for Node version ${TARGET_NODE_VERSION} or greater$(echo_clear)"
 if [ "$(version "$TARGET_NODE_VERSION")" -gt "$(version "$NODE_VERSION")" ]; then
     echo "$(echo_warn)Node version does NOT meet requirements $(echo_if 0)$(echo_clear)"
     echo "Please install nvm and use node ${TARGET_NODE_VERSION} or greater$(echo_clear)"
@@ -104,10 +145,10 @@ else
     echo "$(echo_effect)Node version ${NODE_VERSION} meets requirements $(echo_if 1)$(echo_clear)"
 fi
 
+#########################################################################################
 #
 # Check if NPM is installed and at the right version
-#
-echo "$(echo_cause)Checking for NPM version ${TARGET_NPM_VERSION} or greater$(echo_clear)"
+echo "\n$(echo_cause)Checking for NPM version ${TARGET_NPM_VERSION} or greater$(echo_clear)"
 if [ "$(version "$TARGET_NPM_VERSION")" -gt "$(version "$NPM_VERSION")" ]; then
     echo "$(echo_warn)NPM version does NOT meet requirements $(echo_if 0)$(echo_clear)"
     echo "Please install nvm and use node ${TARGET_NODE_VERSION} or greater$(echo_clear)"
@@ -116,8 +157,10 @@ else
     echo "$(echo_effect)NPM version ${NPM_VERSION} meets requirements $(echo_if 1)$(echo_clear)"
 fi
 
+#########################################################################################
+#
 # Install Nodemon globally if not already installed.
-echo "$(echo_cause)Checking for Nodemon$(echo_clear)"
+echo "\n$(echo_cause)Checking for Nodemon$(echo_clear)"
 if [ ! -x "$(command -v nodemon)" ]; then
     echo "$(echo_warn)WARNING: nodemon command not found, installing globally. $(echo_if 0)$(echo_clear)"
     run "${RUN_SUDO}npm install -g nodemon" &
@@ -128,8 +171,10 @@ else
     echo "$(echo_effect)Nodemon found $(echo_if 1)$(echo_clear)"
 fi
 
+#########################################################################################
+#
 # Install Karma globally if not already installed.
-echo "$(echo_cause)Checking for Karma testing CLI$(echo_clear)"
+echo "\n$(echo_cause)Checking for Karma testing CLI$(echo_clear)"
 if [ ! -x "$(command -v karma)" ]; then
     echo "$(echo_warn)WARNING: karma-cli command not found, installing globally. $(echo_if 0)$(echo_clear)"
     run "${RUN_SUDO}npm install -g karma-cli" &
@@ -140,8 +185,10 @@ else
     echo "$(echo_effect)karma-cli found $(echo_if 1)$(echo_clear)"
 fi
 
+#########################################################################################
+#
 # Install Typescript globally if not already installed.
-echo "$(echo_cause)Checking for Typescript$(echo_clear)"
+echo "\n$(echo_cause)Checking for Typescript$(echo_clear)"
 if [ ! -x "$(command -v tsc)" ]; then
     echo "$(echo_warn)WARNING: tsc command not found, installing globally. $(echo_if 0)$(echo_clear)"
     run "${RUN_SUDO}npm install -g typescript" &
@@ -152,8 +199,10 @@ else
     echo "$(echo_effect)tsc found $(echo_if 1)$(echo_clear)"
 fi
 
+#########################################################################################
+#
 # Install Typescript Definition Utility globally if not already installed.
-echo "$(echo_cause)Checking for Typescript Definitions CLI$(echo_clear)"
+echo "\n$(echo_cause)Checking for Typescript Definitions CLI$(echo_clear)"
 if [ ! -x "$(command -v tsd)" ]; then
     echo "$(echo_warn)WARNING: tsd command not found, installing globally. $(echo_if 0)$(echo_clear)"
     run "${RUN_SUDO}npm install -g tsd" &
@@ -164,8 +213,10 @@ else
     echo "$(echo_effect)tsd found $(echo_if 1)$(echo_clear)"
 fi
 
+#########################################################################################
+#
 # Install NCU Definition Utility globally if not already installed.
-echo "$(echo_cause)Checking for NCU package utility for NPM$(echo_clear)"
+echo "\n$(echo_cause)Checking for NCU package utility for NPM$(echo_clear)"
 if [ ! -x "$(command -v ncu)" ]; then
     echo "$(echo_warn)WARNING: ncu command not found, installing globally. $(echo_if 0)$(echo_clear)"
     run "${RUN_SUDO}npm install -g npm-check-updates" &
@@ -179,8 +230,9 @@ fi
 
 
 #########################################################################################
+#
 # NPM Core install
-echo "$(echo_cause)Starting core NPM install and setup$(echo_clear)"
+echo "\n$(echo_cause)Starting core NPM install and setup$(echo_clear)"
 run 'npm config set registry http://registry.npmjs.org/'
 # NPM Clean dependencies
 run "npm prune"
@@ -188,11 +240,13 @@ run "npm prune"
 run "npm install"
 
 # NPM Link
-read -p "Run NPM link command? (No recommended for yosemite users or with permission problems) " -n 1 -r
+read -p "Run NPM link command? (Not recommended for yosemite users or with permission problems) " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     run "npm link"
+else
+    echo "$(echo_warn)Run 'npm link' if you have errors when running locally$(echo_clear)"
 fi
 
 # NPM Complete
@@ -204,7 +258,7 @@ echo "$(echo_effect)NPM module install complete $(echo_if 1)$(echo_clear)"
 
 #########################################################################################
 # Config Setup using Promptly in ./setup.js
-echo "$(echo_cause)Starting config setup$(echo_clear)"
+echo "\n$(echo_cause)Starting config setup$(echo_clear)"
 # start ./setup.js
 run "npm run setup-config" &
 SETUP_PID=$!
