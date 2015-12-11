@@ -16,8 +16,8 @@ if (process.env.NODE_ENV === 'test') {
     var source = Fs.readFileSync(configTemplatePath, options);
     var configTemplate = Handlebars.compile(source);
     var context = {
-        projectName: 'WattsProject',
-        mongodbUrl: 'mongodb://localhost:27017/watts',
+        projectName: 'Aqua',
+        mongodbUrl: 'mongodb://localhost:27017/aqua',
         rootEmail: 'root@root',
         rootPassword: 'root',
         systemEmail: 'sys@tem',
@@ -34,15 +34,15 @@ if (process.env.NODE_ENV === 'test') {
 Async.auto({
     projectName: function (done) {
 
-        Promptly.prompt('Project name: (WattsProject)', { default: 'WattsProject' }, done);
+        Promptly.prompt('Project name: (Aqua)', { default: 'Aqua' }, done);
     },
     mongodbUrl: ['projectName', function (done, results) {
 
         var promptOptions = {
-            default: 'mongodb://localhost:27017/watts'
+            default: 'mongodb://localhost:27017/aqua'
         };
 
-        Promptly.prompt('MongoDB URL: (mongodb://localhost:27017/watts)', promptOptions, done);
+        Promptly.prompt('MongoDB URL: (mongodb://localhost:27017/aqua)', promptOptions, done);
     }],
     /*
     testMongo: ['rootPassword', function (done, results) {
@@ -108,8 +108,7 @@ Async.auto({
             configTemplate = Handlebars.compile(src);
             Fs.writeFile(configPath, configTemplate(results), done);
         });
-    }],
-    /*
+    }]/*,
     setupRootUser: ['createConfig', function (done, results) {
 
         var BaseModel = require('hapi-mongo-models').BaseModel;

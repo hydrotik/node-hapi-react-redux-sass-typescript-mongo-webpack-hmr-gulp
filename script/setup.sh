@@ -133,6 +133,7 @@ else
     RUN_SUDO=""
 fi
 
+
 #########################################################################################
 #
 # Check if Node is installed and at the right version
@@ -232,7 +233,7 @@ fi
 #########################################################################################
 #
 # NPM Core install
-echo "\n$(echo_cause)Starting core NPM install and setup$(echo_clear)"
+echo "\n$(echo_cause)Starting NPM install and setup$(echo_clear)"
 run 'npm config set registry http://registry.npmjs.org/'
 # NPM Clean dependencies
 run "npm prune"
@@ -240,45 +241,57 @@ run "npm prune"
 run "npm install"
 
 # NPM Link
-read -p "Run NPM link command? (Not recommended for yosemite users or with permission problems) " -n 1 -r
-echo    # (optional) move to a new line
+read -p "Run NPM link command? (Not recommended for Yosemite/El Capitan users or if you are experiencing permission problems) " -n 1 -r
+#echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    run "npm link"
+    run "npm link" &
+    NPM_LINK_PID=$!
+    wait $NPM_LINK_PID
 else
-    echo "$(echo_warn)Run 'npm link' if you have errors when running locally$(echo_clear)"
+    echo "\n$(echo_warn)Run 'npm link' if you have errors when running locally$(echo_clear)"
 fi
-
-# NPM Complete
-echo "$(echo_effect)NPM module install complete $(echo_if 1)$(echo_clear)"
-
-
 
 
 
 #########################################################################################
 # Config Setup using Promptly in ./setup.js
+#
 echo "\n$(echo_cause)Starting config setup$(echo_clear)"
-# start ./setup.js
-run "npm run setup-config" &
-SETUP_PID=$!
-wait $SETUP_PID
-# config setup complete
-echo "$(echo_effect)Config setup complete $(echo_if 1)$(echo_clear)"
+
+if [ ! -f ./config.js ]; then
+    echo "$(echo_effect)Config not present. Running config setup.$(echo_clear)"
+    # start ./setup.js
+    run "npm run setup-config"
+    # config setup complete
+    echo "$(echo_effect)Config setup complete $(echo_if 1)$(echo_clear)"
+else
+    read -p "Config exists, would you like to run the config setup? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        # start ./setup.js
+        run "npm run setup-config"
+        # config setup complete
+        echo "$(echo_effect)Config setup complete $(echo_if 1)$(echo_clear)"
+    else
+        echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)"
+    fi
+fi
+
+
 
 #########################################################################################
-# Great Success!
-echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)"
-
-
-
+# Run Local instance?
+#
+echo "\n$(echo_cause)Finalizing project setup$(echo_clear)"
 read -p "Would you like to start the local instance? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)"
-    echo "$(echo_cause)Starting local instance...$(echo_clear)"
+    echo "\n\n$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)\n\n"
+    echo "$(echo_cause)Starting local instance...$(echo_clear)\n\n"
     run "npm run watch"
 else
-    echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)"
+    echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)\n\n"
 fi
