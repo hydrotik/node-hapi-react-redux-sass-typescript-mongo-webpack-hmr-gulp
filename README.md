@@ -15,7 +15,7 @@ At the moment I am using awesome-typescript-loader, but I plan on testing ts-loa
 ```bash
 git clone https://github.com/hydrotik/node-hapi-react-redux-sass-typescript-mongo-webpack-hmr-gulp.git wattsproject
 cd wattsproject
-npm run setup
+npm run setup -s
 npm run watch
 ```
 

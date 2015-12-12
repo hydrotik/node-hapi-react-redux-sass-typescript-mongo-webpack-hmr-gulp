@@ -10,6 +10,7 @@ source "$IMPORT_PATH/helpers.sh"
 DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #cd "${DIR}"
 
+DATE=`date +%m-%d-%Y" "%r`
 
 #########################################################################################
 # Software version targets
@@ -18,7 +19,7 @@ TARGET_NPM_VERSION=3.3.0
 
 
 
-
+clear
 
 
 #########################################################################################
@@ -83,10 +84,7 @@ NPM_VERSION="$(npm --version | sed 's/[^0-9.]*//g')"
 # WELCOME!
 echo "\n$(echo_cause)"
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \*
-echo "Starting installation tool$(echo_clear)"
-
-
-
+echo "Starting installation tool ${DATE}$(echo_clear)"
 
 
 #########################################################################################
@@ -235,23 +233,28 @@ fi
 # NPM Core install
 echo "\n$(echo_cause)Starting NPM install and setup$(echo_clear)"
 run 'npm config set registry http://registry.npmjs.org/'
+echo "$(echo_effect)NPM registry config complete $(echo_if 1)$(echo_clear)"
 # NPM Clean dependencies
 run "npm prune"
+echo "$(echo_effect)NPM prune complete $(echo_if 1)$(echo_clear)"
 # NPM Install
 run "npm install"
-
+echo "$(echo_effect)NPM install complete $(echo_if 1)$(echo_clear)"
 # NPM Link
 read -p "Run NPM link command? (Not recommended for Yosemite/El Capitan users or if you are experiencing permission problems) " -n 1 -r
 #echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
+    echo ""
     run "npm link" &
     NPM_LINK_PID=$!
     wait $NPM_LINK_PID
+    echo "$(echo_effect)NPM link complete $(echo_if 1)$(echo_clear)"
 else
     echo "\n$(echo_warn)Run 'npm link' if you have errors when running locally$(echo_clear)"
 fi
 
+echo "$(echo_effect)NPM install and setup complete $(echo_if 1)$(echo_clear)"
 
 
 #########################################################################################
@@ -270,6 +273,7 @@ else
     echo    # (optional) move to a new line
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
+        echo ""
         # start ./setup.js
         run "npm run setup-config"
         # config setup complete
@@ -289,9 +293,19 @@ read -p "Would you like to start the local instance? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    echo "\n\n$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)\n\n"
+    clear
+    DELTADATE=`date +%m-%d-%Y" "%r`
+    echo "\n$(echo_cause)"
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \*
+    echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)\n\n"
+    echo "$(echo_effect)Installation started ${DATE} and finished ${DELTADATE} $(echo_if 1)$(echo_clear)"
     echo "$(echo_cause)Starting local instance...$(echo_clear)\n\n"
     run "npm run watch"
 else
+    clear
+    DELTADATE=`date +%m-%d-%Y" "%r`
+    echo "\n$(echo_cause)"
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \*
     echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)\n\n"
+    echo "$(echo_effect)Installation started ${DATE} and finished ${DELTADATE} $(echo_if 1)$(echo_clear)"
 fi
