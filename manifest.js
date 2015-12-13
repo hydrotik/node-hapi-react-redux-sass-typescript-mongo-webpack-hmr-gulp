@@ -73,7 +73,7 @@ var manifest = {
         './global/server/api/index': {},
 
 
-        './global/server/views/isomorphic': {}
+        './global/server/views/projects': {}
     }
 };
 

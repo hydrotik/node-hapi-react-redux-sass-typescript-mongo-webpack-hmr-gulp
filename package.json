@@ -90,6 +90,7 @@
     "slug": "^0.9.1",
     "superagent": "^1.4.0",
     "susy": "^2.2.6",
+    "typescript-parser.jsx": "^0.1.0",
     "vision": "^3.0.0",
     "visionary": "^3.0.1"
   },
