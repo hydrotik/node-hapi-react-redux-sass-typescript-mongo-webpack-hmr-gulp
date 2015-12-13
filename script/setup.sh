@@ -83,6 +83,13 @@ NPM_VERSION="$(npm --version | sed 's/[^0-9.]*//g')"
 #
 # WELCOME!
 echo "\n$(echo_cause)"
+echo " __     __     ______     ______   ______   ______    ";
+echo "/\ \  _ \ \   /\  __ \   /\__  _\ /\__  _\ /\  ___\   ";
+echo "\ \ \/ \".\ \  \ \  __ \  \/_/\ \/ \/_/\ \/ \ \___  \  ";
+echo " \ \__/\".~\_\  \ \_\ \_\    \ \_\    \ \_\  \/\_____\ ";
+echo "  \/_/   \/_/   \/_/\/_/     \/_/     \/_/   \/_____/ ";
+echo "                                                      ";
+
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \*
 echo "Starting installation tool ${DATE}$(echo_clear)"
 

@@ -6,6 +6,8 @@ var criteria = {
     env: process.env.NODE_ENV
 };
 
+require('node-jsx').install();
+
 
 var manifest = {
     $meta: 'This file defines the plot device.',
@@ -43,6 +45,9 @@ var manifest = {
             relativeTo: __dirname,
             path: "./src/global/server/views/"
         },
+        '@tanepiper/quorra' : {
+
+        },
         // Models
         /*
         'hapi-mongo-models': {
@@ -65,7 +70,10 @@ var manifest = {
         './global/server/misc/assets': {},
         // ROUTES
         './global/server/views/home': {},
-        './global/server/api/index': {}
+        './global/server/api/index': {},
+
+
+        './global/server/views/isomorphic': {}
     }
 };
 

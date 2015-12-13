@@ -41,6 +41,7 @@
     "devPort": 8000
   },
   "dependencies": {
+    "@tanepiper/quorra": "^1.0.1",
     "animate.css": "^3.4.0",
     "async": "^1.5.0",
     "bcrypt": "^0.8.5",
@@ -61,11 +62,13 @@
     "hapi-auth-cookie": "^3.1.0",
     "hapi-mongo-models": "^3.0.0",
     "hapi-react-views": "^5.0.0",
+    "history": "^1.16.0",
     "isomorphic-fetch": "^2.2.0",
     "joi": "^7.0.0",
     "lodash": "^3.10.1",
     "lout": "^7.2.0",
     "mongodb": "^2.0.46",
+    "node-jsx": "^0.13.3",
     "normalize.css": "^3.0.3",
     "object-assign": "^4.0.1",
     "qs": "^5.2.0",
