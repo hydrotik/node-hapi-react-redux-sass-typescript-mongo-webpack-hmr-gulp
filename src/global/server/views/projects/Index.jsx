@@ -1,16 +1,10 @@
 // Default layout template
 
 var React = require('react');
-var path = require('path');
-var pkg = require('../../../../../package.json');
-var util = require('util');
 
 var Index = React.createClass({
 
     render: function() {
-
-        var js = 'http://localhost:8080/' + path.join('js', util.format('app.%s.js', pkg.version))
-        var css = 'http://localhost:8080/' + path.join('css', util.format('app.%s.css', pkg.version));
 
         return(
             <html>
@@ -24,7 +18,7 @@ var Index = React.createClass({
                 </head>
                 <body style={{fontFamily: ['Varela Round', 'sans-serif']}}>
                     <div id="app"></div>
-                    <script src={js}></script>
+                    <script src={this.props.js}></script>
                 </body>
             </html>
         );

@@ -28,7 +28,7 @@
     "lint-es": "eslint --config .eslintrc --ignore-path .eslintignore --ext .js,.jsx,.es6 .",
     "watch": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run lint-es\" \"npm run watch-client\" \"npm run start\""
   },
-  "author": "Donovan Adams, Ozgur Uksal",
+  "author": "Donovan Adams, Ozgur Uksal, Kenny Pascal",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -38,7 +38,8 @@
     "buildDir": "./build",
     "buildDirTests": "./build_tests",
     "devHost": "localhost",
-    "devPort": 8000
+    "devPort": 8000,
+    "webpackPort": 8080
   },
   "dependencies": {
     "@tanepiper/quorra": "^1.0.1",
