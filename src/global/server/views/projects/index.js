@@ -2,14 +2,35 @@
 
 exports.register = function (plugin, options, next) {
 
-    const context = { pagetitle: 'Steve' };
+    plugin.route({
+        method: 'GET',
+        path: '/project',
+        handler: function(request, response) {
+        	console.log('LOADING INDEX/HOME');
+
+            var props = {
+                title : 'Projects Title'
+            }
+
+            response.view('projects/Index.jsx', props);
+        },
+        config: {
+            cors: true
+        }
+    });
 
     plugin.route({
         method: 'GET',
-        path: '/projects',
+        path: '/project/{projectid}',
         handler: function(request, response) {
-        	console.log('LOADING INDEX/HOME');
-            response.view('projects/Index.jsx', context);
+            console.log('LOADING INDEX/HOME');
+
+            var props = {
+                title : 'Project Title ' + request.params.projectid,
+                projectid : request.params.projectid
+            }
+
+            response.view('projects/Project.jsx', props);
 
             /*
             Router.run(Routes, request.url.path, function (Handler) {
