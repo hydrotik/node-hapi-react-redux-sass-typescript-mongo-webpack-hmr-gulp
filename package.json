@@ -34,13 +34,6 @@
     "type": "git",
     "url": ""
   },
-  "config": {
-    "buildDir": "./build",
-    "buildDirTests": "./build_tests",
-    "devHost": "localhost",
-    "devPort": 8000,
-    "webpackPort": 8080
-  },
   "dependencies": {
     "@tanepiper/quorra": "^1.0.1",
     "animate.css": "^3.4.0",

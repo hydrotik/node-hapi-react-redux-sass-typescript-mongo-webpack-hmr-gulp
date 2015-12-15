@@ -6,7 +6,7 @@ var format = "dd mmm HH:MM:ss";
 var opn = require('opn');
 var pkg = require('./package.json');
 var util = require('util');
-
+var Config = require('./config');
 
 require('babel-core/register')({
     presets: ['react', 'es2015']
@@ -23,7 +23,7 @@ Composer(function (err, server) {
 
         console.info('==> ' + dateFormat(new Date(), format));
         console.info("==> ✅  Server is listening");
-        var url = util.format('http://%s:%d', pkg.config.devHost, pkg.config.devPort);
+        var url = util.format('http://%s:%d', Config.get('/devHost'), Config.get('/devPort'));
         console.log('==> 🌎  Listening at %s', url);
         opn(url);
     });

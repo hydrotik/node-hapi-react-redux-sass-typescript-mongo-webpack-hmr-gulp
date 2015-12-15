@@ -16,8 +16,8 @@ if (process.env.NODE_ENV === 'test') {
     var source = Fs.readFileSync(configTemplatePath, options);
     var configTemplate = Handlebars.compile(source);
     var context = {
-        projectName: 'Aqua',
-        mongodbUrl: 'mongodb://localhost:27017/aqua',
+        projectName: 'Watts',
+        mongodbUrl: 'mongodb://localhost:27017/watts',
         rootEmail: 'root@root',
         rootPassword: 'root',
         systemEmail: 'sys@tem',
@@ -34,15 +34,35 @@ if (process.env.NODE_ENV === 'test') {
 Async.auto({
     projectName: function (done) {
 
-        Promptly.prompt('Project name: (Aqua)', { default: 'Aqua' }, done);
+        Promptly.prompt('Project name: (WattsProject)', { default: 'WattsProject' }, done);
     },
-    mongodbUrl: ['projectName', function (done, results) {
+    buildDir: ['projectName', function (done) {
+
+        Promptly.prompt('Local build directory: (./build)', { default: './build' }, done);
+    }],
+    buildDirTests: ['buildDir', function (done) {
+
+        Promptly.prompt('Local test build directory: (./build_tests)', { default: './build_tests' }, done);
+    }],
+    devHost: ['buildDirTests', function (done) {
+
+        Promptly.prompt('Local host: (localhost)', { default: 'localhost' }, done);
+    }],
+    devPort: ['devHost', function (done) {
+
+        Promptly.prompt('Local port: (8000)', { default: 8000 }, done);
+    }],
+    webpackPort: ['devPort', function (done) {
+
+        Promptly.prompt('Local Webpack port: (8080)', { default: 8080 }, done);
+    }],
+    mongodbUrl: ['webpackPort', function (done, results) {
 
         var promptOptions = {
-            default: 'mongodb://localhost:27017/aqua'
+            default: 'mongodb://localhost:27017/wattsproject'
         };
 
-        Promptly.prompt('MongoDB URL: (mongodb://localhost:27017/aqua)', promptOptions, done);
+        Promptly.prompt('MongoDB URL: (mongodb://localhost:27017/wattsproject)', promptOptions, done);
     }],
     /*
     testMongo: ['rootPassword', function (done, results) {

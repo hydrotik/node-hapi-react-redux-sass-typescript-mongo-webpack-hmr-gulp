@@ -2,14 +2,14 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
-
+var Config = require('./config');
 var pkg = require('./package.json');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var util = require('util');
 var webpack = require('webpack');
 
-var buildDir = path.resolve(pkg.config.buildDir);
+var buildDir = path.resolve(Config.get('/buildDir'));
 
 var DEBUG = process.env.NODE_ENV === 'development';
 var TEST = process.env.NODE_ENV === 'test';

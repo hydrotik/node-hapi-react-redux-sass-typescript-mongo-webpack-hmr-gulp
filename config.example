@@ -9,19 +9,24 @@ var criteria = {
 var config = {
     $meta: 'This file configures the plot device.',
     projectName: '{{projectName}}',
+    buildDir: '{{buildDir}}',
+    buildDirTests: '{{buildDirTests}}',
+    devHost: '{{devHost}}',
+    devPort: {{devPort}},
+    webpackPort: {{webpackPort}},
     port: {
         web: {
             $filter: 'env',
             test: 9000,
             production: process.env.PORT,
-            $default: 8000
+            $default: {{devPort}}
         }
     },
     baseUrl: {
         $filter: 'env',
         $meta: 'values should not end in "/"',
         production: 'https://wattsproject.herokuapp.com',
-        $default: 'http://127.0.0.1:8000'
+        $default: 'http://{{devHost}}:{{devPort}}'
     },
     authAttempts: {
         forIp: 50,

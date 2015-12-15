@@ -9,7 +9,7 @@ var criteria = {
 require('node-jsx').install();
 
 var helpers = {
-    artifactRoot : process.env.NODE_ENV === 'production' ? '' : 'http://' + pkg.config.devHost + ':' + pkg.config.webpackPort + '/'
+    artifactRoot : process.env.NODE_ENV === 'production' ? '' : 'http://' + Config.get('/devHost') + ':' + Config.get('/webpackPort') + '/'
 }
 
 var manifest = {
@@ -25,7 +25,7 @@ var manifest = {
         }
     },
     connections: [{
-        port: pkg.config.devPort,
+        port: Config.get('/devPort'),
         labels: ['web']
     }],
     plugins: {
