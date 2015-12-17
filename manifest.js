@@ -1,5 +1,6 @@
 var Confidence = require('confidence');
 var Config = require('./config');
+var Routes = require('./config.routes').routes;
 var pkg = require('./package');
 
 var criteria = {
@@ -72,17 +73,11 @@ var manifest = {
         './global/server/misc/build': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
 
         // ASSETS
-        './global/server/misc/assets': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
-
-        // API
-        './global/server/api/index': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
-
-        // ROUTES
-        './global/server/views/home': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
-        './global/server/views/projects': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        './global/server/misc/assets': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
     }
 };
 
+Object.assign(manifest.plugins, Routes);
 
 var store = new Confidence.Store(manifest);
 
