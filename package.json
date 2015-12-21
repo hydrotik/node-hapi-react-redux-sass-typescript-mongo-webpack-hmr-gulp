@@ -14,6 +14,9 @@
   "scripts": {
     "setup": "sh ./script/setup.sh",
     "setup-config": "./setup.js",
+    "mongo-start": "sh ./script/mongod.sh start",
+    "mongo-stop": "sh ./script/mongod.sh stop",
+    "mongo-setup": "sh ./script/mongod.sh setup",
     "test": "sh ./script/test.sh",
     "test-performance": "sh ./script/performance.sh",
     "test-chrometools": "sh ./script/chrometools.sh",

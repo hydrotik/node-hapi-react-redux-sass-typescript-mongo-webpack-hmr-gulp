@@ -1,10 +1,26 @@
 #!/bin/bash
 
 mongod=/usr/local/mongodb/bin/mongod
-mongod_data=/Users/michito/work/mongodb_data
-mongod_log=/Users/michito/work/mongodb_log/mongodb.log
+mongod_data=/data/db
+mongod_log=/data/mongodb.log
 prog=mongod.sh
 RETVAL=0
+
+
+
+
+
+setup() {
+    if [ ! -d /data ] 
+    then
+        mkdir -p /data
+    fi
+
+    if [ ! -d mongod_data ] 
+    then
+        mkdir -p mongod_data
+    fi
+}
 
 stop() {
     grep_mongo=`ps aux | grep -v grep | grep "${mongod}"`
@@ -40,6 +56,9 @@ case "$1" in
     restart)
     stop
     start
+    ;;
+    setup)
+    setup
     ;;
     *)
     echo $"Usage: $prog {start|stop|restart}"
