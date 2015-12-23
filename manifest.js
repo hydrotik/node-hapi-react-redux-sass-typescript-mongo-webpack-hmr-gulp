@@ -41,7 +41,7 @@ var manifest = {
         'vision': {},
         'visionary': {
             engines: {
-              jsx: "hapi-react-views"
+              tsx: "hapi-react-views"
             },
             compileOptions: {
                 useNodeJsx: false
@@ -52,8 +52,19 @@ var manifest = {
         '@tanepiper/quorra' : {
 
         },
-        // Models
-        /*
+
+        // BUILD
+        './global/server/misc/build': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
+
+        // ASSETS
+        './global/server/misc/assets': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+    }
+};
+
+Object.assign(manifest.plugins, Routes);
+
+if(Config.get('/useMongo').toLowerCase() != 'no'){
+    var hapiMongoModels = {
         'hapi-mongo-models': {
             mongodb: Config.get('/hapiMongoModels/mongodb'),
             models: {
@@ -66,18 +77,10 @@ var manifest = {
                 User: './src/global//server/models/user'
             },
             autoIndex: Config.get('/hapiMongoModels/autoIndex')
-        },
-        */
-
-        // BUILD
-        './global/server/misc/build': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
-
-        // ASSETS
-        './global/server/misc/assets': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        }
     }
-};
-
-Object.assign(manifest.plugins, Routes);
+    Object.assign(manifest.plugins, hapiMongoModels);
+}
 
 var store = new Confidence.Store(manifest);
 

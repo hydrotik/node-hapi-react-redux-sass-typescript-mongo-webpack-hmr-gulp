@@ -14,6 +14,7 @@ var config = {
     devHost: '{{devHost}}',
     devPort: {{devPort}},
     webpackPort: {{webpackPort}},
+    useMongo: '{{useMongo}}',
     port: {
         web: {
             $filter: 'env',
