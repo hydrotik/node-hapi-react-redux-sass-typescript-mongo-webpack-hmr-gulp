@@ -1,6 +1,16 @@
-#!/bin/bash
+#!/bin/sh
 
-mongod=/usr/local/mongodb/bin/mongod
+set -e
+
+IMPORT_PATH="${BASH_SOURCE%/*}"
+if [[ ! -d "$IMPORT_PATH" ]]; then IMPORT_PATH="$PWD"; fi
+source "$IMPORT_PATH/helpers.sh"
+
+# Save script's current directory
+DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#cd "${DIR}"
+
+mongod=/usr/local/bin/mongod
 mongod_data=/data/db
 mongod_log=/data/mongodb.log
 prog=mongod.sh
@@ -16,9 +26,9 @@ setup() {
         mkdir -p /data
     fi
 
-    if [ ! -d mongod_data ] 
+    if [ ! -d $mongod_data ] 
     then
-        mkdir -p mongod_data
+        mkdir -p $mongod_data
     fi
 }
 
@@ -41,7 +51,9 @@ start() {
     echo "MongoDB is already running."
     else
     echo "Start MongoDB."
-    `${mongod} --dbpath ${mongod_data} --logpath ${mongod_log} --fork --logappend`
+    mongod --dbpath ${mongod_data} &
+    TSD_PID=$!
+    wait $TSD_PID
     RETVAL=$?
     fi
 }
