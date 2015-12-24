@@ -71,24 +71,20 @@ Async.auto({
     }],
     
     runMongoTest: ['useMongo', function (done, results) {
-
-
-        console.log(results.useMongo);
-
-        done(null, true);
-        
-        /*
-        Mongodb.MongoClient.connect(results.mongodbUrl, {}, function (err, db) {
-
-            if (err) {
-                console.error('Failed to connect to Mongodb.');
-                return done(err);
-            }
-
-            db.close();
+        if(results.useMongo.toLowerCase() === 'no'){
             done(null, true);
-        });
-*/
+        }else{
+            Mongodb.MongoClient.connect(results.mongodbUrl, {}, function (err, db) {
+
+                if (err) {
+                    console.error('Failed to connect to Mongodb.');
+                    return done(err);
+                }
+
+                db.close();
+                done(null, true);
+            });
+        }
     }],
     
     rootEmail: ['runMongoTest', function (done, results) {
@@ -141,93 +137,95 @@ Async.auto({
             configTemplate = Handlebars.compile(src);
             Fs.writeFile(configPath, configTemplate(results), done);
         });
-    }]/*,
+    }],
     setupRootUser: ['createConfig', function (done, results) {
-
-        var BaseModel = require('hapi-mongo-models').BaseModel;
-        var User = require('./src/global/server/models/user');
-        var Admin = require('./src/global//server/models/admin');
-        var AdminGroup = require('./src/global//server/models/admin-group');
-        var Account = require('./src/global//server/models/account');
-
-        Async.auto({
-            connect: function (done) {
-
-                BaseModel.connect({ url: results.mongodbUrl }, done);
-            },
-            clean: ['connect', function (done) {
-
-                Async.parallel([
-                    User.deleteMany.bind(User, {}),
-                    Admin.deleteMany.bind(Admin, {}),
-                    AdminGroup.deleteMany.bind(AdminGroup, {}),
-                    Account.deleteMany.bind(Account, {})
-                ], done);
-            }],
-            adminGroup: ['clean', function (done) {
-
-                AdminGroup.create('Root', done);
-            }],
-            admin: ['clean', function (done) {
-
-                Admin.create('Root Admin', done);
-            }],
-            user: ['clean', function (done, dbResults) {
-
-                User.create('root', results.rootPassword, results.rootEmail, done);
-            }],
-            adminMembership: ['admin', function (done, dbResults) {
-
-                var id = dbResults.admin._id.toString();
-                var update = {
-                    $set: {
-                        groups: {
-                            root: 'Root'
-                        }
-                    }
-                };
-
-                Admin.findByIdAndUpdate(id, update, done);
-            }],
-            linkUser: ['admin', 'user', function (done, dbResults) {
-
-                var id = dbResults.user._id.toString();
-                var update = {
-                    $set: {
-                        'roles.admin': {
-                            id: dbResults.admin._id.toString(),
-                            name: 'Root Admin'
-                        }
-                    }
-                };
-
-                User.findByIdAndUpdate(id, update, done);
-            }],
-            linkAdmin: ['admin', 'user', function (done, dbResults) {
-
-                var id = dbResults.admin._id.toString();
-                var update = {
-                    $set: {
-                        user: {
-                            id: dbResults.user._id.toString(),
-                            name: 'root'
-                        }
-                    }
-                };
-
-                Admin.findByIdAndUpdate(id, update, done);
-            }]
-        }, function (err, dbResults) {
-
-            if (err) {
-                console.error('Failed to setup root user.');
-                return done(err);
-            }
-
+        if(results.useMongo.toLowerCase() === 'no'){
             done(null, true);
-        });
+        }else{
+            var BaseModel = require('hapi-mongo-models').BaseModel;
+            var User = require('./src/global/server/models/user');
+            var Admin = require('./src/global//server/models/admin');
+            var AdminGroup = require('./src/global//server/models/admin-group');
+            var Account = require('./src/global//server/models/account');
+
+            Async.auto({
+                connect: function (done) {
+
+                    BaseModel.connect({ url: results.mongodbUrl }, done);
+                },
+                clean: ['connect', function (done) {
+
+                    Async.parallel([
+                        User.deleteMany.bind(User, {}),
+                        Admin.deleteMany.bind(Admin, {}),
+                        AdminGroup.deleteMany.bind(AdminGroup, {}),
+                        Account.deleteMany.bind(Account, {})
+                    ], done);
+                }],
+                adminGroup: ['clean', function (done) {
+
+                    AdminGroup.create('Root', done);
+                }],
+                admin: ['clean', function (done) {
+
+                    Admin.create('Root Admin', done);
+                }],
+                user: ['clean', function (done, dbResults) {
+
+                    User.create('root', results.rootPassword, results.rootEmail, done);
+                }],
+                adminMembership: ['admin', function (done, dbResults) {
+
+                    var id = dbResults.admin._id.toString();
+                    var update = {
+                        $set: {
+                            groups: {
+                                root: 'Root'
+                            }
+                        }
+                    };
+
+                    Admin.findByIdAndUpdate(id, update, done);
+                }],
+                linkUser: ['admin', 'user', function (done, dbResults) {
+
+                    var id = dbResults.user._id.toString();
+                    var update = {
+                        $set: {
+                            'roles.admin': {
+                                id: dbResults.admin._id.toString(),
+                                name: 'Root Admin'
+                            }
+                        }
+                    };
+
+                    User.findByIdAndUpdate(id, update, done);
+                }],
+                linkAdmin: ['admin', 'user', function (done, dbResults) {
+
+                    var id = dbResults.admin._id.toString();
+                    var update = {
+                        $set: {
+                            user: {
+                                id: dbResults.user._id.toString(),
+                                name: 'root'
+                            }
+                        }
+                    };
+
+                    Admin.findByIdAndUpdate(id, update, done);
+                }]
+            }, function (err, dbResults) {
+
+                if (err) {
+                    console.error('Failed to setup root user.');
+                    return done(err);
+                }
+
+                done(null, true);
+            });
+        }
     }]
-    */
 }, function (err, results) {
 
     if (err) {
