@@ -23,7 +23,7 @@ exports.register = function (plugin, options, next) {
                 css: css
             }
 
-            response.view('projects/Index.tsx', props);
+            response.view('projects/Index.jsx', props);
         },
         config: {
             cors: true
@@ -43,7 +43,7 @@ exports.register = function (plugin, options, next) {
                 projectid : request.params.projectid
             }
 
-            response.view('projects/Index.tsx', props);
+            response.view('projects/Index.jsx', props);
 
             /*
             Router.run(Routes, request.url.path, function (Handler) {

@@ -1,5 +1,5 @@
 /// <reference path="../../../typings/tsd.d.ts" />
-
+/*
 import * as React from 'react';
 
 interface IIndexProps {
@@ -27,13 +27,13 @@ class Index extends React.Component<IIndexProps, {}> {
         );
     }
 }
-
+*/
 
 
 
 
 // Default layout template
-/*
+
 var React = require('react');
 
 var Index = React.createClass({
@@ -60,4 +60,3 @@ var Index = React.createClass({
 });
 
 module.exports = Index;
-*/

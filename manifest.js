@@ -41,6 +41,7 @@ var manifest = {
         'vision': {},
         'visionary': {
             engines: {
+              jsx: "hapi-react-views",
               tsx: "hapi-react-views"
             },
             compileOptions: {
