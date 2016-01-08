@@ -1,13 +1,16 @@
-var React = require('react/addons');
-var Layout = require('../layouts/Default.jsx');
+import React, { Component } from 'react';
+import Layout from '../layouts/Default.jsx';
 
+class Index extends Component {
 
-var Component = React.createClass({
-    render: function () {
+    render() {
+
+        const script = <script src={this.props.js}></script>;
 
         return (
             <Layout
                 title="About us"
+                script={script}
                 activeTab="about">
 
                 <div className="row">
@@ -76,7 +79,6 @@ var Component = React.createClass({
             </Layout>
         );
     }
-});
+};
 
-
-module.exports = Component;
+export default Index;
