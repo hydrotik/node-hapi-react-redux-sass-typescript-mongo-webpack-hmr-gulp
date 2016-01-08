@@ -31,32 +31,190 @@ class Index extends React.Component<IIndexProps, {}> {
 
 
 
-
 // Default layout template
 
-var React = require('react');
+import React, { Component } from 'react';
+import Layout from '../layouts/Default.jsx';
 
-var Index = React.createClass({
 
-    render: function() {
+class Index extends Component {
 
-        return(
-            <html>
-                <head>
+    render() {
 
-                    <meta charSet="utf-8"></meta>
-                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
-                    <title>{this.props.title}</title>
-                    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"></link>
-                    <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'></link>
-                </head>
-                <body style={{fontFamily: ['Varela Round', 'sans-serif']}}>
-                    <div id="app"></div>
-                    <script src={this.props.js}></script>
-                </body>
-            </html>
+        const neck = <link rel='stylesheet' href="/public/pages/home.min.css" />;
+
+        return (
+            <Layout
+                title="Aqua"
+                neck={neck}
+                activeTab="home">
+
+                <div className="jumbotron">
+                    <h1>Success</h1>
+                    <p className="lead">
+                        Your Node.js website and user system is running. May
+                        the force be with you.
+
+                        <div>
+                            <a className="btn btn-primary btn-lg" href="/signup">
+                                Create an account
+                            </a>
+                            &nbsp; or &nbsp;
+                            <a className="btn btn-warning btn-lg" href="/login/forgot">
+                                Reset your password
+                            </a>
+                        </div>
+                    </p>
+                </div>
+                <div className="row">
+                    <div className="col-sm-4">
+                        <div className="panel panel-default">
+                            <div className="panel-body">
+                                <h3>About us</h3>
+                                <p>
+                                    At vero eos et accusamus et iusto odio
+                                    dignissimos ducimus qui blanditiis
+                                    praesentium voluptatum deleniti atque
+                                    corrupti.
+                                </p>
+                                <a href="/about" className="btn btn-default btn-block">
+                                    Learn more
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm-4">
+                        <div className="panel panel-default">
+                            <div className="panel-body">
+                                <h3>Sign up</h3>
+                                <p>
+                                    At vero eos et accusamus et iusto odio
+                                    dignissimos ducimus qui blanditiis
+                                    praesentium voluptatum deleniti atque
+                                    corrupti.
+                                </p>
+                                <a href="/signup" className="btn btn-default btn-block">
+                                    Learn more
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm-4">
+                        <div className="panel panel-default">
+                            <div className="panel-body">
+                                <h3>Contact us</h3>
+                                <p>
+                                    At vero eos et accusamus et iusto odio
+                                    dignissimos ducimus qui blanditiis
+                                    praesentium voluptatum deleniti atque
+                                    corrupti.
+                                </p>
+                                <a href="/contact" className="btn btn-default btn-block">
+                                    Learn more
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Layout>
+            
         );
     }
-});
+};
 
-module.exports = Index;
+export default Index;
+
+/*
+
+
+import React, { Component } from 'react';
+import Layout from '../layouts/Default.jsx';
+
+
+export default class Index extends Component {
+
+    render() {
+
+        const neck = <link rel='stylesheet' href="/public/pages/home.min.css" />;
+
+        //
+        return (
+            <Layout
+                title="Aqua"
+                neck={neck}
+                activeTab="home">
+
+                <div className="jumbotron">
+                    <h1>Success</h1>
+                    <p className="lead">
+                        Your Node.js website and user system is running. May
+                        the force be with you.
+
+                        <div>
+                            <a className="btn btn-primary btn-lg" href="/signup">
+                                Create an account
+                            </a>
+                            &nbsp; or &nbsp;
+                            <a className="btn btn-warning btn-lg" href="/login/forgot">
+                                Reset your password
+                            </a>
+                        </div>
+                    </p>
+                </div>
+                <div className="row">
+                    <div className="col-sm-4">
+                        <div className="panel panel-default">
+                            <div className="panel-body">
+                                <h3>About us</h3>
+                                <p>
+                                    At vero eos et accusamus et iusto odio
+                                    dignissimos ducimus qui blanditiis
+                                    praesentium voluptatum deleniti atque
+                                    corrupti.
+                                </p>
+                                <a href="/about" className="btn btn-default btn-block">
+                                    Learn more
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm-4">
+                        <div className="panel panel-default">
+                            <div className="panel-body">
+                                <h3>Sign up</h3>
+                                <p>
+                                    At vero eos et accusamus et iusto odio
+                                    dignissimos ducimus qui blanditiis
+                                    praesentium voluptatum deleniti atque
+                                    corrupti.
+                                </p>
+                                <a href="/signup" className="btn btn-default btn-block">
+                                    Learn more
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm-4">
+                        <div className="panel panel-default">
+                            <div className="panel-body">
+                                <h3>Contact us</h3>
+                                <p>
+                                    At vero eos et accusamus et iusto odio
+                                    dignissimos ducimus qui blanditiis
+                                    praesentium voluptatum deleniti atque
+                                    corrupti.
+                                </p>
+                                <a href="/contact" className="btn btn-default btn-block">
+                                    Learn more
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Layout>
+        );
+    }
+}
+
+Index.displayName = displayName;
+*/
