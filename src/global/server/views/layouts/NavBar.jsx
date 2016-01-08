@@ -19,11 +19,7 @@ class NavBar extends Component {
                 <div className="container">
                     <div className="navbar-header">
                         <a className="navbar-brand" href="/">
-                            <img
-                                className="navbar-logo"
-                                src="/public/media/logo-square.png"
-                            />
-                            <span className="navbar-brand-label">Aqua</span>
+                            <img className="navbar-logo" src="/assets/logo-square.png" height="64" width="64" />
                         </a>
                     </div>
                     <div className="navbar-collapse collapse">
