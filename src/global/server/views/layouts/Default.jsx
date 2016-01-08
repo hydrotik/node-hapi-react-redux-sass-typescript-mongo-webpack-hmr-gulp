@@ -12,10 +12,9 @@ class Default extends Component {
                     <title>{this.props.title}</title>
                     <meta charSet="utf-8" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                    <link rel="stylesheet" href="/public/core.min.css" />
-                    <link rel="stylesheet" href="/public/layouts/default.min.css" />
-                    <link rel="shortcut icon" href="/public/media/favicon.ico" />
-                    {this.props.neck}
+                    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"></link>
+                    <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'></link>
+                    <link rel="shortcut icon" href="media/favicon.ico" />
                 </head>
                 <body>
                     <NavBar activeTab={this.props.activeTab} />
@@ -36,7 +35,7 @@ class Default extends Component {
                             <div className="clearfix"></div>
                         </div>
                     </div>
-                    <script src="/public/core.min.js"></script>
+                    {this.props.script}
                     {this.props.feet}
                 </body>
             </html>

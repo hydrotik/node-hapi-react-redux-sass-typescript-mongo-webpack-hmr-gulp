@@ -41,17 +41,19 @@ class Index extends Component {
 
     render() {
 
-        const neck = <link rel='stylesheet' href="/public/pages/home.min.css" />;
+        const script = <script src={this.props.js}></script>;
 
         return (
             <Layout
                 title="Aqua"
-                neck={neck}
+                script={script}
                 activeTab="home">
+
+                <div id="app"></div>
 
                 <div className="jumbotron">
                     <h1>Success</h1>
-                    <p className="lead">
+                    <div className="lead">
                         Your Node.js website and user system is running. May
                         the force be with you.
 
@@ -64,7 +66,7 @@ class Index extends Component {
                                 Reset your password
                             </a>
                         </div>
-                    </p>
+                    </div>
                 </div>
                 <div className="row">
                     <div className="col-sm-4">
