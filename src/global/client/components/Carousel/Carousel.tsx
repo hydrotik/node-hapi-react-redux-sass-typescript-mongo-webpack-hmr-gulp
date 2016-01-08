@@ -58,7 +58,6 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
 
     public constructor(props: any) {
         super(props);
-        this.handleRefreshClick = this.handleRefreshClick.bind(this);
     }
 
     public componentDidMount(): void {
@@ -68,7 +67,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
 
     public render(): React.ReactElement<{}> {
 
-        const {slides, isFetching, lastUpdated }: ICarouselState = this.props;
+        const {slides }: ICarouselState = this.props;
 
         /* tslint:disable:no-unused-variable */
         const settings: Object = {
@@ -83,32 +82,12 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
 
         return (
             <div className='carousel'>
-                <p>
-                  {lastUpdated &&
-                    <span>
-                      Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
-                    </span>
-                  }
-                  {!isFetching &&
-                    <a href='#'
-                       onClick={this.handleRefreshClick}>
-                      Refresh
-                    </a>
-                  }
-                </p>
                 <Slider {... settings}>
                     {map(slides, this.renderCarouselSlide)}
                 </Slider>
             </div>
         );
     }
-
-    private handleRefreshClick(e: any): void {
-        e.preventDefault();
-        const {dispatch}: ICarouselProps = this.props;
-        dispatch(fetchContentIfNeeded(CAROUSEL, true));
-    }
-
 
     private renderCarouselSlide(item: any, i: number): React.ReactElement<{}> {
         return (<div key={i}>
