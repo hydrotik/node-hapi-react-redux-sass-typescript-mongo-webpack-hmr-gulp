@@ -50,7 +50,7 @@ stop() {
 }
 start() {
     echo "Starting Mongo!"
-    mongod --dbpath "${WDIR}${mongod_data}" &
+    mongod --dbpath "${WDIR}${mongod_data}" --logpath "${WDIR}${mongod_log}" --logappend --quiet  &
     echo $! > $PIDFILE
     exit 0
     # grep_mongo=`ps aux | grep -v grep | grep "${mongod}"`

@@ -64,7 +64,6 @@ var manifest = {
 
 Object.assign(manifest.plugins, Routes);
 
-if(Config.get('/useMongo').toLowerCase() != 'no'){
     var hapiMongoModels = {
         'hapi-mongo-models': {
             mongodb: Config.get('/hapiMongoModels/mongodb'),
@@ -81,7 +80,7 @@ if(Config.get('/useMongo').toLowerCase() != 'no'){
         }
     }
     Object.assign(manifest.plugins, hapiMongoModels);
-}
+
 
 var store = new Confidence.Store(manifest);
 

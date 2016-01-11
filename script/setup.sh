@@ -277,6 +277,18 @@ fi
 echo "$(echo_effect)NPM install and setup complete $(echo_if 1)$(echo_clear)"
 
 
+
+
+
+
+#########################################################################################
+# Start MongoDB
+#
+echo "$(echo_effect)Starting MongoDB $(echo_if 1)$(echo_clear)"
+run 'npm run mongo-start' &
+MONGO_PID=$!
+wait $MONGO_PID
+
 #########################################################################################
 # Config Setup using Promptly in ./setup.js
 #
@@ -303,6 +315,11 @@ else
     fi
 fi
 
+
+#########################################################################################
+# Stop MongoDB
+#
+npm run 'mongo-stop'
 
 
 #########################################################################################

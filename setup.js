@@ -64,16 +64,9 @@ Async.auto({
 
         Promptly.prompt('MongoDB URL: (mongodb://localhost:27017/wattsproject)', promptOptions, done);
     }],
-
-    useMongo: ['mongodbUrl', function (done, results) {
-
-        Promptly.prompt('Test and use Mongo Connection: (No)', { default: 'No' }, done);
-    }],
     
-    runMongoTest: ['useMongo', function (done, results) {
-        if(results.useMongo.toLowerCase() === 'no'){
-            done(null, true);
-        }else{
+    runMongoTest: ['mongodbUrl', function (done, results) {
+
             Mongodb.MongoClient.connect(results.mongodbUrl, {}, function (err, db) {
 
                 if (err) {
@@ -84,7 +77,6 @@ Async.auto({
                 db.close();
                 done(null, true);
             });
-        }
     }],
     
     rootEmail: ['runMongoTest', function (done, results) {
@@ -139,9 +131,6 @@ Async.auto({
         });
     }],
     setupRootUser: ['createConfig', function (done, results) {
-        if(results.useMongo.toLowerCase() === 'no'){
-            done(null, true);
-        }else{
             var BaseModel = require('hapi-mongo-models').BaseModel;
             var User = require('./src/global/server/models/user');
             var Admin = require('./src/global//server/models/admin');
@@ -224,7 +213,6 @@ Async.auto({
 
                 done(null, true);
             });
-        }
     }]
 }, function (err, results) {
 
