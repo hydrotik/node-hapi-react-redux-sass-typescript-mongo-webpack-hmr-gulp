@@ -1,18 +1,19 @@
-/// <reference path='../../../../../typings/tsd.d.ts' />
-/* tslint:disable:no-unused-variable */
+/// <reference path='../../../../../../../typings/tsd.d.ts' />
+
+// Core Imports
 import * as React from 'react';
-import { map } from 'lodash';
-import './_App.scss';
-import { Header } from '../../components/Header/Header.tsx';
-import { Carousel } from '../../components/Carousel/Carousel.tsx';
-
-import { Footer } from '../../components/Footer/Footer.tsx';
-
 import { connect } from 'react-redux';
+// Styles
+import './_App.scss';
+// Page Components
+import { Header } from '../../components/Header/Header.tsx';
+import { Footer } from '../../components/Footer/Footer.tsx';
+import { Carousel } from '../../components/Carousel/Carousel.tsx';
+// Behaviors and Actions
 import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions.ts';
 import { IEditorialReducer } from '../../reducers/reducers.ts';
 
-
+// Interfaces
 interface IAppProps {
     dispatch?: (func: any) => void;
     isFetching?: boolean;
@@ -20,13 +21,13 @@ interface IAppProps {
     editorial?: any;
     store?: any;
 }
-
 interface IAppState {
     editorial?: any;
     isFetching?: boolean;
     lastUpdated?: number;
 }
 
+// Decorators
 function select(state: { editorialContent: IEditorialReducer; }): IAppState {
     const { editorialContent }: { editorialContent: IEditorialReducer; } = state;
     const {
@@ -52,24 +53,9 @@ export class App extends React.Component<IAppProps, IAppState> {
     public componentDidMount(): void {
         const {dispatch}: IAppProps = this.props;
         dispatch(fetchContentIfNeeded(EDITORIAL));
-
-        // if (ExecutionEnvironment.canUseDOM) {
-        // window.addEventListener('scroll', this.handleScroll);
-        // }
-
-        // window.addEventListener('scroll', (event: any) => {
-        //    this.setState({ rect: document.documentElement.getBoundingClientRect() });
-        // });
-    }
-
-    public componentWillUnmount(): void {
-        // window.removeEventListener('scroll', this.handleScroll);
     }
 
     public render(): React.ReactElement<{}> {
-
-        let gutter: number = 20;
-
         return (
             <div className = 'app'>
                 <Header />
@@ -78,6 +64,4 @@ export class App extends React.Component<IAppProps, IAppState> {
             </div>
         );
     }
-
-    /* tslint:enable:no-unused-variable */
 }

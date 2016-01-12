@@ -1,18 +1,18 @@
-/// <reference path="../../../typings/tsd.d.ts" />
+/// <reference path="../../../../../typings/tsd.d.ts" />
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { App } from './components/app/App.tsx';
 
-import './scss/app.scss';
+import '../../scss/app.scss';
 
 import { Store, createStore, applyMiddleware} from 'redux';
 import { Provider } from 'react-redux';
 
 import { rootReducer } from './reducers/reducers';
 
-import { createLogger } from './utils/redux-logger';
-import { thunkMiddleware } from './utils/redux-thunk';
+import { createLogger } from '../../utils/redux-logger';
+import { thunkMiddleware } from '../../utils/redux-thunk';
 // import { promiseMiddleware } from './utils/redux-promise';
 
 const logger: any = createLogger();

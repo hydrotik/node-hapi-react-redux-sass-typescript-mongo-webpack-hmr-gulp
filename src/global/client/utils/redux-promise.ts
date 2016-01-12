@@ -1,7 +1,6 @@
 /// <reference path="../../../../typings/tsd.d.ts" />
 
 import * as lodash from 'lodash';
-
 var _fluxStandardAction = require('flux-standard-action');
 
 function isPromise(val) {

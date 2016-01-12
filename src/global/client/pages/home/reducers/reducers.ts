@@ -1,4 +1,4 @@
-/// <reference path="../../../../typings/tsd.d.ts" />
+/// <reference path="../../../../../../typings/tsd.d.ts" />
 
 import * as lodash from 'lodash';
 import { Reducer, combineReducers } from 'redux';
@@ -22,7 +22,6 @@ import {
 } from '../actions/actions.ts';
 
 /* animation */
-
 export interface IToggleReducer {
     on?: boolean;
 }
