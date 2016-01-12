@@ -50,9 +50,6 @@ var manifest = {
             relativeTo: __dirname,
             path: "./src/global/server/views/"
         },
-        '@tanepiper/quorra' : {
-
-        },
 
         // BUILD
         './global/server/misc/build': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
