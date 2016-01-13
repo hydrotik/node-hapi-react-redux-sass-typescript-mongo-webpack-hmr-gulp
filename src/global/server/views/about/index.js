@@ -8,8 +8,11 @@ exports.register = function (plugin, options, next) {
 
     options = Hoek.applyToDefaults({ basePath: '' }, options);
 
-    var js = options.artifactRoot + path.join('js', util.format(options.bundleName + '.%s.js', pkg.version))
-    var css = options.artifactRoot + path.join('css', util.format(options.bundleName + '.%s.css', pkg.version));
+    //var js = options.artifactRoot + path.join('js', util.format(options.bundleName + '.%s.js', pkg.version))
+    //var css = options.artifactRoot + path.join('css', util.format(options.bundleName + '.%s.css', pkg.version));
+
+    var js = options.artifactRoot + path.join('js', 'about.min.js')
+    var css = options.artifactRoot + path.join('css', 'about.min.css');
 
     plugin.route({
         method: 'GET',

@@ -60,16 +60,23 @@ cssLoader = [
 
 module.exports = {
     devtool: 'inline-source-map',
-    entry: [
-        'webpack-dev-server/client?http://localhost:8080',
-        'webpack/hot/only-dev-server',
-        /*path.resolve(__dirname, './app/views/Index'),*/
-        path.resolve(__dirname, './src/global/client/pages/home/index')
-    ],
+    entry: {
+        home: [
+            'webpack-dev-server/client?http://localhost:8080',
+            'webpack/hot/only-dev-server',
+            path.resolve(__dirname, './src/global/client/pages/home/index'),
+        ],
+        about: [
+            'webpack-dev-server/client?http://localhost:8080',
+            'webpack/hot/only-dev-server',
+            path.resolve(__dirname, './src/global/client/pages/about/index')
+        ],
+        /* etc */
+    },
     output: {
         path: buildDir,
-        filename: jsBundle,
-        sourceMapFilename: jsMapBundle,
+        filename: 'js/[name].min.js',
+        sourceMapFilename: 'js/[name].min.map',
         publicPath: "http://localhost:8080/",
         devtoolModuleFilenameTemplate: "../[resource-path]",
         devtoolFallbackModuleFilenameTemplate:"../[resource-path]"

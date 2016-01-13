@@ -13,6 +13,8 @@ class Index extends Component {
                 script={script}
                 activeTab="about">
 
+                <div id="app"></div>
+
                 <div className="row">
                     <div className="col-sm-6">
                         <h1 className="page-header">About us</h1>
