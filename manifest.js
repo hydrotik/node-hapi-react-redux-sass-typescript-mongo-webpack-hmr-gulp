@@ -3,6 +3,8 @@ var Config = require('./config');
 var Routes = require('./config.routes').routes;
 var pkg = require('./package');
 
+var HapiTypescriptViews = require('./src/global/server/plugins/hapi-typescript-views');
+
 var criteria = {
     env: process.env.NODE_ENV
 };
@@ -42,7 +44,7 @@ var manifest = {
         'visionary': {
             engines: {
               jsx: "hapi-react-views",
-              tsx: "hapi-react-views"
+              tsx: HapiTypescriptViews
             },
             compileOptions: {
                 useNodeJsx: false

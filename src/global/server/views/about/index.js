@@ -26,7 +26,7 @@ exports.register = function (plugin, options, next) {
                 css: css
             }
 
-            response.view('about/Index.jsx', props);
+            response.view('about/Index.ts.tsx', props);
         },
         config: {
             cors: true

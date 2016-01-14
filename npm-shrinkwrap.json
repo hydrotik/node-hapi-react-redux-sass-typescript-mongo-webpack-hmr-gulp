@@ -8849,6 +8849,18 @@
       "from": "typescript-parser.jsx@*",
       "resolved": "http://registry.npmjs.org/typescript-parser.jsx/-/typescript-parser.jsx-0.1.0.tgz"
     },
+    "typescript-simple": {
+      "version": "3.0.2",
+      "from": "typescript-simple@*",
+      "resolved": "http://registry.npmjs.org/typescript-simple/-/typescript-simple-3.0.2.tgz",
+      "dependencies": {
+        "typescript": {
+          "version": "1.7.5",
+          "from": "typescript@>=1.6.2 <2.0.0",
+          "resolved": "http://registry.npmjs.org/typescript/-/typescript-1.7.5.tgz"
+        }
+      }
+    },
     "typical": {
       "version": "2.4.1",
       "from": "typical@>=2.2.0 <3.0.0",

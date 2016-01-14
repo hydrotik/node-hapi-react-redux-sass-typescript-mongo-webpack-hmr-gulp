@@ -8,7 +8,8 @@
     "inlineSourceMap": true,
     "inlineSources": false,
     "sourceMap": false,
-    "sourceRoot" : "global/client/"
+    "sourceRoot" : "global/client/",
+    "removeComments": true
   },
   "exclude" : ["node_modules", "config", "dev_server.js"]
 }

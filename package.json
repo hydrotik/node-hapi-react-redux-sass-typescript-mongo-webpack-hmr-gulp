@@ -91,6 +91,7 @@
     "superagent": "^1.4.0",
     "susy": "^2.2.6",
     "typescript-parser.jsx": "^0.1.0",
+    "typescript-simple": "^3.0.2",
     "vision": "^3.0.0",
     "visionary": "^3.0.1"
   },
@@ -181,6 +182,7 @@
     "tslint-eslint-rules": "^0.3.0",
     "tslint-loader": "^1.0.2",
     "typescript": "^1.8.0-dev.20151211",
+    "uglify-js": "^2.6.1",
     "webdriverio": "^3.3.0",
     "webdriverrtc": "^0.1.0",
     "webpack": "^1.12.3",
