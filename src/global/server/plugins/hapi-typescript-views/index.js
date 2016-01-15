@@ -18,11 +18,12 @@ const EXT_REGEX = new RegExp('\\.tsx$');
 const DEFAULTS = {
     doctype: '<!DOCTYPE html>',
     renderMethod: 'renderToStaticMarkup',
-    removeCache: process.env.NODE_ENV !== 'production'
+    removeCache: process.env.NODE_ENV !== 'production',
+    removeComments: true
 };
 
 const compile = function compile(template, compileOpts) {
-    console.log('Hapi Typescript:::::::::');
+    console.log('\n\nHapi Typescript ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::');
     compileOpts = Hoek.applyToDefaults(TypescriptOptions, compileOpts);
     compileOpts = Hoek.applyToDefaults(DEFAULTS, compileOpts);
 
@@ -31,10 +32,12 @@ const compile = function compile(template, compileOpts) {
         renderOpts = Hoek.applyToDefaults(compileOpts, renderOpts);
 
         let output = renderOpts.doctype;
-
+        console.log('\n\nfilename =================================================================================');
         console.log(compileOpts.filename);
 
-        //let Component = require(compileOpts.filename);
+        // let c = require(compileOpts.filename);
+        // console.log('\n\nRequire Component ========================================================================');
+        // console.log(c);
 
         fs.readFile(compileOpts.filename, function (err, data) {
             if (err) {
@@ -42,28 +45,34 @@ const compile = function compile(template, compileOpts) {
             }
             let Component = data.toString();
 
-            console.log('transpiling typescript');
+            console.log('\n\ntranspiling typescript');
 
             try {
                 // let tsoutput = TypescriptSimple(Component);
                 let tsoutput = TypeScript.transpile(Component, compileOpts, /*fileName*/ compileOpts.filename, /*diagnostics*/ undefined);
+                console.log('\n\nTypescript ===============================================================================');
+                console.log(tsoutput);
+
+                console.log('eval?:');
+                console.log(JSON.parse(tsoutput).Index);
 
                 let Element = React.createFactory(tsoutput);
-                console.log('Element =======================================================');
-                // console.log(Element);
+                console.log('\n\nElement ==================================================================================');
+                console.log(Element);
+
                 let ElContext = Element(context);
-                console.log('Element Context ===============================================');
-                // console.log(ElContext);
+                console.log('\n\nElement Context ==========================================================================');
+                console.log(ElContext);
 
 
                 // output += '<html><head><title>OUTPUT HERE HELLO WORLD</title></head></html>';
 
 
                 let o = ReactDOMServer.renderToStaticMarkup(ElContext);
-                console.log('o');
+                console.log('\n\nrenderToStaticMarkup =====================================================================');
                 console.log(o);
                 output += o;
-                console.log('output ========================================================');
+                console.log('\n\noutput ===================================================================================');
                 console.log(output);
             } catch (e) {
                 console.error(e); // Error: L1: Type 'string' is not assignable to type 'number'.

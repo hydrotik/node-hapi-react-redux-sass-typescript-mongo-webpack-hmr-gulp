@@ -10,7 +10,6 @@ require('babel-core/register')({
     presets: ['react', 'es2015']
 });
 
-
 Composer(function (err, server) {
 
     if (err) {
