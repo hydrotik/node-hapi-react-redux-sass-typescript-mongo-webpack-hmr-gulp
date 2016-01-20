@@ -19,12 +19,16 @@ const DEFAULTS = {
     doctype: '<!DOCTYPE html>',
     renderMethod: 'renderToStaticMarkup',
     removeCache: process.env.NODE_ENV !== 'production',
-    removeComments: true
+    removeComments: true,
+    jsx : "react",
+    emitRequireType: false,
+    experimentalDecorators: true,
+    module : "commonjs"
 };
 
 const compile = function compile(template, compileOpts) {
     console.log('\n\nHapi Typescript ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::');
-    compileOpts = Hoek.applyToDefaults(TypescriptOptions, compileOpts);
+    //compileOpts = Hoek.applyToDefaults(TypescriptOptions, compileOpts);
     compileOpts = Hoek.applyToDefaults(DEFAULTS, compileOpts);
 
     return function runtime(context, renderOpts) {
@@ -47,29 +51,36 @@ const compile = function compile(template, compileOpts) {
 
             console.log('\n\ntranspiling typescript');
 
+            let compilerOptions =  {jsx: TypeScript.JsxEmit.React, module: TypeScript.ModuleKind.CommonJS, removeComments: true, noResolve: true};
+
             try {
                 // let tsoutput = TypescriptSimple(Component);
-                let tsoutput = TypeScript.transpile(Component, compileOpts, /*fileName*/ compileOpts.filename, /*diagnostics*/ undefined);
+                //let tsoutput = TypeScript.transpile(Component, compileOpts, /*fileName*/ compileOpts.filename, /*diagnostics*/ undefined);
+
+                let d = []; // for diagnostics
+                let tsoutput =  TypeScript.transpile(Component, compilerOptions, compileOpts.filename, d);
                 console.log('\n\nTypescript ===============================================================================');
                 console.log(tsoutput);
 
-                console.log('eval?:');
-                console.log(JSON.parse(tsoutput).Index);
-
                 let Element = React.createFactory(tsoutput);
                 console.log('\n\nElement ==================================================================================');
-                console.log(Element);
+                //console.log(Element);
 
                 let ElContext = Element(context);
                 console.log('\n\nElement Context ==========================================================================');
                 console.log(ElContext);
 
+                console.log('\n\ntest =====================================================================================');
+                let test = React.createElement(tsoutput); /*ReactDOMServer.renderToStaticMarkup(
+                    React.createElement(tsoutput)
+                );*/
+
+                //console.log(test);
 
                 // output += '<html><head><title>OUTPUT HERE HELLO WORLD</title></head></html>';
 
-
-                let o = ReactDOMServer.renderToStaticMarkup(ElContext);
                 console.log('\n\nrenderToStaticMarkup =====================================================================');
+                let o = ReactDOMServer.renderToStaticMarkup(ElContext);
                 console.log(o);
                 output += o;
                 console.log('\n\noutput ===================================================================================');

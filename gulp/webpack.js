@@ -3,6 +3,8 @@ var Gutil = require('gulp-util');
 var Webpack = require('webpack');
 var path = require('path');
 
+var config = require('../webpack.config.client-hot.js');
+
 var CommonsChunkPlugin = Webpack.optimize.CommonsChunkPlugin;
 var UglifyJsPlugin = Webpack.optimize.UglifyJsPlugin;
 var executionCount = 0;
@@ -10,6 +12,7 @@ var executionCount = 0;
 
 Gulp.task('webpack', function(callback) {
 
+    /*
     var config = {
         watch: global.isWatching,
         entry: {
@@ -59,7 +62,7 @@ Gulp.task('webpack', function(callback) {
             })
         ]
     };
-
+    */
     Webpack(config, function(err, stats) {
 
         if (err) {

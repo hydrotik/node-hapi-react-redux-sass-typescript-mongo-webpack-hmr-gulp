@@ -1,4 +1,4 @@
 var Gulp = require('gulp');
 
 
-Gulp.task('build', ['less', 'webpack', 'media']);
+Gulp.task('build', ['webpack', 'media']);
