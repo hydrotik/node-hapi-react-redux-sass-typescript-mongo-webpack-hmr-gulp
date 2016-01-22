@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target" : "ES5",
     "jsx" : "react",
-    "emitRequireType": false,
     "experimentalDecorators": true,
     "module" : "commonjs",
     "inlineSourceMap": true,

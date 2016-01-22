@@ -2,12 +2,11 @@ var Confidence = require('confidence');
 var Config = require('./config');
 var Routes = require('./config.routes').routes;
 var pkg = require('./package');
+var HapiTypescriptViews = require('./src/global/server/plugins/hapi-typescript-views');
 
 var criteria = {
     env: process.env.NODE_ENV
 };
-
-require('node-jsx').install();
 
 var helpers = {
     artifactRoot : process.env.NODE_ENV === 'production' ? '' : 'http://' + Config.get('/devHost') + ':' + Config.get('/webpackPort') + '/'
@@ -41,7 +40,8 @@ var manifest = {
         'vision': {},
         'visionary': {
             engines: {
-              jsx: "hapi-react-views"
+              jsx: "hapi-react-views",
+              tsx: HapiTypescriptViews
             },
             compileOptions: {
                 useNodeJsx: false
