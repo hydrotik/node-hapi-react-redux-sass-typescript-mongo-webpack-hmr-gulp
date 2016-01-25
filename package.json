@@ -95,6 +95,7 @@
     "visionary": "^3.0.1"
   },
   "devDependencies": {
+    "ansi-to-html": "^0.3.0",
     "autoprefixer": "^6.0.3",
     "awesome-typescript-loader": "^0.15.7",
     "babel": "^6.0.15",
