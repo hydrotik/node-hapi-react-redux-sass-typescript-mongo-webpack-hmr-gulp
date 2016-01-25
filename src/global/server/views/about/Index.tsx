@@ -25,10 +25,12 @@ class Index extends React.Component<IIndexProps, {}> {
                     <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'></link>
                     </head>
                 <body style={{ fontFamily: ['Varela Round', 'sans-serif'] }}>
-                    <div id="app"></div>
+                    <div id="app">HELLO BITCHES</div>
                     {script}
                     </body>
                 </html>
         );
     }
 }
+
+export default Index;

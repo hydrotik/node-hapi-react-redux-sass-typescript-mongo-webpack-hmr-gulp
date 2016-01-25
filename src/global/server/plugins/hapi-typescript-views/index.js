@@ -9,6 +9,7 @@ const fs = require('fs');
 const UglifyJS = require("uglify-js");
 
 const TypescriptOptions = require('../../../../../tsconfig.json');
+const vm = require('vm');
 
 // https://github.com/Microsoft/TypeScript/issues/5152
 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#transpiling-single-file
@@ -51,12 +52,7 @@ const compile = function compile(template, compileOpts) {
         // console.log('\n\nrcrf =================================================================================');
         // console.log(rcrf);
 
-
-        fs.readFile(compileOpts.filename, {encoding: 'utf8'}, function (err, data) {
-            if (err) {
-                throw err; 
-            }
-            let Component = data.toString();
+        let Component = fs.readFileSync(compileOpts.filename).toString();
 
             //console.log('\n\ntranspiling typescript');
 
@@ -68,45 +64,29 @@ const compile = function compile(template, compileOpts) {
             };
 
             try {
-                // let tsoutput = TypescriptSimple(Component);
-                //let tsoutput = TypeScript.transpile(Component, compileOpts, /*fileName*/ compileOpts.filename, /*diagnostics*/ undefined);
-
                 let d = []; // for diagnostics
-                let tsoutput =  TypeScript.transpile(Component, compilerOptions, compileOpts.filename, d);
-                console.log('\n\nTypeScript.transpile() ===================================================================');
-                console.log(tsoutput);
 
-                let Element = React.createFactory(tsoutput);
-                console.log('\n\nReact.createFactory() ====================================================================');
-                console.log(Element);
+                var m = require('module');
+
+                let tss =  TypeScript.transpile(Component, compilerOptions, compileOpts.filename, d);
+
+                let tsexec =  eval(tss);
+
+                let Element = React.createFactory(tsexec);
 
                 let ElContext = Element(context);
-                console.log('\n\nElement(context) =========================================================================');
-                console.log(ElContext);
 
-                //console.log('\n\ntest =====================================================================================');
-                // let test = ReactDOMServer.renderToStaticMarkup(
-                //     React.createElement(tsoutput)
-                // );
-
-                //console.log(test);
-
-                // output += '<html><head><title>OUTPUT HERE HELLO WORLD</title></head></html>';
-
-                console.log('\n\nReactDOMServer.renderToStaticMarkup( ======================================================');
+                console.log('\n\nReactDOMServer.renderToStaticMarkup() ====================================================');
                 let o = ReactDOMServer.renderToStaticMarkup(ElContext);
-                //console.log(o);
-                //output += o;
-                //console.log('\n\noutput ===================================================================================');
-                //console.log(output);
+                console.log(o);
+                output += o;
+                console.log('\n\noutput ===================================================================================');
+                console.log(output);
             } catch (e) {
                 console.error(e); // Error: L1: Type 'string' is not assignable to type 'number'.
             }
-
-            return output;
-
-        });
-
+        
+        return output;
         
         /*
 
