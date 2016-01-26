@@ -1,7 +1,7 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
 import * as React from 'react';
-import Layout from '/Users/dadams/Desktop/DDO Framework/src/global/server/views/layouts/Default.tsx';
+import Layout from '../layouts/Default.tsx';
 
 interface IIndexProps {
     title?: string;
