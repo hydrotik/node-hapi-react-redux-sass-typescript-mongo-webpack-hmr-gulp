@@ -19,10 +19,11 @@ const DEFAULTS = {
     doctype: '<!DOCTYPE html>',
     renderMethod: 'renderToStaticMarkup',
     removeCache: process.env.NODE_ENV !== 'production',
-    removeComments: true,
-    jsx : "react",
     experimentalDecorators: true,
-    module : "commonjs"
+    target:TypeScript.ScriptTarget.ES5,
+    jsx: TypeScript.JsxEmit.React,
+    module: TypeScript.ModuleKind.CommonJS,
+    removeComments: true
 };
 
 const compile = function compile(template, compileOpts) {
@@ -37,18 +38,10 @@ const compile = function compile(template, compileOpts) {
 
         let Component = fs.readFileSync(compileOpts.filename).toString();
 
-            let compilerOptions =  {
-                target:TypeScript.ScriptTarget.ES5,
-                jsx: TypeScript.JsxEmit.React,
-                module: TypeScript.ModuleKind.CommonJS,
-                removeComments: true,
-                rootDir : './src/global/server/views'
-            };
-
             try {
                 let d = []; // for diagnostics
 
-                let tss =  TypeScript.transpile(Component, compilerOptions, compileOpts.filename, d);
+                let tss =  TypeScript.transpile(Component, compileOpts, compileOpts.filename, d);
 
                 let tsexec =  eval(tss);
 
@@ -56,7 +49,7 @@ const compile = function compile(template, compileOpts) {
 
                 let ElContext = Element(context);
 
-                output += ReactDOMServer.renderToStaticMarkup(ElContext);
+                output += ReactDOMServer[compileOpts.renderMethod](ElContext);
             } catch (e) {
                 console.error(e); // Error: L1: Type 'string' is not assignable to type 'number'.
 

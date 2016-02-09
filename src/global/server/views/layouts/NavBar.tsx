@@ -3,8 +3,11 @@
 import * as React from 'react';
 import ClassNames from 'classnames';
 
+interface INavBarProps {
+    activeTab?: string;
+}
 
-class NavBar extends React.Component<{}, {}> {
+class NavBar extends React.Component<INavBarProps, {}> {
 
     public render(): React.ReactElement<{}> {
 

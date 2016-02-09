@@ -1,9 +1,9 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
 import * as React from 'react';
-// import NavBar from './NavBar.jsx';
+// import NavBar from './NavBar.jsx'; // <NavBar activeTab={this.props.activeTab} />
 
-interface IIndexProps {
+interface IDefaultProps {
     title?: string;
     activeTab?: string;
     js?: string;
@@ -12,15 +12,14 @@ interface IIndexProps {
     feet?: any;
 }
 
-class Default extends React.Component<IDefaultProps, {}> {
+class Layout extends React.Component<{}, {}> {
     public render(): React.ReactElement<{}> {
 
-        const script = <script src={this.props.js}></script>;
-
         return (
+            <div>Hello Template </div>
             <html>
                 <head>
-                    <title>{this.props.title}</title>
+                    <title>TEST {this.props.title}</title>
                     <meta charSet="utf-8" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"></link>
@@ -28,7 +27,6 @@ class Default extends React.Component<IDefaultProps, {}> {
                     <link rel="shortcut icon" href="favicon.ico" />
                 </head>
                 <body>
-                    {/* <NavBar activeTab={this.props.activeTab} /> */}
                     <div className="page">
                         <div className="container">
                             {this.props.children}
@@ -54,4 +52,4 @@ class Default extends React.Component<IDefaultProps, {}> {
     }
 }
 
-export default Default;
+export default Layout;
