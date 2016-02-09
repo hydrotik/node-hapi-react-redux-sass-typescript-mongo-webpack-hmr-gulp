@@ -11,10 +11,6 @@ const UglifyJS = require("uglify-js");
 const Convert = require('ansi-to-html');
 const convert = new Convert();
 
-const TypescriptOptions = require('../../../../../tsconfig.json');
-
-const EXT_REGEX = new RegExp('\\.tsx$');
-
 const DEFAULTS = {
     doctype: '<!DOCTYPE html>',
     renderMethod: 'renderToStaticMarkup',
@@ -23,7 +19,8 @@ const DEFAULTS = {
     target:TypeScript.ScriptTarget.ES5,
     jsx: TypeScript.JsxEmit.React,
     module: TypeScript.ModuleKind.CommonJS,
-    removeComments: true
+    removeComments: true,
+    noEmit: true
 };
 
 const compile = function compile(template, compileOpts) {
@@ -41,11 +38,24 @@ const compile = function compile(template, compileOpts) {
             try {
                 let d = []; // for diagnostics
 
-                let tss =  TypeScript.transpile(Component, compileOpts, compileOpts.filename, d);
+                //let tss =  TypeScript.transpile(Component, compileOpts, compileOpts.filename, d);
+                //let tsexec =  eval(tss);
 
-                let tsexec =  eval(tss);
+                let files = [];
 
-                let Element = React.createFactory(tsexec);
+                files.push(compileOpts.filename);
+
+                // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#a-minimal-compiler
+                // https://github.com/Microsoft/TypeScript/wiki/Compiler-Options
+                // http://json.schemastore.org/tsconfig
+
+                let program = TypeScript.createProgram(files, compileOpts);
+                let emitResult = program.emit();
+
+                console.log(emitResult);
+
+                //let Element = React.createFactory(tsexec);
+                let Element = React.createFactory(emitResult);
 
                 let ElContext = Element(context);
 

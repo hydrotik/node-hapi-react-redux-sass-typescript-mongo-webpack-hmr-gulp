@@ -18,7 +18,7 @@ exports.register = function (plugin, options, next) {
         method: 'GET',
         path: '/',
         handler: function(request, response) {
-        	console.log('LOADING INDEX/HOME');
+            console.log('LOADING INDEX/HOME');
 
             var props = {
                 title: 'Boilerplate Test',
@@ -26,7 +26,7 @@ exports.register = function (plugin, options, next) {
                 css: css
             }
 
-            response.view('home/Index.jsx', props);
+            response.view('home/Index.tsx', props);
         },
         config: {
             cors: true
@@ -39,5 +39,5 @@ exports.register = function (plugin, options, next) {
 
 
 exports.register.attributes = {
-	pkg: require('./package.json')
+    pkg: require('./package.json')
 };
