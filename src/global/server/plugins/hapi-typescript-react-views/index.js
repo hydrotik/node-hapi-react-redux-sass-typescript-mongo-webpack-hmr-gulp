@@ -20,7 +20,8 @@ const DEFAULTS = {
     jsx: TypeScript.JsxEmit.React,
     module: TypeScript.ModuleKind.CommonJS,
     removeComments: true,
-    noEmit: true
+    noEmit: false,
+    outFile: 'output.js'
 };
 
 const compile = function compile(template, compileOpts) {
@@ -33,33 +34,51 @@ const compile = function compile(template, compileOpts) {
 
         let output = renderOpts.doctype;
 
-        let Component = fs.readFileSync(compileOpts.filename).toString();
+        //let Component = fs.readFileSync(compileOpTypeScript.filename).toString();
 
             try {
                 let d = []; // for diagnostics
 
-                //let tss =  TypeScript.transpile(Component, compileOpts, compileOpts.filename, d);
+                //let tss =  TypeScript.transpile(Component, compileOpts, compileOpTypeScript.filename, d);
                 //let tsexec =  eval(tss);
 
-                let files = [];
-
-                files.push(compileOpts.filename);
+                
 
                 // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#a-minimal-compiler
                 // https://github.com/Microsoft/TypeScript/wiki/Compiler-Options
                 // http://json.schemastore.org/tsconfig
+
+                let files = [];
+                files.push(compileOpts.filename);
 
                 let program = TypeScript.createProgram(files, compileOpts);
                 let emitResult = program.emit();
 
                 console.log(emitResult);
 
+                //let c = compileTypeScript(files, ['./src/global/server/views/home/'], compileOpts);
+
+                
+
                 //let Element = React.createFactory(tsexec);
-                let Element = React.createFactory(emitResult);
+                //let Element = React.createFactory(emitResult);
 
-                let ElContext = Element(context);
+                //let ElContext = Element(context);
 
-                output += ReactDOMServer[compileOpts.renderMethod](ElContext);
+                
+
+                output += '<pre>';
+
+                for (var prop in emitResult) {
+                    output += prop + ': ' + emitResult[prop] + '\r';
+                }
+
+                output +=  '</pre>'; //ReactDOMServer[compileOpTypeScript.renderMethod](ElContext);
+
+
+
+
+
             } catch (e) {
                 console.error(e); // Error: L1: Type 'string' is not assignable to type 'number'.
 
@@ -68,8 +87,8 @@ const compile = function compile(template, compileOpts) {
                 output += '</head><body><p>' + compileOpts.filename + '</p><p>';
 
                 // for (var prop in e) {
-                //   console.log(e[prop]);
-                //   output += convert.toHtml(e[prop]);
+                //     console.log(e[prop]);
+                //     output += convert.toHtml(e[prop]);
                 // }
 
                 output += e.message;
@@ -82,6 +101,69 @@ const compile = function compile(template, compileOpts) {
         return output;
     };
 };
+
+function createCompilerHost(options, moduleSearchLocations) {
+    return {
+        getSourceFile,
+        getDefaultLibFileName: () => "lib.d.ts",
+        writeFile,
+        getCurrentDirectory: () => TypeScript.sys.getCurrentDirectory(),
+        getCanonicalFileName: fileName => TypeScript.sys.useCaseSensitiveFileNames ? fileName : fileName.toLowerCase(),
+        getNewLine: () => TypeScript.sys.newLine,
+        useCaseSensitiveFileNames: () => TypeScript.sys.useCaseSensitiveFileNames,
+        fileExists,
+        readFile,
+        resolveModuleNames
+    }
+
+    function writeFile(fileName, content) {
+        let c = TypeScript.sys.writeFile(fileName, content);
+        console.log(c);
+        return c;
+    }
+
+    function fileExists(fileName) {
+        let e = TypeScript.sys.fileExists(fileName);
+        return e;
+    }
+
+    function readFile(fileName) {
+        return TypeScript.sys.readFile(fileName);
+    }
+
+    function getSourceFile(fileName, languageVersion, onError) {
+        const sourceText = TypeScript.sys.readFile(fileName);
+        return sourceText !== undefined ? TypeScript.createSourceFile(fileName, sourceText, languageVersion) : undefined;
+    }
+
+    function resolveModuleNames(moduleNames, containingFile) {
+        return moduleNames.map(moduleName => {
+            // try to use standard resolution
+            let result = TypeScript.resolveModuleName(moduleName, containingFile, options, {fileExists, readFile});
+            if (result.resolvedModule) {
+                return result.resolvedModule;
+            }
+
+            // check fallback locations, for simplicity assume that module at location should be represented by '.d.ts' file
+            for (const location of moduleSearchLocations) {
+                const modulePath = path.join(location, moduleName + ".d.ts");
+                if (fileExists(modulePath)) {
+                    return { resolvedFileName: modulePath }
+                }
+            } 
+
+            return undefined;
+        });
+    }
+}
+
+function compileTypeScript(sourceFiles, moduleSearchLocations, compileOpts) {
+    const options = compileOpts;
+    const host = createCompilerHost(options, moduleSearchLocations);
+    const program = TypeScript.createProgram(sourceFiles, options);
+
+    return program;
+}
 
 
 module.exports = {
