@@ -18,7 +18,7 @@ const DEFAULTS = {
     experimentalDecorators: true,
     target:TypeScript.ScriptTarget.ES5,
     jsx: TypeScript.JsxEmit.React,
-    module: TypeScript.ModuleKind.CommonJS,
+    module: TypeScript.ModuleKind.AMD,
     removeComments: true,
     noEmit: false,
     outFile: 'output.js'
@@ -51,13 +51,14 @@ const compile = function compile(template, compileOpts) {
                 let files = [];
                 files.push(compileOpts.filename);
 
-                let program = TypeScript.createProgram(files, compileOpts);
-                let emitResult = program.emit();
+                //let program = TypeScript.createProgram(files, compileOpts);
+                //let emitResult = program.emit();
 
-                console.log(emitResult);
+                
 
-                //let c = compileTypeScript(files, ['./src/global/server/views/home/'], compileOpts);
+                let out = compileTypeScript(files, compileOpts);
 
+                console.log(out.emitResult);
                 
 
                 //let Element = React.createFactory(tsexec);
@@ -67,13 +68,16 @@ const compile = function compile(template, compileOpts) {
 
                 
 
-                output += '<pre>';
+                output += '<p>';
 
-                for (var prop in emitResult) {
-                    output += prop + ': ' + emitResult[prop] + '\r';
+                output += out.debug;
+
+                for (var prop in out.emitResult) {
+                    output += prop + ': ' + out.emitResult[prop] + '\r';
                 }
 
-                output +=  '</pre>'; //ReactDOMServer[compileOpTypeScript.renderMethod](ElContext);
+
+                output +=  '</p>'; //ReactDOMServer[compileOpTypeScript.renderMethod](ElContext);
 
 
 
@@ -90,7 +94,7 @@ const compile = function compile(template, compileOpts) {
                 //     console.log(e[prop]);
                 //     output += convert.toHtml(e[prop]);
                 // }
-
+                output += 'ERROR!!!!!';
                 output += e.message;
 
                 if(e.codeFrame != undefined || e.codeFrame != null) output += '<pre style="background-color:#666666">' + convert.toHtml(e.codeFrame) + '</pre>';
@@ -102,67 +106,30 @@ const compile = function compile(template, compileOpts) {
     };
 };
 
-function createCompilerHost(options, moduleSearchLocations) {
+function compileTypeScript(fileNames, options) {
+    let program = TypeScript.createProgram(fileNames, options);
+    let emitResult = program.emit();
+
+    let allDiagnostics = TypeScript.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
+
+    let debug = '';
+
+    allDiagnostics.forEach(diagnostic => {
+        let d = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start);
+        let line = d.line;
+        let character = d.character;
+        let message = TypeScript.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+        console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
+        debug += `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`;
+    });
+
+    let exitCode = emitResult.emitSkipped ? 1 : 0;
+    console.log(`Process exiting with code '${exitCode}'.`);
+
     return {
-        getSourceFile,
-        getDefaultLibFileName: () => "lib.d.ts",
-        writeFile,
-        getCurrentDirectory: () => TypeScript.sys.getCurrentDirectory(),
-        getCanonicalFileName: fileName => TypeScript.sys.useCaseSensitiveFileNames ? fileName : fileName.toLowerCase(),
-        getNewLine: () => TypeScript.sys.newLine,
-        useCaseSensitiveFileNames: () => TypeScript.sys.useCaseSensitiveFileNames,
-        fileExists,
-        readFile,
-        resolveModuleNames
-    }
-
-    function writeFile(fileName, content) {
-        let c = TypeScript.sys.writeFile(fileName, content);
-        console.log(c);
-        return c;
-    }
-
-    function fileExists(fileName) {
-        let e = TypeScript.sys.fileExists(fileName);
-        return e;
-    }
-
-    function readFile(fileName) {
-        return TypeScript.sys.readFile(fileName);
-    }
-
-    function getSourceFile(fileName, languageVersion, onError) {
-        const sourceText = TypeScript.sys.readFile(fileName);
-        return sourceText !== undefined ? TypeScript.createSourceFile(fileName, sourceText, languageVersion) : undefined;
-    }
-
-    function resolveModuleNames(moduleNames, containingFile) {
-        return moduleNames.map(moduleName => {
-            // try to use standard resolution
-            let result = TypeScript.resolveModuleName(moduleName, containingFile, options, {fileExists, readFile});
-            if (result.resolvedModule) {
-                return result.resolvedModule;
-            }
-
-            // check fallback locations, for simplicity assume that module at location should be represented by '.d.ts' file
-            for (const location of moduleSearchLocations) {
-                const modulePath = path.join(location, moduleName + ".d.ts");
-                if (fileExists(modulePath)) {
-                    return { resolvedFileName: modulePath }
-                }
-            } 
-
-            return undefined;
-        });
-    }
-}
-
-function compileTypeScript(sourceFiles, moduleSearchLocations, compileOpts) {
-    const options = compileOpts;
-    const host = createCompilerHost(options, moduleSearchLocations);
-    const program = TypeScript.createProgram(sourceFiles, options);
-
-    return program;
+        debug,
+        emitResult
+    };
 }
 
 

@@ -12,11 +12,10 @@ interface IDefaultProps {
     feet?: any;
 }
 
-class Layout extends React.Component<{}, {}> {
+class Layout extends React.Component<IDefaultProps, {}> {
     public render(): React.ReactElement<{}> {
 
         return (
-            <div>Hello Template </div>
             <html>
                 <head>
                     <title>TEST {this.props.title}</title>
