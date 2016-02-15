@@ -1,7 +1,7 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
 import * as React from 'react';
-// import NavBar from './NavBar.jsx'; // <NavBar activeTab={this.props.activeTab} />
+import NavBar from './NavBar';
 
 interface IDefaultProps {
     title?: string;
@@ -26,6 +26,7 @@ class Layout extends React.Component<IDefaultProps, {}> {
                     <link rel="shortcut icon" href="favicon.ico" />
                 </head>
                 <body>
+                    <NavBar activeTab={this.props.activeTab} />
                     <div className="page">
                         <div className="container">
                             {this.props.children}

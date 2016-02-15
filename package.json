@@ -38,6 +38,8 @@
     "url": ""
   },
   "dependencies": {
+    "amd-loader": "0.0.5",
+    "amdefine": "^1.0.0",
     "animate.css": "^3.4.0",
     "async": "^1.5.2",
     "bcrypt": "^0.8.5",
@@ -52,6 +54,7 @@
     "falcor-hapi": "0.0.2",
     "flux": "^2.1.1",
     "functional-easing": "^1.0.8",
+    "global-define": "^2.2.0",
     "glue": "^2.4.0",
     "hapi": "^11.1.0",
     "hapi-auth-basic": "^3.0.0",
@@ -84,6 +87,7 @@
     "react-track": "^0.3.0",
     "redux": "^3.0.4",
     "redux-promise": "^0.5.0",
+    "requirejs": "^2.1.22",
     "slick": "^1.12.2",
     "slick-carousel": "^1.5.8",
     "slug": "^0.9.1",

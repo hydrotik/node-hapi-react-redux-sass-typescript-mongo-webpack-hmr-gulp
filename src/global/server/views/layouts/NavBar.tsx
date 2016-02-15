@@ -1,7 +1,7 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
 import * as React from 'react';
-import ClassNames from 'classnames';
+import * as ClassNames from 'classnames';
 
 interface INavBarProps {
     activeTab?: string;

@@ -7,9 +7,9 @@ const TypeScript = require('typescript');
 const TypescriptSimple = require('typescript-simple');
 const fs = require('fs');
 const UglifyJS = require("uglify-js");
-
-const Convert = require('ansi-to-html');
-const convert = new Convert();
+const path = require('path');
+const C = require('ansi-to-html');
+const convert = new C();
 
 const DEFAULTS = {
     doctype: '<!DOCTYPE html>',
@@ -24,6 +24,8 @@ const DEFAULTS = {
     outFile: 'output.js'
 };
 
+let define;
+
 const compile = function compile(template, compileOpts) {
 
     compileOpts = Hoek.applyToDefaults(DEFAULTS, compileOpts);
@@ -31,84 +33,78 @@ const compile = function compile(template, compileOpts) {
     return function runtime(context, renderOpts) {
 
         renderOpts = Hoek.applyToDefaults(compileOpts, renderOpts);
-
         let output = renderOpts.doctype;
 
-        //let Component = fs.readFileSync(compileOpTypeScript.filename).toString();
+        try {
+            // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#a-minimal-compiler
+            // https://github.com/Microsoft/TypeScript/wiki/Compiler-Options
+            // http://json.schemastore.org/tsconfig
 
-            try {
-                let d = []; // for diagnostics
+            let files = [];
+            files.push(compileOpts.filename);
 
-                //let tss =  TypeScript.transpile(Component, compileOpts, compileOpTypeScript.filename, d);
-                //let tsexec =  eval(tss);
+            let out = compileTypeScript(files, compileOpts);
 
-                
+            if (typeof define !== 'function') {
+                define = require('amdefine')(module)
+            };
 
-                // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#a-minimal-compiler
-                // https://github.com/Microsoft/TypeScript/wiki/Compiler-Options
-                // http://json.schemastore.org/tsconfig
+            let san = out.outputFiles[0].text;
 
-                let files = [];
-                files.push(compileOpts.filename);
+            let m = path.dirname(compileOpts.filename).split('/').pop() + '/' + path.basename(compileOpts.filename, '.tsx')
+            console.log(m);
 
-                //let program = TypeScript.createProgram(files, compileOpts);
-                //let emitResult = program.emit();
+            let tsexec = eval(san);
 
-                
+            define(function(require) {
+                var dep = require(m);
 
-                let out = compileTypeScript(files, compileOpts);
+                let Element = React.createFactory(dep.default);
 
-                console.log(out.emitResult);
-                
+                let ElContext = Element(context);
 
-                //let Element = React.createFactory(tsexec);
-                //let Element = React.createFactory(emitResult);
+                output += ReactDOMServer[compileOpts.renderMethod](ElContext);
+            });
 
-                //let ElContext = Element(context);
+            define = null;
 
-                
+        } catch (e) {
+            console.error(e); // Error: L1: Type 'string' is not assignable to type 'number'.
 
-                output += '<p>';
+            output += '<html><head><title>Error ' + compileOpts.filename + '</title>';
+            output += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">';
+            output += '</head><body style="padding:12px;"><p>' + compileOpts.filename + '</p><p>';
+            output += '<strong>ERROR</strong><br />';
+            output += '<pre style="background-color:#999999">' + e.message + '</pre>';
 
-                output += out.debug;
+            if (e.codeFrame != undefined || e.codeFrame != null) output += '<pre style="background-color:#999999">' + convert.toHtml(e.codeFrame) + '</pre>';
 
-                for (var prop in out.emitResult) {
-                    output += prop + ': ' + out.emitResult[prop] + '\r';
-                }
+            output += '</p></body></html>';
+        }
 
-
-                output +=  '</p>'; //ReactDOMServer[compileOpTypeScript.renderMethod](ElContext);
-
-
-
-
-
-            } catch (e) {
-                console.error(e); // Error: L1: Type 'string' is not assignable to type 'number'.
-
-                output += '<html><head><title>Error ' + compileOpts.filename + '</title>';
-                output += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">';
-                output += '</head><body><p>' + compileOpts.filename + '</p><p>';
-
-                // for (var prop in e) {
-                //     console.log(e[prop]);
-                //     output += convert.toHtml(e[prop]);
-                // }
-                output += 'ERROR!!!!!';
-                output += e.message;
-
-                if(e.codeFrame != undefined || e.codeFrame != null) output += '<pre style="background-color:#666666">' + convert.toHtml(e.codeFrame) + '</pre>';
-
-                output += '</p></body></html>';
-            }
-        
         return output;
     };
+
 };
 
 function compileTypeScript(fileNames, options) {
+
+    function writeFile(fileName, data, writeByteOrderMark) {
+        outputFiles.push({
+            sourceName: fileName,
+            name: fileName,
+            writeByteOrderMark: writeByteOrderMark,
+            text: data
+        });
+    }
+
+    let outputFiles = [];
+
     let program = TypeScript.createProgram(fileNames, options);
-    let emitResult = program.emit();
+
+    let source = program.getSourceFile(fileNames[0]);
+
+    let emitResult = program.emit(source, writeFile);
 
     let allDiagnostics = TypeScript.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
 
@@ -128,10 +124,14 @@ function compileTypeScript(fileNames, options) {
 
     return {
         debug,
-        emitResult
+        emitResult,
+        outputFiles
     };
 }
 
+const register = function(d){
+    define = d;
+}
 
 module.exports = {
     compile: compile

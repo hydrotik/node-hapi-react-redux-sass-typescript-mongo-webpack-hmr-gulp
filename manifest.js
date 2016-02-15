@@ -2,7 +2,20 @@ var Confidence = require('confidence');
 var Config = require('./config');
 var Routes = require('./config.routes').routes;
 var pkg = require('./package');
+
+// if (typeof define !== 'function') {
+//     const define = require('requirejs').define;
+// }
+
+//require("amd-loader");
+
+//var define;
+
+//if (typeof define !== 'function') { define = require('amdefine')(module) }
+
 var HapiTypescriptViews = require('./src/global/server/plugins/hapi-typescript-react-views');
+//HapiTypescriptViews.register(define);
+
 
 var criteria = {
     env: process.env.NODE_ENV
