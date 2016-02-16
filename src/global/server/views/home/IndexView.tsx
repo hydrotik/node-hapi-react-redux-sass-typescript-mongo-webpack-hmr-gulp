@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Layout from '../layouts/Default';
 
-
 interface IIndexProps {
     js?: string;
 }

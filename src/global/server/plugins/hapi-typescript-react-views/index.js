@@ -52,8 +52,6 @@ const compile = function compile(template, compileOpts) {
             let san = out.outputFiles[0].text;
 
             let m = getModuleFromFullPath(compileOpts.filename);
-            
-            console.log(m);
 
             let tsexec = eval(san);
 
@@ -65,13 +63,15 @@ const compile = function compile(template, compileOpts) {
                 let ElContext = Element(context);
 
                 output += ReactDOMServer[compileOpts.renderMethod](ElContext);
+
+                if(out.debug && out.debug != '') output += handleRuntimeError(out.debug, compileOpts.filename);
             });
 
-            define = null;
-
         } catch (e) {
-            output += handleError(e, compileOpts.filename);
+            output += handlePageError(e, compileOpts.filename);
         }
+
+        define = null;
 
         return output;
     };
@@ -90,6 +90,7 @@ function compileTypeScript(fileNames, options) {
     }
 
     //TODO https://nodejs.org/api/fs.html#fs_fs_watch_filename_options_listener
+    /*
     fs.watch(fileNames[0], (event, filename) => {
         console.log(`event is: ${event}`);
         if (filename) {
@@ -98,6 +99,7 @@ function compileTypeScript(fileNames, options) {
             console.log('filename not provided');
         }
     });
+    */
 
     let outputFiles = [];
 
@@ -134,20 +136,37 @@ const getModuleFromFullPath = function(p){
     return path.dirname(p).split('/').pop() + '/' + path.basename(p, '.tsx');
 }
 
-const handleError = function(error, path){
-    console.error(e); // Error: L1: Type 'string' is not assignable to type 'number'.
-    let m = getModuleFromFullPath(compileOpts.filename);
+const handlePageError = function(error, path){
+    console.error(error); // Error: L1: Type 'string' is not assignable to type 'number'.
+    let m = getModuleFromFullPath(path);
     let output = '';
 
     output += '<html><head><title>Error ' + m + '</title>';
     output += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">';
-    output += '</head><body style="padding:12px;"><p>' + compileOpts.filename + '</p><p>';
-    output += '<strong>ERROR</strong><br />';
-    output += '<pre style="background-color:#999999">' + e.message + '</pre>';
+    output += '</head><body style="padding:12px;">';
+    output += '<h3 style="color:red;" >FILE</strong></h3>';
+    output += '<p>' + path + '</p>';
+    output += '<h2 style="color:red;" >ERROR</strong></h2>';
+    output += '<pre style="background-color:#AAAAAA">' + error.message + '</pre>';
 
-    if (e.codeFrame != undefined || e.codeFrame != null) output += '<pre style="background-color:#999999">' + convert.toHtml(e.codeFrame) + '</pre>';
+    if (error.codeFrame != undefined || error.codeFrame != null) output += '<pre style="background-color:#999999">' + convert.toHtml(error.codeFrame) + '</pre>';
 
     output += '</p></body></html>';
+
+
+    return output;
+}
+
+const handleRuntimeError = function(error, path){
+    console.error(error); // Error: L1: Type 'string' is not assignable to type 'number'.
+    let m = getModuleFromFullPath(path);
+    let output = '';
+
+    output += '<div style="padding:16px; border-style: solid; border-color: red; border-width: 12px 0 0 0;">'
+    output += '<h3 style="color:red;" >FILE</strong></h3>';
+    output += '<p>' + path + '</p>';
+    output += '<h2 style="color:red;" >ERROR</strong></h2>';
+    output += '<pre style="background-color:#AAAAAA">' + error + '</pre></div>';
 
 
     return output;
