@@ -51,7 +51,8 @@ const compile = function compile(template, compileOpts) {
 
             let san = out.outputFiles[0].text;
 
-            let m = path.dirname(compileOpts.filename).split('/').pop() + '/' + path.basename(compileOpts.filename, '.tsx')
+            let m = getModuleFromFullPath(compileOpts.filename);
+            
             console.log(m);
 
             let tsexec = eval(san);
@@ -69,17 +70,7 @@ const compile = function compile(template, compileOpts) {
             define = null;
 
         } catch (e) {
-            console.error(e); // Error: L1: Type 'string' is not assignable to type 'number'.
-
-            output += '<html><head><title>Error ' + compileOpts.filename + '</title>';
-            output += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">';
-            output += '</head><body style="padding:12px;"><p>' + compileOpts.filename + '</p><p>';
-            output += '<strong>ERROR</strong><br />';
-            output += '<pre style="background-color:#999999">' + e.message + '</pre>';
-
-            if (e.codeFrame != undefined || e.codeFrame != null) output += '<pre style="background-color:#999999">' + convert.toHtml(e.codeFrame) + '</pre>';
-
-            output += '</p></body></html>';
+            output += handleError(e, compileOpts.filename);
         }
 
         return output;
@@ -97,6 +88,16 @@ function compileTypeScript(fileNames, options) {
             text: data
         });
     }
+
+    //TODO https://nodejs.org/api/fs.html#fs_fs_watch_filename_options_listener
+    fs.watch(fileNames[0], (event, filename) => {
+        console.log(`event is: ${event}`);
+        if (filename) {
+            console.log(`filename provided: ${filename}`);
+        } else {
+            console.log('filename not provided');
+        }
+    });
 
     let outputFiles = [];
 
@@ -129,8 +130,27 @@ function compileTypeScript(fileNames, options) {
     };
 }
 
-const register = function(d){
-    define = d;
+const getModuleFromFullPath = function(p){
+    return path.dirname(p).split('/').pop() + '/' + path.basename(p, '.tsx');
+}
+
+const handleError = function(error, path){
+    console.error(e); // Error: L1: Type 'string' is not assignable to type 'number'.
+    let m = getModuleFromFullPath(compileOpts.filename);
+    let output = '';
+
+    output += '<html><head><title>Error ' + m + '</title>';
+    output += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">';
+    output += '</head><body style="padding:12px;"><p>' + compileOpts.filename + '</p><p>';
+    output += '<strong>ERROR</strong><br />';
+    output += '<pre style="background-color:#999999">' + e.message + '</pre>';
+
+    if (e.codeFrame != undefined || e.codeFrame != null) output += '<pre style="background-color:#999999">' + convert.toHtml(e.codeFrame) + '</pre>';
+
+    output += '</p></body></html>';
+
+
+    return output;
 }
 
 module.exports = {

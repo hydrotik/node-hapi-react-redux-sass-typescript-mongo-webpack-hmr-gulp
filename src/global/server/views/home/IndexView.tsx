@@ -23,7 +23,7 @@ class Index extends React.Component<IIndexProps, {}> {
                 <div id="app"></div>
 
                 <div className="jumbotron">
-                    <h1>Success</h1>
+                    <h1>Success TEAH</h1>
                     <div className="lead">
                         Your Node.js website and user system is running.May
                         the force be with you.
