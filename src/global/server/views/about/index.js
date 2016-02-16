@@ -27,7 +27,7 @@ exports.register = function (plugin, options, next) {
             }
 
             // Hook into typescript generated files
-            response.view('about/Index.tsx', props);
+            response.view('about/IndexView.tsx', props);
         },
         config: {
             cors: true

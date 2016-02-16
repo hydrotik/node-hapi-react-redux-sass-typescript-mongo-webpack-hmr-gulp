@@ -34,7 +34,7 @@ const compile = function compile(template, compileOpts) {
 
         renderOpts = Hoek.applyToDefaults(compileOpts, renderOpts);
         let output = renderOpts.doctype;
-
+        let out;
         try {
             // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#a-minimal-compiler
             // https://github.com/Microsoft/TypeScript/wiki/Compiler-Options
@@ -43,7 +43,7 @@ const compile = function compile(template, compileOpts) {
             let files = [];
             files.push(compileOpts.filename);
 
-            let out = compileTypeScript(files, compileOpts);
+            out = compileTypeScript(files, compileOpts);
 
             if (typeof define !== 'function') {
                 define = require('amdefine')(module)
@@ -68,7 +68,8 @@ const compile = function compile(template, compileOpts) {
             });
 
         } catch (e) {
-            output += handlePageError(e, compileOpts.filename);
+            let rt = (out.debug && out.debug != '') ? handleRuntimeError(out.debug, compileOpts.filename) : '';
+            output += handlePageError(e, compileOpts.filename, rt);
         }
 
         define = null;
@@ -90,7 +91,6 @@ function compileTypeScript(fileNames, options) {
     }
 
     //TODO https://nodejs.org/api/fs.html#fs_fs_watch_filename_options_listener
-    /*
     fs.watch(fileNames[0], (event, filename) => {
         console.log(`event is: ${event}`);
         if (filename) {
@@ -99,7 +99,6 @@ function compileTypeScript(fileNames, options) {
             console.log('filename not provided');
         }
     });
-    */
 
     let outputFiles = [];
 
@@ -118,8 +117,10 @@ function compileTypeScript(fileNames, options) {
         let line = d.line;
         let character = d.character;
         let message = TypeScript.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+        let dir = path.dirname(diagnostic.file.fileName);
+        let file = path.basename(diagnostic.file.fileName);
         console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
-        debug += `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`;
+        debug += `${dir}/<span style="color: #993333; font-weight: bold;">${file}</span>\t\t<span style="font-weight: bold;">(${line + 1},${character + 1}): ${message}</span><br />`;
     });
 
     let exitCode = emitResult.emitSkipped ? 1 : 0;
@@ -136,7 +137,7 @@ const getModuleFromFullPath = function(p){
     return path.dirname(p).split('/').pop() + '/' + path.basename(p, '.tsx');
 }
 
-const handlePageError = function(error, path){
+const handlePageError = function(error, path, runtime){
     console.error(error); // Error: L1: Type 'string' is not assignable to type 'number'.
     let m = getModuleFromFullPath(path);
     let output = '';
@@ -148,6 +149,8 @@ const handlePageError = function(error, path){
     output += '<p>' + path + '</p>';
     output += '<h2 style="color:red;" >ERROR</strong></h2>';
     output += '<pre style="background-color:#AAAAAA">' + error.message + '</pre>';
+
+    if(runtime != '') output += runtime;
 
     if (error.codeFrame != undefined || error.codeFrame != null) output += '<pre style="background-color:#999999">' + convert.toHtml(error.codeFrame) + '</pre>';
 

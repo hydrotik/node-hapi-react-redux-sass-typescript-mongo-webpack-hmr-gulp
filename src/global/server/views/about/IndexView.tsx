@@ -1,40 +1,24 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
 import * as React from 'react';
-//import Layout from '../layouts/Default.tsx';
-
+import Layout from '../layouts/Default';
 
 interface IIndexProps {
-    title?: string;
-    activeTab?: string;
     js?: string;
-    script?: any;
-    children?: any;
-    feet?: any;
 }
 
 class Index extends React.Component<IIndexProps, {}> {
 
-    // FIXME Until I can get transpile API to import external modules, this is the crappy workaround
     public render(): React.ReactElement<{}> {
 
-        const title = 'About Us';
         const script = <script src={this.props.js}></script>;
-        const activeTab = 'about';
 
         return (
-            <html>
-                <head>
-                    <title>TEST {title}</title>
-                    <meta charSet="utf-8" />
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"></link>
-                    <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'></link>
-                    <link rel="shortcut icon" href="favicon.ico" />
-                    </head>
-                <body>
-                    <div className="page">
-                        <div className="container">
+            <Layout
+                title="About Us"
+                script={script}
+                activeTab="about">
+
                 <div id="app"></div>
 
                 <div className="row">
@@ -100,24 +84,6 @@ class Index extends React.Component<IIndexProps, {}> {
                         <i className="fa fa-volume-up bamf"></i>
                     </div>
                 </div>
-                            </div>
-                        </div>
-                    <div className="footer">
-                        <div className="container">
-                            <span className="copyright pull-right">
-                                &copy; 2014 Acme, Inc.
-                                </span>
-                            <ul className="links">
-                                <li><a href="/">Home</a></li>
-                                <li><a href="/contact">Contact</a></li>
-                                </ul>
-                            <div className="clearfix"></div>
-                            </div>
-                        </div>
-                    {script}
-                    {this.props.feet}
-                    </body>
-                </html>
         );
     }
 }

@@ -18,7 +18,7 @@ class Layout extends React.Component<IDefaultProps, {}> {
         return (
             <html>
                 <head>
-                    <title>TEST {this.props.title} WHAT</title>
+                    <title>TEST {this.props.title}</title>
                     <meta charSet="utf-8" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"></link>
