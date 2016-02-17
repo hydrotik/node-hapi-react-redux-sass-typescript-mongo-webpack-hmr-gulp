@@ -84,6 +84,7 @@ class Index extends React.Component<IIndexProps, {}> {
                         <i className="fa fa-volume-up bamf"></i>
                     </div>
                 </div>
+            </Layout>
         );
     }
 }
