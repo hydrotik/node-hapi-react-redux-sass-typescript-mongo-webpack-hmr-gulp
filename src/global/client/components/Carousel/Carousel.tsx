@@ -1,5 +1,5 @@
-/// <reference path="../../../../../../../typings/tsd.d.ts" />
-/// <reference path="../../../../../../../typings/react-slick/react-slick.d.ts" />
+/// <reference path="../../../../../typings/tsd.d.ts" />
+/// <reference path="../../../../../typings/react-slick/react-slick.d.ts" />
 
 import * as React from 'react';
 
@@ -11,12 +11,12 @@ import * as Slick from 'react-slick';
 
 import { CarouselItem } from './CarouselItem.tsx';
 
-import '../../../../../../../node_modules/slick-carousel/slick/slick.scss';
-import '../../../../../../../node_modules/slick-carousel/slick/slick-theme.scss';
+import '../../../../../node_modules/slick-carousel/slick/slick.scss';
+import '../../../../../node_modules/slick-carousel/slick/slick-theme.scss';
 
 import { connect } from 'react-redux';
-import { fetchContentIfNeeded, CAROUSEL } from '../../actions/actions.ts';
-import { ICarouselReducer } from '../../reducers/reducers.ts';
+import { fetchContentIfNeeded, CAROUSEL } from '../../actions/carousel.ts';
+import { ICarouselReducer } from '../../reducers/carousel.ts';
 
 const Slider: any = Slick.Slider;
 

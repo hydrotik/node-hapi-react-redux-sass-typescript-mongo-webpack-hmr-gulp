@@ -1,11 +1,11 @@
-/// <reference path="../../../../../../../typings/tsd.d.ts" />
+/// <reference path="../../../../../typings/tsd.d.ts" />
 
 import * as React from 'react';
 import { Motion, spring } from 'react-motion';
 
 import { connect } from 'react-redux';
-import { onToggle } from '../../actions/actions.ts';
-import { IToggleReducer } from '../../reducers/reducers.ts';
+import { onToggle } from '../../actions/animation.ts';
+import { IToggleReducer } from '../../reducers/animation.ts';
 
 import './_Header.scss';
 

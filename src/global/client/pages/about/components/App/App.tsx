@@ -6,12 +6,12 @@ import { connect } from 'react-redux';
 // Styles
 import './_App.scss';
 // Page Components
-import { Header } from '../../components/Header/Header.tsx';
-import { Footer } from '../../components/Footer/Footer.tsx';
-import { Carousel } from '../../components/Carousel/Carousel.tsx';
+import { Header } from '../../../../components/Header/Header.tsx';
+import { Footer } from '../../../../components/Footer/Footer.tsx';
+import { Carousel } from '../../../../components/Carousel/Carousel.tsx';
 // Behaviors and Actions
 import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions.ts';
-import { IEditorialReducer } from '../../reducers/reducers.ts';
+import { IEditorialReducer } from '../../reducers/reducer.ts';
 
 // Interfaces
 interface IAppProps {

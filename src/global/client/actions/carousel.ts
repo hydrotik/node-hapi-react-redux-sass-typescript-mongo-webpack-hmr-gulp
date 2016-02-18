@@ -1,9 +1,10 @@
 // import * as fetch from 'isomorphic-fetch';
 
-export const EDITORIAL: string = 'EDITORIAL';
+export const CAROUSEL: string = 'CAROUSEL';
 
-export const REQUEST_EDITORIAL: string = 'REQUEST_EDITORIAL';
-export const RECEIVE_EDITORIAL: string = 'RECEIVE_EDITORIAL';
+export const REQUEST_SLIDES: string = 'REQUEST_SLIDES';
+export const RECEIVE_SLIDES: string = 'RECEIVE_SLIDES';
+
 
 export const fixture: any = {
     name: 'Contemporary',
@@ -122,21 +123,20 @@ export const fixture: any = {
     ]
 };
 
-
-/* **************** Editorial Content ********************* */
-export interface IEditorialAction {
+/* **************** Carousel Content ********************* */
+export interface ICarouselAction {
     type: string;
-    editorial?: any[];
+    slides?: any[];
     receivedAt?: number;
     lastUpdated?: any;
 }
 
-export function requestEditorial(): IEditorialAction {
-    return { type: REQUEST_EDITORIAL };
+export function requestSlides(): ICarouselAction {
+    return { type: REQUEST_SLIDES };
 }
 
-export function receiveEditorial(editorial: any[]): IEditorialAction {
-    return { type: RECEIVE_EDITORIAL, editorial: editorial, receivedAt: Date.now() };
+export function receiveSlides(slides: any[]): ICarouselAction {
+    return { type: RECEIVE_SLIDES, slides: slides, receivedAt: Date.now() };
 }
 
 /* **************** Abstract Fetch ********************* */
@@ -146,10 +146,10 @@ function fetchContent(type: string): any {
     let rec: any;
 
     switch (type) {
-        case EDITORIAL:
-            mock = fixture.editorial;
-            req = requestEditorial;
-            rec = receiveEditorial;
+        case CAROUSEL:
+            mock = fixture.slides;
+            req = requestSlides;
+            rec = receiveSlides;
             break;
         default:
             throw new Error('fetchContent() :: event not registered in actions.ts');
@@ -167,9 +167,9 @@ function shouldFetchContent(state: any, type: string): boolean {
     let store: any;
 
     switch (type) {
-        case EDITORIAL:
-            reducer = state.editorialContent;
-            store = reducer.editorial;
+        case CAROUSEL:
+            reducer = state.carouselContent;
+            store = reducer.slides;
             break;
         default:
             throw new Error('shouldFetchContent() :: event not registered in actions.ts');

@@ -29,7 +29,7 @@ const DEFAULTS = {
 
 let define;
 
-const cols = process.stdout.getWindowSize()[0];
+const cols = (process.stdout && typeof process.stdout.getWindowSize === 'function') ? process.stdout.getWindowSize()[0] : 25;
 
 let consoleErrors;
 
