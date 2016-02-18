@@ -24,7 +24,7 @@ const DEFAULTS = {
     removeComments: true,
     consoleErrors: true,
     noEmit: false,
-    outFile: 'output.js'
+    outFile: 'build/servoutput.js'
 };
 
 let define;
