@@ -3,6 +3,14 @@
 import * as React from 'react';
 import NavBar from './NavBar';
 
+interface IDefaultProps {
+    title?: string;
+    activeTab?: string;
+    js?: string;
+    script?: any;
+    children?: any;
+    feet?: any;
+}
 
 class Layout extends React.Component<IDefaultProps, {}> {
     public render(): React.ReactElement<{}> {

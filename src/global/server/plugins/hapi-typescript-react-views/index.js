@@ -22,6 +22,7 @@ const DEFAULTS = {
     jsx: TypeScript.JsxEmit.React,
     module: TypeScript.ModuleKind.AMD,
     removeComments: true,
+    consoleErrors: true,
     noEmit: false,
     outFile: 'output.js'
 };
@@ -29,6 +30,8 @@ const DEFAULTS = {
 let define;
 
 const cols = process.stdout.getWindowSize()[0];
+
+let consoleErrors;
 
 const compile = function compile(template, compileOpts) {
 
@@ -41,6 +44,8 @@ const compile = function compile(template, compileOpts) {
         let out;
         let errors = [];
         let fatalCount = 0;
+
+        consoleErrors = compileOpts.consoleErrors;
 
         try {
             // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#a-minimal-compiler
@@ -207,8 +212,10 @@ const formatErrors = function(fatal, path, errors){
 }
 
 const getFatalError = function(error, p){
-    console.error(createConsoleHeader('Fatal Error'));
-    console.error(error); // Error: L1: Type 'string' is not assignable to type 'number'.
+    if(consoleErrors){
+        console.error(createConsoleHeader('Fatal Error'));
+        console.error(error); // Error: L1: Type 'string' is not assignable to type 'number'.
+    }
     let output = '';
 
     let dir = path.dirname(p);
@@ -221,9 +228,11 @@ const getFatalError = function(error, p){
 }
 
 const getRuntimeError = function(error){
-    console.error(createConsoleHeader('Runtime Error'));
-    var regex = /<br\s*[\/]?>/gi;
-    console.error(striptags(error.replace(regex, '\n'))); // Error: L1: Type 'string' is not assignable to type 'number'.
+    if(consoleErrors){
+        console.error(createConsoleHeader('Runtime Error'));
+        var regex = /<br\s*[\/]?>/gi;
+        console.error(striptags(error.replace(regex, '\n'))); // Error: L1: Type 'string' is not assignable to type 'number'.
+    }
     let output = '';
     output += error + '\n';
     return output;
