@@ -9,7 +9,7 @@ import '../../scss/app.scss';
 import { Store, createStore, applyMiddleware} from 'redux';
 import { Provider } from 'react-redux';
 
-import { rootReducer } from './reducers/reducer';
+import { rootReducer } from './reducers/reducers';
 
 import { createLogger } from '../../utils/redux-logger';
 import { thunkMiddleware } from '../../utils/redux-thunk';
@@ -29,8 +29,8 @@ function configureStore(): Store {
     const store: Store = createStoreWithMiddleware(rootReducer);
 
     if (module.hot) {
-        module.hot.accept('./reducers/reducer', () => {
-            const nextRootReducer: any = require('./reducers/reducer').rootReducer;
+        module.hot.accept('./reducers/reducers', () => {
+            const nextRootReducer: any = require('./reducers/reducers').rootReducer;
             store.replaceReducer(nextRootReducer);
         });
     }

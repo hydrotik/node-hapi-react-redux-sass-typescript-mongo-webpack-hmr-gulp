@@ -10,7 +10,7 @@ export class Footer extends React.Component<{}, {}> {
         const year: number = (new Date()).getFullYear();
         return (
             <footer className='footer'>
-                &copy; Your Company&nbsp;{year}
+                WHAAAAT &copy; Your Company&nbsp;{year}
             </footer>
         );
     }

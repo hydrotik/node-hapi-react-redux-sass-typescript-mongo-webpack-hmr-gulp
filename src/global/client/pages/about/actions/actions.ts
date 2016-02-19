@@ -1,9 +1,15 @@
 // import * as fetch from 'isomorphic-fetch';
 
+export const CAROUSEL: string = 'CAROUSEL';
 export const EDITORIAL: string = 'EDITORIAL';
+
+export const REQUEST_SLIDES: string = 'REQUEST_SLIDES';
+export const RECEIVE_SLIDES: string = 'RECEIVE_SLIDES';
 
 export const REQUEST_EDITORIAL: string = 'REQUEST_EDITORIAL';
 export const RECEIVE_EDITORIAL: string = 'RECEIVE_EDITORIAL';
+
+export const ON_TOGGLE: string = 'ON_TOGGLE';
 
 export const fixture: any = {
     name: 'Contemporary',
@@ -11,31 +17,31 @@ export const fixture: any = {
     tags: 'Contemporary,Shoes',
     slides: [{
         id: 0,
-        title: 'Slide 1',
+        title: 'About Slide 1',
         description: 'Lorem ipsum 1',
-        src: 'http://c2.staticflickr.com/4/3726/19098533125_d38c33cc4d_k.jpg',
+        src: 'https://s.yimg.com/uy/build/images/sohp/hero/lax-den3.jpg',
         href: 'https://www.google.com/#q=1'
     }, {
         id: 1,
-        title: 'Slide 2',
+        title: 'About Slide 2',
         description: 'Lorem ipsum 2',
-        src: 'https://s.yimg.com/uy/build/images/sohp/hero/lax-den3.jpg',
+        src: 'http://c2.staticflickr.com/4/3726/19098533125_d38c33cc4d_k.jpg',
         href: 'https://www.google.com/#q=2'
     }, {
         id: 2,
-        title: 'Slide 3',
+        title: 'About Slide 3',
         description: 'Lorem ipsum 3',
         src: 'https://s.yimg.com/uy/build/images/sohp/inspiration/lucas-at-pipe3.jpg',
         href: 'https://www.google.com/#q=3'
     }, {
         id: 3,
-        title: 'Slide 4',
+        title: 'About Slide 4',
         description: 'Lorem ipsum 4',
         src: 'https://s.yimg.com/uy/build/images/sohp/inspiration/love-rock3.jpg',
         href: 'https://www.google.com/#q=4'
     }, {
         id: 4,
-        title: 'Slide 5',
+        title: 'About Slide 5',
         description: 'Lorem ipsum 5',
         src: 'http://c2.staticflickr.com/4/3726/19098533125_d38c33cc4d_k.jpg',
         href: 'https://www.google.com/#q=5'
@@ -122,6 +128,31 @@ export const fixture: any = {
     ]
 };
 
+/* **************** Animation Toggle ********************* */
+export interface IToggleAction {
+    type: string;
+    on?: boolean;
+}
+
+export function onToggle(on: boolean): IToggleAction {
+    return { type: ON_TOGGLE, on: on};
+}
+
+/* **************** Carousel Content ********************* */
+export interface ICarouselAction {
+    type: string;
+    slides?: any[];
+    receivedAt?: number;
+    lastUpdated?: any;
+}
+
+export function requestSlides(): ICarouselAction {
+    return { type: REQUEST_SLIDES };
+}
+
+export function receiveSlides(slides: any[]): ICarouselAction {
+    return { type: RECEIVE_SLIDES, slides: slides, receivedAt: Date.now() };
+}
 
 /* **************** Editorial Content ********************* */
 export interface IEditorialAction {
@@ -146,6 +177,12 @@ function fetchContent(type: string): any {
     let rec: any;
 
     switch (type) {
+        case CAROUSEL:
+            mock = fixture.slides;
+            console.warn(mock);
+            req = requestSlides;
+            rec = receiveSlides;
+            break;
         case EDITORIAL:
             mock = fixture.editorial;
             req = requestEditorial;
@@ -166,10 +203,16 @@ function shouldFetchContent(state: any, type: string): boolean {
     let reducer: any;
     let store: any;
 
+    console.warn('shouldFetchContent(): ' + type);
+
     switch (type) {
         case EDITORIAL:
             reducer = state.editorialContent;
             store = reducer.editorial;
+            break;
+        case CAROUSEL:
+            reducer = state.carouselContent;
+            store = reducer.slides;
             break;
         default:
             throw new Error('shouldFetchContent() :: event not registered in actions.ts');
@@ -183,6 +226,7 @@ function shouldFetchContent(state: any, type: string): boolean {
 }
 
 export function fetchContentIfNeeded(type: string, invalidate: boolean = false): any {
+    console.warn('fetchContentIfNeeded(): ' + type);
     return (dispatch: any, getState: any) => {
         if (shouldFetchContent(getState(), type) || invalidate) {
             return dispatch(fetchContent(type));

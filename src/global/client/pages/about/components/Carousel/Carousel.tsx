@@ -1,5 +1,5 @@
-/// <reference path="../../../../../typings/tsd.d.ts" />
-/// <reference path="../../../../../typings/react-slick/react-slick.d.ts" />
+/// <reference path="../../../../../../../typings/tsd.d.ts" />
+/// <reference path="../../../../../../../typings/react-slick/react-slick.d.ts" />
 
 import * as React from 'react';
 
@@ -9,14 +9,14 @@ import { map } from 'lodash';
 
 import * as Slick from 'react-slick';
 
-import { CarouselItem } from './CarouselItem.tsx';
+import { CarouselItem } from '../../../../components/CarouselItem/CarouselItem';
 
-import '../../../../../node_modules/slick-carousel/slick/slick.scss';
-import '../../../../../node_modules/slick-carousel/slick/slick-theme.scss';
+import '../../../../../../../node_modules/slick-carousel/slick/slick.scss';
+import '../../../../../../../node_modules/slick-carousel/slick/slick-theme.scss';
 
 import { connect } from 'react-redux';
-import { fetchContentIfNeeded, CAROUSEL } from '../../actions/carousel.ts';
-import { ICarouselReducer } from '../../reducers/carousel.ts';
+import { fetchContentIfNeeded, CAROUSEL } from '../../actions/actions';
+import { ICarouselReducer } from '../../reducers/reducers';
 
 const Slider: any = Slick.Slider;
 
@@ -67,7 +67,9 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
 
     public render(): React.ReactElement<{}> {
 
-        const {slides }: ICarouselState = this.props;
+        const { slides }: ICarouselState = this.props;
+
+        console.warn(slides);
 
         /* tslint:disable:no-unused-variable */
         const settings: Object = {

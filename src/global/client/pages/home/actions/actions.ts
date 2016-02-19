@@ -179,6 +179,7 @@ function fetchContent(type: string): any {
     switch (type) {
         case CAROUSEL:
             mock = fixture.slides;
+            console.warn(mock);
             req = requestSlides;
             rec = receiveSlides;
             break;
@@ -202,6 +203,8 @@ function shouldFetchContent(state: any, type: string): boolean {
     let reducer: any;
     let store: any;
 
+    console.warn('shouldFetchContent(): ' + type);
+
     switch (type) {
         case EDITORIAL:
             reducer = state.editorialContent;
@@ -223,6 +226,7 @@ function shouldFetchContent(state: any, type: string): boolean {
 }
 
 export function fetchContentIfNeeded(type: string, invalidate: boolean = false): any {
+    console.warn('fetchContentIfNeeded(): ' + type);
     return (dispatch: any, getState: any) => {
         if (shouldFetchContent(getState(), type) || invalidate) {
             return dispatch(fetchContent(type));
