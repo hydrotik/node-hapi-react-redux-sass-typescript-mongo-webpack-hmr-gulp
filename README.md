@@ -12,6 +12,10 @@ At the moment I am using awesome-typescript-loader, but I plan on testing ts-loa
 * Node 4 or greater
 * NPM 3.2 or greater
 
+**Working Features**
+* Server and client side React using Typescript (TSX)
+* Webpack on client side React using Typescript (TSX)
+
 #### Run
 
 ```bash
