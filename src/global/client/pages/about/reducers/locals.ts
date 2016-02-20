@@ -19,7 +19,7 @@ import {
     ON_TOGGLE
 
 
-} from '../actions/actions';
+} from '../actions/locals';
 
 /* animation */
 export interface IToggleReducer {

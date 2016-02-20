@@ -10,8 +10,8 @@ import { Header } from '../Header/Header';
 import { Footer } from '../../../../components/Footer/Footer';
 import { Carousel } from '../Carousel/Carousel';
 // Behaviors and Actions
-import { fetchContentIfNeeded, EDITORIAL } from '../../actions/actions';
-import { IEditorialReducer } from '../../reducers/reducers';
+import { fetchContentIfNeeded, EDITORIAL } from '../../actions/locals';
+import { IEditorialReducer } from '../../reducers/locals';
 
 // Interfaces
 interface IAppProps {

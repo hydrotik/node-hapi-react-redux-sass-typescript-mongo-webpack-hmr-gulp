@@ -15,8 +15,8 @@ import '../../../../../../../node_modules/slick-carousel/slick/slick.scss';
 import '../../../../../../../node_modules/slick-carousel/slick/slick-theme.scss';
 
 import { connect } from 'react-redux';
-import { fetchContentIfNeeded, CAROUSEL } from '../../actions/actions';
-import { ICarouselReducer } from '../../reducers/reducers';
+import { fetchContentIfNeeded, CAROUSEL } from '../../actions/locals';
+import { ICarouselReducer } from '../../reducers/locals';
 
 const Slider: any = Slick.Slider;
 
