@@ -3,7 +3,7 @@
 // Global Action Constants here...
 
 /* **************** Example Action Constant ******************* */
-export const ACTION_NAME: string = 'ACTION_NAME';
+export const EXAMPLE_ACTION: string = 'EXAMPLE_ACTION';
 
 
 
@@ -13,11 +13,9 @@ export const ACTION_NAME: string = 'ACTION_NAME';
 export interface IExampleAction {
     type: string;
     payload?: any[];
-    receivedAt?: number;
-    lastUpdated?: any;
 }
 
 /* **************** Example Action Event ********************** */
-export function receiveAction(payload: any[]): IExampleAction {
-    return { type: ACTION_NAME, payload: payload, receivedAt: Date.now() };
+export function onExample(payload: any[]): IExampleAction {
+    return { type: EXAMPLE_ACTION, payload: payload };
 }

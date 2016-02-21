@@ -1,7 +1,6 @@
 /// <reference path="../../../../../../typings/tsd.d.ts" />
 
 import * as lodash from 'lodash';
-import { Reducer, combineReducers } from 'redux';
 import {
 
     /* carouselContent */
@@ -77,13 +76,3 @@ export function editorialContent(state: any = { isFetching: false, editorial: []
             return state;
     }
 }
-
-
-
-
-
-export const rootReducer: Reducer = combineReducers({
-    toggle,
-    carouselContent,
-    editorialContent
-});
