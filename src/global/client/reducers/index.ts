@@ -1,1 +1,1 @@
-export { onExampleReducer } from './globals';
+export { onExampleReducer } from './example';

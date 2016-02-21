@@ -1,1 +1,1 @@
-export { EXAMPLE_ACTION, IExampleAction, onExample } from './globals';
+export { EXAMPLE_ACTION, IExampleAction, onExample } from './example';
