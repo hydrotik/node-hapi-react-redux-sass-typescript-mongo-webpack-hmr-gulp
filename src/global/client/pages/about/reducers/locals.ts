@@ -18,7 +18,7 @@ import {
     ON_TOGGLE
 
 
-} from '../actions/locals';
+} from '../actions';
 
 /* animation */
 export function toggle(state: any = { on: false }, action: IToggleAction): any {
