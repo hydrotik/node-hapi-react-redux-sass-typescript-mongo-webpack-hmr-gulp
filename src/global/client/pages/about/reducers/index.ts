@@ -3,7 +3,7 @@ import { Reducer, combineReducers } from 'redux';
 
 import { toggle, carouselContent, editorialContent } from './locals';
 
-import { onExampleReducer } from '../../../reducers/globals';
+import { onExampleReducer } from '../../../reducers';
 
 export const rootReducer: Reducer = combineReducers({
     toggle,

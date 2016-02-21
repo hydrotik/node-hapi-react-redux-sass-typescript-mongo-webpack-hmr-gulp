@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import { connect } from 'react-redux';
-import { onExample, IExampleAction } from '../../../../actions/globals';
+import { onExample, IExampleAction } from '../../../../actions';
 
 import './_Strip.scss';
 

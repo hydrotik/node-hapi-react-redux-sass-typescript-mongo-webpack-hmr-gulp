@@ -5,8 +5,6 @@
 /* **************** Example Action Constant ******************* */
 export const EXAMPLE_ACTION: string = 'EXAMPLE_ACTION';
 
-
-
 // Global Actions here...
 
 /* **************** Example Action Interface ****************** */

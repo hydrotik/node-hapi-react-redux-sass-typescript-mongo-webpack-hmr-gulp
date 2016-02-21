@@ -8,7 +8,7 @@ import {
     IExampleAction,
     EXAMPLE_ACTION
 
-} from '../actions/globals';
+} from '../actions';
 
 // Multiple Reducers Example
 // https://github.com/suin/redux-multiple-reducers-example

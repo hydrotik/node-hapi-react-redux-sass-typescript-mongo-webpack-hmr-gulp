@@ -1,0 +1,1 @@
+export { onExampleReducer } from './globals';
