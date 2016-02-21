@@ -4,8 +4,7 @@ import * as React from 'react';
 import { Motion, spring } from 'react-motion';
 
 import { connect } from 'react-redux';
-import { onToggle } from '../../actions/locals';
-import { IToggleReducer } from '../../reducers/locals';
+import { onToggle, IToggleAction} from '../../actions/locals';
 
 import './_Header.scss';
 
@@ -19,12 +18,12 @@ interface IHeaderState {
     on?: boolean;
 }
 
-function select(state: { toggle: IToggleReducer }): IHeaderState {
-    const { toggle }: { toggle: IToggleReducer; } = state;
+function select(state: { toggle: IToggleAction }): IHeaderState {
+    const { toggle }: { toggle: IToggleAction; } = state;
 
     const {
         on
-    }: IToggleReducer = toggle;
+    }: IToggleAction = toggle;
 
     return {
         on

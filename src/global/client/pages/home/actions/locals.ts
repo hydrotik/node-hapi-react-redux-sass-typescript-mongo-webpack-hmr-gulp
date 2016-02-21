@@ -144,6 +144,7 @@ export interface ICarouselAction {
     slides?: any[];
     receivedAt?: number;
     lastUpdated?: any;
+    isFetching?: boolean;
 }
 
 export function requestSlides(): ICarouselAction {
@@ -160,6 +161,7 @@ export interface IEditorialAction {
     editorial?: any[];
     receivedAt?: number;
     lastUpdated?: any;
+    isFetching?: boolean;
 }
 
 export function requestEditorial(): IEditorialAction {

@@ -59,7 +59,7 @@ cssLoader = [
 
 
 module.exports = {
-    devtool: 'inline-source-map',
+    devtool: 'eval',
     entry: {
         home: [
             'webpack-dev-server/client?http://localhost:8080',

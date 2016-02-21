@@ -15,8 +15,7 @@ import '../../../../../../../node_modules/slick-carousel/slick/slick.scss';
 import '../../../../../../../node_modules/slick-carousel/slick/slick-theme.scss';
 
 import { connect } from 'react-redux';
-import { fetchContentIfNeeded, CAROUSEL } from '../../actions/locals';
-import { ICarouselReducer } from '../../reducers/locals';
+import { fetchContentIfNeeded, CAROUSEL, ICarouselAction} from '../../actions/locals';
 
 const Slider: any = Slick.Slider;
 
@@ -34,13 +33,13 @@ interface ICarouselState {
     lastUpdated?: number;
 }
 
-function select(state: { carouselContent: ICarouselReducer }): ICarouselState {
-    const { carouselContent }: { carouselContent: ICarouselReducer; } = state;
+function select(state: { carouselContent: ICarouselAction }): ICarouselState {
+    const { carouselContent }: { carouselContent: ICarouselAction; } = state;
     const {
         isFetching,
         lastUpdated,
         slides
-    }: ICarouselReducer = carouselContent;
+    }: ICarouselAction = carouselContent;
 
     return {
         slides,

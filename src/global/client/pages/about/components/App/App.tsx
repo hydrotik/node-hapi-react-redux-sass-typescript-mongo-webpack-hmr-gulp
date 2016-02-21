@@ -10,8 +10,7 @@ import { Header } from '../Header/Header';
 import { Footer } from '../../../../components/Footer/Footer';
 import { Carousel } from '../Carousel/Carousel';
 // Behaviors and Actions
-import { fetchContentIfNeeded, EDITORIAL } from '../../actions/locals';
-import { IEditorialReducer } from '../../reducers/locals';
+import { fetchContentIfNeeded, EDITORIAL, IEditorialAction} from '../../actions/locals';
 
 // Interfaces
 interface IAppProps {
@@ -28,13 +27,13 @@ interface IAppState {
 }
 
 // Decorators
-function select(state: { editorialContent: IEditorialReducer; }): IAppState {
-    const { editorialContent }: { editorialContent: IEditorialReducer; } = state;
+function select(state: { editorialContent: IEditorialAction; }): IAppState {
+    const { editorialContent }: { editorialContent: IEditorialAction; } = state;
     const {
         isFetching,
         lastUpdated,
         editorial
-    }: IEditorialReducer = editorialContent;
+    }: IEditorialAction = editorialContent;
 
     return {
         editorial,

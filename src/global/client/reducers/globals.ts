@@ -6,23 +6,21 @@ import {
     // Global Actions here...
 
     /* Example Event */
-    // ACTION_NAME
+    IExampleAction,
+    ACTION_NAME
 
-} from '../actions/actions';
+} from '../actions/globals';
 
 // Multiple Reducers Example
 // https://github.com/suin/redux-multiple-reducers-example
 // Nested Reducers Thread
 // https://github.com/reactjs/redux/issues/316
 
-// Global Action Constants here...
+// Global Reducers here...
 
-/* **************** Example Action Constant *******************
-export interface IExampleReducer {
-    payload?: boolean;
-}
+/* **************** Example Reducer ******************* */
 
-export function onExampleReducer(state: any = { payload: [] }, action: IExampleReducer): any {
+export function onExampleReducer(state: any = { payload: [] }, action: IExampleAction): any {
     let delta: Object;
     switch (action.type) {
         case ACTION_NAME:
@@ -34,9 +32,9 @@ export function onExampleReducer(state: any = { payload: [] }, action: IExampleR
             return state;
     }
 }
-*/
+
 
 // Combine Global Reducers
 export const rootReducer: Reducer = combineReducers({
-    //onExampleChange
+    onExampleReducer
 });
