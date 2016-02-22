@@ -3,13 +3,16 @@
 // Core Imports
 import * as React from 'react';
 import { connect } from 'react-redux';
+
 // Styles
 import './_App.scss';
+
 // Page Components
 import { Header } from '../Header/Header';
 import { Footer } from '../../../../components/Footer/Footer';
 import { Carousel } from '../Carousel/Carousel';
 import { Strip } from '../Strip/Strip';
+
 // Behaviors and Actions
 import { fetchContentIfNeeded, EDITORIAL, IEditorialAction} from '../../actions';
 

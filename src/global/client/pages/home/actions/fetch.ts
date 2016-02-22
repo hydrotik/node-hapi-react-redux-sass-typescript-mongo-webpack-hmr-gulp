@@ -1,6 +1,6 @@
 import { CAROUSEL, requestSlides, receiveSlides } from './carousel';
 import { EDITORIAL, requestEditorial, receiveEditorial } from './editorial';
-import { fixture } from '../fixtures';
+import { editorial, carousel } from '../fixtures';
 
 /* **************** Abstract Fetch ********************* */
 function fetchContent(type: string): any {
@@ -10,13 +10,13 @@ function fetchContent(type: string): any {
 
     switch (type) {
         case CAROUSEL:
-            mock = fixture.slides;
+            mock = carousel;
             console.warn(mock);
             req = requestSlides;
             rec = receiveSlides;
             break;
         case EDITORIAL:
-            mock = fixture.editorial;
+            mock = editorial;
             req = requestEditorial;
             rec = receiveEditorial;
             break;
