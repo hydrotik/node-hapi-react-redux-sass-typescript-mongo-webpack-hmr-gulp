@@ -40,7 +40,7 @@ function configureStore(): Store {
 
 const store: Store = configureStore();
 
-class About extends React.Component<{}, {}> {
+class Page extends React.Component<{}, {}> {
     public render(): React.ReactElement<Provider> {
         return (
             <Provider store={store}>
@@ -50,4 +50,4 @@ class About extends React.Component<{}, {}> {
     }
 }
 
-ReactDOM.render(<About />, document.getElementById('app'));
+ReactDOM.render(<Page />, document.getElementById('app'));
