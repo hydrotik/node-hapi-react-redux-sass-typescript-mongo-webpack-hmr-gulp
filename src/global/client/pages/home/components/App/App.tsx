@@ -9,8 +9,9 @@ import './_App.scss';
 import { Header } from '../Header/Header';
 import { Footer } from '../../../../components/Footer/Footer';
 import { Carousel } from '../Carousel/Carousel';
+import { Strip } from '../Strip/Strip';
 // Behaviors and Actions
-import { fetchContentIfNeeded, EDITORIAL, IEditorialAction} from '../../actions/locals';
+import { fetchContentIfNeeded, EDITORIAL, IEditorialAction} from '../../actions';
 
 // Interfaces
 interface IAppProps {
@@ -58,6 +59,7 @@ export class App extends React.Component<IAppProps, IAppState> {
         return (
             <div className = 'app'>
                 <Header />
+                <Strip />
                 <Carousel />
                 <Footer />
             </div>

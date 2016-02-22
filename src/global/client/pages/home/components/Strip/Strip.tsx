@@ -37,7 +37,7 @@ export class Strip extends React.Component<IStripProps, IStripState> {
 
     public componentDidMount(): void {
         const {dispatch}: IStripProps = this.props;
-        dispatch(onExample(['four', 'five', 'six']));
+        dispatch(onExample(['one', 'two', 'three']));
     }
 
     public render(): React.ReactElement<{}> {

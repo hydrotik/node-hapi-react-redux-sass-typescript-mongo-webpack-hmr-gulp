@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Motion, spring } from 'react-motion';
 
 import { connect } from 'react-redux';
-import { onToggle, IToggleAction} from '../../actions/locals';
+import { onToggle, IToggleAction} from '../../actions';
 
 import './_Header.scss';
 

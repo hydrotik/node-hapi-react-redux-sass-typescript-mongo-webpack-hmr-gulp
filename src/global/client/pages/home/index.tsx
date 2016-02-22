@@ -9,7 +9,7 @@ import '../../scss/app.scss';
 import { Store, createStore, applyMiddleware} from 'redux';
 import { Provider } from 'react-redux';
 
-import { rootReducer } from './reducers/locals';
+import { rootReducer } from './reducers';
 
 import { createLogger } from '../../utils/redux-logger';
 import { thunkMiddleware } from '../../utils/redux-thunk';
@@ -29,8 +29,8 @@ function configureStore(): Store {
     const store: Store = createStoreWithMiddleware(rootReducer);
 
     if (module.hot) {
-        module.hot.accept('./reducers/locals', () => {
-            const nextRootReducer: any = require('./reducers/locals').rootReducer;
+        module.hot.accept('./reducers', () => {
+            const nextRootReducer: any = require('./reducers').rootReducer;
             store.replaceReducer(nextRootReducer);
         });
     }
@@ -40,7 +40,7 @@ function configureStore(): Store {
 
 const store: Store = configureStore();
 
-class Home extends React.Component<{}, {}> {
+class Page extends React.Component<{}, {}> {
     public render(): React.ReactElement<Provider> {
         return (
             <Provider store={store}>
@@ -50,4 +50,4 @@ class Home extends React.Component<{}, {}> {
     }
 }
 
-ReactDOM.render(<Home />, document.getElementById('app'));
+ReactDOM.render(<Page />, document.getElementById('app'));

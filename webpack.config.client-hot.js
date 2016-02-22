@@ -129,7 +129,7 @@ module.exports = {
         }, {
             test: /\.ts(x?)$/,
             loader: 'react-hot!awesome-typescript-loader!tslint',
-            exclude: /node_modules/
+            exclude: [/bower_components/, /node_modules/]
         }]
     },
     tslint: {
