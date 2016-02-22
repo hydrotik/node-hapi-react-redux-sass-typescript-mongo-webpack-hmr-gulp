@@ -19,6 +19,7 @@ At the moment I am using awesome-typescript-loader, but I plan on testing ts-loa
 * Simple Redux implementation using globals spanning across multiple pages and locals using in index within pages
 * Setup using bash scripts
 * Setup using Promptly for setting up manifest config
+* Currently using awesome-typescript-loader for Webpack
 
 #### Run
 
