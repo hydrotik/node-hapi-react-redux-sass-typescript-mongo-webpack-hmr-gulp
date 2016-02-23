@@ -9,7 +9,6 @@ interface IDefaultProps {
     js?: string;
     script?: any;
     children?: any;
-    feet?: any;
 }
 
 class Layout extends React.Component<IDefaultProps, {}> {
@@ -45,7 +44,6 @@ class Layout extends React.Component<IDefaultProps, {}> {
                         </div>
                     </div>
                     {this.props.script}
-                    {this.props.feet}
                 </body>
             </html>
         );
