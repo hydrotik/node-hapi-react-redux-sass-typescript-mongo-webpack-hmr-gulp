@@ -1,5 +1,5 @@
 export const page: any = {
-    name: 'Contemporary',
+    name: 'Home',
     description: 'Contemporary description content',
     tags: 'Contemporary,Shoes'
 };

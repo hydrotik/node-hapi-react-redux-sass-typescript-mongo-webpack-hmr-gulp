@@ -2,25 +2,38 @@
 
 // Core Imports
 import * as React from 'react';
+import * as LinkedStateMixin from 'react-addons-linked-state-mixin';
 // import { connect } from 'react-redux';
 
 // Styles
 import './_Form.scss';
 
 // Page Components
+import { ControlGroup } from './components/ControlGroup/ControlGroup';
+import { TextControl } from './components/TextControl/TextControl';
+import { Button } from './components/Button/Button';
+import { Spinner } from './components/Spinner/Spinner';
 
 // Behaviors and Actions
 // import { } from '../../actions';
 
 // Interfaces
-/*
 interface IFormProps {
     // dispatch?: (func: any) => void;
     // store?: any;
 }
 interface IFormState {
+    success?: boolean;
+    error?: boolean;
+    hasError?: any;
+    help?: any;
+    loading?: boolean;
+
+    name?: string;
+    username?: string;
+    password?: string;
+    email?: string;
 }
-*/
 
 // Decorators
 /*
@@ -40,7 +53,7 @@ function select(state: { editorialContent: IEditorialAction; }): IFormState {
 
 @connect(select)
 */
-export class Form extends React.Component<{}, {}> {
+export class Form extends React.Component<{}, IFormState> {
 
     public constructor(props: any) {
         super(props);
@@ -51,11 +64,106 @@ export class Form extends React.Component<{}, {}> {
         // dispatch(fetchContentIfNeeded(EDITORIAL));
     }
 
+    public handleSubmit(event): void {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        /*
+        Actions.sendRequest({
+            name: this.state.name,
+            username: this.state.username,
+            password: this.state.password,
+            email: this.state.email
+        });
+        */
+    }
+
+    public handleChange(newValue: string): void {
+        this.setState({ message: newValue });
+    }
+
+    public linkState(value:string): any {
+        return {
+            value: this.state[value],
+            requestChange: function(newValue){
+                this.state[value] = newValue;
+            }
+        };
+    }
+
     public render(): React.ReactElement<{}> {
+
+        let alerts:any[] = [];
+
+        if (this.state.success) {
+            alerts.push(<div key="success" className="alert alert-success">
+                Success.Redirecting...
+                </div>);
+        }
+        else if (this.state.error) {
+            alerts.push(<div key="danger" className="alert alert-danger">
+                {this.state.error}
+                </div>);
+        }
+
+        var formElements;
+        if (!this.state.success) {
+            formElements = <fieldset>
+                <TextControl
+                    name="name"
+                    label="Name"
+                    ref="nameControl"
+                    hasError={this.state.hasError.name}
+                    valueLink={this.linkState('name') }
+                    help={this.state.help.name}
+                    disabled={this.state.loading}
+                    />
+                <TextControl
+                    name="email"
+                    label="Email"
+                    hasError={this.state.hasError.email}
+                    valueLink={this.linkState('email') }
+                    help={this.state.help.email}
+                    disabled={this.state.loading}
+                    />
+                <TextControl
+                    name="username"
+                    label="Username"
+                    hasError={this.state.hasError.username}
+                    valueLink={this.linkState('username') }
+                    help={this.state.help.username}
+                    disabled={this.state.loading}
+                    />
+                <TextControl
+                    name="password"
+                    label="Password"
+                    type="password"
+                    hasError={this.state.hasError.password}
+                    valueLink={this.linkState('password') }
+                    help={this.state.help.password}
+                    disabled={this.state.loading}
+                    />
+                <ControlGroup hideLabel={true} hideHelp={true}>
+                    <Button
+                        type="submit"
+                        inputClasses={{ 'btn-primary': true }}
+                        disabled={this.state.loading}>
+
+                        Create my account
+                        <Spinner space="left" show={this.state.loading} />
+                        </Button>
+                    </ControlGroup>
+                </fieldset>;
+
         return (
-            <div className='form'>
-                Hello Form.
-            </div>
+            <section>
+                <h1 className="page-header">Sign up</h1>
+                <form onSubmit={this.handleSubmit}>
+                    {alerts}
+                    {formElements}
+                </form>
+            </section>
         );
     }
 }
