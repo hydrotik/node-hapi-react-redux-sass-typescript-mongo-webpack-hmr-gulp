@@ -21,7 +21,7 @@ class Index extends React.Component<IIndexProps, {}> {
                 activeTab="signup">
 
                 <div className="row">
-                    <div className="col-sm-6" id="app-mount"></div>
+                    <div className="col-sm-6" id="app"></div>
                     <div className="col-sm-6 text-center">
                         <h1 className="page-header">Campy benefits</h1>
                         <p className="lead">
