@@ -26,14 +26,10 @@ export class TextControl extends React.Component<ITextControlProps, ITextControl
         super(props);
     }
 
-    public componentDidMount(): void {
-
-    }
-
     public render(): React.ReactElement<{}> {
 
             return (
-                <div className="textcontrol"></div>
+                <div className='textcontrol'></div>
             );
         }
     }

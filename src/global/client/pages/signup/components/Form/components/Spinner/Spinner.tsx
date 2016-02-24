@@ -22,30 +22,26 @@ export class Spinner extends React.Component<ISpinnerProps, ISpinnerState> {
         super(props);
     }
 
-    public componentDidMount(): void {
-
-    }
-
     public render(): React.ReactElement<{}> {
 
-        var spaceLeft;
+        let spaceLeft: string;
         if (this.props.space === 'left') {
             spaceLeft = '\u00A0\u00A0';
         }
 
-        var spaceRight;
+        let spaceRight: string;
         if (this.props.space === 'right') {
             spaceRight = '\u00A0\u00A0';
         }
 
-        var spinnerClasses = ClassNames({
+        let spinnerClasses: any = ClassNames({
             hidden: !this.props.show
         });
 
         return (
             <span className={spinnerClasses}>
                 {spaceLeft}
-                <i className="fa fa-refresh fa-spin"></i>
+                <i className='fa fa-refresh fa-spin'></i>
                 {spaceRight}
             </span>
         );

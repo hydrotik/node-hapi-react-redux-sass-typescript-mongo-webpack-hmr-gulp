@@ -143,7 +143,7 @@ declare namespace __React {
     // ----------------------------------------------------------------------
 
     interface MockedComponentClass {
-        new(): any;
+        new (): any;
     }
 
     module ReactTestUtils {

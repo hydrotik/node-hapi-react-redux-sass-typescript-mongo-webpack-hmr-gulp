@@ -2,7 +2,6 @@
 
 // Core Imports
 import * as React from 'react';
-import * as LinkedStateMixin from 'react-addons-linked-state-mixin';
 // import { connect } from 'react-redux';
 
 // Styles
@@ -55,8 +54,18 @@ function select(state: { editorialContent: IEditorialAction; }): IFormState {
 */
 export class Form extends React.Component<{}, IFormState> {
 
-    public constructor(props: any) {
+    public constructor(props: any = {}) {
         super(props);
+
+        this.state = {
+            success : false,
+            hasError : {
+                name : ''
+            },
+            help: {
+                name: ''
+            }
+        };
     }
 
     public componentDidMount(): void {
@@ -64,7 +73,7 @@ export class Form extends React.Component<{}, IFormState> {
         // dispatch(fetchContentIfNeeded(EDITORIAL));
     }
 
-    public handleSubmit(event): void {
+    public handleSubmit(event: any): void {
 
         event.preventDefault();
         event.stopPropagation();
@@ -79,14 +88,10 @@ export class Form extends React.Component<{}, IFormState> {
         */
     }
 
-    public handleChange(newValue: string): void {
-        this.setState({ message: newValue });
-    }
-
-    public linkState(value:string): any {
+    public linkState(value: string): any {
         return {
             value: this.state[value],
-            requestChange: function(newValue){
+            requestChange: function(newValue: string): void {
                 this.state[value] = newValue;
             }
         };
@@ -94,51 +99,50 @@ export class Form extends React.Component<{}, IFormState> {
 
     public render(): React.ReactElement<{}> {
 
-        let alerts:any[] = [];
+        let alerts: any[] = [];
 
         if (this.state.success) {
-            alerts.push(<div key="success" className="alert alert-success">
+            alerts.push(<div key='success' className='alert alert-success'>
                 Success.Redirecting...
                 </div>);
-        }
-        else if (this.state.error) {
-            alerts.push(<div key="danger" className="alert alert-danger">
+        }else if (this.state.error) {
+            alerts.push(<div key='danger' className='alert alert-danger'>
                 {this.state.error}
                 </div>);
         }
 
-        var formElements;
+        let formElements: React.ReactElement<{}>;
         if (!this.state.success) {
             formElements = <fieldset>
                 <TextControl
-                    name="name"
-                    label="Name"
-                    ref="nameControl"
+                    name='name'
+                    label='Name'
+                    ref='nameControl'
                     hasError={this.state.hasError.name}
                     valueLink={this.linkState('name') }
                     help={this.state.help.name}
                     disabled={this.state.loading}
                     />
                 <TextControl
-                    name="email"
-                    label="Email"
+                    name='email'
+                    label='Email'
                     hasError={this.state.hasError.email}
                     valueLink={this.linkState('email') }
                     help={this.state.help.email}
                     disabled={this.state.loading}
                     />
                 <TextControl
-                    name="username"
-                    label="Username"
+                    name='username'
+                    label='Username'
                     hasError={this.state.hasError.username}
                     valueLink={this.linkState('username') }
                     help={this.state.help.username}
                     disabled={this.state.loading}
                     />
                 <TextControl
-                    name="password"
-                    label="Password"
-                    type="password"
+                    name='password'
+                    label='Password'
+                    type='password'
                     hasError={this.state.hasError.password}
                     valueLink={this.linkState('password') }
                     help={this.state.help.password}
@@ -146,19 +150,19 @@ export class Form extends React.Component<{}, IFormState> {
                     />
                 <ControlGroup hideLabel={true} hideHelp={true}>
                     <Button
-                        type="submit"
+                        type='submit'
                         inputClasses={{ 'btn-primary': true }}
                         disabled={this.state.loading}>
 
                         Create my account
-                        <Spinner space="left" show={this.state.loading} />
+                        <Spinner space='left' show={this.state.loading} />
                         </Button>
                     </ControlGroup>
                 </fieldset>;
-
+        }
         return (
             <section>
-                <h1 className="page-header">Sign up</h1>
+                <h1 className='page-header'>Sign up</h1>
                 <form onSubmit={this.handleSubmit}>
                     {alerts}
                     {formElements}
@@ -221,12 +225,12 @@ var Component = React.createClass({
 
         var alerts = [];
         if (this.state.success) {
-            alerts.push(<div key="success" className="alert alert-success">
+            alerts.push(<div key='success' className='alert alert-success'>
                 Success.Redirecting...
                 </div>);
         }
         else if (this.state.error) {
-            alerts.push(<div key="danger" className="alert alert-danger">
+            alerts.push(<div key='danger' className='alert alert-danger'>
                 {this.state.error}
                 </div>);
         }
@@ -235,34 +239,34 @@ var Component = React.createClass({
         if (!this.state.success) {
             formElements = <fieldset>
                 <TextControl
-                    name="name"
-                    label="Name"
-                    ref="nameControl"
+                    name='name'
+                    label='Name'
+                    ref='nameControl'
                     hasError={this.state.hasError.name}
                     valueLink={this.linkState('name') }
                     help={this.state.help.name}
                     disabled={this.state.loading}
                     />
                 <TextControl
-                    name="email"
-                    label="Email"
+                    name='email'
+                    label='Email'
                     hasError={this.state.hasError.email}
                     valueLink={this.linkState('email') }
                     help={this.state.help.email}
                     disabled={this.state.loading}
                     />
                 <TextControl
-                    name="username"
-                    label="Username"
+                    name='username'
+                    label='Username'
                     hasError={this.state.hasError.username}
                     valueLink={this.linkState('username') }
                     help={this.state.help.username}
                     disabled={this.state.loading}
                     />
                 <TextControl
-                    name="password"
-                    label="Password"
-                    type="password"
+                    name='password'
+                    label='Password'
+                    type='password'
                     hasError={this.state.hasError.password}
                     valueLink={this.linkState('password') }
                     help={this.state.help.password}
@@ -270,12 +274,12 @@ var Component = React.createClass({
                     />
                 <ControlGroup hideLabel={true} hideHelp={true}>
                     <Button
-                        type="submit"
+                        type='submit'
                         inputClasses={{ 'btn-primary': true }}
                         disabled={this.state.loading}>
 
                         Create my account
-                        <Spinner space="left" show={this.state.loading} />
+                        <Spinner space='left' show={this.state.loading} />
                         </Button>
                     </ControlGroup>
                 </fieldset>;
@@ -283,7 +287,7 @@ var Component = React.createClass({
 
         return (
             <section>
-                <h1 className="page-header">Sign up</h1>
+                <h1 className='page-header'>Sign up</h1>
                 <form onSubmit={this.handleSubmit}>
                     {alerts}
                     {formElements}

@@ -32,34 +32,34 @@ export class ControlGroup extends React.Component<IControlGroupProps, IControlGr
         super(props);
     }
 
-    public componentDidMount(): void {
-
-    }
-
     public render(): React.ReactElement<{}> {
 
 
-        var groupClasses = ClassNames(lodash.assign({}, {
-            'form-group': true,
-            'has-error': this.props.hasError
-        }, this.props.groupClasses) as any);
+        let groupClasses: any = ClassNames(
+            lodash.assign(
+                {},
+                {
+                    'form-group': true,
+                    'has-error': this.props.hasError
+                },
+                this.props.groupClasses
+            ) as any
+        );
 
-        var labelClasses = ClassNames(lodash.assign({}, {
-            'control-label': true
-        }, this.props.labelClasses) as any);
+        let labelClasses: any = ClassNames(lodash.assign({}, { 'control-label': true }, this.props.labelClasses) as any);
 
-        var helpClasses = ClassNames(lodash.assign({}, {
-            'help-block': true
-        }, this.props.helpClasses) as any);
+        let helpClasses: any = ClassNames(lodash.assign({}, { 'help-block': true }, this.props.helpClasses) as any);
 
-        var labelComponent;
+        let labelComponent: React.ReactElement<{}>;
+
         if (!this.props.hideLabel) {
             labelComponent = <label className={labelClasses}>
                 {this.props.label}
                 </label>;
         }
 
-        var helpComponent;
+        let helpComponent: React.ReactElement<{}>;
+
         if (!this.props.hideHelp) {
             helpComponent = <span className={helpClasses}>
                 {this.props.help}

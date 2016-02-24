@@ -14,5 +14,3 @@
 /// <reference path="react-imation/react-imation.d.ts" />
 /// <reference path="react-imation/tween-value-factories.d.ts" />
 /// <reference path="classnames/classnames.d.ts" />
-/// <reference path="react/react-addons-linked-state-mixin.d.ts" />
-undefined
