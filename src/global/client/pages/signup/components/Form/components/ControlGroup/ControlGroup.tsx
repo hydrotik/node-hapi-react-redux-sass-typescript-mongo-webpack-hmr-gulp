@@ -10,8 +10,8 @@ import './_ControlGroup.scss';
 
 // Interfaces
 interface IControlGroupProps {
-    hideLabel: boolean;
-    hideHelp: boolean;
+    hideLabel?: boolean;
+    hideHelp?: boolean;
     children?: any;
     hasError?: boolean;
 
