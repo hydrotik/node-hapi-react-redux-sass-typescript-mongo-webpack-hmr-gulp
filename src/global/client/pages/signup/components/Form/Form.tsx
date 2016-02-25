@@ -64,7 +64,9 @@ export class Form extends React.Component<{}, IFormState> {
             },
             help: {
                 name: ''
-            }
+            },
+            loading: false,
+            error: false
         };
     }
 
@@ -156,9 +158,9 @@ export class Form extends React.Component<{}, IFormState> {
 
                         Create my account
                         <Spinner space='left' show={this.state.loading} />
-                        </Button>
-                    </ControlGroup>
-                </fieldset>;
+                    n </Button>
+                </ControlGroup>
+            </fieldset>;
         }
         return (
             <section>

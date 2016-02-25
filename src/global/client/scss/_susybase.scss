@@ -4,13 +4,13 @@
 $susy: (
     columns: 4,  // mobile first
     gutters: 0,
-    global-box-sizing: border-box,
-    debug: (
-        image: show,
-        color: rgba(#66b3dc, 0.25),
-        output: background,
-        toggle: top right
-    )
+    global-box-sizing: border-box
+    // debug: (
+    //     image: show,
+    //     color: rgba(#66b3dc, 0.25),
+    //     output: background,
+    //     toggle: top right
+    // )
 );
 
 $basic: 640px;
