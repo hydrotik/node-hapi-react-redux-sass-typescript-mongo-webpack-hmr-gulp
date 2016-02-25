@@ -11,13 +11,7 @@ export {
 /* *********** LOCALS *********** */
 
 // Carousel
-/*
 export {
-    CAROUSEL,
-    REQUEST_SLIDES,
-    RECEIVE_SLIDES,
-    ICarouselAction,
-    requestSlides,
-    receiveSlides
-} from './carousel';
-*/
+    SEND_REQUEST,
+    RECEIVE_RESPONSE
+} from './form';
