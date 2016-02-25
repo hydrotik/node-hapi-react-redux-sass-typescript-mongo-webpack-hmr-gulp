@@ -158,7 +158,7 @@ export class Form extends React.Component<{}, IFormState> {
 
                         Create my account
                         <Spinner space='left' show={this.state.loading} />
-                    n </Button>
+                    </Button>
                 </ControlGroup>
             </fieldset>;
         }
