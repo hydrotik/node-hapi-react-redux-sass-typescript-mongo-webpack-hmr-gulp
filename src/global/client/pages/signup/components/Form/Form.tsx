@@ -14,7 +14,11 @@ import { Button } from './components/Button/Button';
 import { Spinner } from './components/Spinner/Spinner';
 
 // Behaviors and Actions
-// import { } from '../../actions';
+import {
+    // SEND_REQUEST,
+    // RECEIVE_RESPONSE,
+    handleRequest
+} from '../../actions';
 
 // Interfaces
 interface IFormProps {
@@ -73,6 +77,12 @@ export class Form extends React.Component<{}, IFormState> {
     public componentDidMount(): void {
         // const {dispatch}: IFormProps = this.props;
         // dispatch(fetchContentIfNeeded(EDITORIAL));
+        handleRequest({
+            name: 'John Smith',
+            username: 'johnsmith1234',
+            password: 'test1234',
+            email: 'jsmith@gmail.com'
+        });
     }
 
     public handleSubmit(event: any): void {

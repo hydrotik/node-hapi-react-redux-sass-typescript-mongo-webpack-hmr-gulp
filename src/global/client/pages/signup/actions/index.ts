@@ -10,8 +10,9 @@ export {
 /* ****************************** */
 /* *********** LOCALS *********** */
 
-// Carousel
+// Form
 export {
     SEND_REQUEST,
-    RECEIVE_RESPONSE
+    RECEIVE_RESPONSE,
+    handleRequest
 } from './form';

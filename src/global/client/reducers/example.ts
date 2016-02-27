@@ -24,7 +24,6 @@ import {
 
 export function onExampleReducer(state: any = { payload: [] }, action: IExampleAction): any {
     let delta: Object;
-    console.warn(action);
     switch (action.type) {
         case EXAMPLE_ACTION:
             delta = lodash.assign({}, state, {

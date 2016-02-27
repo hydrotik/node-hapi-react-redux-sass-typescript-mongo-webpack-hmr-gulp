@@ -1,10 +1,29 @@
 /// <reference path="../../../../typings/tsd.d.ts" />
 
-export default function sendRequest(options: any, callback : any): void {
-    
+export interface IJSONFetch {
+    url: string;
+    method: string;
+    // Link to Data Interface
+    data?: any;
 }
 
+export default function jsonFetch(options: IJSONFetch, callback: (error: string, result?: string) => any): void {
+        /*    
+        let config = {
+            url: options.url,
+            method: options.method,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        };
+        */
 
+
+    let o: string = JSON.stringify(options.data);
+
+    callback(null, JSON.parse(o));
+}
 
 
 /*
