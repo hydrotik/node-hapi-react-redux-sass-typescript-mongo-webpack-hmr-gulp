@@ -34,6 +34,12 @@
     },
     "isomorphic-fetch/isomorphic-fetch.d.ts": {
       "commit": "163a4277199c3d896d9efffe24ea84c85f55c8ac"
+    },
+    "cookie/cookie.d.ts": {
+      "commit": "b10e5ade29708bb0a7d21916a9fe289973520e89"
+    },
+    "qs/qs.d.ts": {
+      "commit": "b10e5ade29708bb0a7d21916a9fe289973520e89"
     }
   }
 }
