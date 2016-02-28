@@ -17,13 +17,17 @@ import { Spinner } from './components/Spinner/Spinner';
 import {
     // SEND_REQUEST,
     // RECEIVE_RESPONSE,
+    // IFormSendRequestAction,
+    // sendRequest,
+    // IRecieveResponseAction,
+    // recieveResponse,
     handleRequest
 } from '../../actions';
 
 // Interfaces
 interface IFormProps {
-    // dispatch?: (func: any) => void;
-    // store?: any;
+    dispatch?: (func: any) => void;
+    store?: any;
 }
 interface IFormState {
     success?: boolean;
@@ -36,27 +40,27 @@ interface IFormState {
     username?: string;
     password?: string;
     email?: string;
+
+    response?: any;
+    data?: any;
 }
 
 // Decorators
 /*
-function select(state: { editorialContent: IEditorialAction; }): IFormState {
-    const { editorialContent }: { editorialContent: IEditorialAction; } = state;
+function select(state: { recieveResponse: IRecieveResponseAction; }): IFormState {
+    const { recieveResponse }: { recieveResponse: IRecieveResponseAction; } = state;
     const {
-        isFetching,
-        lastUpdated,
-        editorial
-    }: IEditorialAction = editorialContent;
+        response
+    }: IRecieveResponseAction = recieveResponse;
 
     return {
-
+        response
     };
 
 }
 
-@connect(select)
-*/
-export class Form extends React.Component<{}, IFormState> {
+@connect(select)*/
+export class Form extends React.Component<IFormProps, IFormState> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -76,13 +80,17 @@ export class Form extends React.Component<{}, IFormState> {
 
     public componentDidMount(): void {
         // const {dispatch}: IFormProps = this.props;
-        // dispatch(fetchContentIfNeeded(EDITORIAL));
+        // console.warn(dispatch);
+        // dispatch(
+        /*
         handleRequest({
             name: 'John Smith',
             username: 'johnsmith1234',
             password: 'test1234',
             email: 'jsmith@gmail.com'
         });
+        */
+        // );
     }
 
     public handleSubmit(event: any): void {
@@ -98,6 +106,13 @@ export class Form extends React.Component<{}, IFormState> {
             email: this.state.email
         });
         */
+
+        handleRequest({
+            name: this.state.name,
+            username: this.state.username,
+            password: this.state.password,
+            email: this.state.email
+        });
     }
 
     public linkState(value: string): any {

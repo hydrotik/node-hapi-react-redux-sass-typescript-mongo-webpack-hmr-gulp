@@ -49,49 +49,29 @@ function shouldFetchPosts(state, subreddit) {
         return posts.didInvalidate
     }
 }
-
-export function fetchPostsIfNeeded(subreddit) {
-    return (dispatch, getState) => {
-        if (shouldFetchPosts(getState(), subreddit)) {
-            return dispatch(fetchPosts(subreddit))
-        }
-    }
-}
 */
 
-// Interface for Data
-export function handleRequest(data: any): void {
+// TODO Interface for Data
+export function handleRequest(data: any): any {
+    // return (dispatch: any, getState: any) => {
+        // dispatch(SEND_REQUEST, data);
 
-    // dispatch(VIEW_ACTION, Types.SEND_REQUEST, data);
+        let request: any = {
+            method: 'POST',
+            url: '/api/signup',
+            data: data
+        };
 
-    // Link to Action Interface!
-    let request: any = {
-        method: 'POST',
-        url: '/api/signup',
-        data: data
-    };
+        Fetch(request, function(err: Error, response: any): void {
+            if (!err) {
+                window.location.href = '/account';
+                response.success = true;
+            }
+            console.warn('request reponse:');
+            console.warn(response);
 
-    /*
-    fetch('//offline-news-api.herokuapp.com/stories')
-    .then(function(response) {
-        if (response.status >= 400) {
-            throw new Error("Bad response from server");
-        }
-        return response.json();
-    })
-    .then(function(stories) {
-        console.log(stories);
-    });
-    */
-
-    Fetch(request, function(err: Error, response: any): void {
-
-        // if (!err) {
-        //     window.location.href = '/account';
-        //     response.success = true;
-        // }
-        console.warn('request reponse:');
-        console.warn(response);
-        // dispatch(RECEIVE_RESPONSE, response);
-    });
+            // dispatch(RECEIVE_RESPONSE, response);
+        });
+    // };
 }
+

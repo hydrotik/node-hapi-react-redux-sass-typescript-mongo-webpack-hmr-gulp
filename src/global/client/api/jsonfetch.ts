@@ -39,6 +39,7 @@ export default function jsonFetch(options: IJSONFetch, callback: (error: Error, 
 
     console.log(config);
 
+    // TODO Clean this up
     let x: any = Xhr;
 
     let cb: any = function(err: Error, response: any, body: any): void {
@@ -59,8 +60,4 @@ export default function jsonFetch(options: IJSONFetch, callback: (error: Error, 
     };
 
     x(config.url, config, cb);
-
-    // let o: string = JSON.stringify(options.data);
-
-    // callback(null, JSON.parse(o));
 }

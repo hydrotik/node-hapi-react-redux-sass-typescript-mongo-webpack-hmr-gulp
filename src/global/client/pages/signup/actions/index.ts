@@ -14,5 +14,9 @@ export {
 export {
     SEND_REQUEST,
     RECEIVE_RESPONSE,
+    IFormSendRequestAction,
+    sendRequest,
+    IRecieveResponseAction,
+    recieveResponse,
     handleRequest
 } from './form';
