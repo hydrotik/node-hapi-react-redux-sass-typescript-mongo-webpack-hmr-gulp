@@ -95,7 +95,8 @@
     "typescript-parser.jsx": "^0.1.0",
     "typescript-simple": "^3.0.2",
     "vision": "^3.0.0",
-    "visionary": "^3.0.1"
+    "visionary": "^3.0.1",
+    "xhr": "^2.2.0"
   },
   "devDependencies": {
     "ansi-to-html": "^0.3.0",

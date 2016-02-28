@@ -1,5 +1,7 @@
 /// <reference path="../../../../typings/tsd.d.ts" />
 
+import Xhr from 'xhr';
+
 export interface IJSONFetch {
     url: string;
     method: string;
@@ -7,9 +9,9 @@ export interface IJSONFetch {
     data?: any;
 }
 
-export default function jsonFetch(options: IJSONFetch, callback: (error: string, result?: string) => any): void {
-        /*    
-        let config = {
+export default function jsonFetch(options: IJSONFetch, callback: (error: Error, result?: string) => any): void {
+
+        let config: any = {
             url: options.url,
             method: options.method,
             headers: {
@@ -17,12 +19,27 @@ export default function jsonFetch(options: IJSONFetch, callback: (error: string,
                 'Content-Type': 'application/json'
             }
         };
-        */
 
+        Xhr(config, function(err: Error, response: any, body: any): void {
 
-    let o: string = JSON.stringify(options.data);
+            if (err) {
+                callback(err);
+            } else if (response.statusCode >= 200 && response.statusCode < 300) {
+                if (response.headers.hasOwnProperty('x-auth-required')) {
+                    // RedirectActions.saveReturnUrl();
+                    window.location.href = '/login';
+                } else {
+                    callback(null, JSON.parse(body));
+                }
+            } else {
+                let httpErr: Error = new Error(response.rawRequest.statusText);
+                callback(httpErr, JSON.parse(body));
+            }
+        });
 
-    callback(null, JSON.parse(o));
+    // let o: string = JSON.stringify(options.data);
+
+    // callback(null, JSON.parse(o));
 }
 
 

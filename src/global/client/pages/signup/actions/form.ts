@@ -84,7 +84,7 @@ export function handleRequest(data: any): void {
     });
     */
 
-    Fetch(request, function(err: string, response: any): void {
+    Fetch(request, function(err: Error, response: any): void {
 
         // if (!err) {
         //     window.location.href = '/account';
