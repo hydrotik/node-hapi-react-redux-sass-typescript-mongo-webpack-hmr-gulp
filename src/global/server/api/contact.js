@@ -1,6 +1,6 @@
 var Joi = require('joi');
 var Hoek = require('hoek');
-var Config = require('../../config');
+var Config = require('../../../../config');
 
 
 exports.register = function (server, options, next) {

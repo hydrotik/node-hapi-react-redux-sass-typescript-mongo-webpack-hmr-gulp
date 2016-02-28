@@ -3,7 +3,7 @@ var Fs = require('fs');
 var Handlebars = require('handlebars');
 var Nodemailer = require('nodemailer');
 var Markdown = require('nodemailer-markdown').markdown;
-var Config = require('../config');
+var Config = require('../../../config');
 
 
 var transport = Nodemailer.createTransport(Config.get('/nodemailer'));
