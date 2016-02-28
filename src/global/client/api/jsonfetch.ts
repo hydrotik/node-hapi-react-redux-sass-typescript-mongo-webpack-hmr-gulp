@@ -37,6 +37,8 @@ export default function jsonFetch(options: IJSONFetch, callback: (error: Error, 
         config.body = JSON.stringify(options.data);
     }
 
+    console.log(config);
+
     Xhr(config, function(err: Error, response: any, body: any): void {
 
         if (err) {
