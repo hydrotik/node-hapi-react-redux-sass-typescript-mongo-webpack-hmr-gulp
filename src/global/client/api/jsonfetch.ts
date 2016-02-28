@@ -1,6 +1,6 @@
 /// <reference path="../../../../typings/tsd.d.ts" />
 
-import Xhr from 'xhr';
+import * as Xhr from 'xhr';
 import * as Cookie from 'cookie';
 import * as Qs from 'qs';
 
@@ -39,7 +39,9 @@ export default function jsonFetch(options: IJSONFetch, callback: (error: Error, 
 
     console.log(config);
 
-    Xhr(config, function(err: Error, response: any, body: any): void {
+    let x: any = Xhr;
+
+    let cb: any = function(err: Error, response: any, body: any): void {
 
         if (err) {
             callback(err);
@@ -54,7 +56,9 @@ export default function jsonFetch(options: IJSONFetch, callback: (error: Error, 
             let httpErr: Error = new Error(response.rawRequest.statusText);
             callback(httpErr, JSON.parse(body));
         }
-    });
+    };
+
+    x(config.url, config, cb);
 
     // let o: string = JSON.stringify(options.data);
 

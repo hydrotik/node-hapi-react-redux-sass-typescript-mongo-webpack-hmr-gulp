@@ -1,6 +1,10 @@
 // Type definitions for xhr v0.1.0
 
-declare module 'xhr' {
+declare module Xhr {
 
-  export default function Xhr(request: any, callback: any): void;
+    function createXHR(uri: string, options: any, callback: any): void;
+}
+
+declare module "xhr" {
+    export = Xhr;
 }
