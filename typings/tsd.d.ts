@@ -14,5 +14,6 @@
 /// <reference path="react-track/react-track-formulas.d.ts" />
 /// <reference path="react-imation/react-imation.d.ts" />
 /// <reference path="react-imation/tween-value-factories.d.ts" />
+/// <reference path="xhr/xhr.d.ts" />
 /// <reference path="qs/qs.d.ts" />
 /// <reference path="cookie/cookie.d.ts" />
