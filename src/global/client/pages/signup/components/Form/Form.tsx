@@ -88,41 +88,20 @@ export class Form extends React.Component<IFormProps, IFormState> {
         };
     }
 
-    public componentDidMount(): void {
-        const {dispatch}: IFormProps = this.props;
-        console.warn(dispatch);
-        // dispatch(
-        /*
-        handleRequest({
-            name: 'John Smith',
-            username: 'johnsmith1234',
-            password: 'test1234',
-            email: 'jsmith@gmail.com'
-        });
-        */
-        // );
-    }
-
     public handleSubmit(event: any): void {
 
         event.preventDefault();
         event.stopPropagation();
 
-        /*
-        Actions.sendRequest({
-            name: this.state.name,
-            username: this.state.username,
-            password: this.state.password,
-            email: this.state.email
-        });
-        */
-
-        handleRequest({
-            name: this.state.name,
-            username: this.state.username,
-            password: this.state.password,
-            email: this.state.email
-        });
+        const {dispatch}: IFormProps = this.props;
+        dispatch(
+            handleRequest({
+                name: this.state.name,
+                username: this.state.username,
+                password: this.state.password,
+                email: this.state.email
+            })
+        );
     }
 
     public linkState(value: string): any {
