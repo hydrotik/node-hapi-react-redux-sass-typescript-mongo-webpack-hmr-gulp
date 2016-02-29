@@ -88,12 +88,13 @@ export class Form extends React.Component<IFormProps, IFormState> {
         };
     }
 
-    public handleSubmit(event: any): void {
+    public onSubmit(event: any): void {
 
         event.preventDefault();
         event.stopPropagation();
 
-        const {dispatch}: IFormProps = this.props;
+        const { dispatch }: IFormProps = this.props;
+
         dispatch(
             handleRequest({
                 name: this.state.name,
@@ -179,7 +180,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
         return (
             <section>
                 <h1 className='page-header'>Sign up</h1>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={(e: any) => this.onSubmit(e) }>
                     {alerts}
                     {formElements}
                 </form>
