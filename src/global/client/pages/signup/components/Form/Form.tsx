@@ -29,7 +29,7 @@ interface IFormProps {
 }
 interface IFormState {
     success?: boolean;
-    error?: boolean;
+    error?: string;
     hasError?: any;
     help?: any;
     loading?: boolean;
@@ -84,8 +84,12 @@ export class Form extends React.Component<IFormProps, IFormState> {
                 name: ''
             },
             loading: false,
-            error: false
+            error: undefined
         };
+    }
+
+    public componentDidMount(): void {
+        // this.refs.nameControl.refs.inputField.getDOMNode().focus();
     }
 
     public onSubmit(event: any): void {

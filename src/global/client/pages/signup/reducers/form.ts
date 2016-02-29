@@ -1,6 +1,7 @@
 /// <reference path="../../../../../../typings/tsd.d.ts" />
 
 import * as lodash from 'lodash';
+
 import {
     SEND_REQUEST,
     RECEIVE_RESPONSE,
