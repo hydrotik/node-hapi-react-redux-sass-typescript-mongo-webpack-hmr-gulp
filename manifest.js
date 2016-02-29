@@ -103,26 +103,6 @@ var manifest = {
 
 Object.assign(manifest.plugins, Routes);
 
-/*
-    var hapiMongoModels = {
-        'hapi-mongo-models': {
-            mongodb: Config.get('/hapiMongoModels/mongodb'),
-            models: {
-                Account: './src/global/server/models/account',
-                AdminGroup: './src/global//server/models/admin-group',
-                Admin: './src/global//server/models/admin',
-                AuthAttempt: './src/global//server/models/auth-attempt',
-                Session: './src/global//server/models/session',
-                Status: './src/global//server/models/status',
-                User: './src/global//server/models/user'
-            },
-            autoIndex: Config.get('/hapiMongoModels/autoIndex')
-        }
-    }
-
-Object.assign(manifest.plugins, hapiMongoModels);
-*/
-
 var store = new Confidence.Store(manifest);
 
 

@@ -9,7 +9,7 @@ export interface IValidation {
 export default function parseValidation(validation: any, message: string): IValidation {
 
     let response: IValidation = {
-        error: undefined,
+        error: '',
         hasError: {},
         help: {}
     };
@@ -24,8 +24,11 @@ export default function parseValidation(validation: any, message: string): IVali
 
         response.hasError[forField] = true;
         response.help[forField] = message;
-    } else if (message) {
-        response.error = message;
+    }
+
+    if (message) {
+        response.error = 'Error with Form!';
+
     }
 
     return response;

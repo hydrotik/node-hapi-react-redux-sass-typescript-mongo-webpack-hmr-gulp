@@ -4,6 +4,7 @@ import Fetch from '../../../api/jsonfetch';
 import ParseValidation, { IValidation } from '../../../api/parsevalidation';
 // import fetch from 'isomorphic-fetch';
 
+export const FORM_INIT: string = 'FORM_INIT';
 export const SEND_REQUEST: string = 'SEND_REQUEST';
 export const RECEIVE_RESPONSE: string = 'RECEIVE_RESPONSE';
 
@@ -23,7 +24,7 @@ export interface IFormRequest extends IFormAbstract {
 
 export interface IFormResponse extends IFormAbstract {
     success: boolean;
-    error: string;
+    errormessage: string;
     hasError: any;
     help: any;
     loading: boolean;
@@ -42,6 +43,13 @@ export interface IFormMapping extends IFormRequest, IFormResponse {
 }
 
 /* **************** Form Send Action Event ********************** */
+export function onFormInit(): IFormAbstract {
+    return {
+        type: FORM_INIT
+    };
+}
+
+/* **************** Form Send Action Event ********************** */
 export function onSendFormAction(name: string, username: string, password: string, email: string): IFormRequest {
     return {
         type: SEND_REQUEST,
@@ -53,14 +61,14 @@ export function onSendFormAction(name: string, username: string, password: strin
 }
 
 /* **************** Form Receive Action Event ********************** */
-export function onReceiveFormAction(success: boolean, error: string, hasError: any, help: any, loading: boolean): IFormResponse {
+export function onReceiveFormAction(success: boolean, errormessage: string, hasError: any, help: any, loading: boolean): IFormResponse {
     return {
         type: RECEIVE_RESPONSE,
-        success,
-        error,
-        hasError,
-        help,
-        loading
+        success: success,
+        errormessage: errormessage,
+        hasError: hasError,
+        help: help,
+        loading: loading
     };
 }
 
@@ -75,14 +83,11 @@ export function handleRequest(data: any): any {
             data: data
         };
 
-        Fetch(request, function(err: any, response: any): void {
+        Fetch(request, (err: any, response: any) => {
             if (!err) {
                 window.location.href = '/account';
                 response.success = true;
             }
-            console.warn('request reponse:');
-            console.warn(response);
-            console.warn(err);
 
             let validation: IValidation = ParseValidation(response.validation, response.message);
 

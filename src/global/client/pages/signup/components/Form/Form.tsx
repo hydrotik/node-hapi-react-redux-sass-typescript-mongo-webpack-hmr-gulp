@@ -19,7 +19,9 @@ import {
     // RECEIVE_RESPONSE,
     IFormMapping,
     // onFormAction,
-    handleRequest
+    // handleRequest,
+    onFormInit,
+    onReceiveFormAction
 } from '../../actions';
 
 // Interfaces
@@ -29,7 +31,7 @@ interface IFormProps {
 }
 interface IFormState {
     success?: boolean;
-    error?: string;
+    errormessage?: string;
     hasError?: any;
     help?: any;
     loading?: boolean;
@@ -44,24 +46,27 @@ interface IFormState {
 function select(state: { formSignup: IFormMapping; }): IFormState {
     const { formSignup }: { formSignup: IFormMapping; } = state;
     const {
+        errormessage,
         name,
         username,
         password,
         email,
         success,
-        error,
         hasError,
         help,
         loading
     }: IFormMapping = formSignup;
 
+    console.warn('select() :: errormessage');
+    console.warn(errormessage);
+
     return {
+        errormessage,
         name,
         username,
         password,
         email,
         success,
-        error,
         hasError,
         help,
         loading
@@ -74,22 +79,27 @@ export class Form extends React.Component<IFormProps, IFormState> {
 
     public constructor(props: any = {}) {
         super(props);
-
+        console.warn('constructor()');
         this.state = {
-            success : false,
-            hasError : {
-                name : ''
+            success: false,
+            hasError: {
+                name: ''
             },
             help: {
                 name: ''
             },
             loading: false,
-            error: undefined
+            errormessage: 'init'
         };
     }
 
     public componentDidMount(): void {
         // this.refs.nameControl.refs.inputField.getDOMNode().focus();
+        console.warn('componentDidMount()');
+        const { dispatch }: IFormProps = this.props;
+        dispatch(
+            onFormInit()
+        );
     }
 
     public onSubmit(event: any): void {
@@ -99,6 +109,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
 
         const { dispatch }: IFormProps = this.props;
 
+        /*
         dispatch(
             handleRequest({
                 name: this.state.name,
@@ -106,6 +117,11 @@ export class Form extends React.Component<IFormProps, IFormState> {
                 password: this.state.password,
                 email: this.state.email
             })
+        );
+        */
+
+        dispatch(
+            onReceiveFormAction(false, 'ERROR', {}, {}, false)
         );
     }
 
@@ -121,14 +137,19 @@ export class Form extends React.Component<IFormProps, IFormState> {
     public render(): React.ReactElement<{}> {
 
         let alerts: any[] = [];
+        console.warn('render()');
+        console.warn('this.state.errormessage');
+        console.warn(this.state.errormessage);
 
         if (this.state.success) {
             alerts.push(<div key='success' className='alert alert-success'>
                 Success.Redirecting...
             </div>);
-        }else if (this.state.error) {
+        }
+
+        if (this.state.errormessage !== '') {
             alerts.push(<div key='danger' className='alert alert-danger'>
-                {this.state.error}
+                {this.state.errormessage}
             </div>);
         }
 
@@ -192,134 +213,3 @@ export class Form extends React.Component<IFormProps, IFormState> {
         );
     }
 }
-
-
-
-
-
-
-
-
-/*
-var React = require('react/addons');
-var ControlGroup = require('../../components/form/ControlGroup');
-var TextControl = require('../../components/form/TextControl');
-var Button = require('../../components/form/Button');
-var Spinner = require('../../components/form/Spinner');
-var Actions = require('./Actions');
-var Store = require('./Store');
-
-
-var Component = React.createClass({
-    mixins: [React.addons.LinkedStateMixin],
-    getInitialState: function() {
-
-        Store.reset();
-        return Store.getState();
-    },
-    componentDidMount: function() {
-
-        Store.addChangeListener(this.onStoreChange);
-        this.refs.nameControl.refs.inputField.getDOMNode().focus();
-    },
-    componentWillUnmount: function() {
-
-        Store.removeChangeListener(this.onStoreChange);
-    },
-    onStoreChange: function() {
-
-        this.setState(Store.getState());
-    },
-    handleSubmit: function(event) {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        Actions.sendRequest({
-            name: this.state.name,
-            username: this.state.username,
-            password: this.state.password,
-            email: this.state.email
-        });
-    },
-    render: function() {
-
-        var alerts = [];
-        if (this.state.success) {
-            alerts.push(<div key='success' className='alert alert-success'>
-                Success.Redirecting...
-                </div>);
-        }
-        else if (this.state.error) {
-            alerts.push(<div key='danger' className='alert alert-danger'>
-                {this.state.error}
-                </div>);
-        }
-
-        var formElements;
-        if (!this.state.success) {
-            formElements = <fieldset>
-                <TextControl
-                    name='name'
-                    label='Name'
-                    ref='nameControl'
-                    hasError={this.state.hasError.name}
-                    valueLink={this.linkState('name') }
-                    help={this.state.help.name}
-                    disabled={this.state.loading}
-                    />
-                <TextControl
-                    name='email'
-                    label='Email'
-                    hasError={this.state.hasError.email}
-                    valueLink={this.linkState('email') }
-                    help={this.state.help.email}
-                    disabled={this.state.loading}
-                    />
-                <TextControl
-                    name='username'
-                    label='Username'
-                    hasError={this.state.hasError.username}
-                    valueLink={this.linkState('username') }
-                    help={this.state.help.username}
-                    disabled={this.state.loading}
-                    />
-                <TextControl
-                    name='password'
-                    label='Password'
-                    type='password'
-                    hasError={this.state.hasError.password}
-                    valueLink={this.linkState('password') }
-                    help={this.state.help.password}
-                    disabled={this.state.loading}
-                    />
-                <ControlGroup hideLabel={true} hideHelp={true}>
-                    <Button
-                        type='submit'
-                        inputClasses={{ 'btn-primary': true }}
-                        disabled={this.state.loading}>
-
-                        Create my account
-                        <Spinner space='left' show={this.state.loading} />
-                        </Button>
-                    </ControlGroup>
-                </fieldset>;
-        }
-
-        return (
-            <section>
-                <h1 className='page-header'>Sign up</h1>
-                <form onSubmit={this.handleSubmit}>
-                    {alerts}
-                    {formElements}
-                    </form>
-                </section>
-        );
-    }
-});
-
-
-module.exports = Component;
-
-*/
-

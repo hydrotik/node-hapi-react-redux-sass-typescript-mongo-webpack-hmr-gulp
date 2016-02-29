@@ -22,6 +22,7 @@ export {
     IFormMapping,
 
     // Actions and methods
+    onFormInit,
     onSendFormAction,
     onReceiveFormAction,
     handleRequest
