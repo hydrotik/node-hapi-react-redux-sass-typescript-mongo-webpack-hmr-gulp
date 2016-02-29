@@ -7,7 +7,6 @@ import * as Qs from 'qs';
 export interface IJSONFetch {
     url: string;
     method: string;
-    // Link to Data Interface
     data?: any;
     query?: any;
 }

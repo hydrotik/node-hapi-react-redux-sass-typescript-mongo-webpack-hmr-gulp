@@ -12,11 +12,18 @@ export {
 
 // Form
 export {
+    // Constants
     SEND_REQUEST,
     RECEIVE_RESPONSE,
-    IFormSendRequestAction,
-    sendRequest,
-    IRecieveResponseAction,
-    recieveResponse,
+
+    // Interfaces
+    IFormRequest,
+    IFormResponse,
+    IFormMapping,
+
+    // Actions and methods
+    onSendFormAction,
+    onReceiveFormAction,
     handleRequest
+
 } from './form';

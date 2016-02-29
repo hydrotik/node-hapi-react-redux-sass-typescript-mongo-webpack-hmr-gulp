@@ -7,54 +7,66 @@ export const SEND_REQUEST: string = 'SEND_REQUEST';
 export const RECEIVE_RESPONSE: string = 'RECEIVE_RESPONSE';
 
 /* **************** Form Send Action Interface ****************** */
-export interface IFormSendRequestAction {
+// start(callback: (startStatus: bool, engineType: string) => void) : void;
+// http://stackoverflow.com/questions/17865620/typescript-multiple-inheritance-workarounds
+export interface IFormAbstract {
     type: string;
-    data?: any;
+}
+
+export interface IFormRequest extends IFormAbstract {
+    name: string;
+    username: string;
+    password: string;
+    email: string;
+}
+
+export interface IFormResponse extends IFormAbstract {
+    success: boolean;
+    error: boolean;
+    hasError: any;
+    help: any;
+    loading: boolean;
+}
+
+export interface IFormMapping extends IFormRequest, IFormResponse {
+    // success?: boolean;
+    // error?: boolean;
+    // hasError?: any;
+    // help?: any;
+    // loading?: boolean;
+    // name?: string;
+    // username?: string;
+    // password?: string;
+    // email?: string;
 }
 
 /* **************** Form Send Action Event ********************** */
-export function sendRequest(data: any): IFormSendRequestAction {
-    return { type: SEND_REQUEST, data: data };
+export function onSendFormAction(name: string, username: string, password: string, email: string): IFormRequest {
+    return {
+        type: SEND_REQUEST,
+        name,
+        username,
+        password,
+        email
+    };
 }
 
-/* **************** Form Recieve Action Interface ****************** */
-export interface IRecieveResponseAction {
-    type: string;
-    response?: any;
+/* **************** Form Receive Action Event ********************** */
+export function onReceiveFormAction(success: boolean, error: boolean, hasError: any, help: any, loading: boolean): IFormResponse {
+    return {
+        type: RECEIVE_RESPONSE,
+        success,
+        error,
+        hasError,
+        help,
+        loading
+    };
 }
-
-/* **************** Form Recieve Action Event ********************** */
-export function recieveResponse(response: any): IRecieveResponseAction {
-    return { type: RECEIVE_RESPONSE, response: response };
-}
-
-
-/*
-function fetchPosts(subreddit) {
-    return dispatch => {
-        dispatch(requestPosts(subreddit))
-        return fetch(`http://www.reddit.com/r/${subreddit}.json`)
-            .then(req => req.json())
-            .then(json => dispatch(receivePosts(subreddit, json)))
-    }
-}
-
-function shouldFetchPosts(state, subreddit) {
-    const posts = state.postsBySubreddit[subreddit]
-    if (!posts) {
-        return true
-    } else if (posts.isFetching) {
-        return false
-    } else {
-        return posts.didInvalidate
-    }
-}
-*/
 
 // TODO Interface for Data
 export function handleRequest(data: any): any {
-    // return (dispatch: any, getState: any) => {
-        // dispatch(SEND_REQUEST, data);
+    return (dispatch: any, getState: any) => {
+        dispatch(onSendFormAction(data.name, data.username, data.password, data.email));
 
         let request: any = {
             method: 'POST',
@@ -70,8 +82,7 @@ export function handleRequest(data: any): any {
             console.warn('request reponse:');
             console.warn(response);
 
-            // dispatch(RECEIVE_RESPONSE, response);
+            dispatch(onReceiveFormAction(response.success, response.error, response.hasError, response.help, response.loading));
         });
-    // };
+    };
 }
-

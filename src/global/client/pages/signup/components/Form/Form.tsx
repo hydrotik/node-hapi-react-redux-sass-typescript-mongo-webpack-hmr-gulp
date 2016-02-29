@@ -2,7 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 // Styles
 import './_Form.scss';
@@ -17,10 +17,8 @@ import { Spinner } from './components/Spinner/Spinner';
 import {
     // SEND_REQUEST,
     // RECEIVE_RESPONSE,
-    // IFormSendRequestAction,
-    // sendRequest,
-    // IRecieveResponseAction,
-    // recieveResponse,
+    IFormMapping,
+    // onFormAction,
     handleRequest
 } from '../../actions';
 
@@ -40,26 +38,38 @@ interface IFormState {
     username?: string;
     password?: string;
     email?: string;
-
-    response?: any;
-    data?: any;
 }
 
 // Decorators
-/*
-function select(state: { recieveResponse: IRecieveResponseAction; }): IFormState {
-    const { recieveResponse }: { recieveResponse: IRecieveResponseAction; } = state;
+function select(state: { formSignup: IFormMapping; }): IFormState {
+    const { formSignup }: { formSignup: IFormMapping; } = state;
     const {
-        response
-    }: IRecieveResponseAction = recieveResponse;
+        name,
+        username,
+        password,
+        email,
+        success,
+        error,
+        hasError,
+        help,
+        loading
+    }: IFormMapping = formSignup;
 
     return {
-        response
+        name,
+        username,
+        password,
+        email,
+        success,
+        error,
+        hasError,
+        help,
+        loading
     };
 
 }
 
-@connect(select)*/
+@connect(select)
 export class Form extends React.Component<IFormProps, IFormState> {
 
     public constructor(props: any = {}) {
@@ -79,8 +89,8 @@ export class Form extends React.Component<IFormProps, IFormState> {
     }
 
     public componentDidMount(): void {
-        // const {dispatch}: IFormProps = this.props;
-        // console.warn(dispatch);
+        const {dispatch}: IFormProps = this.props;
+        console.warn(dispatch);
         // dispatch(
         /*
         handleRequest({
@@ -131,11 +141,11 @@ export class Form extends React.Component<IFormProps, IFormState> {
         if (this.state.success) {
             alerts.push(<div key='success' className='alert alert-success'>
                 Success.Redirecting...
-                </div>);
+            </div>);
         }else if (this.state.error) {
             alerts.push(<div key='danger' className='alert alert-danger'>
                 {this.state.error}
-                </div>);
+            </div>);
         }
 
         let formElements: React.ReactElement<{}>;

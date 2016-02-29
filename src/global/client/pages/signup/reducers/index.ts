@@ -10,10 +10,11 @@ import { onExampleReducer } from '../../../reducers';
 /* ****************************** */
 /* *********** LOCALS *********** */
 
-// Carousel
-// import { carouselContent } from './carousel';
+// Form
+import { formSignup } from './form';
 
 export const rootReducer: Reducer = combineReducers({
-    onExampleReducer
+    onExampleReducer,
+    formSignup
 });
 
