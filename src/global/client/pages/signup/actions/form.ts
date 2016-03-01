@@ -30,16 +30,17 @@ export interface IFormResponse extends IFormAbstract {
     loading: boolean;
 }
 
-export interface IFormMapping extends IFormRequest, IFormResponse {
-    // success?: boolean;
-    // error?: boolean;
-    // hasError?: any;
-    // help?: any;
-    // loading?: boolean;
-    // name?: string;
-    // username?: string;
-    // password?: string;
-    // email?: string;
+export interface IFormMapping {
+    type: string;
+    success: boolean;
+    errormessage: string;
+    hasError: any;
+    help: any;
+    loading: boolean;
+    name: string;
+    username: string;
+    password: string;
+    email: string;
 }
 
 /* **************** Form Send Action Event ********************** */

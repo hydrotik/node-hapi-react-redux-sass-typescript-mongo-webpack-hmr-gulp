@@ -18,7 +18,7 @@ interface ITextControlProps {
     ref?: string; // = "nameControl"
     type?: string;
     hasError: boolean; // = { this.state.hasError.name }
-    valueLink: any; // = { this.linkState('name') }
+    valueLink?: any; // = { this.linkState('name') }
     help: string; // = { this.state.help.name }
     disabled: boolean; // = { this.state.loading }
 
