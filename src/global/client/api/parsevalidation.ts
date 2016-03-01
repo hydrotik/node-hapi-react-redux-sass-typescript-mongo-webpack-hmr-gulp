@@ -27,7 +27,7 @@ export default function parseValidation(validation: any, message: string): IVali
     }
 
     if (message) {
-        response.error = 'Error with Form!';
+        response.error = 'There are errors with your information below';
 
     }
 

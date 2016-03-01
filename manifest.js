@@ -28,9 +28,9 @@ var helpers = {
 var manifest = {
     $meta: 'This file defines the plot device.',
     server: {
-        /*debug: { // Boom
+        debug: { // Boom
             request: ['error']
-        },*/
+        },
         connections: {
             routes: {
                 security: true

@@ -9,22 +9,6 @@ import {
     IFormMapping
 } from '../actions';
 
-/*
-const initState: any = {
-    name: '',
-    username: '',
-    password: '',
-    email: '',
-    success: false,
-    hasError: {
-    },
-    help: {
-    },
-    loading: false,
-    errormessage: ''
-};
-*/
-
 export function formSignup(
     state: any = {
         name: '',

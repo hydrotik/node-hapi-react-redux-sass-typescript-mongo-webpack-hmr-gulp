@@ -58,5 +58,5 @@ export default function jsonFetch(options: IJSONFetch, callback: (error: Error, 
         }
     };
 
-    x(config.url, config, cb);
+    x(config, cb);
 }
