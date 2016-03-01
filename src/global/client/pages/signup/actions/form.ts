@@ -5,6 +5,7 @@ import ParseValidation, { IValidation } from '../../../api/parsevalidation';
 // import fetch from 'isomorphic-fetch';
 
 export const FORM_INIT: string = 'FORM_INIT';
+export const FORM_UPDATE: string = 'FORM_UPDATE';
 export const SEND_REQUEST: string = 'SEND_REQUEST';
 export const RECEIVE_RESPONSE: string = 'RECEIVE_RESPONSE';
 
@@ -13,6 +14,12 @@ export const RECEIVE_RESPONSE: string = 'RECEIVE_RESPONSE';
 // http://stackoverflow.com/questions/17865620/typescript-multiple-inheritance-workarounds
 export interface IFormAbstract {
     type: string;
+}
+
+export interface IFormUpdate {
+    type: string;
+    field: string;
+    value: string;
 }
 
 export interface IFormRequest extends IFormAbstract {
@@ -41,12 +48,23 @@ export interface IFormMapping {
     username: string;
     password: string;
     email: string;
+    field: string;
+    value: string;
 }
 
 /* **************** Form Send Action Event ********************** */
 export function onFormInit(): IFormAbstract {
     return {
         type: FORM_INIT
+    };
+}
+
+/* **************** Form Send Action Event ********************** */
+export function onFormUpdate(field: string, value: string): IFormUpdate {
+    return {
+        type: FORM_UPDATE,
+        field,
+        value
     };
 }
 

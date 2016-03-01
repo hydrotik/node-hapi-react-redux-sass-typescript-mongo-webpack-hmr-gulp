@@ -19,15 +19,21 @@ import {
     // RECEIVE_RESPONSE,
     IFormMapping,
     // onFormAction,
-    // handleRequest,
-    // onFormInit,
-    onReceiveFormAction
+    onFormUpdate,
+    handleRequest,
+    onFormInit,
+    // onReceiveFormAction
 } from '../../actions';
 
 // Interfaces
 interface IFormProps {
     dispatch?: (func: any) => void;
     store?: any;
+
+    name?: string;
+    username?: string;
+    password?: string;
+    email?: string;
 }
 interface IFormState {
     success?: boolean;
@@ -39,6 +45,8 @@ interface IFormState {
     username?: string;
     password?: string;
     email?: string;
+    field?: string;
+    value?: string;
 }
 
 // Decorators
@@ -53,7 +61,9 @@ function select(state: { formSignup: IFormMapping; }): IFormState {
         success,
         hasError,
         help,
-        loading
+        loading,
+        field,
+        value
     }: IFormMapping = formSignup;
 
     return {
@@ -65,7 +75,9 @@ function select(state: { formSignup: IFormMapping; }): IFormState {
         success,
         hasError,
         help,
-        loading
+        loading,
+        field,
+        value
     };
 
 }
@@ -79,6 +91,17 @@ export class Form extends React.Component<IFormProps, IFormState> {
 
     public componentDidMount(): void {
         // this.refs.nameControl.refs.inputField.getDOMNode().focus();
+        const { dispatch }: IFormProps = this.props;
+        dispatch(
+            onFormInit()
+        );
+    }
+
+    public handleChange(event: any): void {
+        const { dispatch }: IFormProps = this.props;
+        dispatch(
+            onFormUpdate(event.target.name, event.target.value)
+        );
     }
 
     public onSubmit(event: any): void {
@@ -86,10 +109,21 @@ export class Form extends React.Component<IFormProps, IFormState> {
         event.preventDefault();
         event.stopPropagation();
 
-        const { dispatch }: IFormProps = this.props;
+        const {
+            dispatch,
+            name,
+            username,
+            password,
+            email
+        }: IFormProps = this.props;
 
         dispatch(
-            onReceiveFormAction(false, 'ERROR', {}, {}, false)
+            handleRequest({
+                name,
+                username,
+                password,
+                email
+            })
         );
     }
 
@@ -130,6 +164,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
                     ref='nameControl'
                     hasError={hasError.name}
                     value={name}
+                    onChange={ (e: any) => this.handleChange(e) }
                     help={help.name}
                     disabled={loading}
                     />
@@ -138,6 +173,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
                     label='Email'
                     hasError={hasError.email}
                     value={email}
+                    onChange={ (e: any) => this.handleChange(e) }
                     help={help.email}
                     disabled={loading}
                     />
@@ -146,6 +182,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
                     label='Username'
                     hasError={hasError.username}
                     value={username}
+                    onChange={ (e: any) => this.handleChange(e) }
                     help={help.username}
                     disabled={loading}
                     />
@@ -155,6 +192,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
                     type='password'
                     hasError={hasError.password}
                     value={password}
+                    onChange={ (e: any) => this.handleChange(e) }
                     help={help.password}
                     disabled={loading}
                     />

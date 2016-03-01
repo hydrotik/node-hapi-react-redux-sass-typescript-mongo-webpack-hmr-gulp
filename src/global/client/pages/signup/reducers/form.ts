@@ -3,6 +3,7 @@
 import * as lodash from 'lodash';
 
 import {
+    FORM_UPDATE,
     SEND_REQUEST,
     RECEIVE_RESPONSE,
     IFormMapping
@@ -36,12 +37,19 @@ export function formSignup(
         help: {
         },
         loading: false,
-        errormessage: ''
+        errormessage: '',
+        field: '',
+        value: ''
     },
     action: IFormMapping
 ): any {
     let delta: Object;
     switch (action.type) {
+        case FORM_UPDATE:
+            let obj: any = {};
+            obj[action.field] = action.value;
+            delta = lodash.assign({}, state, obj);
+            return delta;
         case SEND_REQUEST:
             delta = lodash.assign({}, state, {
                 name: action.name,

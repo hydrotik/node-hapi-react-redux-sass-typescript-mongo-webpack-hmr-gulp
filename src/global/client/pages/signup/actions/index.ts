@@ -13,6 +13,7 @@ export {
 // Form
 export {
     // Constants
+    FORM_UPDATE,
     SEND_REQUEST,
     RECEIVE_RESPONSE,
 
@@ -23,6 +24,7 @@ export {
 
     // Actions and methods
     onFormInit,
+    onFormUpdate,
     onSendFormAction,
     onReceiveFormAction,
     handleRequest
