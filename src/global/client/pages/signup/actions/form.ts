@@ -10,8 +10,6 @@ export const SEND_REQUEST: string = 'SEND_REQUEST';
 export const RECEIVE_RESPONSE: string = 'RECEIVE_RESPONSE';
 
 /* **************** Form Send Action Interface ****************** */
-// start(callback: (startStatus: bool, engineType: string) => void) : void;
-// http://stackoverflow.com/questions/17865620/typescript-multiple-inheritance-workarounds
 export interface IFormAbstract {
     type: string;
 }
@@ -37,6 +35,7 @@ export interface IFormResponse extends IFormAbstract {
     loading: boolean;
 }
 
+// TODO test using multiple inheritance: export interface IFormMapping extends IFormAbstract, IFormAbstract
 export interface IFormMapping {
     type: string;
     success: boolean;
@@ -109,7 +108,6 @@ export function handleRequest(data: any): any {
             }
 
             let validation: IValidation = ParseValidation(response.validation, response.message);
-
             dispatch(onReceiveFormAction(response.success, validation.error, validation.hasError, validation.help, response.loading));
         });
     };
