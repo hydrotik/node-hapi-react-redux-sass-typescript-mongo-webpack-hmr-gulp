@@ -24,10 +24,8 @@ export default function parseValidation(validation: any, message: string): IVali
 
         response.hasError[forField] = true;
         response.help[forField] = message;
-    }
-
-    if (message) {
-        response.error = 'There are errors with your information below';
+    }else if (message) {
+        response.error = message;
 
     }
 
