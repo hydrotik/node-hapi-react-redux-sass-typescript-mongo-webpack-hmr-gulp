@@ -20,7 +20,7 @@ export default function jsonFetch(options: IJSONFetch, callback: (error: Error, 
         method: options.method,
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         }
     };
 
