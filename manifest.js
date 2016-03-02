@@ -29,7 +29,7 @@ var manifest = {
     $meta: 'This file defines the plot device.',
     server: {
         debug: { // Boom
-            request: ['error']
+            request: [/*'error'*/]
         },
         connections: {
             routes: {
