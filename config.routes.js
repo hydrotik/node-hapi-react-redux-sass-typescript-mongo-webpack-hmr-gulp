@@ -9,7 +9,8 @@ var routes = {
     './global/server/api/index': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
     './global/server/views/home': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
     './global/server/views/about': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
-    './global/server/views/signup': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+    './global/server/views/signup': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
+    './global/server/views/account': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
 }
 
 exports.routes = routes;
