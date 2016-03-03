@@ -21,6 +21,9 @@ At the moment I am using awesome-typescript-loader, but I plan on testing ts-loa
 * Setup using Promptly for setting up manifest config
 * Currently using awesome-typescript-loader for Webpack
 
+**Working/Completed Sections**
+* Signup
+
 #### Run
 
 ```bash
