@@ -2,26 +2,28 @@
 
 // Core Imports
 import * as React from 'react';
-import * as ReactRouter from 'react-router';
+import { Router } from 'react-router';
 
 
 // Styles
 import './_App.scss';
 
 // Page Components
-import { NavBar } from '../NavBar/NavBar';
-import { Footer } from '../Footer/Footer';
+// import { NavBar } from '../NavBar/NavBar';
+// import { Footer } from '../Footer/Footer';
 
 // Interfaces
-/*
+
 interface IAppProps {
+    children?: any;
 }
 
 interface IAppState {
 }
-*/
 
-export class App extends React.Component<{}, {}> {
+// https://github.com/reactjs/react-router/tree/1.0.x/docs
+
+export class App extends React.Component<IAppProps, IAppState> {
 
     public constructor(props: any) {
         super(props);
@@ -31,9 +33,8 @@ export class App extends React.Component<{}, {}> {
     public render(): React.ReactElement<{}> {
         return (
             <div>
-                <NavBar />
-                    <ReactRouter.RouteHandler />
-                <Footer />
+            <Router />
+                {this.props.children}
             </div>
         );
     }

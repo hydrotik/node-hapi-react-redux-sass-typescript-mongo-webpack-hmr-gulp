@@ -2,7 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 // Styles
 import './_UserForm.scss';
@@ -60,7 +60,7 @@ export class UserForm extends React.Component<IUserFormProps, IUserFormState> {
     public render(): React.ReactElement<{}> {
 
         return (
-            
+            <div>USER FORM</div>
         );
     }
 }

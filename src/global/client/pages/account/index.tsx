@@ -2,7 +2,9 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { App } from './components/app/App.tsx';
+
+// import { App } from './components/app/App.tsx';
+import { Routes } from'./Routes';
 
 import '../../scss/app.scss';
 
@@ -44,7 +46,7 @@ class Page extends React.Component<{}, {}> {
     public render(): React.ReactElement<Provider> {
         return (
             <Provider store={store}>
-                <App />
+                <Routes />
             </Provider>
         );
     }

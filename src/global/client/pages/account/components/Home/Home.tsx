@@ -2,7 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 // Styles
 import './_Home.scss';
@@ -60,7 +60,7 @@ export class Home extends React.Component<IHomeProps, IHomeState> {
     public render(): React.ReactElement<{}> {
 
         return (
-            
+            <div>HOME</div>
         );
     }
 }

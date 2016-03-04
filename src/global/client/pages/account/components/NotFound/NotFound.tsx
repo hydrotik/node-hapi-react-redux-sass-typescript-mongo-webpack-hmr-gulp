@@ -2,7 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 // Styles
 import './_NotFound.scss';
@@ -60,7 +60,7 @@ export class NotFound extends React.Component<INotFoundProps, INotFoundState> {
     public render(): React.ReactElement<{}> {
 
         return (
-            
+            <div>NOT FOUND</div>
         );
     }
 }

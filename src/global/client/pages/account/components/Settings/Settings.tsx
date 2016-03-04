@@ -2,7 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 // Styles
 import './_Settings.scss';
@@ -60,7 +60,7 @@ export class Settings extends React.Component<ISettingsProps, ISettingsState> {
     public render(): React.ReactElement<{}> {
 
         return (
-            
+            <div>SETTINGS</div>
         );
     }
 }
