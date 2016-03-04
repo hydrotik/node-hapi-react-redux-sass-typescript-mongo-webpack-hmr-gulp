@@ -11,10 +11,9 @@ import { onExampleReducer } from '../../../reducers';
 /* *********** LOCALS *********** */
 
 // Form
-import { formSignup } from './form';
+
 
 export const rootReducer: Reducer = combineReducers({
-    onExampleReducer,
-    formSignup
+    onExampleReducer
 });
 

@@ -85,7 +85,7 @@
     "react-redux": "^4.0.0",
     "react-router": "^1.0.3",
     "react-scroll": "^0.30.0",
-    "react-slick": "^0.9.3",
+    "react-slick": "^0.11.1",
     "react-track": "^0.3.0",
     "redux": "^3.0.4",
     "redux-promise": "^0.5.0",
