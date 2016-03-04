@@ -6,7 +6,7 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "react/react.d.ts": {
-      "commit": "dade4414712ce84e3c63393f1aae407e9e7e6af7"
+      "commit": "ba4c4fc6c9ec3d1b9b7e26437d6e0f4f8337c948"
     },
     "react-dom/react-dom.d.ts": {
       "commit": "af5b8275d1f2b92738b93fddabc461fc20c553a1"
@@ -40,6 +40,12 @@
     },
     "qs/qs.d.ts": {
       "commit": "b10e5ade29708bb0a7d21916a9fe289973520e89"
+    },
+    "react-router/react-router.d.ts": {
+      "commit": "ba4c4fc6c9ec3d1b9b7e26437d6e0f4f8337c948"
+    },
+    "react-router/history.d.ts": {
+      "commit": "ba4c4fc6c9ec3d1b9b7e26437d6e0f4f8337c948"
     }
   }
 }

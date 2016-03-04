@@ -2,12 +2,15 @@
 
 // Core Imports
 import * as React from 'react';
+import * as ReactRouter from 'react-router';
+
 
 // Styles
 import './_App.scss';
 
 // Page Components
-
+import { NavBar } from '../NavBar/NavBar';
+import { Footer } from '../Footer/Footer';
 
 // Interfaces
 /*
@@ -27,8 +30,10 @@ export class App extends React.Component<{}, {}> {
 
     public render(): React.ReactElement<{}> {
         return (
-            <div className='app'>
-                Hello Account
+            <div>
+                <NavBar />
+                    <ReactRouter.RouteHandler />
+                <Footer />
             </div>
         );
     }
