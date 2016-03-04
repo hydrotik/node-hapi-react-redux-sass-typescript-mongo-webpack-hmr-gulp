@@ -2,8 +2,6 @@
 
 // Core Imports
 import * as React from 'react';
-import { Router } from 'react-router';
-
 
 // Styles
 import './_App.scss';
@@ -33,7 +31,6 @@ export class App extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<{}> {
         return (
             <div>
-            <Router />
                 {this.props.children}
             </div>
         );

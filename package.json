@@ -83,7 +83,7 @@
     "react-motion": "^0.3.1",
     "react-picture": "0.0.4",
     "react-redux": "^4.0.0",
-    "react-router": "^1.0.3",
+    "react-router": "^2.0.0",
     "react-scroll": "^0.30.0",
     "react-slick": "^0.11.1",
     "react-track": "^0.3.0",

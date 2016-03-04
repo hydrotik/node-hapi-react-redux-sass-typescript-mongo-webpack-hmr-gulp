@@ -43,6 +43,7 @@ function configureStore(): Store {
 const store: Store = configureStore();
 
 class Page extends React.Component<{}, {}> {
+
     public render(): React.ReactElement<Provider> {
         return (
             <Provider store={store}>
