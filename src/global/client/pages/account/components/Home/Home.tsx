@@ -60,7 +60,7 @@ export class Home extends React.Component<IHomeProps, IHomeState> {
     public render(): React.ReactElement<{}> {
 
         return (
-            <div>HOME</div>
+            <div>HELLO HOME!!!!</div>
         );
     }
 }

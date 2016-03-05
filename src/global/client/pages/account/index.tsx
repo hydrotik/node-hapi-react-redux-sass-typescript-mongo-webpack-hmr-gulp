@@ -3,8 +3,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-// import { App } from './components/app/App.tsx';
-import { Routes } from'./Routes';
+import { browserHistory, Router, IndexRoute, Route} from 'react-router';
+
+// Local Components
+import { App } from './components/App/App';
+import { Home } from './components/Home/Home';
+import { NotFound } from './components/NotFound/NotFound';
+import { Settings } from './components/Settings/Settings';
 
 import '../../scss/app.scss';
 
@@ -42,15 +47,29 @@ function configureStore(): Store {
 
 const store: Store = configureStore();
 
-class Page extends React.Component<{}, {}> {
+interface IBootstrapProps {
+    routes?: any;
+}
+
+interface IBootstrapState {
+}
+
+
+class Bootstrap extends React.Component<IBootstrapProps, IBootstrapState> {
 
     public render(): React.ReactElement<Provider> {
         return (
             <Provider store={store}>
-                <Routes />
+                <Router history={browserHistory}>
+                    <Route path='/account' component={App}>
+                        <IndexRoute component={Home} />
+                        <Route path='settings' component={Settings} />
+                        <Route path='*' component={ NotFound }/>
+                    </Route>
+                </Router>
             </Provider>
         );
     }
 }
 
-ReactDOM.render(<Page />, document.getElementById('app'));
+ReactDOM.render(<Bootstrap />, document.getElementById('app'));

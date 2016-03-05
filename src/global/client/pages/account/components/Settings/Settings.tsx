@@ -60,7 +60,7 @@ export class Settings extends React.Component<ISettingsProps, ISettingsState> {
     public render(): React.ReactElement<{}> {
 
         return (
-            <div>SETTINGS</div>
+            <div>HELLO SETTINGS!!!!!!!</div>
         );
     }
 }
