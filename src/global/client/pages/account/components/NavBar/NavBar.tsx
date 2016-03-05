@@ -21,10 +21,11 @@ import {
 interface INavBarProps {
     dispatch?: (func: any) => void;
     store?: any;
+    navBarOpen?: boolean;
 }
 
 interface INavBarState {
-    navBarOpen: boolean;
+    // navBarOpen: boolean;
 }
 
 
@@ -43,35 +44,39 @@ function select(state: { formSignup: IReducer; }): INavBarState {
 @connect(select) */
 export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
-    public constructor(props: any = {}) {
+    public constructor(props: INavBarProps = { navBarOpen: false}) {
         super(props);
     }
 
     public componentWillReceiveProps(): void {
 
-        this.setState({ navBarOpen: false });
+        // this.setState({ navBarOpen: false });
     }
 
-    public isNavActive(routes: any): any {
-
+    public isNavActive(routes: any): string {
+        /*
         return ClassNames({
             active: routes.some(function(route: any): any {
 
                 return this.context.router.isActive(route);
             }.bind(this))
         });
+        */
+
+        return 'active';
     }
 
     public toggleMenu(): void {
-
-        this.setState({ navBarOpen: !this.state.navBarOpen });
+        // this.props.navBarOpen = !this.props.navBarOpen;
+        // 
+        // dispatch(toogleMenu(!this.props.navBarOpen));
     }
 
     public render(): React.ReactElement<{}> {
 
         let navBarCollapse: any = ClassNames({
             'navbar-collapse': true,
-            collapse: !this.state.navBarOpen
+            collapse: !this.props.navBarOpen
         });
 
         return (
