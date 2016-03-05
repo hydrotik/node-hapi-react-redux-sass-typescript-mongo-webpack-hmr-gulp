@@ -8,7 +8,7 @@ import { Link } from 'react-router';
 import './_App.scss';
 
 // Page Components
-// import { NavBar } from '../NavBar/NavBar';
+import { NavBar } from '../NavBar/NavBar';
 // import { Footer } from '../Footer/Footer';
 
 // Interfaces
@@ -49,6 +49,7 @@ export class App extends React.Component<IAppProps, IAppState> {
         return (
             <div>
                 <h1>Hello App!</h1>
+                <NavBar />
                 <aside>
                     <ul>
                         <li><Link to={Sections.Home.path}>{Sections.Home.title}</Link></li>

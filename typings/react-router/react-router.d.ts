@@ -101,6 +101,7 @@ declare namespace ReactRouter {
         to: RoutePattern
         query?: H.Query
         state?: H.LocationState
+        className?: String
     }
     interface Link extends React.ComponentClass<LinkProps> { }
     interface LinkElement extends React.ReactElement<LinkProps> { }
