@@ -2,7 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 // Styles
 import './_AccountForm.scss';
@@ -19,6 +19,7 @@ import {
 interface IAccountFormProps {
     dispatch?: (func: any) => void;
     store?: any;
+    data: any;
 }
 
 interface IAccountFormState {
@@ -60,7 +61,7 @@ export class AccountForm extends React.Component<IAccountFormProps, IAccountForm
     public render(): React.ReactElement<{}> {
 
         return (
-            
+            <div>HELLO ACCOUNT FORM</div>
         );
     }
 }

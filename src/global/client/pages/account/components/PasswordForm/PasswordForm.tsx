@@ -2,7 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 // Styles
 import './_PasswordForm.scss';
@@ -19,6 +19,7 @@ import {
 interface IPasswordFormProps {
     dispatch?: (func: any) => void;
     store?: any;
+    data: any;
 }
 
 interface IPasswordFormState {
@@ -60,7 +61,7 @@ export class PasswordForm extends React.Component<IPasswordFormProps, IPasswordF
     public render(): React.ReactElement<{}> {
 
         return (
-            
+            <div>HELLO PASSWORD FORM</div>
         );
     }
 }

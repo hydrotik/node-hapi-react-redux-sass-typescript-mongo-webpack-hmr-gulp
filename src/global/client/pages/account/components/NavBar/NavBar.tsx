@@ -84,7 +84,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                 <div className='container'>
                     <div className='navbar-header'>
                         <Link className='navbar-brand' to='home'>
-                            <img className='navbar-logo' src='/public/media/logo-square.png' />
+                            <img className='navbar-logo' src='media/logo-square.png' />
                             <span className='navbar-brand-label'>Aqua</span>
                             </Link>
                         <button

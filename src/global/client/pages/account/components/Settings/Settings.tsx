@@ -8,7 +8,9 @@ import * as React from 'react';
 import './_Settings.scss';
 
 // Page Components
-
+import { AccountForm } from '../AccountForm/AccountForm';
+import { UserForm } from '../UserForm/UserForm';
+import { PasswordForm } from '../PasswordForm/PasswordForm';
 
 // Behaviors and Actions
 import {
@@ -19,6 +21,9 @@ import {
 interface ISettingsProps {
     dispatch?: (func: any) => void;
     store?: any;
+    account?: any;
+    user?: any;
+    password?: any;
 }
 
 interface ISettingsState {
@@ -60,7 +65,16 @@ export class Settings extends React.Component<ISettingsProps, ISettingsState> {
     public render(): React.ReactElement<{}> {
 
         return (
-            <div>HELLO SETTINGS!!!!!!!</div>
+            <section className='section-settings container'>
+                <h1 className='page-header'>Account settings</h1>
+                <div className='row'>
+                    <div className='col-sm-6'>
+                        <AccountForm data={this.props.account} />
+                        <UserForm data={this.props.user} />
+                        <PasswordForm data={this.props.password} />
+                        </div>
+                    </div>
+                </section>
         );
     }
 }

@@ -19,6 +19,7 @@ import {
 interface IUserFormProps {
     dispatch?: (func: any) => void;
     store?: any;
+    data: any;
 }
 
 interface IUserFormState {
@@ -60,7 +61,7 @@ export class UserForm extends React.Component<IUserFormProps, IUserFormState> {
     public render(): React.ReactElement<{}> {
 
         return (
-            <div>USER FORM</div>
+            <div>HELLO USER FORM</div>
         );
     }
 }

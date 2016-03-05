@@ -10,18 +10,18 @@ interface IIndexProps {
 class Index extends React.Component<IIndexProps, {}> {
 
     public render(): React.ReactElement<{}> {
-        /*
+        
         const styles = [
-            <link key="layout" rel="stylesheet" href="/public/layouts/default.min.css" />,
-            <link key="page" rel="stylesheet" href="/public/pages/account.min.css" />
+            <link key="layout" rel="stylesheet" href="layouts/default.min.css" />,
+            <link key="page" rel="stylesheet" href="pages/account.min.css" />
         ];
-        */
+        
         const script = <script src={this.props.js}></script>;
 
         return (
             <Layout
                 title="Account"
-                // styles={styles}
+                styles={styles}
                 script={script}>
 
                 <div id="app"></div>
