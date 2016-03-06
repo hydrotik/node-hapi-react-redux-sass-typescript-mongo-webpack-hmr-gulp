@@ -21,3 +21,4 @@
 /// <reference path="cookie/cookie.d.ts" />
 /// <reference path="moment/moment-node.d.ts" />
 /// <reference path="moment/moment.d.ts" />
+/// <reference path="react-router-active-component/react-router-active-component.d.ts" />

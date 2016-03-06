@@ -2,43 +2,10 @@
 
 // Core Imports
 import * as React from 'react';
-// import { connect } from 'react-redux';
 
 // Styles
 import './_Footer.scss';
 
-// Page Components
-
-/*
-// Behaviors and Actions
-import {
-
-} from '../../actions';
-
-// Interfaces
-
-interface IFooterProps {
-    dispatch?: (func: any) => void;
-    store?: any;
-}
-
-interface IFooterState {
-
-}
-*/
-// Decorators
-/*
-function select(state: { formSignup: IReducer; }): IFooterState {
-    const { formSignup }: { formSignup: IReducer; } = state;
-    const {
-    }: IReducer = formSignup;
-
-    return {
-    };
-
-}
-
-@connect(select) */
 export class Footer extends React.Component<{}, {}> {
 
     public constructor(props: any = {}) {
@@ -48,7 +15,17 @@ export class Footer extends React.Component<{}, {}> {
     public render(): React.ReactElement<{}> {
 
         return (
-            <div>Footer</div>
+            <div className='footer'>
+                <div className='container'>
+                    <span className='copyright pull-right'>
+                        &#169; 2014 Acme, Inc.
+                    </span>
+                    <ul className='links'>
+                        <li><a href='/'>Home</a></li>
+                        <li><a href='/login/logout'>Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
         );
     }
 }

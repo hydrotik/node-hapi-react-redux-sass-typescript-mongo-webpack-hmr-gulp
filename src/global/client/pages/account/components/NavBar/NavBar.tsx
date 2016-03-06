@@ -4,6 +4,9 @@
 import * as React from 'react';
 import * as ClassNames from 'classnames';
 import { Link } from 'react-router';
+
+// https://github.com/insin/react-router-active-component
+import * as activeComponent from 'react-router-active-component';
 // import { connect } from 'react-redux';
 
 // Styles
@@ -27,6 +30,20 @@ interface INavBarProps {
 interface INavBarState {
     // navBarOpen: boolean;
 }
+
+export const Sections: any = {
+    Home: {
+        title: 'My account',
+        path: '/account'
+    },
+    Settings: {
+        title: 'Settings',
+        path: '/account/settings'
+    }
+};
+
+let ac: any = activeComponent;
+const NavLink: any = ac('li');
 
 
 // Decorators
@@ -53,17 +70,13 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
         // this.setState({ navBarOpen: false });
     }
 
-    public isNavActive(routes: any): string {
-        /*
+    public isNavActive(routes: any): any {
         return ClassNames({
             active: routes.some(function(route: any): any {
 
                 return this.context.router.isActive(route);
             }.bind(this))
         });
-        */
-
-        return 'active';
     }
 
     public toggleMenu(): void {
@@ -76,7 +89,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
         let navBarCollapse: any = ClassNames({
             'navbar-collapse': true,
-            collapse: !this.props.navBarOpen
+            collapse: true /*!this.props.navBarOpen*/
         });
 
         return (
@@ -98,13 +111,18 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                         </div>
                     <div className={navBarCollapse}>
                         <ul className='nav navbar-nav'>
+                            { /*
                             <li className={this.isNavActive(['home']) }>
-                                <Link to='home'>My account</Link>
-                                </li>
+                                <Link to={Sections.Home.path}>{Sections.Home.title}</Link>
+                            </li>
                             <li className={this.isNavActive(['settings']) }>
-                                <Link to='settings'>Settings</Link>
-                                </li>
-                            </ul>
+                                <Link to={Sections.Settings.path}>{Sections.Settings.title}</Link>
+                            </li>
+                            */ }
+
+                            <NavLink onlyActiveOnIndex to={Sections.Home.path}>{Sections.Home.title}</NavLink>
+                            <NavLink to={Sections.Settings.path}>{Sections.Settings.title}</NavLink>
+                        </ul>
                         <ul className='nav navbar-nav navbar-right'>
                             <li>
                                 <a href='/login/logout'>Sign out</a>
