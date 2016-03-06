@@ -2,7 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 // Styles
 import './_UserForm.scss';
@@ -15,7 +15,9 @@ import { Spinner } from '../../../signup/components/Form/components/Spinner/Spin
 
 // Behaviors and Actions
 import {
-
+    IAccountMapping,
+    getUserSettings,
+    onFormUpdate
 } from '../../actions';
 
 // Interfaces
@@ -38,18 +40,33 @@ interface IUserFormState {
 }
 
 // Decorators
-/*
-function select(state: { formSignup: IReducer; }): IUserFormState {
-    const { formSignup }: { formSignup: IReducer; } = state;
+function select(state: { account: IAccountMapping; }): IUserFormState {
+    const { account }: { account: IAccountMapping; } = state;
     const {
-    }: IReducer = formSignup;
+        username,
+        email,
+        hasError,
+        help,
+        loading,
+        success,
+        error,
+        hydrated
+    }: IAccountMapping = account;
 
     return {
+        username,
+        email,
+        hasError,
+        help,
+        loading,
+        success,
+        error,
+        hydrated
     };
 
 }
 
-@connect(select) */
+@connect(select)
 export class UserForm extends React.Component<IUserFormProps, IUserFormState> {
 
     public constructor(props: any = {}) {
@@ -58,43 +75,34 @@ export class UserForm extends React.Component<IUserFormProps, IUserFormState> {
 
     public componentDidMount(): void {
         // this.refs.nameControl.refs.inputField.getDOMNode().focus();
-        // const { dispatch }: IUserFormProps = this.props;
-        /*
-        dispatch(
-            onFormInit()
-        );
-        */
+        const { dispatch }: IUserFormProps = this.props;
+        dispatch(getUserSettings());
     }
 
     public handleChange(event: any): void {
-        // const { dispatch }: IUserFormProps = this.props;
-        /*
+        const { dispatch }: IUserFormProps = this.props;
         dispatch(
             onFormUpdate(event.target.name, event.target.value)
         );
-        */
     }
 
     public onSubmit(event: any): void {
 
         event.preventDefault();
         event.stopPropagation();
-
         /*
         const {
             dispatch,
-            name,
-            username,
-            password,
-            email
-        }: IUserFormProps = this.props;
+            nameFirst,
+            nameMiddle,
+            nameLast
+        }: IAccountFormProps = this.props;
 
         dispatch(
-            handleRequest({
-                name,
-                username,
-                password,
-                email
+            saveAccountSettings({
+                nameFirst,
+                nameMiddle,
+                nameLast
             })
         );
         */

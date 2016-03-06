@@ -81,10 +81,13 @@ export function account(
             return delta;
         case GET_USER_SETTINGS:
             delta = lodash.assign({}, state, {
+                hydrated: false
             });
             return delta;
         case GET_USER_SETTINGS_RESPONSE:
             delta = lodash.assign({}, state, {
+                username: action.username,
+                email: action.email
             });
             return delta;
         case SAVE_USER_SETTINGS:

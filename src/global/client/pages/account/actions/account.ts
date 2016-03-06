@@ -48,6 +48,18 @@ export interface IAccountResponse extends IAccountAbstract {
 }
 
 export interface IUserResponse extends IAccountAbstract {
+    username: string;
+    email: string;
+    /*
+    success: boolean;
+    errormessage: string;
+    hasError: any;
+    help: any;
+    loading: boolean;
+    */
+}
+
+export interface IPasswordResponse extends IAccountAbstract {
     response: any;
     /*
     success: boolean;
@@ -166,7 +178,7 @@ export function getAccountSettings(data?: any): any {
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onSaveAccountSettingsAction(response: any): IUserResponse {
+export function onSaveAccountSettingsAction(response: any): IPasswordResponse {
     return {
         type: SAVE_ACCOUNT_SETTINGS_RESPONSE,
         response
@@ -198,10 +210,11 @@ export function saveAccountSettings(data: any): any {
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onGetUserSettingsAction(response: any): IUserResponse {
+export function onGetUserSettingsAction(username?: string, email?: string): IUserResponse {
     return {
         type: GET_USER_SETTINGS_RESPONSE,
-        response
+        username,
+        email
     };
 }
 
@@ -216,17 +229,24 @@ export function getUserSettings(data?: any): any {
             useAuth: true
         };
 
+        console.warn('getUserSettings()');
+
         Fetch(request, (err: any, response: any) => {
 
             // dispatch(SERVER_ACTION, Types.GET_USER_SETTINGS_RESPONSE, response);
 
             dispatch(onGetUserSettingsAction(response));
+
+            console.warn('getUserSettings() :: response');
+            console.warn(err);
+            console.warn(response);
+            dispatch(onGetUserSettingsAction(response.username, response.email));
         });
     };
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onSaveUserSettingsAction(response: any): IUserResponse {
+export function onSaveUserSettingsAction(response: any): IPasswordResponse {
     return {
         type: SAVE_USER_SETTINGS_RESPONSE,
         response
@@ -258,7 +278,7 @@ export function saveUserSettings(data: any): any {
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onSavePasswordSettingsAction(response: any): IUserResponse {
+export function onSavePasswordSettingsAction(response: any): IPasswordResponse {
     return {
         type: SAVE_PASSWORD_SETTINGS_RESPONSE,
         response
