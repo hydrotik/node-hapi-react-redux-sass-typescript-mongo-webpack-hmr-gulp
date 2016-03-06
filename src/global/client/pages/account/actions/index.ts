@@ -24,6 +24,13 @@ export {
     SAVE_USER_SETTINGS_RESPONSE,
     SAVE_PASSWORD_SETTINGS,
     SAVE_PASSWORD_SETTINGS_RESPONSE,
-    IAccountMapping
+    IAccountMapping,
+
+    onFormUpdate,
+    getAccountSettings,
+    saveAccountSettings,
+    getUserSettings,
+    saveUserSettings,
+    savePasswordSettings
 
 } from './account';
