@@ -163,15 +163,7 @@ export function getAccountSettings(data?: any): any {
             useAuth: true
         };
 
-        console.warn('getAccountSettings()');
-
         Fetch(request, (err: any, response: any) => {
-
-            // dispatch(SERVER_ACTION, Types.GET_ACCOUNT_SETTINGS_RESPONSE, response);
-
-            console.warn('getAccountSettings() :: response');
-            console.warn(err);
-            console.warn(response);
             dispatch(onGetAccountSettingsAction(response.name.first, response.name.middle, response.name.last));
         });
     };
@@ -202,8 +194,6 @@ export function saveAccountSettings(data: any): any {
                 response.success = true;
             }
 
-            // dispatch(SERVER_ACTION, Types.SAVE_ACCOUNT_SETTINGS_RESPONSE, response);
-
             dispatch(onSaveAccountSettingsAction(response));
         });
     };
@@ -229,17 +219,7 @@ export function getUserSettings(data?: any): any {
             useAuth: true
         };
 
-        console.warn('getUserSettings()');
-
         Fetch(request, (err: any, response: any) => {
-
-            // dispatch(SERVER_ACTION, Types.GET_USER_SETTINGS_RESPONSE, response);
-
-            dispatch(onGetUserSettingsAction(response));
-
-            console.warn('getUserSettings() :: response');
-            console.warn(err);
-            console.warn(response);
             dispatch(onGetUserSettingsAction(response.username, response.email));
         });
     };
