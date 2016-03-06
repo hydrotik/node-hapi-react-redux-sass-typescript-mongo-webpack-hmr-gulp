@@ -90,7 +90,6 @@ export function onReceiveFormAction(success: boolean, errormessage: string, hasE
     };
 }
 
-// TODO Interface for Data
 export function handleRequest(data: any): any {
     return (dispatch: any, getState: any) => {
         dispatch(onSendFormAction(data.name, data.username, data.password, data.email));
