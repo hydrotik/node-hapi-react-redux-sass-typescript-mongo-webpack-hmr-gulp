@@ -17,6 +17,7 @@ import { Spinner } from '../../../signup/components/Form/components/Spinner/Spin
 import {
     IAccountMapping,
     getUserSettings,
+    saveUserSettings,
     onFormUpdate
 } from '../../actions';
 
@@ -90,22 +91,19 @@ export class UserForm extends React.Component<IUserFormProps, IUserFormState> {
 
         event.preventDefault();
         event.stopPropagation();
-        /*
+
         const {
             dispatch,
-            nameFirst,
-            nameMiddle,
-            nameLast
-        }: IAccountFormProps = this.props;
+            username,
+            email
+        }: IUserFormProps = this.props;
 
         dispatch(
-            saveAccountSettings({
-                nameFirst,
-                nameMiddle,
-                nameLast
+            saveUserSettings({
+                username,
+                email
             })
         );
-        */
     }
 
     public render(): React.ReactElement<{}> {

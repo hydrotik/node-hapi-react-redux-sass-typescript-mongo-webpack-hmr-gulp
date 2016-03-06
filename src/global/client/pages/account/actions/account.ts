@@ -188,6 +188,9 @@ export function saveAccountSettings(data: any): any {
             useAuth: true
         };
 
+        console.warn('saveAccountSettings()');
+        console.warn(data);
+
         Fetch(request, (err: any, response: any) => {
 
             if (!err) {
@@ -249,8 +252,6 @@ export function saveUserSettings(data: any): any {
             if (!err) {
                 response.success = true;
             }
-
-            // dispatch(SERVER_ACTION, Types.SAVE_USER_SETTINGS_RESPONSE, response);
 
             dispatch(onSaveUserSettingsAction(response));
         });
