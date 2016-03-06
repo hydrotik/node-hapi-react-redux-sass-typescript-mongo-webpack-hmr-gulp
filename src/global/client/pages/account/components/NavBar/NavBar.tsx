@@ -3,7 +3,7 @@
 // Core Imports
 import * as React from 'react';
 import * as ClassNames from 'classnames';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 
 // https://github.com/insin/react-router-active-component
 import * as activeComponent from 'react-router-active-component';
@@ -87,10 +87,12 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             <div className='navbar navbar-default navbar-fixed-top'>
                 <div className='container'>
                     <div className='navbar-header'>
-                        <Link className='navbar-brand' to='home'>
-                            <img className='navbar-logo' src='media/logo-square.png' />
-                            <span className='navbar-brand-label'>Aqua</span>
-                            </Link>
+                        <div className='navbar-header'>
+                            <a className='navbar-brand' href='/'>
+                                <img className='navbar-logo' src='/assets/logo-square.png' height='64' width='64' />
+                            </a>
+                        </div>
+
                         <button
                             className='navbar-toggle collapsed'
                             onClick={this.toggleMenu}>
@@ -98,8 +100,9 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                             <span className='icon-bar'></span>
                             <span className='icon-bar'></span>
                             <span className='icon-bar'></span>
-                            </button>
-                        </div>
+                        </button>
+                    </div>
+
                     <div className={navBarCollapse}>
                         <ul className='nav navbar-nav'>
                             <NavLink onlyActiveOnIndex to={Sections.Home.path}>{Sections.Home.title}</NavLink>
