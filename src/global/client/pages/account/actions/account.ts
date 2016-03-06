@@ -1,8 +1,10 @@
 /// <reference path="../../../../../../typings/tsd.d.ts" />
 
 import Fetch from '../../../api/jsonfetch';
-import ParseValidation, { IValidation } from '../../../api/parsevalidation';
+// import ParseValidation, { IValidation } from '../../../api/parsevalidation';
 
+export const FORM_INIT: string = 'FORM_INIT';
+export const FORM_UPDATE: string = 'FORM_UPDATE';
 export const GET_ACCOUNT_SETTINGS: string = 'GET_ACCOUNT_SETTINGS';
 export const GET_ACCOUNT_SETTINGS_RESPONSE: string = 'GET_ACCOUNT_SETTINGS_RESPONSE';
 export const SAVE_ACCOUNT_SETTINGS: string = 'SAVE_ACCOUNT_SETTINGS';
@@ -46,17 +48,22 @@ export interface IAccountResponse extends IAccountAbstract {
 // TODO test using multiple inheritance: export interface IAccountMapping extends IAccountAbstract, IAccountAbstract
 export interface IAccountMapping {
     type: string;
-    success: boolean;
-    errormessage: string;
-    hasError: any;
-    help: any;
-    loading: boolean;
-    name: string;
-    username: string;
-    password: string;
-    email: string;
-    field: string;
-    value: string;
+    success?: boolean;
+    errormessage?: string;
+    error?: boolean;
+    hasError?: any;
+    help?: any;
+    loading?: boolean;
+    nameFirst?: string;
+    nameMiddle?: string;
+    nameLast?: string;
+    username?: string;
+    password?: string;
+    passwordConfirm?: string;
+    email?: string;
+    field?: string;
+    value?: string;
+    hydrated?: boolean;
 }
 
 /*
@@ -84,6 +91,22 @@ export function handleRequest(data: any): any {
 */
 
 /* **************** Form Send Action Event ********************** */
+export function onFormInit(): IAccountAbstract {
+    return {
+        type: FORM_INIT
+    };
+}
+
+/* **************** Form Send Action Event ********************** */
+export function onFormUpdate(field: string, value: string): IAccountUpdate {
+    return {
+        type: FORM_UPDATE,
+        field,
+        value
+    };
+}
+
+/* **************** Form Send Action Event ********************** */
 export function onViewAction(type: string, data: any): IAccountRequest {
     return {
         type,
@@ -105,7 +128,7 @@ export function getAccountSettings(data: any): any {
     return (dispatch: any, getState: any) => {
         dispatch(onViewAction(GET_ACCOUNT_SETTINGS, data));
 
-        var request = {
+        let request: any = {
             method: 'GET',
             url: '/api/accounts/my',
             data: data,
@@ -114,11 +137,11 @@ export function getAccountSettings(data: any): any {
 
         Fetch(request, (err: any, response: any) => {
 
-            //dispatch(SERVER_ACTION, Types.GET_ACCOUNT_SETTINGS_RESPONSE, response);
+            // dispatch(SERVER_ACTION, Types.GET_ACCOUNT_SETTINGS_RESPONSE, response);
 
             dispatch(onGetAccountSettingsAction(response));
         });
-    }
+    };
 }
 
 /* **************** Form Send Action Event ********************** */
@@ -133,7 +156,7 @@ export function saveAccountSettings(data: any): any {
     return (dispatch: any, getState: any) => {
         dispatch(onViewAction(SAVE_ACCOUNT_SETTINGS, data));
 
-        var request = {
+        let request: any = {
             method: 'PUT',
             url: '/api/accounts/my',
             data: data,
@@ -150,7 +173,7 @@ export function saveAccountSettings(data: any): any {
 
             dispatch(onSaveAccountSettingsAction(response));
         });
-    }
+    };
 }
 
 /* **************** Form Send Action Event ********************** */
@@ -165,7 +188,7 @@ export function getUserSettings(data: any): any {
     return (dispatch: any, getState: any) => {
         dispatch(onViewAction(GET_USER_SETTINGS, data));
 
-        var request = {
+        let request: any = {
             method: 'GET',
             url: '/api/users/my',
             data: data,
@@ -174,11 +197,11 @@ export function getUserSettings(data: any): any {
 
         Fetch(request, (err: any, response: any) => {
 
-            //dispatch(SERVER_ACTION, Types.GET_USER_SETTINGS_RESPONSE, response);
+            // dispatch(SERVER_ACTION, Types.GET_USER_SETTINGS_RESPONSE, response);
 
             dispatch(onGetUserSettingsAction(response));
         });
-    }
+    };
 }
 
 /* **************** Form Send Action Event ********************** */
@@ -193,7 +216,7 @@ export function saveUserSettings(data: any): any {
     return (dispatch: any, getState: any) => {
         dispatch(onViewAction(SAVE_USER_SETTINGS, data));
 
-        var request = {
+        let request: any = {
             method: 'PUT',
             url: '/api/users/my',
             data: data,
@@ -210,7 +233,7 @@ export function saveUserSettings(data: any): any {
 
             dispatch(onSaveUserSettingsAction(response));
         });
-    }
+    };
 }
 
 /* **************** Form Send Action Event ********************** */
@@ -241,7 +264,7 @@ export function savePasswordSettings(data: any): any {
 
         delete data.passwordConfirm;
 
-        var request = {
+        let request: any = {
             method: 'PUT',
             url: '/api/users/my/password',
             data: data,
@@ -258,5 +281,5 @@ export function savePasswordSettings(data: any): any {
 
             dispatch(onSavePasswordSettingsAction(response));
         });
-    }
+    };
 }

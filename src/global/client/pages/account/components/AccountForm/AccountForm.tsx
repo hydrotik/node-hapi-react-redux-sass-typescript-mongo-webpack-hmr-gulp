@@ -2,7 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 // Styles
 import './_AccountForm.scss';
@@ -15,7 +15,11 @@ import { Spinner } from '../../../signup/components/Form/components/Spinner/Spin
 
 // Behaviors and Actions
 import {
-
+    IAccountMapping,
+    onFormInit,
+    onFormUpdate,
+    // getAccountSettings,
+    saveAccountSettings
 } from '../../actions';
 
 // Interfaces
@@ -39,18 +43,35 @@ interface IAccountFormState {
 }
 
 // Decorators
-/*
-function select(state: { formSignup: IReducer; }): IAccountFormState {
-    const { formSignup }: { formSignup: IReducer; } = state;
+function select(state: { account: IAccountMapping; }): IAccountFormState {
+    const { account }: { account: IAccountMapping; } = state;
     const {
-    }: IReducer = formSignup;
+        nameFirst,
+        nameMiddle,
+        nameLast,
+        hasError,
+        help,
+        loading,
+        success,
+        error,
+        hydrated
+    }: IAccountMapping = account;
 
     return {
+        nameFirst,
+        nameMiddle,
+        nameLast,
+        hasError,
+        help,
+        loading,
+        success,
+        error,
+        hydrated
     };
 
 }
 
-@connect(select) */
+@connect(select)
 export class AccountForm extends React.Component<IAccountFormProps, IAccountFormState> {
 
     public constructor(props: any = {}) {
@@ -59,17 +80,15 @@ export class AccountForm extends React.Component<IAccountFormProps, IAccountForm
 
     public componentDidMount(): void {
         // this.refs.nameControl.refs.inputField.getDOMNode().focus();
-        // const { dispatch }: IAccountFormProps = this.props;
-        // dispatch(onAccountFormInit());
+        const { dispatch }: IAccountFormProps = this.props;
+        dispatch(onFormInit());
     }
 
     public handleChange(event: any): void {
-        // const { dispatch }: IUserFormProps = this.props;
-        /*
+        const { dispatch }: IAccountFormProps = this.props;
         dispatch(
             onFormUpdate(event.target.name, event.target.value)
         );
-        */
     }
 
     public onSubmit(event: any): void {
@@ -77,24 +96,20 @@ export class AccountForm extends React.Component<IAccountFormProps, IAccountForm
         event.preventDefault();
         event.stopPropagation();
 
-        /*
         const {
             dispatch,
-            name,
-            username,
-            password,
-            email
-        }: IUserFormProps = this.props;
+            nameFirst,
+            nameMiddle,
+            nameLast
+        }: IAccountFormProps = this.props;
 
         dispatch(
-            handleRequest({
-                name,
-                username,
-                password,
-                email
+            saveAccountSettings({
+                nameFirst,
+                nameMiddle,
+                nameLast
             })
         );
-        */
     }
 
     public render(): React.ReactElement<{}> {
@@ -114,6 +129,7 @@ export class AccountForm extends React.Component<IAccountFormProps, IAccountForm
         }: IAccountFormProps = this.props;
 
         // TESTING FOR UI
+        /*
         hydrated = true;
         hasError = {
             nameFirst: false,
@@ -125,6 +141,7 @@ export class AccountForm extends React.Component<IAccountFormProps, IAccountForm
             nameMiddle: false,
             nameLast: false
         };
+        */
 
         if (success) {
             alerts.push(<div key='success' className='alert alert-success'>

@@ -13,6 +13,7 @@ export {
 // Form
 export {
     // Constants
+    FORM_INIT,
     FORM_UPDATE,
     GET_ACCOUNT_SETTINGS,
     GET_ACCOUNT_SETTINGS_RESPONSE,
@@ -26,6 +27,7 @@ export {
     SAVE_PASSWORD_SETTINGS_RESPONSE,
     IAccountMapping,
 
+    onFormInit,
     onFormUpdate,
     getAccountSettings,
     saveAccountSettings,

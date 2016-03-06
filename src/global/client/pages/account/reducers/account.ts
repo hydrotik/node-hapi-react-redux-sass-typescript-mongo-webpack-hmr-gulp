@@ -17,8 +17,37 @@ import {
     IAccountMapping
 } from '../actions';
 
-export function accountRequest(
+export function account(
     state: any = {
+        name: '',
+        username: '',
+        password: '',
+        email: '',
+        success: false,
+        hasError: {
+            nameFirst: false,
+            nameMiddle: false,
+            nameLast: false
+        },
+        help: {
+            nameFirst: false,
+            nameMiddle: false,
+            nameLast: false
+        },
+        loading: false,
+        errormessage: '',
+        field: '',
+        value: '',
+
+        error: false,
+
+        nameFirst: '',
+        nameMiddle: '',
+        nameLast: '',
+
+        passwordConfirm: '',
+
+        hydrated: false
     },
     action: IAccountMapping
 ): any {
