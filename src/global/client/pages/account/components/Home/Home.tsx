@@ -16,6 +16,10 @@ import {
 
 } from '../../actions';
 
+interface IHome {
+    interval: any;
+}
+
 // Interfaces
 interface IHomeProps {
     dispatch?: (func: any) => void;
@@ -30,8 +34,14 @@ interface IHomeProps {
 }
 
 interface IHomeState {
-
+    hour?: number;
+    minute?: number;
+    second?: number;
+    year?: number;
+    month?: number;
+    day?: number;
 }
+
 
 // Decorators
 /*
@@ -46,25 +56,35 @@ function select(state: { formSignup: IReducer; }): IHomeState {
 }
 
 @connect(select) */
-export class Home extends React.Component<IHomeProps, IHomeState> {
+export class Home extends React.Component<IHomeProps, IHomeState> implements IHome {
+
+
 
     public constructor(props: any = {}) {
         super(props);
+
+        this.state = {
+            second: 0,
+            minute: 0,
+            hour: 0,
+            day: 0,
+            month: 0,
+            year: 0
+        };
     }
 
-    public componentDidMount(): void {
+    public interval: any;
 
-        // this.interval = setInterval(this.refreshTime, 1000);
+    public refreshTime: any = (e: any): void => {
+        this.setState(this.getThisMoment());
+    };
+
+    public componentDidMount(): void {
+        this.interval = setInterval(this.refreshTime, 1000);
     }
 
     public componentWillUnmount(): void {
-
-        // clearInterval(this.interval);
-    }
-
-    public refreshTime(): void {
-
-        // this.setState(this.getThisMoment());
+        clearInterval(this.interval);
     }
 
     public getThisMoment(): any {
@@ -92,7 +112,7 @@ export class Home extends React.Component<IHomeProps, IHomeState> {
                             <div className='col-sm-4'>
                                 <div className='well text-center'>
                                     <div className='stat-value'>
-                                        {this.props.hour}
+                                        {this.state.hour}
                                         </div>
                                     <div className='stat-label'>hour</div>
                                     </div>
@@ -100,7 +120,7 @@ export class Home extends React.Component<IHomeProps, IHomeState> {
                             <div className='col-sm-4'>
                                 <div className='well text-center'>
                                     <div className='stat-value'>
-                                        {this.props.minute}
+                                        {this.state.minute}
                                         </div>
                                     <div className='stat-label'>minute</div>
                                     </div>
@@ -108,7 +128,7 @@ export class Home extends React.Component<IHomeProps, IHomeState> {
                             <div className='col-sm-4'>
                                 <div className='well text-center'>
                                     <div className='stat-value'>
-                                        {this.props.second}
+                                        {this.state.second}
                                         </div>
                                     <div className='stat-label'>second</div>
                                     </div>
@@ -116,7 +136,7 @@ export class Home extends React.Component<IHomeProps, IHomeState> {
                             <div className='col-sm-4'>
                                 <div className='well text-center'>
                                     <div className='stat-value'>
-                                        {this.props.year}
+                                        {this.state.year}
                                         </div>
                                     <div className='stat-label'>year</div>
                                     </div>
@@ -124,7 +144,7 @@ export class Home extends React.Component<IHomeProps, IHomeState> {
                             <div className='col-sm-4'>
                                 <div className='well text-center'>
                                     <div className='stat-value'>
-                                        {this.props.month}
+                                        {this.state.month}
                                         </div>
                                     <div className='stat-label'>month</div>
                                     </div>
@@ -132,7 +152,7 @@ export class Home extends React.Component<IHomeProps, IHomeState> {
                             <div className='col-sm-4'>
                                 <div className='well text-center'>
                                     <div className='stat-value'>
-                                        {this.props.day}
+                                        {this.state.day}
                                         </div>
                                     <div className='stat-label'>day</div>
                                     </div>

@@ -70,15 +70,6 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
         // this.setState({ navBarOpen: false });
     }
 
-    public isNavActive(routes: any): any {
-        return ClassNames({
-            active: routes.some(function(route: any): any {
-
-                return this.context.router.isActive(route);
-            }.bind(this))
-        });
-    }
-
     public toggleMenu(): void {
         // this.props.navBarOpen = !this.props.navBarOpen;
         // 
@@ -111,15 +102,6 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                         </div>
                     <div className={navBarCollapse}>
                         <ul className='nav navbar-nav'>
-                            { /*
-                            <li className={this.isNavActive(['home']) }>
-                                <Link to={Sections.Home.path}>{Sections.Home.title}</Link>
-                            </li>
-                            <li className={this.isNavActive(['settings']) }>
-                                <Link to={Sections.Settings.path}>{Sections.Settings.title}</Link>
-                            </li>
-                            */ }
-
                             <NavLink onlyActiveOnIndex to={Sections.Home.path}>{Sections.Home.title}</NavLink>
                             <NavLink to={Sections.Settings.path}>{Sections.Settings.title}</NavLink>
                         </ul>
