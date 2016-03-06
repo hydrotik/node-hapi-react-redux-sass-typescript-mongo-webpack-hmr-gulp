@@ -60,10 +60,15 @@ export function account(
             return delta;
         case GET_ACCOUNT_SETTINGS:
             delta = lodash.assign({}, state, {
+                hydrated: false
             });
             return delta;
         case GET_ACCOUNT_SETTINGS_RESPONSE:
             delta = lodash.assign({}, state, {
+                nameFirst: action.nameFirst,
+                nameMiddle: action.nameMiddle,
+                nameLast: action.nameLast,
+                hydrated: true
             });
             return delta;
         case SAVE_ACCOUNT_SETTINGS:

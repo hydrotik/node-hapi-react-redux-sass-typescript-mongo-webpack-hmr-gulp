@@ -35,6 +35,19 @@ export interface IAccountRequest extends IAccountAbstract {
 }
 
 export interface IAccountResponse extends IAccountAbstract {
+    nameFirst: string;
+    nameMiddle: string;
+    nameLast: string;
+    /*
+    success: boolean;
+    errormessage: string;
+    hasError: any;
+    help: any;
+    loading: boolean;
+    */
+}
+
+export interface IUserResponse extends IAccountAbstract {
     response: any;
     /*
     success: boolean;
@@ -54,6 +67,7 @@ export interface IAccountMapping {
     hasError?: any;
     help?: any;
     loading?: boolean;
+    name?: any;
     nameFirst?: string;
     nameMiddle?: string;
     nameLast?: string;
@@ -107,7 +121,7 @@ export function onFormUpdate(field: string, value: string): IAccountUpdate {
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onViewAction(type: string, data: any): IAccountRequest {
+export function onViewAction(type: string, data?: any): IAccountRequest {
     return {
         type,
         data
@@ -117,14 +131,16 @@ export function onViewAction(type: string, data: any): IAccountRequest {
 
 
 /* **************** Form Send Action Event ********************** */
-export function onGetAccountSettingsAction(response: any): IAccountResponse {
+export function onGetAccountSettingsAction(nameFirst: string, nameMiddle: string, nameLast: string): IAccountResponse {
     return {
         type: GET_ACCOUNT_SETTINGS_RESPONSE,
-        response
+        nameFirst,
+        nameMiddle,
+        nameLast
     };
 }
 
-export function getAccountSettings(data: any): any {
+export function getAccountSettings(data?: any): any {
     return (dispatch: any, getState: any) => {
         dispatch(onViewAction(GET_ACCOUNT_SETTINGS, data));
 
@@ -135,17 +151,22 @@ export function getAccountSettings(data: any): any {
             useAuth: true
         };
 
+        console.warn('getAccountSettings()');
+
         Fetch(request, (err: any, response: any) => {
 
             // dispatch(SERVER_ACTION, Types.GET_ACCOUNT_SETTINGS_RESPONSE, response);
 
-            dispatch(onGetAccountSettingsAction(response));
+            console.warn('getAccountSettings() :: response');
+            console.warn(err);
+            console.warn(response);
+            dispatch(onGetAccountSettingsAction(response.name.first, response.name.middle, response.name.last));
         });
     };
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onSaveAccountSettingsAction(response: any): IAccountResponse {
+export function onSaveAccountSettingsAction(response: any): IUserResponse {
     return {
         type: SAVE_ACCOUNT_SETTINGS_RESPONSE,
         response
@@ -177,14 +198,14 @@ export function saveAccountSettings(data: any): any {
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onGetUserSettingsAction(response: any): IAccountResponse {
+export function onGetUserSettingsAction(response: any): IUserResponse {
     return {
         type: GET_USER_SETTINGS_RESPONSE,
         response
     };
 }
 
-export function getUserSettings(data: any): any {
+export function getUserSettings(data?: any): any {
     return (dispatch: any, getState: any) => {
         dispatch(onViewAction(GET_USER_SETTINGS, data));
 
@@ -205,7 +226,7 @@ export function getUserSettings(data: any): any {
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onSaveUserSettingsAction(response: any): IAccountResponse {
+export function onSaveUserSettingsAction(response: any): IUserResponse {
     return {
         type: SAVE_USER_SETTINGS_RESPONSE,
         response
@@ -237,7 +258,7 @@ export function saveUserSettings(data: any): any {
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onSavePasswordSettingsAction(response: any): IAccountResponse {
+export function onSavePasswordSettingsAction(response: any): IUserResponse {
     return {
         type: SAVE_PASSWORD_SETTINGS_RESPONSE,
         response
