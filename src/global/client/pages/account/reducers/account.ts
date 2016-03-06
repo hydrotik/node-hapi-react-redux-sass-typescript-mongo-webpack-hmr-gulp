@@ -27,12 +27,16 @@ export function account(
         hasError: {
             nameFirst: false,
             nameMiddle: false,
-            nameLast: false
+            nameLast: false,
+            password: false,
+            passwordConfirm: false
         },
         help: {
             nameFirst: false,
             nameMiddle: false,
-            nameLast: false
+            nameLast: false,
+            password: false,
+            passwordConfirm: false
         },
         loading: false,
         errormessage: '',
@@ -87,7 +91,8 @@ export function account(
         case GET_USER_SETTINGS_RESPONSE:
             delta = lodash.assign({}, state, {
                 username: action.username,
-                email: action.email
+                email: action.email,
+                hydrated: true
             });
             return delta;
         case SAVE_USER_SETTINGS:

@@ -196,6 +196,8 @@ export function saveAccountSettings(data: any): any {
             if (!err) {
                 response.success = true;
             }
+            console.warn('saveAccountSettings() :: response:');
+            console.warn(response);
 
             dispatch(onSaveAccountSettingsAction(response));
         });
@@ -247,11 +249,17 @@ export function saveUserSettings(data: any): any {
             useAuth: true
         };
 
+        console.warn('saveUserSettings()');
+        console.warn(data);
+
         Fetch(request, (err: any, response: any) => {
 
             if (!err) {
                 response.success = true;
             }
+
+            console.warn('saveUserSettings() :: response:');
+            console.warn(response);
 
             dispatch(onSaveUserSettingsAction(response));
         });
@@ -271,11 +279,6 @@ export function savePasswordSettings(data: any): any {
         dispatch(onViewAction(SAVE_PASSWORD_SETTINGS, data));
 
         if (data.password !== data.passwordConfirm) {
-            /*
-            dispatch(VIEW_ACTION, Types.SAVE_PASSWORD_SETTINGS_RESPONSE, {
-                message: 'Passwords do not match.'
-            });
-            */
 
             dispatch(onSavePasswordSettingsAction({
                 message: 'Passwords do not match.'
@@ -293,13 +296,17 @@ export function savePasswordSettings(data: any): any {
             useAuth: true
         };
 
+        console.warn('savePasswordSettings()');
+        console.warn(data);
+
         Fetch(request, (err: any, response: any) => {
 
             if (!err) {
                 response.success = true;
             }
 
-            // dispatch(SERVER_ACTION, Types.SAVE_PASSWORD_SETTINGS_RESPONSE, response);
+            console.warn('savePasswordSettings() :: response:');
+            console.warn(response);
 
             dispatch(onSavePasswordSettingsAction(response));
         });

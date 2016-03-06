@@ -2,7 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 // Styles
 import './_PasswordForm.scss';
@@ -15,7 +15,10 @@ import { Spinner } from '../../../signup/components/Form/components/Spinner/Spin
 
 // Behaviors and Actions
 import {
-
+    onFormInit,
+    onFormUpdate,
+    saveUserSettings,
+    IAccountMapping
 } from '../../actions';
 
 // Interfaces
@@ -38,18 +41,31 @@ interface IPasswordFormState {
 }
 
 // Decorators
-/*
-function select(state: { formSignup: IReducer; }): IPasswordFormState {
-    const { formSignup }: { formSignup: IReducer; } = state;
+function select(state: { account: IAccountMapping; }): IPasswordFormState {
+    const { account }: { account: IAccountMapping; } = state;
     const {
-    }: IReducer = formSignup;
+        password,
+        passwordConfirm,
+        hasError,
+        help,
+        loading,
+        success,
+        error
+    }: IAccountMapping = account;
 
     return {
+        password,
+        passwordConfirm,
+        hasError,
+        help,
+        loading,
+        success,
+        error
     };
 
 }
 
-@connect(select) */
+@connect(select)
 export class PasswordForm extends React.Component<IPasswordFormProps, IPasswordFormState> {
 
     public constructor(props: any = {}) {
@@ -58,17 +74,15 @@ export class PasswordForm extends React.Component<IPasswordFormProps, IPasswordF
 
     public componentDidMount(): void {
         // this.refs.nameControl.refs.inputField.getDOMNode().focus();
-        // const { dispatch }: IPasswordFormProps = this.props;
-        // dispatch(onPasswordFormInit());
+        const { dispatch }: IPasswordFormProps = this.props;
+        dispatch(onFormInit());
     }
 
     public handleChange(event: any): void {
-        // const { dispatch }: IUserFormProps = this.props;
-        /*
+        const { dispatch }: IPasswordFormProps = this.props;
         dispatch(
             onFormUpdate(event.target.name, event.target.value)
         );
-        */
     }
 
     public onSubmit(event: any): void {
@@ -76,24 +90,18 @@ export class PasswordForm extends React.Component<IPasswordFormProps, IPasswordF
         event.preventDefault();
         event.stopPropagation();
 
-        /*
         const {
             dispatch,
-            name,
-            username,
             password,
-            email
-        }: IUserFormProps = this.props;
+            passwordConfirm
+        }: IPasswordFormProps = this.props;
 
         dispatch(
-            handleRequest({
-                name,
-                username,
+            saveUserSettings({
                 password,
-                email
+                passwordConfirm
             })
         );
-        */
     }
 
     public render(): React.ReactElement<{}> {
@@ -109,14 +117,6 @@ export class PasswordForm extends React.Component<IPasswordFormProps, IPasswordF
             success,
             error
         }: IPasswordFormProps = this.props;
-
-        // TESTING FOR UI
-        hasError = {
-            username: false
-        };
-        help = {
-            username: false
-        };
 
         if (success) {
             alerts.push(<div key='success' className='alert alert-success'>
