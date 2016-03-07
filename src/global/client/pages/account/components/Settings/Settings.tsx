@@ -21,9 +21,6 @@ import {
 interface ISettingsProps {
     dispatch?: (func: any) => void;
     store?: any;
-    account?: any;
-    user?: any;
-    password?: any;
 }
 
 interface ISettingsState {
@@ -32,17 +29,35 @@ interface ISettingsState {
 
 // Decorators
 /*
-function select(state: { formSignup: IReducer; }): ISettingsState {
-    const { formSignup }: { formSignup: IReducer; } = state;
+function select(state: { account: IAccountMapping; }): ISettingsState {
+    const { account }: { account: IAccountMapping; } = state;
     const {
-    }: IReducer = formSignup;
+        accountsuccess,
+        usersuccess,
+        passwordsuccess,
+        hasError,
+        help,
+        loading,
+        error,
+        accounthydrated,
+        userhydrated
+    }: IAccountMapping = account;
 
     return {
+        accountsuccess,
+        usersuccess,
+        passwordsuccess,
+        hasError,
+        help,
+        loading,
+        error,
+        accounthydrated,
+        userhydrated
     };
 
 }
 
-@connect(select) */
+@connect(select)*/
 export class Settings extends React.Component<ISettingsProps, ISettingsState> {
 
     public constructor(props: any = {}) {
@@ -51,8 +66,9 @@ export class Settings extends React.Component<ISettingsProps, ISettingsState> {
 
     public componentDidMount(): void {
         // this.refs.nameControl.refs.inputField.getDOMNode().focus();
+        // console.warn('reset form state');
         // const { dispatch }: ISettingsProps = this.props;
-        // dispatch(onSettingsInit());
+        // dispatch(onFormReset());
     }
 
     /*
@@ -69,9 +85,9 @@ export class Settings extends React.Component<ISettingsProps, ISettingsState> {
                 <h1 className='page-header'>Account settings</h1>
                 <div className='row'>
                     <div className='col-sm-6'>
-                        <AccountForm data={this.props.account} />
-                        <UserForm data={this.props.user} />
-                        <PasswordForm data={this.props.password} />
+                        <AccountForm />
+                        <UserForm />
+                        <PasswordForm />
                         </div>
                     </div>
                 </section>

@@ -18,14 +18,14 @@ import {
     IAccountMapping,
     getUserSettings,
     saveUserSettings,
-    onFormUpdate
+    onFormUpdate,
+    onFormReset
 } from '../../actions';
 
 // Interfaces
 interface IUserFormProps {
     dispatch?: (func: any) => void;
     store?: any;
-    data?: any;
     error?: boolean;
     usersuccess?:  boolean;
     userhydrated?: boolean;
@@ -77,6 +77,7 @@ export class UserForm extends React.Component<IUserFormProps, IUserFormState> {
     public componentDidMount(): void {
         // this.refs.nameControl.refs.inputField.getDOMNode().focus();
         const { dispatch }: IUserFormProps = this.props;
+        dispatch(onFormReset());
         dispatch(getUserSettings());
     }
 

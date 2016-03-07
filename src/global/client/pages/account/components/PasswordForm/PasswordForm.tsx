@@ -16,6 +16,7 @@ import { Spinner } from '../../../signup/components/Form/components/Spinner/Spin
 // Behaviors and Actions
 import {
     onFormInit,
+    onFormReset,
     onFormUpdate,
     savePasswordSettings,
     IAccountMapping
@@ -25,7 +26,6 @@ import {
 interface IPasswordFormProps {
     dispatch?: (func: any) => void;
     store?: any;
-    data?: any;
     error?: boolean;
     passwordsuccess?:  boolean;
     password?: string;
@@ -74,6 +74,7 @@ export class PasswordForm extends React.Component<IPasswordFormProps, IPasswordF
     public componentDidMount(): void {
         // this.refs.nameControl.refs.inputField.getDOMNode().focus();
         const { dispatch }: IPasswordFormProps = this.props;
+        dispatch(onFormReset());
         dispatch(onFormInit());
     }
 

@@ -17,6 +17,7 @@ import { Spinner } from '../../../signup/components/Form/components/Spinner/Spin
 import {
     IAccountMapping,
     // onFormInit,
+    onFormReset,
     onFormUpdate,
     getAccountSettings,
     saveAccountSettings
@@ -26,7 +27,6 @@ import {
 interface IAccountFormProps {
     dispatch?: (func: any) => void;
     store?: any;
-    data?: any;
     error?: boolean;
     accountsuccess?:  boolean;
     accounthydrated?: boolean;
@@ -81,6 +81,7 @@ export class AccountForm extends React.Component<IAccountFormProps, IAccountForm
     public componentDidMount(): void {
         // this.refs.nameControl.refs.inputField.getDOMNode().focus();
         const { dispatch }: IAccountFormProps = this.props;
+        dispatch(onFormReset());
         dispatch(getAccountSettings());
     }
 

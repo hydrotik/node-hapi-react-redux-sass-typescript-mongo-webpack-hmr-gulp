@@ -4,6 +4,7 @@ import * as lodash from 'lodash';
 
 import {
     FORM_UPDATE,
+    FORM_RESET,
     GET_ACCOUNT_SETTINGS,
     GET_ACCOUNT_SETTINGS_RESPONSE,
     SAVE_ACCOUNT_SETTINGS,
@@ -69,6 +70,36 @@ export function account(
             obj[action.field] = action.value;
             delta = lodash.assign({}, state, obj);
             return delta;
+        case FORM_RESET:
+            delta = lodash.assign({}, state, {
+                accountsuccess: false,
+                usersuccess: false,
+                passwordsuccess: false,
+                hasError: {
+                    username: false,
+                    email: false,
+                    nameFirst: false,
+                    nameMiddle: false,
+                    nameLast: false,
+                    password: false,
+                    passwordConfirm: false
+                },
+                help: {
+                    username: false,
+                    email: false,
+                    nameFirst: false,
+                    nameMiddle: false,
+                    nameLast: false,
+                    password: false,
+                    passwordConfirm: false
+                },
+                loading: false,
+                errormessage: '',
+                error: false,
+                accounthydrated: false,
+                userhydrated: false
+            });
+            return delta;
         case GET_ACCOUNT_SETTINGS:
             delta = lodash.assign({}, state, {
                 accounthydrated: false
@@ -102,7 +133,7 @@ export function account(
             return delta;
         case GET_USER_SETTINGS:
             delta = lodash.assign({}, state, {
-                userhydrated: false,
+                userhydrated: false
             });
             return delta;
         case GET_USER_SETTINGS_RESPONSE:

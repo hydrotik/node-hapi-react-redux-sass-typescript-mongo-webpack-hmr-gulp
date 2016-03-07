@@ -4,6 +4,7 @@ import Fetch from '../../../api/jsonfetch';
 import ParseValidation, { IValidation } from '../../../api/parsevalidation';
 
 export const FORM_INIT: string = 'FORM_INIT';
+export const FORM_RESET: string = 'FORM_RESET';
 export const FORM_UPDATE: string = 'FORM_UPDATE';
 export const GET_ACCOUNT_SETTINGS: string = 'GET_ACCOUNT_SETTINGS';
 export const GET_ACCOUNT_SETTINGS_RESPONSE: string = 'GET_ACCOUNT_SETTINGS_RESPONSE';
@@ -119,6 +120,13 @@ export function handleRequest(data: any): any {
 export function onFormInit(): IAccountAbstract {
     return {
         type: FORM_INIT
+    };
+}
+
+/* **************** Form Send Action Event ********************** */
+export function onFormReset(): IAccountMapping {
+    return {
+        type: FORM_RESET
     };
 }
 
