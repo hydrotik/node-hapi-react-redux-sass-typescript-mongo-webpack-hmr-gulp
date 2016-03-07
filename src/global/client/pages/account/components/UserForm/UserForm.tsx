@@ -27,8 +27,8 @@ interface IUserFormProps {
     store?: any;
     data?: any;
     error?: boolean;
-    success?:  boolean;
-    hydrated?: boolean;
+    usersuccess?:  boolean;
+    userhydrated?: boolean;
     username?: boolean;
     email?: string;
     hasError?: any;
@@ -49,9 +49,9 @@ function select(state: { account: IAccountMapping; }): IUserFormState {
         hasError,
         help,
         loading,
-        success,
+        usersuccess,
         error,
-        hydrated
+        userhydrated
     }: IAccountMapping = account;
 
     return {
@@ -60,9 +60,9 @@ function select(state: { account: IAccountMapping; }): IUserFormState {
         hasError,
         help,
         loading,
-        success,
+        usersuccess,
         error,
-        hydrated
+        userhydrated
     };
 
 }
@@ -116,21 +116,12 @@ export class UserForm extends React.Component<IUserFormProps, IUserFormState> {
             hasError,
             help,
             loading,
-            success,
+            usersuccess,
             error,
-            hydrated
+            userhydrated
         }: IUserFormProps = this.props;
 
-        // TESTING FOR UI
-        hydrated = true;
-        hasError = {
-            username: false
-        };
-        help = {
-            username: false
-        };
-
-        if (success) {
+        if (usersuccess) {
             alerts.push(<div key='success' className='alert alert-success'>
                 Success. Identity settings saved.
             </div>);
@@ -141,14 +132,14 @@ export class UserForm extends React.Component<IUserFormProps, IUserFormState> {
         }
 
         let notice: any;
-        if (!hydrated) {
+        if (!userhydrated) {
             notice = <div className='alert alert-info'>
                 Loading identity data...
             </div>;
         }
 
         let formElements: any;
-        if (hydrated) {
+        if (userhydrated) {
             formElements = (
                 <fieldset>
                     <legend>Identity</legend>

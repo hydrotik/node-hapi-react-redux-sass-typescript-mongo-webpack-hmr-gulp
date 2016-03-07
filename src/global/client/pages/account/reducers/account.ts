@@ -23,8 +23,12 @@ export function account(
         username: '',
         password: '',
         email: '',
-        success: false,
+        accountsuccess: false,
+        usersuccess: false,
+        passwordsuccess: false,
         hasError: {
+            username: false,
+            email: false,
             nameFirst: false,
             nameMiddle: false,
             nameLast: false,
@@ -32,6 +36,8 @@ export function account(
             passwordConfirm: false
         },
         help: {
+            username: false,
+            email: false,
             nameFirst: false,
             nameMiddle: false,
             nameLast: false,
@@ -51,7 +57,8 @@ export function account(
 
         passwordConfirm: '',
 
-        hydrated: false
+        accounthydrated: false,
+        userhydrated: false
     },
     action: IAccountMapping
 ): any {
@@ -64,7 +71,7 @@ export function account(
             return delta;
         case GET_ACCOUNT_SETTINGS:
             delta = lodash.assign({}, state, {
-                hydrated: false
+                accounthydrated: false
             });
             return delta;
         case GET_ACCOUNT_SETTINGS_RESPONSE:
@@ -72,43 +79,73 @@ export function account(
                 nameFirst: action.nameFirst,
                 nameMiddle: action.nameMiddle,
                 nameLast: action.nameLast,
-                hydrated: true
+                accounthydrated: true
             });
             return delta;
         case SAVE_ACCOUNT_SETTINGS:
             delta = lodash.assign({}, state, {
+                accountsuccess: action.accountsuccess,
+                errormessage: action.errormessage,
+                hasError: action.hasError,
+                help: action.help,
+                loading: action.loading
             });
             return delta;
         case SAVE_ACCOUNT_SETTINGS_RESPONSE:
             delta = lodash.assign({}, state, {
+                accountsuccess: action.accountsuccess,
+                errormessage: action.errormessage,
+                hasError: action.hasError,
+                help: action.help,
+                loading: action.loading
             });
             return delta;
         case GET_USER_SETTINGS:
             delta = lodash.assign({}, state, {
-                hydrated: false
+                userhydrated: false,
             });
             return delta;
         case GET_USER_SETTINGS_RESPONSE:
             delta = lodash.assign({}, state, {
                 username: action.username,
                 email: action.email,
-                hydrated: true
+                userhydrated: true
             });
             return delta;
         case SAVE_USER_SETTINGS:
             delta = lodash.assign({}, state, {
+                usersuccess: action.usersuccess,
+                errormessage: action.errormessage,
+                hasError: action.hasError,
+                help: action.help,
+                loading: action.loading
             });
             return delta;
         case SAVE_USER_SETTINGS_RESPONSE:
             delta = lodash.assign({}, state, {
+                usersuccess: action.usersuccess,
+                errormessage: action.errormessage,
+                hasError: action.hasError,
+                help: action.help,
+                loading: action.loading
             });
             return delta;
         case SAVE_PASSWORD_SETTINGS:
             delta = lodash.assign({}, state, {
+                passwordsuccess: action.passwordsuccess,
+                errormessage: action.errormessage,
+                hasError: action.hasError,
+                help: action.help,
+                loading: action.loading
             });
             return delta;
         case SAVE_PASSWORD_SETTINGS_RESPONSE:
             delta = lodash.assign({}, state, {
+                passwordsuccess: action.passwordsuccess,
+                errormessage: action.errormessage,
+                hasError: action.hasError,
+                help: action.help,
+                loading: action.loading
             });
             return delta;
         default:

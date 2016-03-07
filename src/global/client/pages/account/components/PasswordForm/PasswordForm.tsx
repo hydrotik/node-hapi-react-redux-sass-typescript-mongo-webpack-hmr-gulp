@@ -17,7 +17,7 @@ import { Spinner } from '../../../signup/components/Form/components/Spinner/Spin
 import {
     onFormInit,
     onFormUpdate,
-    saveUserSettings,
+    savePasswordSettings,
     IAccountMapping
 } from '../../actions';
 
@@ -27,8 +27,7 @@ interface IPasswordFormProps {
     store?: any;
     data?: any;
     error?: boolean;
-    success?:  boolean;
-    username?: boolean;
+    passwordsuccess?:  boolean;
     password?: string;
     passwordConfirm?: string;
     hasError?: any;
@@ -49,7 +48,7 @@ function select(state: { account: IAccountMapping; }): IPasswordFormState {
         hasError,
         help,
         loading,
-        success,
+        passwordsuccess,
         error
     }: IAccountMapping = account;
 
@@ -59,7 +58,7 @@ function select(state: { account: IAccountMapping; }): IPasswordFormState {
         hasError,
         help,
         loading,
-        success,
+        passwordsuccess,
         error
     };
 
@@ -97,7 +96,7 @@ export class PasswordForm extends React.Component<IPasswordFormProps, IPasswordF
         }: IPasswordFormProps = this.props;
 
         dispatch(
-            saveUserSettings({
+            savePasswordSettings({
                 password,
                 passwordConfirm
             })
@@ -114,11 +113,11 @@ export class PasswordForm extends React.Component<IPasswordFormProps, IPasswordF
             hasError,
             help,
             loading,
-            success,
+            passwordsuccess,
             error
         }: IPasswordFormProps = this.props;
 
-        if (success) {
+        if (passwordsuccess) {
             alerts.push(<div key='success' className='alert alert-success'>
                 Success. New password set.
             </div>);

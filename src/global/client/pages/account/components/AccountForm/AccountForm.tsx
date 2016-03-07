@@ -28,8 +28,8 @@ interface IAccountFormProps {
     store?: any;
     data?: any;
     error?: boolean;
-    success?:  boolean;
-    hydrated?: boolean;
+    accountsuccess?:  boolean;
+    accounthydrated?: boolean;
     nameFirst?: string;
     nameMiddle?: string;
     nameLast?: string;
@@ -52,9 +52,9 @@ function select(state: { account: IAccountMapping; }): IAccountFormState {
         hasError,
         help,
         loading,
-        success,
+        accountsuccess,
         error,
-        hydrated
+        accounthydrated
     }: IAccountMapping = account;
 
     return {
@@ -64,9 +64,9 @@ function select(state: { account: IAccountMapping; }): IAccountFormState {
         hasError,
         help,
         loading,
-        success,
+        accountsuccess,
         error,
-        hydrated
+        accounthydrated
     };
 
 }
@@ -123,9 +123,9 @@ export class AccountForm extends React.Component<IAccountFormProps, IAccountForm
             hasError,
             help,
             loading,
-            success,
+            accountsuccess,
             error,
-            hydrated
+            accounthydrated
         }: IAccountFormProps = this.props;
 
         // TESTING FOR UI
@@ -143,7 +143,7 @@ export class AccountForm extends React.Component<IAccountFormProps, IAccountForm
         };
         */
 
-        if (success) {
+        if (accountsuccess) {
             alerts.push(<div key='success' className='alert alert-success'>
                 Success. Contact info settings saved.
             </div>);
@@ -154,14 +154,14 @@ export class AccountForm extends React.Component<IAccountFormProps, IAccountForm
         }
 
         let notice: any;
-        if (!hydrated) {
+        if (!accounthydrated) {
             notice = <div className='alert alert-info'>
                 Loading contact info data...
             </div>;
         }
 
         let formElements: any;
-        if (hydrated) {
+        if (accounthydrated) {
             formElements = (
                 <fieldset>
                     <legend>Contact info</legend>

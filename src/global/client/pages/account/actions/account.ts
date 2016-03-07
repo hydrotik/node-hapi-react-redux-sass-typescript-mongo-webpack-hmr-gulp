@@ -1,7 +1,7 @@
 /// <reference path="../../../../../../typings/tsd.d.ts" />
 
 import Fetch from '../../../api/jsonfetch';
-// import ParseValidation, { IValidation } from '../../../api/parsevalidation';
+import ParseValidation, { IValidation } from '../../../api/parsevalidation';
 
 export const FORM_INIT: string = 'FORM_INIT';
 export const FORM_UPDATE: string = 'FORM_UPDATE';
@@ -35,45 +35,43 @@ export interface IAccountRequest extends IAccountAbstract {
 }
 
 export interface IAccountResponse extends IAccountAbstract {
-    nameFirst: string;
-    nameMiddle: string;
-    nameLast: string;
-    /*
-    success: boolean;
-    errormessage: string;
-    hasError: any;
-    help: any;
-    loading: boolean;
-    */
+    response?: any;
+    nameFirst?: string;
+    nameMiddle?: string;
+    nameLast?: string;
+    accountsuccess?: boolean;
+    errormessage?: string;
+    hasError?: any;
+    help?: any;
+    loading?: boolean;
 }
 
 export interface IUserResponse extends IAccountAbstract {
-    username: string;
-    email: string;
-    /*
-    success: boolean;
-    errormessage: string;
-    hasError: any;
-    help: any;
-    loading: boolean;
-    */
+    response?: any;
+    username?: string;
+    email?: string;
+    usersuccess?: boolean;
+    errormessage?: string;
+    hasError?: any;
+    help?: any;
+    loading?: boolean;
 }
 
 export interface IPasswordResponse extends IAccountAbstract {
-    response: any;
-    /*
-    success: boolean;
-    errormessage: string;
-    hasError: any;
-    help: any;
-    loading: boolean;
-    */
+    response?: any;
+    passwordsuccess?: boolean;
+    errormessage?: string;
+    hasError?: any;
+    help?: any;
+    loading?: boolean;
 }
 
 // TODO test using multiple inheritance: export interface IAccountMapping extends IAccountAbstract, IAccountAbstract
 export interface IAccountMapping {
     type: string;
-    success?: boolean;
+    accountsuccess?: boolean;
+    passwordsuccess?: boolean;
+    usersuccess?: boolean;
     errormessage?: string;
     error?: boolean;
     hasError?: any;
@@ -89,7 +87,8 @@ export interface IAccountMapping {
     email?: string;
     field?: string;
     value?: string;
-    hydrated?: boolean;
+    userhydrated?: boolean;
+    accounthydrated?: boolean;
 }
 
 /*
@@ -170,10 +169,22 @@ export function getAccountSettings(data?: any): any {
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onSaveAccountSettingsAction(response: any): IPasswordResponse {
+export function onSaveAccountSettingsAction(
+    response: any,
+    errormessage: string,
+    hasError: any,
+    help: any,
+    accountsuccess: boolean,
+    loading: boolean
+): IAccountResponse {
     return {
         type: SAVE_ACCOUNT_SETTINGS_RESPONSE,
-        response
+        response,
+        errormessage,
+        hasError,
+        help,
+        accountsuccess,
+        loading
     };
 }
 
@@ -199,7 +210,19 @@ export function saveAccountSettings(data: any): any {
             console.warn('saveAccountSettings() :: response:');
             console.warn(response);
 
-            dispatch(onSaveAccountSettingsAction(response));
+            let validation: IValidation = ParseValidation(response.validation, response.message);
+
+            // dispatch(onReceiveFormAction(response.success, validation.error, validation.hasError, validation.help, response.loading));
+            dispatch(
+                onSaveAccountSettingsAction(
+                    response,
+                    validation.error,
+                    validation.hasError,
+                    validation.help,
+                    response.success,
+                    response.loading
+                )
+            );
         });
     };
 }
@@ -231,10 +254,22 @@ export function getUserSettings(data?: any): any {
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onSaveUserSettingsAction(response: any): IPasswordResponse {
+export function onSaveUserSettingsAction(
+    response: any,
+    errormessage: string,
+    hasError: any,
+    help: any,
+    usersuccess: boolean,
+    loading: boolean
+): IUserResponse {
     return {
         type: SAVE_USER_SETTINGS_RESPONSE,
-        response
+        response,
+        errormessage,
+        hasError,
+        help,
+        usersuccess,
+        loading
     };
 }
 
@@ -261,28 +296,73 @@ export function saveUserSettings(data: any): any {
             console.warn('saveUserSettings() :: response:');
             console.warn(response);
 
-            dispatch(onSaveUserSettingsAction(response));
+            let validation: IValidation = ParseValidation(response.validation, response.message);
+
+            dispatch(
+                onSaveUserSettingsAction(
+                    response,
+                    validation.error,
+                    validation.hasError,
+                    validation.help,
+                    response.success,
+                    response.loading
+                )
+            );
         });
     };
 }
 
 /* **************** Form Send Action Event ********************** */
-export function onSavePasswordSettingsAction(response: any): IPasswordResponse {
+export function onSavePasswordSettingsAction(
+    response: any,
+    errormessage: string,
+    hasError: any,
+    help: any,
+    passwordsuccess: boolean,
+    loading: boolean
+): IPasswordResponse {
     return {
         type: SAVE_PASSWORD_SETTINGS_RESPONSE,
-        response
+        response,
+        errormessage,
+        hasError,
+        help,
+        passwordsuccess,
+        loading
     };
 }
 
 export function savePasswordSettings(data: any): any {
+
+    let validation: IValidation;
+
     return (dispatch: any, getState: any) => {
         dispatch(onViewAction(SAVE_PASSWORD_SETTINGS, data));
 
         if (data.password !== data.passwordConfirm) {
 
-            dispatch(onSavePasswordSettingsAction({
-                message: 'Passwords do not match.'
-            }));
+            let r: any = {
+                response: {},
+                message: 'Passwords do not match.',
+                validation: {
+                    keys : [
+                        'passwordConfirm'
+                    ]
+                },
+                passwordsuccess: false,
+                loading: false
+            };
+
+            validation = ParseValidation(r.validation, r.message);
+
+            dispatch(onSavePasswordSettingsAction(
+                r,
+                validation.error,
+                validation.hasError,
+                validation.help,
+                r.success,
+                r.loading
+            ));
 
             return;
         }
@@ -308,7 +388,18 @@ export function savePasswordSettings(data: any): any {
             console.warn('savePasswordSettings() :: response:');
             console.warn(response);
 
-            dispatch(onSavePasswordSettingsAction(response));
+            validation = ParseValidation(response.validation, response.message);
+
+            dispatch(
+                onSavePasswordSettingsAction(
+                    response,
+                    validation.error,
+                    validation.hasError,
+                    validation.help,
+                    response.success,
+                    response.loading
+                )
+            );
         });
     };
 }
