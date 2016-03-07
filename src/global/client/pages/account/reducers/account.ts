@@ -97,7 +97,9 @@ export function account(
                 errormessage: '',
                 error: false,
                 accounthydrated: false,
-                userhydrated: false
+                userhydrated: false,
+                password: '',
+                passwordConfirm: ''
             });
             return delta;
         case GET_ACCOUNT_SETTINGS:
@@ -117,8 +119,6 @@ export function account(
             delta = lodash.assign({}, state, {
                 accountsuccess: action.accountsuccess,
                 errormessage: action.errormessage,
-                hasError: action.hasError,
-                help: action.help,
                 loading: action.loading
             });
             return delta;
@@ -147,8 +147,6 @@ export function account(
             delta = lodash.assign({}, state, {
                 usersuccess: action.usersuccess,
                 errormessage: action.errormessage,
-                hasError: action.hasError,
-                help: action.help,
                 loading: action.loading
             });
             return delta;
@@ -165,8 +163,6 @@ export function account(
             delta = lodash.assign({}, state, {
                 passwordsuccess: action.passwordsuccess,
                 errormessage: action.errormessage,
-                hasError: action.hasError,
-                help: action.help,
                 loading: action.loading
             });
             return delta;

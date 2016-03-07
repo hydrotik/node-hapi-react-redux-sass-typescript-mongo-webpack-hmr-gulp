@@ -207,16 +207,11 @@ export function saveAccountSettings(data: any): any {
             useAuth: true
         };
 
-        console.warn('saveAccountSettings()');
-        console.warn(data);
-
         Fetch(request, (err: any, response: any) => {
 
             if (!err) {
                 response.success = true;
             }
-            console.warn('saveAccountSettings() :: response:');
-            console.warn(response);
 
             let validation: IValidation = ParseValidation(response.validation, response.message);
 
@@ -292,17 +287,11 @@ export function saveUserSettings(data: any): any {
             useAuth: true
         };
 
-        console.warn('saveUserSettings()');
-        console.warn(data);
-
         Fetch(request, (err: any, response: any) => {
 
             if (!err) {
                 response.success = true;
             }
-
-            console.warn('saveUserSettings() :: response:');
-            console.warn(response);
 
             let validation: IValidation = ParseValidation(response.validation, response.message);
 
@@ -384,17 +373,11 @@ export function savePasswordSettings(data: any): any {
             useAuth: true
         };
 
-        console.warn('savePasswordSettings()');
-        console.warn(data);
-
         Fetch(request, (err: any, response: any) => {
 
             if (!err) {
                 response.success = true;
             }
-
-            console.warn('savePasswordSettings() :: response:');
-            console.warn(response);
 
             validation = ParseValidation(response.validation, response.message);
 
