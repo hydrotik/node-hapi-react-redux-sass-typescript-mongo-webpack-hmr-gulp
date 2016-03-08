@@ -121,7 +121,7 @@ exports.register = function (server, options, next) {
             },
             validate: {
                 payload: {
-                    name: Joi.string().required()
+                    name: Joi.string().required().label('Name')
                 }
             }
         },
@@ -152,9 +152,9 @@ exports.register = function (server, options, next) {
             },
             validate: {
                 payload: {
-                    nameFirst: Joi.string().required(),
-                    nameMiddle: Joi.string().allow('', null),
-                    nameLast: Joi.string().required()
+                    nameFirst: Joi.string().required().label('First name'),
+                    nameMiddle: Joi.string().allow('', null).label('Middle name'),
+                    nameLast: Joi.string().required().label('Last name')
                 }
             }
         },
@@ -198,9 +198,9 @@ exports.register = function (server, options, next) {
             },
             validate: {
                 payload: {
-                    nameFirst: Joi.string().required(),
-                    nameMiddle: Joi.string().allow(''),
-                    nameLast: Joi.string().required()
+                    nameFirst: Joi.string().required().label('First name'),
+                    nameMiddle: Joi.string().allow('').label('Middle name'),
+                    nameLast: Joi.string().required().label('Last name')
                 }
             }
         },
@@ -243,7 +243,7 @@ exports.register = function (server, options, next) {
             },
             validate: {
                 payload: {
-                    username: Joi.string().lowercase().required()
+                    username: Joi.string().lowercase().required().label('Username')
                 }
             },
             pre: [{
