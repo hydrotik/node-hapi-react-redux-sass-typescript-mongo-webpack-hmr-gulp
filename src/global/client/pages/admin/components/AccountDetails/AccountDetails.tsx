@@ -16,7 +16,7 @@ export class AccountSearch extends React.Component<{}, {}> {
 
         return (
             <div>
-                Account Search
+                Account Details
             </div>
         );
     }
