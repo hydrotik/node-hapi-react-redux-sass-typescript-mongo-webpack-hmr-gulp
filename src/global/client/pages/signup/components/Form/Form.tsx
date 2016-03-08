@@ -8,10 +8,10 @@ import { connect } from 'react-redux';
 import './_Form.scss';
 
 // Page Components
-import { ControlGroup } from './components/ControlGroup/ControlGroup';
-import { TextControl } from './components/TextControl/TextControl';
-import { Button } from './components/Button/Button';
-import { Spinner } from './components/Spinner/Spinner';
+import { ControlGroup } from '../../../../components/ControlGroup/ControlGroup';
+import { TextControl } from '../../../../components/TextControl/TextControl';
+import { Button } from '../../../../components/Button/Button';
+import { Spinner } from '../../../../components/Spinner/Spinner';
 
 // Behaviors and Actions
 import {

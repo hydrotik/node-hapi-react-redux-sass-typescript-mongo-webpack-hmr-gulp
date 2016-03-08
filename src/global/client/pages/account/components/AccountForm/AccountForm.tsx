@@ -8,10 +8,10 @@ import { connect } from 'react-redux';
 import './_AccountForm.scss';
 
 // Page Components
-import { ControlGroup } from '../../../signup/components/Form/components/ControlGroup/ControlGroup';
-import { TextControl } from '../../../signup/components/Form/components/TextControl/TextControl';
-import { Button } from '../../../signup/components/Form/components/Button/Button';
-import { Spinner } from '../../../signup/components/Form/components/Spinner/Spinner';
+import { ControlGroup } from '../../../../components/ControlGroup/ControlGroup';
+import { TextControl } from '../../../../components/TextControl/TextControl';
+import { Button } from '../../../../components/Button/Button';
+import { Spinner } from '../../../../components/Spinner/Spinner';
 
 // Behaviors and Actions
 import {
