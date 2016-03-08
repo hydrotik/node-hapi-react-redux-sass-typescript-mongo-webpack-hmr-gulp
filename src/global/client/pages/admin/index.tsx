@@ -11,6 +11,19 @@ import { Home } from './components/Home/Home';
 import { NotFound } from './components/NotFound/NotFound';
 import { Settings } from './components/Settings/Settings';
 
+/*
+import { AccountSearch } from './components/accounts/Search';
+import { AccountDetails } from './components/accounts/Details';
+import { AdminSearch } from './components/admins/Search';
+import { AdminDetails } from './components/admins/Details';
+import { AdminGroupSearch } from './components/admin-groups/Search';
+import { AdminGroupDetails } from './components/admin-groups/Details';
+import { StatusSearch } from './components/statuses/Search';
+import { StatusDetails } from './components/statuses/Details';
+import { UserSearch } from './components/users/Search';
+import { UserDetails } from './components/users/Details';
+*/
+
 import '../../scss/app.scss';
 
 import { Store, createStore, applyMiddleware} from 'redux';
