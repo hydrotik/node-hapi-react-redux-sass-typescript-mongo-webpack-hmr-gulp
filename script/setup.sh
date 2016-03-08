@@ -110,19 +110,19 @@ echo "Starting installation tool ${DATE}$(echo_clear)"
 #########################################################################################
 #
 # Check NVM globally if not already installed.
-echo "\n$(echo_cause)Checking NVM path$(echo_clear)"
-if [ ! -f ~/.nvm/nvm.sh ]; then
-    echo "$(echo_warn)WARNING: NVM not found. $(echo_if 0)$(echo_clear)"
-    echo "$(echo_warn)Please run:$(echo_clear)"
-    echo "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash"
-    echo "$(echo_warn)Then in ~/.bash_profile add:$(echo_clear)"
-    echo 'export NVM_DIR="$HOME/.nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm"\n\n'
-    exit 0
-else
-    . ~/.nvm/nvm.sh
-    NVM_VERSION="$(nvm --version | sed 's/[^0-9.]*//g')"
-    echo "$(echo_effect)NVM version ${NVM_VERSION} found $(echo_if 1)$(echo_clear)"
-fi
+# echo "\n$(echo_cause)Checking NVM path$(echo_clear)"
+# if [ ! -f ~/.nvm/nvm.sh ]; then
+#     echo "$(echo_warn)WARNING: NVM not found. $(echo_if 0)$(echo_clear)"
+#     echo "$(echo_warn)Please run:$(echo_clear)"
+#     echo "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash"
+#     echo "$(echo_warn)Then in ~/.bash_profile add:$(echo_clear)"
+#     echo 'export NVM_DIR="$HOME/.nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm"\n\n'
+#     exit 0
+# else
+#     . ~/.nvm/nvm.sh
+#     NVM_VERSION="$(nvm --version | sed 's/[^0-9.]*//g')"
+#     echo "$(echo_effect)NVM version ${NVM_VERSION} found $(echo_if 1)$(echo_clear)"
+# fi
 
 
 # NOT WORKING????????

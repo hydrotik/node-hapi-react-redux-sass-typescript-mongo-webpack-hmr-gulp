@@ -95,7 +95,7 @@ exports.register = function (server, options, next) {
             },
             validate: {
                 payload: {
-                    name: Joi.string().required()
+                    name: Joi.string().required().label('Name')
                 }
             },
             pre: [
@@ -129,7 +129,7 @@ exports.register = function (server, options, next) {
             },
             validate: {
                 payload: {
-                    name: Joi.string().required()
+                    name: Joi.string().required().label('Name')
                 }
             },
             pre: [
