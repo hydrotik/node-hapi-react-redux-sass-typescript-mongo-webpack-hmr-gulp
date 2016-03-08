@@ -16,8 +16,8 @@ exports.register = function (server, options, next) {
         config: {
             validate: {
                 payload: {
-                    username: Joi.string().lowercase().required(),
-                    password: Joi.string().required()
+                    username: Joi.string().lowercase().required().label('Username'),
+                    password: Joi.string().required().label('Password')
                 }
             },
             plugins: {

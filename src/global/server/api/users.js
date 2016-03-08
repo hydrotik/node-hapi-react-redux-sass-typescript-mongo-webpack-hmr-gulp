@@ -134,9 +134,9 @@ exports.register = function (server, options, next) {
             },
             validate: {
                 payload: {
-                    username: Joi.string().token().lowercase().required(),
-                    email: Joi.string().email().lowercase().required(),
-                    password: Joi.string().required()
+                    username: Joi.string().token().lowercase().required().label('Username'),
+                    email: Joi.string().email().lowercase().required().label('Email'),
+                    password: Joi.string().required().label('Password')
                 }
             },
             pre: [
@@ -226,8 +226,8 @@ exports.register = function (server, options, next) {
             validate: {
                 payload: {
                     isActive: Joi.boolean().required(),
-                    username: Joi.string().token().lowercase().required(),
-                    email: Joi.string().email().lowercase().required()
+                    username: Joi.string().token().lowercase().required().label('Username'),
+                    email: Joi.string().email().lowercase().required().label('Email')
                 }
             },
             pre: [
@@ -327,8 +327,8 @@ exports.register = function (server, options, next) {
             },
             validate: {
                 payload: {
-                    username: Joi.string().token().lowercase().required(),
-                    email: Joi.string().email().lowercase().required()
+                    username: Joi.string().token().lowercase().required().label('Username'),
+                    email: Joi.string().email().lowercase().required().label('Email')
                 }
             },
             pre: [{
@@ -424,7 +424,7 @@ exports.register = function (server, options, next) {
             },
             validate: {
                 payload: {
-                    password: Joi.string().required()
+                    password: Joi.string().required().label('Password')
                 }
             },
             pre: [
@@ -479,7 +479,7 @@ exports.register = function (server, options, next) {
             },
             validate: {
                 payload: {
-                    password: Joi.string().required()
+                    password: Joi.string().required().label('Password')
                 }
             },
             pre: [{
