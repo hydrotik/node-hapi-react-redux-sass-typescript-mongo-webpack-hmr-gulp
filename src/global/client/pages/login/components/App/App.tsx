@@ -7,8 +7,6 @@ import * as React from 'react';
 import './_App.scss';
 
 // Page Components
-import { NavBar } from '../NavBar/NavBar';
-import { Footer } from '../Footer/Footer';
 
 // Interfaces
 
@@ -18,10 +16,8 @@ interface IAppProps {
 }
 
 interface IAppState {
-}
 
-// https://github.com/reactjs/react-router/tree/1.0.x/docs
-// https://github.com/reactjs/react-router/blob/master/examples/breadcrumbs/app.js
+}
 
 export class App extends React.Component<IAppProps, IAppState> {
 
@@ -34,9 +30,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
         return (
             <div>
-                <NavBar />
                 {this.props.children}
-                <Footer />
             </div>
         );
     }

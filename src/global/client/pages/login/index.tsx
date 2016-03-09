@@ -9,7 +9,10 @@ import { browserHistory, Router, IndexRoute, Route} from 'react-router';
 import { App } from './components/App/App';
 import { Home } from './components/Home/Home';
 import { NotFound } from './components/NotFound/NotFound';
-import { Settings } from './components/Settings/Settings';
+
+import { Logout } from './components/Logout/Logout';
+import { Forgot } from './components/Forgot/Forgot';
+import { Reset } from './components/Reset/Reset';
 
 import '../../scss/app.scss';
 
@@ -63,7 +66,9 @@ class Bootstrap extends React.Component<IBootstrapProps, IBootstrapState> {
                 <Router history={browserHistory}>
                     <Route path='/login' component={App}>
                         <IndexRoute component={Home} />
-                        <Route path='settings' component={Settings} />
+                        <Route path="forgot" component={Forgot} />
+                        <Route path="reset/:email/:key" component={Reset} />
+                        <Route path="logout" component={Logout} />
                         <Route path='*' component={ NotFound }/>
                     </Route>
                 </Router>
