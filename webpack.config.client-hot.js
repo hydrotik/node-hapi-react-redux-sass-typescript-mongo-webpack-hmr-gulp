@@ -85,6 +85,11 @@ module.exports = {
             'webpack-dev-server/client?http://localhost:8080',
             'webpack/hot/only-dev-server',
             path.resolve(__dirname, './src/global/client/pages/admin/index')
+        ],
+        login: [
+            'webpack-dev-server/client?http://localhost:8080',
+            'webpack/hot/only-dev-server',
+            path.resolve(__dirname, './src/global/client/pages/login/index')
         ]
         /* etc */
     },

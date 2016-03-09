@@ -1,4 +1,15 @@
+var Hoek = require('hoek');
+var path = require('path');
+var pkg = require('../../../../../package.json');
+var util = require('util');
+
+
 exports.register = function (plugin, options, next) {
+
+    options = Hoek.applyToDefaults({ basePath: '' }, options);
+
+    var js = options.artifactRoot + path.join('js', 'login.min.js')
+    var css = options.artifactRoot + path.join('css', 'login.min.css');
 
     plugin.route({
         method: 'GET',
@@ -26,7 +37,14 @@ exports.register = function (plugin, options, next) {
                 return reply.redirect('/account');
             }
 
-            var response = reply.view('login/index');
+            var props = {
+                title: 'Boilerplate Test',
+                js: js,
+                css: css
+            }
+
+            // Hook into typescript generated files
+            var response = reply.view('signup/Index.tsx', props);
             response.header('x-auth-required', true);
         }
     });
@@ -37,5 +55,5 @@ exports.register = function (plugin, options, next) {
 
 
 exports.register.attributes = {
-    name: 'web/login'
+    pkg: require('./package.json')
 };
