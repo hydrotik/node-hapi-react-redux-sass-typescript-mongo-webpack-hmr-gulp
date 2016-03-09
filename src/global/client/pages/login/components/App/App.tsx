@@ -25,7 +25,6 @@ export class App extends React.Component<IAppProps, IAppState> {
         super(props);
     }
 
-
     public render(): React.ReactElement<{}> {
 
         return (
