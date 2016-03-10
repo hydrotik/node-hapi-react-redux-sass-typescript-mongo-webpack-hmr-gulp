@@ -1,4 +1,4 @@
-/// <reference path="../../../../../typings/tsd.d.ts" />
+/// <reference path='../../../../../typings/tsd.d.ts' />
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -66,9 +66,9 @@ class Bootstrap extends React.Component<IBootstrapProps, IBootstrapState> {
                 <Router history={browserHistory}>
                     <Route path='/login' component={App}>
                         <IndexRoute component={Home} />
-                        <Route path="forgot" component={Forgot} />
-                        <Route path="reset/:email/:key" component={Reset} />
-                        <Route path="logout" component={Logout} />
+                        <Route path='forgot' component={Forgot} />
+                        <Route path='reset/:email/:key' component={Reset} />
+                        <Route path='logout' component={Logout} />
                         <Route path='*' component={ NotFound }/>
                     </Route>
                 </Router>
