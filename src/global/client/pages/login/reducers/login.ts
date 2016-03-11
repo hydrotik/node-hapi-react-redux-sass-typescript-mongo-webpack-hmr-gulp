@@ -7,11 +7,28 @@ import {
 
     FORM_UPDATE,
     FORM_RESET,
+    LOGIN_RESPONSE
 
 } from '../actions';
 
-export function account(
+export function login(
     state: any = {
+        username: '',
+        password: '',
+        success: false,
+        loading: false,
+        message: '',
+        field: '',
+        value: '',
+        error: '',
+        hasError: {
+            username: false,
+            password: false
+        },
+        help: {
+            username: false,
+            password: false
+        },
     },
     action: ILoginMapping
 ): any {
@@ -25,6 +42,15 @@ export function account(
         case FORM_RESET:
             delta = lodash.assign({}, state, {
 
+            });
+            return delta;
+        case LOGIN_RESPONSE:
+            delta = lodash.assign({}, state, {
+                message: action.message,
+                success: action.success,
+                loading: action.loading,
+                help: action.help,
+                hasError: action.hasError
             });
             return delta;
         default:

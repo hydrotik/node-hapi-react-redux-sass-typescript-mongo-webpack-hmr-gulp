@@ -2,6 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
+import * as activeComponent from 'react-router-active-component';
 // import { connect } from 'react-redux';
 
 // Styles
@@ -18,11 +19,16 @@ import {
 interface ILogoutProps {
     dispatch?: (func: any) => void;
     store?: any;
+    success?: boolean;
+    error?: string;
 }
 
 interface ILogoutState {
 
 }
+
+let ac: any = activeComponent;
+const NavLink: any = ac('li');
 
 // Decorators
 /*
@@ -94,8 +100,29 @@ export class Logout extends React.Component<ILogoutProps, ILogoutState> {
 
     public render(): React.ReactElement<{}> {
 
+        let alerts: any[] = [];
+
+        let {
+            success,
+            error
+        }: ILogoutProps = this.props;
+
+        if (success) {
+            alerts.push(<div key='success' className='alert alert-success'>
+                Logout successful.
+            </div>);
+        } else if (error) {
+            alerts.push(<div key='danger' className='alert alert-warning'>
+                {error}
+            </div>);
+        }
+
         return (
-            <div>Logout Section</div>
+            <section>
+                <h1 className='page-header'>Sign out</h1>
+                {alerts}
+                <NavLink className='btn btn-link' to='/login'>Back to login</NavLink>
+            </section>
         );
     }
 }

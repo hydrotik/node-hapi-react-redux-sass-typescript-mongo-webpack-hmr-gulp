@@ -2,7 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 // Styles
 import './_Reset.scss';
@@ -12,12 +12,20 @@ import './_Reset.scss';
 
 // Behaviors and Actions
 import {
+    IResetMapping
 } from '../../actions';
 
 // Interfaces
 interface IResetProps {
     dispatch?: (func: any) => void;
     store?: any;
+    error?: string;
+    success?:  boolean;
+    email?: string;
+    hasError?: any;
+    help?: any;
+    loading?: boolean;
+    message?: string;
 }
 
 interface IResetState {
@@ -25,32 +33,30 @@ interface IResetState {
 }
 
 // Decorators
-/*
-function select(state: { account: IAccountMapping; }): IResetState {
-    const { account }: { account: IAccountMapping; } = state;
+function select(state: { login: IResetMapping; }): IResetProps {
+    const { login }: { login: IResetMapping; } = state;
     const {
-        password,
-        passwordConfirm,
+        success,
+        error,
         hasError,
         help,
         loading,
-        passwordsuccess,
-        error
-    }: IAccountMapping = account;
+        email,
+        message
+    }: IResetMapping = login;
 
     return {
-        password,
-        passwordConfirm,
+        success,
+        error,
         hasError,
         help,
         loading,
-        passwordsuccess,
-        error
+        email,
+        message
     };
 
 }
-
-@connect(select)*/
+@connect(select)
 export class Reset extends React.Component<IResetProps, IResetState> {
 
     public constructor(props: any = {}) {

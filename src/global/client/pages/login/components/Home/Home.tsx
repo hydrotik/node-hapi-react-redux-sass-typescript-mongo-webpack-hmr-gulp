@@ -2,171 +2,181 @@
 
 // Core Imports
 import * as React from 'react';
-// import { connect } from 'react-redux';
-import * as Moment from 'moment';
+import { connect } from 'react-redux';
+import * as activeComponent from 'react-router-active-component';
 
 // Styles
 import './_Home.scss';
 
 // Page Components
-
+import { ControlGroup } from '../../../../components/ControlGroup/ControlGroup';
+import { TextControl } from '../../../../components/TextControl/TextControl';
+import { Button } from '../../../../components/Button/Button';
+import { Spinner } from '../../../../components/Spinner/Spinner';
 
 // Behaviors and Actions
 import {
-
+    ILoginMapping,
+    onFormUpdate,
+    onFormReset,
+    login
 } from '../../actions';
-
-interface IHome {
-    interval: any;
-}
 
 // Interfaces
 interface IHomeProps {
     dispatch?: (func: any) => void;
     store?: any;
-
-    hour?: number;
-    minute?: number;
-    second?: number;
-    year?: number;
-    month?: number;
-    day?: number;
+    error?: string;
+    success?:  boolean;
+    username?: string;
+    password?: string;
+    hasError?: any;
+    help?: any;
+    loading?: boolean;
+    message?: string;
 }
 
 interface IHomeState {
-    hour?: number;
-    minute?: number;
-    second?: number;
-    year?: number;
-    month?: number;
-    day?: number;
 }
+
+let ac: any = activeComponent;
+const NavLink: any = ac('li');
 
 
 // Decorators
-/*
-function select(state: { formSignup: IReducer; }): IHomeState {
-    const { formSignup }: { formSignup: IReducer; } = state;
+function select(state: { login: ILoginMapping; }): IHomeProps {
+    const { login }: { login: ILoginMapping; } = state;
     const {
-    }: IReducer = formSignup;
+        success,
+        error,
+        hasError,
+        help,
+        loading,
+        username,
+        password,
+        message
+    }: ILoginMapping = login;
 
     return {
+        success,
+        error,
+        hasError,
+        help,
+        loading,
+        username,
+        password,
+        message
     };
 
 }
-
-@connect(select) */
-export class Home extends React.Component<IHomeProps, IHomeState> implements IHome {
+@connect(select)
+export class Home extends React.Component<IHomeProps, IHomeState> {
 
 
 
     public constructor(props: any = {}) {
         super(props);
-
-        this.state = {
-            second: 0,
-            minute: 0,
-            hour: 0,
-            day: 0,
-            month: 0,
-            year: 0
-        };
     }
-
-    public interval: any;
-
-    public refreshTime: any = (e: any): void => {
-        this.setState(this.getThisMoment());
-    };
 
     public componentDidMount(): void {
-        this.interval = setInterval(this.refreshTime, 1000);
+        // this.refs.nameControl.refs.inputField.getDOMNode().focus();
+        const { dispatch }: IHomeProps = this.props;
+        dispatch(onFormReset());
     }
 
-    public componentWillUnmount(): void {
-        clearInterval(this.interval);
+    public handleChange(event: any): void {
+        const { dispatch }: IHomeProps = this.props;
+        dispatch(
+            onFormUpdate(event.target.name, event.target.value)
+        );
     }
 
-    public getThisMoment(): any {
+    public onSubmit(event: any): void {
+        event.preventDefault();
+        event.stopPropagation();
 
-        let thisMoment: any = Moment();
+        const {
+            dispatch,
+            username,
+            password
+        }: IHomeProps = this.props;
 
-        return {
-            second: thisMoment.format('ss'),
-            minute: thisMoment.format('mm'),
-            hour: thisMoment.format('HH'),
-            day: thisMoment.format('DD'),
-            month: thisMoment.format('MM'),
-            year: thisMoment.format('YYYY')
-        };
+        dispatch(
+            login({
+                username,
+                password
+            })
+        );
     }
 
     public render(): React.ReactElement<{}> {
 
+        let alerts: any[] = [];
+
+        let {
+            username,
+            password,
+            hasError,
+            help,
+            loading,
+            success,
+            message
+        }: IHomeProps = this.props;
+
+        if (success) {
+            alerts.push(<div key='success' className='alert alert-success'>
+                Success. Redirecting...
+            </div>);
+        } else if (message) {
+            alerts.push(<div key='danger' className='alert alert-danger'>
+                {message}
+            </div>);
+        }
+
+        let formElements: any;
+        if (!success) {
+            formElements = <fieldset>
+                <TextControl
+                        name='username'
+                        label='Username'
+                        hasError={hasError.username}
+                        value={username}
+                        onChange={ (e: any) => this.handleChange(e) }
+                        help={help.username}
+                        disabled={loading}
+                        />
+                <TextControl
+                        name='password'
+                        label='Password'
+                        type='password'
+                        hasError={hasError.password}
+                        value={password}
+                        onChange={ (e: any) => this.handleChange(e) }
+                        help={help.password}
+                        disabled={loading}
+                        />
+                <ControlGroup hideLabel={true} hideHelp={true}>
+                    <Button
+                        type='submit'
+                        inputClasses={{ 'btn-primary': true }}
+                        disabled={loading}>
+
+                        Sign in
+                        <Spinner space='left' show={loading} />
+                    </Button>
+                    <NavLink to='login/forgot' className='btn btn-link'>Forgot your password?</NavLink>
+                </ControlGroup>
+            </fieldset>;
+        }
+
         return (
-            <section className='section-home container'>
-                <div className='row'>
-                    <div className='col-sm-7'>
-                        <h1 className='page-header'>My account</h1>
-                        <div className='row'>
-                            <div className='col-sm-4'>
-                                <div className='well text-center'>
-                                    <div className='stat-value'>
-                                        {this.state.hour}
-                                        </div>
-                                    <div className='stat-label'>hour</div>
-                                    </div>
-                                </div>
-                            <div className='col-sm-4'>
-                                <div className='well text-center'>
-                                    <div className='stat-value'>
-                                        {this.state.minute}
-                                        </div>
-                                    <div className='stat-label'>minute</div>
-                                    </div>
-                                </div>
-                            <div className='col-sm-4'>
-                                <div className='well text-center'>
-                                    <div className='stat-value'>
-                                        {this.state.second}
-                                        </div>
-                                    <div className='stat-label'>second</div>
-                                    </div>
-                                </div>
-                            <div className='col-sm-4'>
-                                <div className='well text-center'>
-                                    <div className='stat-value'>
-                                        {this.state.year}
-                                        </div>
-                                    <div className='stat-label'>year</div>
-                                    </div>
-                                </div>
-                            <div className='col-sm-4'>
-                                <div className='well text-center'>
-                                    <div className='stat-value'>
-                                        {this.state.month}
-                                        </div>
-                                    <div className='stat-label'>month</div>
-                                    </div>
-                                </div>
-                            <div className='col-sm-4'>
-                                <div className='well text-center'>
-                                    <div className='stat-value'>
-                                        {this.state.day}
-                                        </div>
-                                    <div className='stat-label'>day</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <div className='col-sm-5'>
-                        <h1 className='page-header'>Throttle guage</h1>
-                        <div className='text-center'>
-                            <i className='fa fa-dashboard bamf'></i>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+            <section>
+                <h1 className='page-header'>Sign in</h1>
+                <form onSubmit={(e: any) => this.onSubmit(e) }>
+                    {alerts}
+                    {formElements}
+                </form>
+            </section>
         );
     }
 }

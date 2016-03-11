@@ -11,9 +11,12 @@ import { onExampleReducer } from '../../../reducers';
 /* *********** LOCALS *********** */
 
 // Login
-import { } from './login';
+import {
+    login
+} from './login';
 
 export const rootReducer: Reducer = combineReducers({
+    login,
     onExampleReducer
 });
 

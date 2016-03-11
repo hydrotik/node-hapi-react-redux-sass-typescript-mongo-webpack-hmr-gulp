@@ -3,29 +3,26 @@
 import Fetch from '../../../api/jsonfetch';
 import ParseValidation, { IValidation } from '../../../api/parsevalidation';
 
-export const FORM_INIT: string = 'FORM_INIT';
-export const FORM_RESET: string = 'FORM_RESET';
-export const FORM_UPDATE: string = 'FORM_UPDATE';
-export const LOGIN_REQUEST: string = 'LOGIN_REQUEST';
-export const LOGIN_RESPONSE: string = 'LOGIN_RESPONSE';
+export const RESET_REQUEST: string = 'RESET_REQUEST';
+export const RESET_RESPONSE: string = 'RESET_RESPONSE';
 
 /* **************** Form Send Action Interface ****************** */
-export interface ILoginAbstract {
+export interface IResetAbstract {
     type: string;
 }
 
-export interface ILoginUpdate {
+export interface IResetUpdate {
     type: string;
     field: string;
     value: string;
 }
 
-export interface ILoginRequest extends ILoginAbstract {
+export interface IResetRequest extends IResetAbstract {
     username?: string;
     password?: string;
 }
 
-export interface ILoginResponse extends ILoginAbstract {
+export interface IResetResponse extends IResetAbstract {
     response?: any;
     success?: boolean;
     message?: string;
@@ -34,8 +31,8 @@ export interface ILoginResponse extends ILoginAbstract {
     loading?: boolean;
 }
 
-// TODO test using multiple inheritance: export interface ILoginMapping extends ILoginAbstract, ILoginAbstract
-export interface ILoginMapping {
+// TODO test using multiple inheritance: export interface IResetMapping extends IResetAbstract, IResetAbstract
+export interface IResetMapping {
     type: string;
     success?: boolean;
     error?: string;
@@ -50,45 +47,22 @@ export interface ILoginMapping {
     email?: string;
 }
 
-/* **************** Form Send Action Event ********************** */
-export function onFormInit(): ILoginAbstract {
+export function onResetRequest(): IResetRequest {
     return {
-        type: FORM_INIT
+        type: RESET_REQUEST
     };
 }
 
-/* **************** Form Send Action Event ********************** */
-export function onFormReset(): ILoginMapping {
-    return {
-        type: FORM_RESET
-    };
-}
-
-/* **************** Form Send Action Event ********************** */
-export function onFormUpdate(field: string, value: string): ILoginUpdate {
-    return {
-        type: FORM_UPDATE,
-        field,
-        value
-    };
-}
-
-export function onLoginRequest(): ILoginRequest {
-    return {
-        type: LOGIN_REQUEST
-    };
-}
-
-export function onLoginResponse(
+export function onResetResponse(
     response: any,
     message: string,
     hasError: any,
     help: any,
     success: boolean,
     loading: boolean
-): ILoginResponse {
+): IResetResponse {
     return {
-        type: LOGIN_RESPONSE,
+        type: RESET_RESPONSE,
         response,
         message,
         hasError,
@@ -102,7 +76,7 @@ export function onLoginResponse(
 export function login(data: any): any {
     return (dispatch: any, getState: any) => {
 
-        dispatch(onLoginRequest());
+        dispatch(onResetRequest());
 
         let request: any = {
             method: 'POST',
@@ -129,9 +103,9 @@ export function login(data: any): any {
 
             let validation: IValidation = ParseValidation(response.validation, response.message);
 
-            // dispatch(SERVER_ACTION, Types.LOGIN_RESPONSE, response);
+            // dispatch(SERVER_ACTION, Types.RESET_RESPONSE, response);
             dispatch(
-                onLoginResponse(
+                onResetResponse(
                     response,
                     validation.error,
                     validation.hasError,
