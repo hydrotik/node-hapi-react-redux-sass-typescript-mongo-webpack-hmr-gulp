@@ -46,8 +46,7 @@ jsxLoader.push('babel-loader');
 sassParams.push('sourceMap', 'sourceMapContents=true');
 sassLoader = [
     'style-loader',
-    'css-loader',
-    'postcss-loader',
+    'css-loader?sourceMap',
     'sass-loader?' + sassParams.join('&')
 ].join('!');
 cssLoader = [
@@ -108,13 +107,10 @@ module.exports = {
         }),
         new webpack.optimize.DedupePlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.SourceMapDevToolPlugin({
-          filename: jsMapBundle
-        }),
         new ForkCheckerPlugin()
     ],
     resolve: {
-        extensions: ['', '.js', '.json', '.jsx', '.ts', '.tsx'],
+        extensions: ['', '.js', '.json', '.jsx', '.scss', '.ts', '.tsx'],
         root: ['${__dirname}/src/global/client/'],
         fallback: path.join(__dirname, "node_modules")
     },
@@ -122,6 +118,10 @@ module.exports = {
         root: path.join(__dirname, "node_modules")
     },
     module: {
+        preloaders: [{
+            test: /\.ts(x?)$/,
+            loader: 'tslint'
+        }],
         loaders: [{
             test: /\.html$/,
             loader: htmlLoader
@@ -148,13 +148,13 @@ module.exports = {
             exclude: /node_modules/
         }, {
             test: /\.ts(x?)$/,
-            loader: 'react-hot!awesome-typescript-loader!tslint',
+            loader: 'react-hot!awesome-typescript-loader',
             exclude: [/bower_components/, /node_modules/]
         }]
     },
     tslint: {
         configuration: {
-            
+
         },
 
         // tslint errors are displayed by default as warnings
