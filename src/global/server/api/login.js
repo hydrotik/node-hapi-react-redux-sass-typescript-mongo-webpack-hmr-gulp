@@ -137,7 +137,7 @@ exports.register = function (server, options, next) {
         config: {
             validate: {
                 payload: {
-                    email: Joi.string().email().lowercase().required()
+                    email: Joi.string().email().lowercase().required().label('Email')
                 }
             },
             pre: [{
@@ -149,7 +149,12 @@ exports.register = function (server, options, next) {
                         email: request.payload.email
                     };
 
+                    console.log('pre() email: ' + request.payload.email);
+
                     User.findOne(conditions, function (err, user) {
+
+                        console.log(err);
+                        console.log(user);
 
                         if (err) {
                             return reply(err);
@@ -186,7 +191,7 @@ exports.register = function (server, options, next) {
                             }
                         }
                     };
-
+                    console.log('mailer.sendEmail() :: ' + results.keyHash.hash);
                     User.findByIdAndUpdate(id, update, done);
                 }],
                 email: ['user', function (done, results) {
@@ -201,7 +206,7 @@ exports.register = function (server, options, next) {
                         email: request.payload.email,
                         key: results.keyHash.key
                     };
-
+                    console.log('mailer.sendEmail()');
                     mailer.sendEmail(emailOptions, template, context, done);
                 }]
             }, function (err, results) {
@@ -209,7 +214,7 @@ exports.register = function (server, options, next) {
                 if (err) {
                     return reply(err);
                 }
-
+                console.log({ message: 'Success.' });
                 reply({ message: 'Success.' });
             });
         }
@@ -222,9 +227,9 @@ exports.register = function (server, options, next) {
         config: {
             validate: {
                 payload: {
-                    key: Joi.string().required(),
-                    email: Joi.string().email().lowercase().required(),
-                    password: Joi.string().required()
+                    key: Joi.string().required().label('Key'),
+                    email: Joi.string().email().lowercase().required().label('Email'),
+                    password: Joi.string().required().label('Password')
                 }
             },
             pre: [{

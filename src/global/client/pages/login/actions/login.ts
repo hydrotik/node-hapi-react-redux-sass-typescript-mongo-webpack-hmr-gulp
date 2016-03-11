@@ -8,6 +8,8 @@ export const FORM_RESET: string = 'FORM_RESET';
 export const FORM_UPDATE: string = 'FORM_UPDATE';
 export const LOGIN_REQUEST: string = 'LOGIN_REQUEST';
 export const LOGIN_RESPONSE: string = 'LOGIN_RESPONSE';
+export const LOGOUT_REQUEST: string = 'LOGOUT_REQUEST';
+export const LOGOUT_RESPONSE: string = 'LOGOUT_RESPONSE';
 
 /* **************** Form Send Action Interface ****************** */
 export interface ILoginAbstract {
@@ -99,7 +101,7 @@ export function onLoginResponse(
 }
 
 
-export function login(data: any): any {
+export function doLogin(data: any): any {
     return (dispatch: any, getState: any) => {
 
         dispatch(onLoginRequest());
@@ -143,3 +145,65 @@ export function login(data: any): any {
         });
     };
 }
+
+
+export function onLogoutRequest(): ILoginRequest {
+    return {
+        type: LOGOUT_REQUEST
+    };
+}
+
+export function onLogoutResponse(
+    response: any,
+    message: string,
+    hasError: any,
+    help: any,
+    success: boolean,
+    loading: boolean
+): ILoginResponse {
+    return {
+        type: LOGOUT_RESPONSE,
+        response,
+        message,
+        hasError,
+        help,
+        success,
+        loading
+    };
+}
+
+export function doLogout(data: any): any {
+    return (dispatch: any, getState: any) => {
+
+        dispatch(onLoginRequest());
+
+        let request: any = {
+            method: 'DELETE',
+            url: '/api/logout',
+            data: data,
+            useAuth: true
+        };
+
+        Fetch(request, (err: any, response: any) => {
+
+            if (!err) {
+                response.success = true;
+            } else {
+                response.error = err.message;
+            }
+
+            // dispatch(SERVER_ACTION, Types.LOGIN_RESPONSE, response);
+            dispatch(
+                onLoginResponse(
+                    response,
+                    response.error,
+                    response.hasError,
+                    response.help,
+                    response.success,
+                    response.loading
+                )
+            );
+        });
+    };
+}
+

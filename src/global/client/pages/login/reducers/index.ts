@@ -15,8 +15,18 @@ import {
     login
 } from './login';
 
+import {
+    forgot
+} from './forgot';
+
+import {
+    reset
+} from './reset';
+
 export const rootReducer: Reducer = combineReducers({
     login,
+    forgot,
+    reset,
     onExampleReducer
 });
 

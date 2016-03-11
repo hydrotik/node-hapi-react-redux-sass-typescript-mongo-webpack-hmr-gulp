@@ -19,7 +19,7 @@ import {
     ILoginMapping,
     onFormUpdate,
     onFormReset,
-    login
+    doLogin
 } from '../../actions';
 
 // Interfaces
@@ -102,7 +102,7 @@ export class Home extends React.Component<IHomeProps, IHomeState> {
         }: IHomeProps = this.props;
 
         dispatch(
-            login({
+            doLogin({
                 username,
                 password
             })
