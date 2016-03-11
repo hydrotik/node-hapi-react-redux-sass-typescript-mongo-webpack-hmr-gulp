@@ -171,6 +171,22 @@ export function getAccountSettings(data?: any): any {
         };
 
         Fetch(request, (err: any, response: any) => {
+            if(response.name == undefined){
+                response.name = {
+                    first : '',
+                    middle: '',
+                    last: ''
+                };
+            }
+            if(response.name && response.name.first == undefined){
+                response.name.first = '';
+            }
+            if(response.name && response.name.middle == undefined){
+                response.name.middle = '';
+            }
+            if(response.name && response.name.last == undefined){
+                response.name.last = '';
+            }
             dispatch(onGetAccountSettingsAction(response.name.first, response.name.middle, response.name.last));
         });
     };
