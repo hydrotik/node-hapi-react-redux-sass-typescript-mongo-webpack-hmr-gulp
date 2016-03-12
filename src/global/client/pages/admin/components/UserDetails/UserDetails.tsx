@@ -4,9 +4,9 @@
 import * as React from 'react';
 
 // Styles
-import './_AccountSearch.scss';
+import './_UserDetails.scss';
 
-export class AccountSearch extends React.Component<{}, {}> {
+export class UserDetails extends React.Component<{}, {}> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -19,7 +19,7 @@ export class AccountSearch extends React.Component<{}, {}> {
                 <div className='row'>
                     <div className='col-sm-7'>
                         <h1 className='page-header'>
-                            Account Search
+                            User Details
                         </h1>
                     </div>
                 </div>

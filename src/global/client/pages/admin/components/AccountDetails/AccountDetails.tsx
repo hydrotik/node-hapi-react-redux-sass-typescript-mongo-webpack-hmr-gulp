@@ -4,9 +4,9 @@
 import * as React from 'react';
 
 // Styles
-import './_AccountSearch.scss';
+import './_AccountDetails.scss';
 
-export class AccountSearch extends React.Component<{}, {}> {
+export class AccountDetails extends React.Component<{}, {}> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -15,9 +15,15 @@ export class AccountSearch extends React.Component<{}, {}> {
     public render(): React.ReactElement<{}> {
 
         return (
-            <div>
-                Account Details
-            </div>
+            <section className='section-home container'>
+                <div className='row'>
+                    <div className='col-sm-7'>
+                        <h1 className='page-header'>
+                            Account Details
+                        </h1>
+                    </div>
+                </div>
+            </section>
         );
     }
 }

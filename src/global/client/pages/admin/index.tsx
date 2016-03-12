@@ -1,4 +1,4 @@
-/// <reference path="../../../../../typings/tsd.d.ts" />
+/// <reference path='../../../../../typings/tsd.d.ts' />
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -9,20 +9,18 @@ import { browserHistory, Router, IndexRoute, Route} from 'react-router';
 import { App } from './components/App/App';
 import { Home } from './components/Home/Home';
 import { NotFound } from './components/NotFound/NotFound';
-import { Settings } from './components/Settings/Settings';
 
-/*
-import { AccountSearch } from './components/accounts/Search';
-import { AccountDetails } from './components/accounts/Details';
-import { AdminSearch } from './components/admins/Search';
-import { AdminDetails } from './components/admins/Details';
-import { AdminGroupSearch } from './components/admin-groups/Search';
-import { AdminGroupDetails } from './components/admin-groups/Details';
-import { StatusSearch } from './components/statuses/Search';
-import { StatusDetails } from './components/statuses/Details';
-import { UserSearch } from './components/users/Search';
-import { UserDetails } from './components/users/Details';
-*/
+import { AccountSearch } from './components/AccountSearch/AccountSearch';
+import { AccountDetails } from './components/AccountDetails/AccountDetails';
+import { AdminSearch } from './components/AdminSearch/AdminSearch';
+import { AdminDetails } from './components/AdminDetails/AdminDetails';
+import { AdminGroupSearch } from './components/AdminGroupSearch/AdminGroupSearch';
+import { AdminGroupDetails } from './components/AdminGroupDetails/AdminGroupDetails';
+import { StatusSearch } from './components/StatusSearch/StatusSearch';
+import { StatusDetails } from './components/StatusDetails/StatusDetails';
+import { UserSearch } from './components/UserSearch/UserSearch';
+import { UserDetails } from './components/UserDetails/UserDetails';
+
 
 import '../../scss/app.scss';
 
@@ -76,7 +74,16 @@ class Bootstrap extends React.Component<IBootstrapProps, IBootstrapState> {
                 <Router history={browserHistory}>
                     <Route path='/admin' component={App}>
                         <IndexRoute component={Home} />
-                        <Route path='settings' component={Settings} />
+                        <Route path='accounts' component={AccountSearch} />
+                        <Route path='accounts/:id' component={AccountDetails} />
+                        <Route path='admins' component={AdminSearch} />
+                        <Route path='admins/:id' component={AdminDetails} />
+                        <Route path='admin-groups' component={AdminGroupSearch} />
+                        <Route path='admin-groups/:id' component={AdminGroupDetails} />
+                        <Route path='statuses' component={StatusSearch} />
+                        <Route path='statuses/:id' component={StatusDetails} />
+                        <Route path='users' component={UserSearch} />
+                        <Route path='users/:id' component={UserDetails} />
                         <Route path='*' component={ NotFound }/>
                     </Route>
                 </Router>
