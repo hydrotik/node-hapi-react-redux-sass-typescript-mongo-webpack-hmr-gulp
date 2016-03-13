@@ -21,6 +21,11 @@ interface IAppState {
 }
 
 export const Sections: any = {
+    Home: {
+        title: 'Admin Home',
+        path: '/admin',
+        onlyActiveOnIndex: true
+    },
     Accounts: {
         title: 'Accounts',
         path: '/admin/accounts'

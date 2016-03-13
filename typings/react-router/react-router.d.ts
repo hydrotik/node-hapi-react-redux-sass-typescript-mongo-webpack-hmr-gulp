@@ -54,7 +54,7 @@ declare namespace ReactRouter {
 
     type RouteHook = (nextLocation?: H.Location) => any
 
-    type RoutePattern = string
+    type RoutePattern = any
 
     type StringifyQuery = (queryObject: H.Query) => H.QueryString
 

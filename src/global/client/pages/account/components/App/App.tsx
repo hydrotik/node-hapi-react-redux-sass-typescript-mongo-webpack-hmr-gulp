@@ -22,12 +22,12 @@ interface IAppState {
 
 export const Sections: any = {
     Home: {
-        title: 'My account',
+        title: 'My Account Home',
         path: '/account',
         onlyActiveOnIndex: true
     },
     Settings: {
-        title: 'Settings',
+        title: 'Account Settings',
         path: '/account/settings'
     }
 };

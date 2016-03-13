@@ -1,5 +1,9 @@
 /// <reference path='../../../../../../../typings/tsd.d.ts' />
 
+/*
+    Maps to components/admins-groups/Details.jsx
+*/
+
 // Core Imports
 import * as React from 'react';
 
