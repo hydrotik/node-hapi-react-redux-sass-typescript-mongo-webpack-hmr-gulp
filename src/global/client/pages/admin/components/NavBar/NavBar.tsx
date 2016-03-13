@@ -3,6 +3,7 @@
 // Core Imports
 import * as React from 'react';
 import * as ClassNames from 'classnames';
+import { map } from 'lodash';
 // import { Link } from 'react-router';
 
 // https://github.com/insin/react-router-active-component
@@ -32,13 +33,25 @@ interface INavBarState {
 }
 
 export const Sections: any = {
-    Home: {
-        title: 'My account',
-        path: '/account'
+    Accounts: {
+        title: 'Accounts',
+        path: '/admin/accounts'
     },
-    Settings: {
-        title: 'Settings',
-        path: '/account/settings'
+    Admins: {
+        title: 'Admins',
+        path: '/admin/admins'
+    },
+    AdminGroups: {
+        title: 'Admin Groups',
+        path: '/admin/admin-groups'
+    },
+    Statuses: {
+        title: 'Statuses',
+        path: '/admin/statuses'
+    },
+    Users: {
+        title: 'Users',
+        path: '/admin/users'
     }
 };
 
@@ -76,12 +89,22 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
         // dispatch(toogleMenu(!this.props.navBarOpen));
     }
 
+    public createNavItem(object: any, i: number): any {
+        if( object.hasOwnProperty('onlyActiveOnIndex') && object.onlyActiveOnIndex ){
+            return <NavLink onlyActiveOnIndex to={object.path} key={i}>{object.title}</NavLink>;
+        }else{
+            return <NavLink to={object.path} key={i}>{object.title}</NavLink>;
+        }
+    }
+
     public render(): React.ReactElement<{}> {
 
         let navBarCollapse: any = ClassNames({
             'navbar-collapse': true,
             collapse: true /*!this.props.navBarOpen*/
         });
+
+        
 
         return (
             <div className="navbar navbar-inverse navbar-fixed-top">
@@ -103,11 +126,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                     </div>
                     <div className={navBarCollapse}>
                         <ul className="nav navbar-nav">
-                            <NavLink onlyActiveOnIndex to="/admin/accounts">Accounts</NavLink>
-                            <NavLink to="/admin/admins">Admins</NavLink>
-                            <NavLink to="/admin/admin-groups">Admin Groups</NavLink>
-                            <NavLink to="/admin/statuses">Statuses</NavLink>
-                            <NavLink to="/admin/users">Users</NavLink>
+                            { map(Sections, this.createNavItem) }
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
                             <li>

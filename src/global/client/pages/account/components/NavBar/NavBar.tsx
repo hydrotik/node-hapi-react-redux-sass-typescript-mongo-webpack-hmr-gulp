@@ -3,6 +3,7 @@
 // Core Imports
 import * as React from 'react';
 import * as ClassNames from 'classnames';
+import { map } from 'lodash';
 // import { Link } from 'react-router';
 
 // https://github.com/insin/react-router-active-component
@@ -34,7 +35,8 @@ interface INavBarState {
 export const Sections: any = {
     Home: {
         title: 'My account',
-        path: '/account'
+        path: '/account',
+        onlyActiveOnIndex: true
     },
     Settings: {
         title: 'Settings',
@@ -76,6 +78,14 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
         // dispatch(toogleMenu(!this.props.navBarOpen));
     }
 
+    public createNavItem(object: any, i: number): any {
+        if( object.hasOwnProperty('onlyActiveOnIndex') && object.onlyActiveOnIndex ){
+            return <NavLink onlyActiveOnIndex to={object.path} key={i}>{object.title}</NavLink>;
+        }else{
+            return <NavLink to={object.path} key={i}>{object.title}</NavLink>;
+        }
+    }
+
     public render(): React.ReactElement<{}> {
 
         let navBarCollapse: any = ClassNames({
@@ -105,8 +115,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
                     <div className={navBarCollapse}>
                         <ul className='nav navbar-nav'>
-                            <NavLink onlyActiveOnIndex to={Sections.Home.path}>{Sections.Home.title}</NavLink>
-                            <NavLink to={Sections.Settings.path}>{Sections.Settings.title}</NavLink>
+                            { map(Sections, this.createNavItem) }
                         </ul>
                         <ul className='nav navbar-nav navbar-right'>
                             <li>
