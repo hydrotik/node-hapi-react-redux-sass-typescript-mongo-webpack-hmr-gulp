@@ -1,4 +1,4 @@
-/// <reference path='../../../../../../../typings/tsd.d.ts' />
+/// <reference path='../../../../../typings/tsd.d.ts' />
 
 // Core Imports
 import * as React from 'react';
@@ -26,23 +26,16 @@ interface INavBarProps {
     dispatch?: (func: any) => void;
     store?: any;
     navBarOpen?: boolean;
+
+    pages: any;
+    navStyle: string;
 }
 
 interface INavBarState {
     // navBarOpen: boolean;
 }
 
-export const Sections: any = {
-    Home: {
-        title: 'My account',
-        path: '/account',
-        onlyActiveOnIndex: true
-    },
-    Settings: {
-        title: 'Settings',
-        path: '/account/settings'
-    }
-};
+
 
 let ac: any = activeComponent;
 const NavLink: any = ac('li');
@@ -63,7 +56,7 @@ function select(state: { formSignup: IReducer; }): INavBarState {
 @connect(select) */
 export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
-    public constructor(props: INavBarProps = { navBarOpen: false}) {
+    public constructor(props: INavBarProps = { navBarOpen: false, pages: {}, navStyle: 'navbar-default'}) {
         super(props);
     }
 
@@ -93,38 +86,44 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             collapse: true /*!this.props.navBarOpen*/
         });
 
+        let navStyleMain: any = ClassNames(
+            'navbar',
+            'navbar-fixed-top',
+            this.props.navStyle
+        );
+
+        
+
         return (
-            <div className='navbar navbar-default navbar-fixed-top'>
-                <div className='container'>
-                    <div className='navbar-header'>
+            <div className={navStyleMain}>
+                <div className="container">
+                    <div className="navbar-header">
                         <div className='navbar-header'>
                             <a className='navbar-brand' href='/'>
                                 <img className='navbar-logo' src='/assets/logo-square.png' height='64' width='64' />
                             </a>
                         </div>
-
                         <button
-                            className='navbar-toggle collapsed'
+                            className="navbar-toggle collapsed"
                             onClick={this.toggleMenu}>
 
-                            <span className='icon-bar'></span>
-                            <span className='icon-bar'></span>
-                            <span className='icon-bar'></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
                         </button>
                     </div>
-
                     <div className={navBarCollapse}>
-                        <ul className='nav navbar-nav'>
-                            { map(Sections, this.createNavItem) }
+                        <ul className="nav navbar-nav">
+                            { map(this.props.pages, this.createNavItem) }
                         </ul>
-                        <ul className='nav navbar-nav navbar-right'>
+                        <ul className="nav navbar-nav navbar-right">
                             <li>
-                                <a href='/login/logout'>Sign out</a>
-                                </li>
-                            </ul>
-                        </div>
+                                <a href="/login/logout">Sign out</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+            </div>
         );
     }
 }

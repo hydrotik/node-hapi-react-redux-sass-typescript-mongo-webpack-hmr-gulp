@@ -7,7 +7,7 @@ import * as React from 'react';
 import './_App.scss';
 
 // Page Components
-import { NavBar } from '../NavBar/NavBar';
+import { NavBar } from '../../../../components/NavBar/NavBar';
 import { Footer } from '../Footer/Footer';
 
 // Interfaces
@@ -19,6 +19,29 @@ interface IAppProps {
 
 interface IAppState {
 }
+
+export const Sections: any = {
+    Accounts: {
+        title: 'Accounts',
+        path: '/admin/accounts'
+    },
+    Admins: {
+        title: 'Admins',
+        path: '/admin/admins'
+    },
+    AdminGroups: {
+        title: 'Admin Groups',
+        path: '/admin/admin-groups'
+    },
+    Statuses: {
+        title: 'Statuses',
+        path: '/admin/statuses'
+    },
+    Users: {
+        title: 'Users',
+        path: '/admin/users'
+    }
+};
 
 // https://github.com/reactjs/react-router/tree/1.0.x/docs
 // https://github.com/reactjs/react-router/blob/master/examples/breadcrumbs/app.js
@@ -34,7 +57,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
         return (
             <div>
-                <NavBar />
+                <NavBar pages={Sections} navStyle='navbar-inverse' />
                 {this.props.children}
                 <Footer />
             </div>
