@@ -8,7 +8,7 @@ import './_App.scss';
 
 // Page Components
 import { NavBar } from '../../../../components/NavBar/NavBar';
-import { Footer } from '../Footer/Footer';
+import { Footer } from '../../../../components/Footer/Footer';
 
 // Interfaces
 
