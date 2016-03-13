@@ -8,7 +8,7 @@ import { browserHistory, Router, IndexRoute, Route} from 'react-router';
 // Local Components
 import { App } from './components/App/App';
 import { Home } from './components/Home/Home';
-import { NotFound } from './components/NotFound/NotFound';
+import { NotFound } from '../../components/NotFound/NotFound';
 import { Settings } from './components/Settings/Settings';
 
 import '../../scss/app.scss';
