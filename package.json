@@ -28,7 +28,7 @@
     "watch-client": "node ./webpack.server.client-hot.js --verbose --colors --display-error-details --config webpack.config.client-hot.js --projectpath $PROJECTPATH",
     "lint-ts": "tslint --config tslint.json --ext .ts,.tsx",
     "lint-jsc": "jscs . --config .jscsrc",
-    "lint-es": "eslint --config .eslintrc --ignore-path .eslintignore --ext .js,.jsx,.es6 .",
+    "lint-es": "./node_modules/.bin/eslint --config .eslintrc --ignore-path .eslintignore --ext .js,.jsx,.es6 .",
     "watch": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run mongo-start\" \"npm run lint-es\" \"npm run watch-client\" \"npm run start\""
   },
   "author": "Donovan Adams, Ozgur Uksal, Kenny Pascal",

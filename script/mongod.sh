@@ -12,30 +12,38 @@ DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 WDIR="$( pwd )"
 mongod=/usr/local/bin/mongod
-mongod_data=/data/db
-mongod_log=/data/mongodb.log
+mongod_data="${WDIR}/data/db"
+mongod_log="${WDIR}/data/mongodb.log"
 prog=mongod.sh
-PIDFILE=../mongod.pid
+PIDFILE="${WDIR}/mongod.pid"
 RETVAL=0
 
 
 
 setup() {
     echo "Setting Up Mongo!"
-    # if [ ! -d /data ] 
+    # if [ ! -d /data ]
     # then
     #     mkdir -p /data
     # fi
 
-    # if [ ! -d $mongod_data ] 
-    # then
-    #     mkdir -p $mongod_data
-    # fi
+    if [ ! -d $mongod_data ]
+    then
+         mkdir -p $mongod_data
+    fi
 }
 
 stop() {
     echo "Stopping Mongo!"
-    SELPID=`cat $PIDFILE` && kill $SELPID
+    if [ -s $PIDFILE ]
+    then
+      SELPID=`cat $PIDFILE`
+      if [[ "$(ps aux $SELPID | grep mongod)" != "" ]]
+      then
+        echo "Killing mongod process $SELPID"
+        kill $SELPID
+      fi
+    fi
     exit 0
     # grep_mongo=`ps aux | grep -v grep | grep "${mongod}"`
     # if [ ${#grep_mongo} -gt 0 ]
@@ -50,7 +58,7 @@ stop() {
 }
 start() {
     echo "Starting Mongo!"
-    mongod --dbpath "${WDIR}${mongod_data}" --logpath "${WDIR}${mongod_log}" --logappend --quiet  &
+    mongod --dbpath "${mongod_data}" --logpath "${mongod_log}" --logappend --quiet  &
     echo $! > $PIDFILE
     exit 0
     # grep_mongo=`ps aux | grep -v grep | grep "${mongod}"`
