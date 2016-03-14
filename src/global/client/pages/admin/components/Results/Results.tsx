@@ -16,11 +16,14 @@ import * as React from 'react';
 import './_Results.scss';
 
 interface IResultsProps {
-    children?: any;
-    routes?: any[];
+    // children?: any;
+    // routes?: any[];
 
-    parentSection: string;
-    data: any;
+    // parentSection: string;
+    // data: any;
+
+    rowComponent: React.ReactElement<{}>;
+    headComponent: React.ReactElement<{}>;
 }
 
 interface IResultsState {
@@ -35,36 +38,20 @@ export class Results extends React.Component<IResultsProps, IResultsState> {
     public render(): React.ReactElement<{}> {
 
         let linkTo: string;
-        let rows: React.ReactElement<{}>;
-        let head: React.ReactElement<{}>;
+        
+        let head: React.ReactElement<{}> = this.props.headComponent;
 
+        let rows: React.ReactElement<{}> = this.props.rowComponent;
+
+        /*
         switch(this.props.parentSection){
             case 'accounts':
                 console.log('loading Results.tsx for accounts');
                 linkTo = 'admin/accounts';
-                rows = this.props.data.map(function (record) {
-                    return (
-                        <tr key={record._id}>
-                            <td>
-                                <Link
-                                    className='btn btn-default btn-sm'
-                                    to={{ pathname: '/' + linkTo, query: { id: record._id } }}>
-                                    Edit
-                                </Link>
-                            </td>
-                            <td>{record.name.first} {record.name.last}</td>
-                            <td>{record._id}</td>
-                        </tr>
-                    );
-                });
-                head = (
-                    <tr>
-                        <th></th>
-                        <th className="stretch">name</th>
-                        <th>id</th>
-                    </tr>
-                );
+                rows = this.props.rowComponent;
+                head = this.props.headComponent;
                 break;
+            
             case 'admin-groups':
                 console.log('loading Results.tsx for admin-groups');
                 linkTo = 'adminGroupDetails';
@@ -175,20 +162,18 @@ export class Results extends React.Component<IResultsProps, IResultsState> {
                     </tr>
                 );
                 break;
+            
             default :
                 console.warn('Results.tsx parentSection property doesn\'t match a section');
                 break;
         }
+        */
 
         return (
             <div className="table-responsive">
                 <table className="table table-striped table-results">
-                    <thead>
-                        {head}
-                    </thead>
-                    <tbody>
-                        {rows}
-                    </tbody>
+                    {head}
+                    {rows}
                 </table>
             </div>
         );

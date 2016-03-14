@@ -14,6 +14,9 @@ import './_AccountSearch.scss';
 import { Results } from '../Results/Results';
 import { FilterForm } from '../FilterForm/FilterForm';
 
+import { ResultsHead } from './components/ResultsHead/ResultsHead';
+import { ResultsRow } from './components/ResultsRow/ResultsRow';
+
 // Interfaces
 interface IAccountSearchProps {
     children?: any;
@@ -88,6 +91,10 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
 
         let loading: boolean = false;
 
+        //
+        let HeadComponent: React.ReactElement<{}> = <ResultsHead />;
+        let RowComponent: React.ReactElement<{}> = <ResultsRow linkTo='accounts' data={testData} />
+
         return (
             <section className='section-accounts container'>
                 <div className='page-header'>
@@ -106,7 +113,7 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
                     loading={loading}
                     onChange={(e: any) => this.onFiltersChange}
                 />
-                <Results parentSection='accounts' data={testData} />
+                <Results headComponent={HeadComponent} rowComponent={RowComponent}  />
                 {/*<Paging
                     ref='paging'
                     pages={this.state.results.pages}
