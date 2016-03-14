@@ -41,7 +41,7 @@ export class Results extends React.Component<IResultsProps, IResultsState> {
         switch(this.props.parentSection){
             case 'accounts':
                 console.log('loading Results.tsx for accounts');
-                linkTo = 'accountDetails';
+                linkTo = 'admin/accounts';
                 rows = this.props.data.map(function (record) {
                     return (
                         <tr key={record._id}>

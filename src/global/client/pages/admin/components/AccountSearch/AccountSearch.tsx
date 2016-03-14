@@ -12,14 +12,27 @@ import './_AccountSearch.scss';
 
 // Components
 import { Results } from '../Results/Results';
+import { FilterForm } from '../FilterForm/FilterForm';
 
 // Interfaces
 interface IAccountSearchProps {
     children?: any;
     routes?: any[];
+
+    results?: any;
+
+    location?: any;
 }
 
 interface IAccountSearchState {
+}
+
+interface IRouter {
+    getCurrentQuery(): any;
+}
+
+interface IRouterContext {
+    router: IRouter;
 }
 
 const testData: any[] = [
@@ -48,33 +61,54 @@ const testData: any[] = [
 
 export class AccountSearch extends React.Component<IAccountSearchProps, IAccountSearchState> {
 
-    public constructor(props: any = {}) {
+    public constructor(props: IAccountSearchProps) {
         super(props);
+    }
+
+    public context: IRouterContext;
+
+    public onFiltersChange(event: any): void {
+
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        // this.context.router.transitionTo('accounts', {}, this.refs.filters.state);
+        window.scrollTo(0, 0);
+    }
+
+    public onNewClick(): void {
+        // Actions.showCreateNew();
     }
 
     public render(): React.ReactElement<{}> {
 
-        return (
-            <section className="section-accounts container">
-                <div className="page-header">
-                    {/*<button
-                        ref="createNew"
-                        className="btn btn-default pull-right"
-                        onClick={this.onNewClick}>
+        let { query } = this.props.location;
 
+        let loading: boolean = false;
+
+        return (
+            <section className='section-accounts container'>
+                <div className='page-header'>
+                    <button
+                        ref='createNew'
+                        className='btn btn-default pull-right'
+                        onClick={(e: any) => this.onNewClick}>
                         Create new
-                    </button>*/}
+                    </button>
                     <h1>Accounts</h1>
                 </div>
-                {/*<FilterForm
-                    ref="filters"
-                    query={this.context.router.getCurrentQuery()}
-                    loading={this.state.results.loading}
-                    onChange={this.onFiltersChange}
-                />*/}
+                <FilterForm
+                    parentSection='accounts'
+                    ref='filters'
+                    query={query}
+                    loading={loading}
+                    onChange={(e: any) => this.onFiltersChange}
+                />
                 <Results parentSection='accounts' data={testData} />
                 {/*<Paging
-                    ref="paging"
+                    ref='paging'
                     pages={this.state.results.pages}
                     items={this.state.results.items}
                     loading={this.state.results.loading}

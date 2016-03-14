@@ -6,13 +6,13 @@ import * as ClassNames from 'classnames';
 import * as lodash from 'lodash';
 
 // Styles
-import './_TextControl.scss';
+import './_SelectControl.scss';
 
 // Components
 import { ControlGroup } from '../ControlGroup/ControlGroup';
 
 // Interfaces
-interface ITextControlProps {
+interface ISelectControlProps {
     name: string; // = "name"
     label: string; // = "Name"
     ref?: string; // = "nameControl"
@@ -27,12 +27,16 @@ interface ITextControlProps {
     placeholder?: string;
     value?: any;
     onChange?: (func: any) => void;
+    children?: any;
+    defaultValue?: string;
+    size?: any;
+    multiple?: any;
 
 }
-interface ITextControlState {
+interface ISelectControlState {
 }
 
-export class TextControl extends React.Component<ITextControlProps, ITextControlState> {
+export class SelectControl extends React.Component<ISelectControlProps, ISelectControlState> {
 
     public constructor(props: any) {
         super(props);
@@ -56,18 +60,20 @@ export class TextControl extends React.Component<ITextControlProps, ITextControl
                 label={this.props.label}
                 help={this.props.help}>
 
-                <input
-                    ref='inputField'
-                    type={this.props.type}
-                    autoCapitalize={this.props.autoCapitalize}
+                <select
+                    ref="selectField"
+                    multiple={this.props.multiple}
                     className={inputClasses}
                     name={this.props.name}
-                    placeholder={this.props.placeholder}
+                    size={this.props.size}
                     value={this.props.value}
-                    disabled={this.props.disabled ? true : false}
-                    onChange={this.props.onChange}
-                    />
-                </ControlGroup>
+                    defaultValue={this.props.defaultValue}
+                    disabled={this.props.disabled}
+                    onChange={this.props.onChange}>
+
+                    {this.props.children}
+                </select>
+            </ControlGroup>
             );
         }
     }
