@@ -34,6 +34,7 @@ Thumbs.db
 # MongoDB
 # --------------------
 data/
+mongod.pid
 
 public/*
 test/artifacts/*
