@@ -16,6 +16,7 @@ import { FilterForm } from '../FilterForm/FilterForm';
 
 import { ResultsHead } from './components/ResultsHead/ResultsHead';
 import { ResultsRow } from './components/ResultsRow/ResultsRow';
+import { FilterFormRow } from './components/FilterFormRow/FilterFormRow';
 
 // Interfaces
 interface IAccountSearchProps {
@@ -107,12 +108,12 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
                     <h1>Accounts</h1>
                 </div>
                 <FilterForm
-                    parentSection='accounts'
                     ref='filters'
                     query={query}
                     loading={loading}
-                    onChange={(e: any) => this.onFiltersChange}
-                />
+                    onChange={(e: any) => this.onFiltersChange}>
+                        <FilterFormRow />
+                </FilterForm>
                 <Results headComponent={HeadComponent} rowComponent={RowComponent}  />
                 {/*<Paging
                     ref='paging'

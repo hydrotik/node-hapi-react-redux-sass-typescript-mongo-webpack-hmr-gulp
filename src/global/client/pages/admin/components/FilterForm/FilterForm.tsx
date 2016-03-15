@@ -22,11 +22,9 @@ import { SelectControl } from '../../../../components/SelectControl/SelectContro
 
 interface IFilterFormProps {
     dispatch?: (func: any) => void;
-    children?: any;
     routes?: any[];
     ref?: any;
     query: string;
-    parentSection: string;
     data?: any;
     onChange?: any;
 
@@ -34,6 +32,11 @@ interface IFilterFormProps {
     sort?: boolean;
     username?: string;
     limit?: number;
+
+    children?: any;
+
+    handleChange?: (e: any) => void;
+    onMenuChange?: (e: any) => void;
 }
 
 interface IFilterFormState {
@@ -75,96 +78,21 @@ export class FilterForm extends React.Component<IFilterFormProps, IFilterFormSta
 
     public render(): React.ReactElement<{}> {
 
-        let linkTo: string;
-        let row: React.ReactElement<{}>;
-        let head: React.ReactElement<{}>;
+        let handleChange = (e: any) => this.handleChange;
+        let onMenuChange = (e: any) => this.onMenuChange;
 
-        switch(this.props.parentSection){
-            case 'accounts':
-                console.log('loading FilterForm.tsx for accounts');
-                linkTo = 'accountDetails';
-                row = (
-                    <div className='row'>
-                        <div className='col-sm-4'>
-                            <TextControl
-                                name='username'
-                                label='Username search'
-                                value={this.props.username}
-                                onChange={ (e: any) => this.handleChange(e) }
-                                disabled={this.props.loading}
-                            />
-                        </div>
-                        <div className='col-sm-4'>
-                            <SelectControl
-                                name='sort'
-                                label='Sort by'
-                                disabled={this.props.loading}
-                                onChange={(e: any) => this.onMenuChange}
-                                value={this.props.sort}>
+        let p: any = {
+            handleChange,
+            onMenuChange
+        };
 
-                                <option value='_id'>id &#9650;</option>
-                                <option value='-_id'>id &#9660;</option>
-                                <option value='username'>username &#9650;</option>
-                                <option value='-username'>username &#9660;</option>
-                            </SelectControl>
-                        </div>
-                        <div className='col-sm-4'>
-                            <SelectControl
-                                name='limit'
-                                label='Limit'
-                                disabled={this.props.loading}
-                                onChange={(e: any) => this.onMenuChange}
-                                value={this.props.limit}>
-
-                                <option value='10'>10 items</option>
-                                <option value='20'>20 items</option>
-                                <option value='50'>50 items</option>
-                                <option value='100'>100 items</option>
-                            </SelectControl>
-                        </div>
-                    </div>
-                );
-                break;
-            case 'admin-groups':
-                console.log('loading FilterForm.tsx for admin-groups');
-                linkTo = 'adminGroupDetails';
-                row = (
-                    <div className='row'>
-                    </div>
-                );
-                break;
-            case 'admins':
-                console.log('loading FilterForm.tsx for admins');
-                linkTo = 'adminDetails';
-                row = (
-                    <div className='row'>
-                    </div>
-                );
-                break;
-            case 'statuses':
-                console.log('loading FilterForm.tsx for statuses');
-                linkTo = 'statusDetails';
-                row = (
-                    <div className='row'>
-                    </div>
-                );
-                break;
-            case 'users':
-                console.log('loading FilterForm.tsx for users');
-                linkTo = 'userDetails';
-                row = (
-                    <div className='row'>
-                    </div>
-                );
-                break;
-            default :
-                console.warn('FilterForm.tsx parentSection property doesn\'t match a section');
-                break;
-        }
+        let childrenWithProps: any = React.Children.map(this.props.children, (child: React.ReactElement<{}>) => {
+            return React.cloneElement(child, p);
+        });
 
         return (
             <form onKeyDown={(e: any) => this.onEnterSubmit} onSubmit={(e: any) => this.props.onChange}>
-                {row}
+                { childrenWithProps }
             </form>
         );
     }
