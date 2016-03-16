@@ -9,5 +9,6 @@
     "sourceMap": true,
     "sourceRoot": "src/global"
   },
-  "exclude" : ["node_modules", "config", "dev_server.js"]
+  "exclude" : ["node_modules", "config", "dev_server.js"],
+  "compileOnSave": false
 }
