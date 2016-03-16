@@ -33,11 +33,11 @@ Thumbs.db
 # --------------------
 # MongoDB
 # --------------------
-data/
+data/*
 mongod.pid
 
 public/*
 test/artifacts/*
 /config.js
 
-!assets/
+assets/*
