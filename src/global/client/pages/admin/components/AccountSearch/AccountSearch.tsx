@@ -73,10 +73,15 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
 
     public onFiltersChange(event: any): void {
 
+        console.warn('AccountSearch :: onFiltersChange()');
+        console.warn(event.target.name + ': ' + event.target.value);
+
         if (event) {
             event.preventDefault();
             event.stopPropagation();
         }
+
+
 
         // this.context.router.transitionTo('accounts', {}, this.refs.filters.state);
         window.scrollTo(0, 0);
@@ -111,7 +116,7 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
                     ref='filters'
                     query={query}
                     loading={loading}
-                    onChange={(e: any) => this.onFiltersChange}>
+                    onChange={this.onFiltersChange}>
                         <FilterFormRow />
                 </FilterForm>
                 <Results headComponent={HeadComponent} rowComponent={RowComponent}  />

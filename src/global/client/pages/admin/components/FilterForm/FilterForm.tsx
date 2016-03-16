@@ -50,21 +50,29 @@ export class FilterForm extends React.Component<IFilterFormProps, IFilterFormSta
         super(props);
     }
 
-    public handleChange(event: any): void {
+    public handleChange: any = (event: any): void => {
+        // console.warn('FilterForm :: handleChange()');
+        // console.warn(event.target.value);
         /*
         const { dispatch }: IFilterFormProps = this.props;
         dispatch(
             onFormUpdate(event.target.name, event.target.value)
         );
         */
+        // console.log(this.props);
+        this.props.onChange(event);
     }
 
-    public onMenuChange(event: any): void {
+    public onMenuChange: any = (event: any): void => {
+        // console.warn('FilterForm :: onMenuChange()');
+        // console.warn(event.target.value);
         /*
         var newState = { page: 1 };
         newState[event.target.name] = event.target.value;
         this.setState(newState, this.props.onChange);
         */
+        // console.log(this.props);
+        this.props.onChange(event);
     }
 
     public onEnterSubmit(event: any): void {
@@ -78,8 +86,8 @@ export class FilterForm extends React.Component<IFilterFormProps, IFilterFormSta
 
     public render(): React.ReactElement<{}> {
 
-        let handleChange = (e: any) => this.handleChange;
-        let onMenuChange = (e: any) => this.onMenuChange;
+        let handleChange = this.handleChange;
+        let onMenuChange = this.onMenuChange;
 
         let p: any = {
             handleChange,
@@ -91,7 +99,7 @@ export class FilterForm extends React.Component<IFilterFormProps, IFilterFormSta
         });
 
         return (
-            <form onKeyDown={(e: any) => this.onEnterSubmit} onSubmit={(e: any) => this.props.onChange}>
+            <form onKeyDown={this.onEnterSubmit} onSubmit={this.props.onChange}>
                 { childrenWithProps }
             </form>
         );

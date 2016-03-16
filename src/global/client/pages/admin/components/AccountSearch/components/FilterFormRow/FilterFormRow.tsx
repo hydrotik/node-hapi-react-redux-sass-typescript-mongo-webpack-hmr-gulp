@@ -18,8 +18,6 @@ import { SelectControl } from '../../../../../../components/SelectControl/Select
 
 interface IFilterFormRowProps {
 
-    onChange?: any;
-
     loading?: boolean;
     sort?: boolean;
     username?: string;
@@ -47,7 +45,7 @@ export class FilterFormRow extends React.Component<IFilterFormRowProps, IFilterF
                         name='username'
                         label='Username search'
                         value={this.props.username}
-                        onChange={ (e: any) => this.props.handleChange(e) }
+                        onChange={this.props.handleChange}
                         disabled={this.props.loading}
                     />
                 </div>
@@ -56,7 +54,7 @@ export class FilterFormRow extends React.Component<IFilterFormRowProps, IFilterF
                         name='sort'
                         label='Sort by'
                         disabled={this.props.loading}
-                        onChange={(e: any) => this.props.onMenuChange}
+                        onChange={this.props.onMenuChange}
                         value={this.props.sort}>
 
                         <option value='_id'>id &#9650;</option>
@@ -70,7 +68,7 @@ export class FilterFormRow extends React.Component<IFilterFormRowProps, IFilterF
                         name='limit'
                         label='Limit'
                         disabled={this.props.loading}
-                        onChange={(e: any) => this.props.onMenuChange}
+                        onChange={this.props.onMenuChange}
                         value={this.props.limit}>
 
                         <option value='10'>10 items</option>
