@@ -13,7 +13,6 @@ import './_Logout.scss';
 
 // Behaviors and Actions
 import {
-    doLogout
 } from '../../actions';
 
 import jsonFetch, { IJSONFetch } from '../../../../api/jsonfetch'
