@@ -22,6 +22,7 @@ import { FilterFormRow } from './components/FilterFormRow/FilterFormRow';
 interface IAccountSearchProps {
     children?: any;
     routes?: any[];
+    data?: any;
 
     results?: any;
 
@@ -39,9 +40,18 @@ interface IRouterContext {
     router: IRouter;
 }
 
-const testData: any[] = [
+let testData: any[] = [
+    {
+        _id : '12345004',
+        username: 'superman',
+        name: {
+            first: 'Super',
+            last: 'Man'
+        }
+    },
     {
         _id : '12345001',
+        username: 'johnsmith',
         name: {
             first: 'John',
             last: 'Smith'
@@ -49,6 +59,7 @@ const testData: any[] = [
     },
     {
         _id : '12345002',
+        username: 'jamesdoe',
         name: {
             first: 'James',
             last: 'Doe'
@@ -56,9 +67,10 @@ const testData: any[] = [
     },
     {
         _id : '12345003',
+        username: 'fredalan',
         name: {
             first: 'Fred',
-            last: 'Allen'
+            last: 'Alan'
         }
     }
 ];
@@ -69,9 +81,13 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
         super(props);
     }
 
+    public componentDidMount(): void {
+
+    }
+
     public context: IRouterContext;
 
-    public onFiltersChange(event: any): void {
+    public onFiltersChange: any = (event: any): void => {
 
         console.warn('AccountSearch :: onFiltersChange()');
         console.warn(event.target.name + ': ' + event.target.value);
@@ -80,8 +96,6 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
             event.preventDefault();
             event.stopPropagation();
         }
-
-
 
         // this.context.router.transitionTo('accounts', {}, this.refs.filters.state);
         window.scrollTo(0, 0);
