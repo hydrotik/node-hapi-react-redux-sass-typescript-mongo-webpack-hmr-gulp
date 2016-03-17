@@ -16,14 +16,7 @@ import * as React from 'react';
 import './_Results.scss';
 
 interface IResultsProps {
-    // children?: any;
-    // routes?: any[];
-
-    // parentSection: string;
-    // data: any;
-
-    rowComponent: React.ReactElement<{}>;
-    headComponent: React.ReactElement<{}>;
+    children?: any;
 }
 
 interface IResultsState {
@@ -37,17 +30,10 @@ export class Results extends React.Component<IResultsProps, IResultsState> {
 
     public render(): React.ReactElement<{}> {
 
-        let linkTo: string;
-        
-        let head: React.ReactElement<{}> = this.props.headComponent;
-
-        let rows: React.ReactElement<{}> = this.props.rowComponent;
-
         return (
             <div className="table-responsive">
                 <table className="table table-striped table-results">
-                    {head}
-                    {rows}
+                    { this.props.children }
                 </table>
             </div>
         );

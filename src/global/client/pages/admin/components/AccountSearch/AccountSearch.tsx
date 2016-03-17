@@ -112,8 +112,8 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
         let loading: boolean = false;
 
         //
-        let HeadComponent: React.ReactElement<{}> = <ResultsHead />;
-        let RowComponent: React.ReactElement<{}> = <ResultsRow linkTo='accounts' data={testData} />
+        // let HeadComponent: React.ReactElement<{}> = <ResultsHead />;
+        // let RowComponent: React.ReactElement<{}> = <ResultsRow linkTo='accounts' data={testData} />
 
         return (
             <section className='section-accounts container'>
@@ -133,7 +133,10 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
                     onChange={this.onFiltersChange}>
                         <FilterFormRow />
                 </FilterForm>
-                <Results headComponent={HeadComponent} rowComponent={RowComponent}  />
+                <Results>
+                    <ResultsHead />
+                    <ResultsRow linkTo='accounts' data={testData} />
+                </Results>
                 {/*<Paging
                     ref='paging'
                     pages={this.state.results.pages}
