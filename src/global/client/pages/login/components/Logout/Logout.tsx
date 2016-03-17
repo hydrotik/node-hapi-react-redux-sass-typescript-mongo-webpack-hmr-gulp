@@ -13,8 +13,10 @@ import './_Logout.scss';
 
 // Behaviors and Actions
 import {
+    doLogout
 } from '../../actions';
 
+import jsonFetch, { IJSONFetch } from '../../../../api/jsonfetch'
 // Interfaces
 interface ILogoutProps {
     dispatch?: (func: any) => void;
@@ -64,39 +66,13 @@ export class Logout extends React.Component<ILogoutProps, ILogoutState> {
     }
 
     public componentDidMount(): void {
-        // this.refs.nameControl.refs.inputField.getDOMNode().focus();
-        // const { dispatch }: ILogoutProps = this.props;
-        // dispatch(onFormReset());
-        // dispatch(onFormInit());
+        // TODO: refactor this so that it is in an action?
+        jsonFetch({ url: "/api/logout", method: "DELETE" } as IJSONFetch, (err: Error, result: string) => {
+          console.log(result)
+        })
+
+
     }
-
-    /*
-    public handleChange(event: any): void {
-        const { dispatch }: ILogoutProps = this.props;
-        dispatch(
-            onFormUpdate(event.target.name, event.target.value)
-        );
-    }
-
-    public onSubmit(event: any): void {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        const {
-            dispatch,
-            password,
-            passwordConfirm
-        }: ILogoutProps = this.props;
-
-        dispatch(
-            savePasswordSettings({
-                password,
-                passwordConfirm
-            })
-        );
-    }
-    */
 
     public render(): React.ReactElement<{}> {
 
