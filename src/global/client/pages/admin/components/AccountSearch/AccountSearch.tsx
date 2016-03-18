@@ -30,6 +30,7 @@ interface IAccountSearchProps {
 }
 
 interface IAccountSearchState {
+    data?: any[];
 }
 
 interface IRouter {
@@ -40,7 +41,7 @@ interface IRouterContext {
     router: IRouter;
 }
 
-let testData: any[] = [
+const MockData: any[] = [
     {
         _id : '12345004',
         username: 'superman',
@@ -79,6 +80,9 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
 
     public constructor(props: IAccountSearchProps) {
         super(props);
+        this.state = {
+            data: MockData
+        };
     }
 
     public componentDidMount(): void {
@@ -97,6 +101,27 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
             event.stopPropagation();
         }
 
+        let delta;
+
+        switch(event.target.value){
+            case '_id':
+                delta = this.state.data.sort(this.sortHelper('_id', false, parseInt));
+                break;
+            case '-_id':
+                delta = this.state.data.sort(this.sortHelper('_id', true, parseInt));
+                break;
+            case 'username':
+                delta = this.state.data.sort(this.sortHelper('username', false, function(a){return a.toUpperCase()}));
+                break;
+            case '-username':
+                delta = this.state.data.sort(this.sortHelper('username', true, function(a){return a.toUpperCase()}));
+                break;
+        } 
+
+        console.warn(delta);
+
+        this.setState({data : delta});
+
         // this.context.router.transitionTo('accounts', {}, this.refs.filters.state);
         window.scrollTo(0, 0);
     }
@@ -105,15 +130,19 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
         // Actions.showCreateNew();
     }
 
+    public sortHelper(field, reverse, primer) {
+       let key = primer ? function(x) {return primer(x[field])} : function(x) {return x[field]};
+       reverse = !reverse ? 1 : -1;
+       return function (a, b) {
+           return a = key(a), b = key(b), reverse * (+(a > b) - +(b > a));
+         } 
+    }
+
     public render(): React.ReactElement<{}> {
 
         let { query } = this.props.location;
 
         let loading: boolean = false;
-
-        //
-        // let HeadComponent: React.ReactElement<{}> = <ResultsHead />;
-        // let RowComponent: React.ReactElement<{}> = <ResultsRow linkTo='accounts' data={testData} />
 
         return (
             <section className='section-accounts container'>
@@ -135,7 +164,7 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
                 </FilterForm>
                 <Results>
                     <ResultsHead />
-                    <ResultsRow linkTo='accounts' data={testData} />
+                    <ResultsRow linkTo='accounts' data={this.state.data} />
                 </Results>
                 {/*<Paging
                     ref='paging'
