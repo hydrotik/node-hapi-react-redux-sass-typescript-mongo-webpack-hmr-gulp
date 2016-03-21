@@ -1,25 +1,30 @@
-var Async = require('async');
-var Joi = require('joi');
-var Hoek = require('hoek');
-var AuthPlugin = require('../auth');
+'use strict';
+
+const Boom = require('boom');
+const Async = require('async');
+const Joi = require('joi');
+const AuthPlugin = require('../auth');
 
 
-exports.register = function (server, options, next) {
+const internals = {};
 
-    options = Hoek.applyToDefaults({ basePath: '' }, options);
+
+internals.applyRoutes = function (server, next) {
+
+    const Admin = server.plugins['hapi-mongo-models'].Admin;
+    const User = server.plugins['hapi-mongo-models'].User;
 
 
     server.route({
         method: 'GET',
-        path: options.basePath + '/admins',
+        path: '/admins',
         config: {
             auth: {
-                strategy: 'session',
+                strategy: 'simple',
                 scope: 'admin'
             },
             validate: {
                 query: {
-                    username: Joi.string().allow(''),
                     fields: Joi.string(),
                     sort: Joi.string().default('_id'),
                     limit: Joi.number().default(20),
@@ -32,17 +37,13 @@ exports.register = function (server, options, next) {
         },
         handler: function (request, reply) {
 
-            var Admin = request.server.plugins['hapi-mongo-models'].Admin;
-            var query = {};
-            if (request.query.username) {
-                query['user.name'] = new RegExp('^.*?' + request.query.username + '.*$', 'i');
-            }
-            var fields = request.query.fields;
-            var sort = request.query.sort;
-            var limit = request.query.limit;
-            var page = request.query.page;
+            const query = {};
+            const fields = request.query.fields;
+            const sort = request.query.sort;
+            const limit = request.query.limit;
+            const page = request.query.page;
 
-            Admin.pagedFind(query, fields, sort, limit, page, function (err, results) {
+            Admin.pagedFind(query, fields, sort, limit, page, (err, results) => {
 
                 if (err) {
                     return reply(err);
@@ -56,10 +57,10 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'GET',
-        path: options.basePath + '/admins/{id}',
+        path: '/admins/{id}',
         config: {
             auth: {
-                strategy: 'session',
+                strategy: 'simple',
                 scope: 'admin'
             },
             pre: [
@@ -68,16 +69,14 @@ exports.register = function (server, options, next) {
         },
         handler: function (request, reply) {
 
-            var Admin = request.server.plugins['hapi-mongo-models'].Admin;
-
-            Admin.findById(request.params.id, function (err, admin) {
+            Admin.findById(request.params.id, (err, admin) => {
 
                 if (err) {
                     return reply(err);
                 }
 
                 if (!admin) {
-                    return reply({ message: 'Document not found.' }).code(404);
+                    return reply(Boom.notFound('Document not found.'));
                 }
 
                 reply(admin);
@@ -88,10 +87,10 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'POST',
-        path: options.basePath + '/admins',
+        path: '/admins',
         config: {
             auth: {
-                strategy: 'session',
+                strategy: 'simple',
                 scope: 'admin'
             },
             validate: {
@@ -105,10 +104,9 @@ exports.register = function (server, options, next) {
         },
         handler: function (request, reply) {
 
-            var Admin = request.server.plugins['hapi-mongo-models'].Admin;
-            var name = request.payload.name;
+            const name = request.payload.name;
 
-            Admin.create(name, function (err, admin) {
+            Admin.create(name, (err, admin) => {
 
                 if (err) {
                     return reply(err);
@@ -122,17 +120,19 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'PUT',
-        path: options.basePath + '/admins/{id}',
+        path: '/admins/{id}',
         config: {
             auth: {
-                strategy: 'session',
+                strategy: 'simple',
                 scope: 'admin'
             },
             validate: {
                 payload: {
-                    nameFirst: Joi.string().required(),
-                    nameMiddle: Joi.string().allow(['', null]),
-                    nameLast: Joi.string().required()
+                    name: Joi.object().keys({
+                        first: Joi.string().required(),
+                        middle: Joi.string().allow(''),
+                        last: Joi.string().required()
+                    }).required()
                 }
             },
             pre: [
@@ -141,26 +141,21 @@ exports.register = function (server, options, next) {
         },
         handler: function (request, reply) {
 
-            var Admin = request.server.plugins['hapi-mongo-models'].Admin;
-            var id = request.params.id;
-            var update = {
+            const id = request.params.id;
+            const update = {
                 $set: {
-                    name: {
-                        first: request.payload.nameFirst,
-                        middle: request.payload.nameMiddle,
-                        last: request.payload.nameLast
-                    }
+                    name: request.payload.name
                 }
             };
 
-            Admin.findByIdAndUpdate(id, update, function (err, admin) {
+            Admin.findByIdAndUpdate(id, update, (err, admin) => {
 
                 if (err) {
                     return reply(err);
                 }
 
                 if (!admin) {
-                    return reply({ message: 'Document not found.' }).code(404);
+                    return reply(Boom.notFound('Document not found.'));
                 }
 
                 reply(admin);
@@ -171,10 +166,10 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'PUT',
-        path: options.basePath + '/admins/{id}/permissions',
+        path: '/admins/{id}/permissions',
         config: {
             auth: {
-                strategy: 'session',
+                strategy: 'simple',
                 scope: 'admin'
             },
             validate: {
@@ -188,15 +183,14 @@ exports.register = function (server, options, next) {
         },
         handler: function (request, reply) {
 
-            var Admin = request.server.plugins['hapi-mongo-models'].Admin;
-            var id = request.params.id;
-            var update = {
+            const id = request.params.id;
+            const update = {
                 $set: {
                     permissions: request.payload.permissions
                 }
             };
 
-            Admin.findByIdAndUpdate(id, update, function (err, admin) {
+            Admin.findByIdAndUpdate(id, update, (err, admin) => {
 
                 if (err) {
                     return reply(err);
@@ -210,10 +204,10 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'PUT',
-        path: options.basePath + '/admins/{id}/groups',
+        path: '/admins/{id}/groups',
         config: {
             auth: {
-                strategy: 'session',
+                strategy: 'simple',
                 scope: 'admin'
             },
             validate: {
@@ -227,15 +221,14 @@ exports.register = function (server, options, next) {
         },
         handler: function (request, reply) {
 
-            var Admin = request.server.plugins['hapi-mongo-models'].Admin;
-            var id = request.params.id;
-            var update = {
+            const id = request.params.id;
+            const update = {
                 $set: {
                     groups: request.payload.groups
                 }
             };
 
-            Admin.findByIdAndUpdate(id, update, function (err, admin) {
+            Admin.findByIdAndUpdate(id, update, (err, admin) => {
 
                 if (err) {
                     return reply(err);
@@ -249,10 +242,10 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'PUT',
-        path: options.basePath + '/admins/{id}/user',
+        path: '/admins/{id}/user',
         config: {
             auth: {
-                strategy: 'session',
+                strategy: 'simple',
                 scope: 'admin'
             },
             validate: {
@@ -266,16 +259,14 @@ exports.register = function (server, options, next) {
                     assign: 'admin',
                     method: function (request, reply) {
 
-                        var Admin = request.server.plugins['hapi-mongo-models'].Admin;
-
-                        Admin.findById(request.params.id, function (err, admin) {
+                        Admin.findById(request.params.id, (err, admin) => {
 
                             if (err) {
                                 return reply(err);
                             }
 
                             if (!admin) {
-                                return reply({ message: 'Document not found.' }).takeover().code(404);
+                                return reply(Boom.notFound('Document not found.'));
                             }
 
                             reply(admin);
@@ -285,27 +276,21 @@ exports.register = function (server, options, next) {
                     assign: 'user',
                     method: function (request, reply) {
 
-                        var User = request.server.plugins['hapi-mongo-models'].User;
-
-                        User.findByUsername(request.payload.username, function (err, user) {
+                        User.findByUsername(request.payload.username, (err, user) => {
 
                             if (err) {
                                 return reply(err);
                             }
 
                             if (!user) {
-                                return reply({ message: 'User document not found.' }).takeover().code(404);
+                                return reply(Boom.notFound('User document not found.'));
                             }
 
                             if (user.roles &&
                                 user.roles.admin &&
                                 user.roles.admin.id !== request.params.id) {
 
-                                var response = {
-                                    message: 'User is already linked to another admin. Unlink first.'
-                                };
-
-                                return reply(response).takeover().code(409);
+                                return reply(Boom.conflict('User is already linked to another admin. Unlink first.'));
                             }
 
                             reply(user);
@@ -318,11 +303,7 @@ exports.register = function (server, options, next) {
                         if (request.pre.admin.user &&
                             request.pre.admin.user.id !== request.pre.user._id.toString()) {
 
-                            var response = {
-                                message: 'Admin is already linked to another user. Unlink first.'
-                            };
-
-                            return reply(response).takeover().code(409);
+                            return reply(Boom.conflict('Admin is already linked to another user. Unlink first.'));
                         }
 
                         reply(true);
@@ -335,9 +316,8 @@ exports.register = function (server, options, next) {
             Async.auto({
                 admin: function (done) {
 
-                    var Admin = request.server.plugins['hapi-mongo-models'].Admin;
-                    var id = request.params.id;
-                    var update = {
+                    const id = request.params.id;
+                    const update = {
                         $set: {
                             user: {
                                 id: request.pre.user._id.toString(),
@@ -350,9 +330,8 @@ exports.register = function (server, options, next) {
                 },
                 user: function (done) {
 
-                    var User = request.server.plugins['hapi-mongo-models'].User;
-                    var id = request.pre.user._id;
-                    var update = {
+                    const id = request.pre.user._id;
+                    const update = {
                         $set: {
                             'roles.admin': {
                                 id: request.pre.admin._id.toString(),
@@ -363,7 +342,7 @@ exports.register = function (server, options, next) {
 
                     User.findByIdAndUpdate(id, update, done);
                 }
-            }, function (err, results) {
+            }, (err, results) => {
 
                 if (err) {
                     return reply(err);
@@ -377,10 +356,10 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'DELETE',
-        path: options.basePath + '/admins/{id}/user',
+        path: '/admins/{id}/user',
         config: {
             auth: {
-                strategy: 'session',
+                strategy: 'simple',
                 scope: 'admin'
             },
             pre: [
@@ -389,16 +368,14 @@ exports.register = function (server, options, next) {
                     assign: 'admin',
                     method: function (request, reply) {
 
-                        var Admin = request.server.plugins['hapi-mongo-models'].Admin;
-
-                        Admin.findById(request.params.id, function (err, admin) {
+                        Admin.findById(request.params.id, (err, admin) => {
 
                             if (err) {
                                 return reply(err);
                             }
 
                             if (!admin) {
-                                return reply({ message: 'Document not found.' }).takeover().code(404);
+                                return reply(Boom.notFound('Document not found.'));
                             }
 
                             if (!admin.user || !admin.user.id) {
@@ -412,16 +389,14 @@ exports.register = function (server, options, next) {
                     assign: 'user',
                     method: function (request, reply) {
 
-                        var User = request.server.plugins['hapi-mongo-models'].User;
-
-                        User.findById(request.pre.admin.user.id, function (err, user) {
+                        User.findById(request.pre.admin.user.id, (err, user) => {
 
                             if (err) {
                                 return reply(err);
                             }
 
                             if (!user) {
-                                return reply({ message: 'User document not found.' }).takeover().code(404);
+                                return reply(Boom.notFound('User document not found.'));
                             }
 
                             reply(user);
@@ -435,9 +410,8 @@ exports.register = function (server, options, next) {
             Async.auto({
                 admin: function (done) {
 
-                    var Admin = request.server.plugins['hapi-mongo-models'].Admin;
-                    var id = request.params.id;
-                    var update = {
+                    const id = request.params.id;
+                    const update = {
                         $unset: {
                             user: undefined
                         }
@@ -447,9 +421,8 @@ exports.register = function (server, options, next) {
                 },
                 user: function (done) {
 
-                    var User = request.server.plugins['hapi-mongo-models'].User;
-                    var id = request.pre.user._id.toString();
-                    var update = {
+                    const id = request.pre.user._id.toString();
+                    const update = {
                         $unset: {
                             'roles.admin': undefined
                         }
@@ -457,7 +430,7 @@ exports.register = function (server, options, next) {
 
                     User.findByIdAndUpdate(id, update, done);
                 }
-            }, function (err, results) {
+            }, (err, results) => {
 
                 if (err) {
                     return reply(err);
@@ -471,10 +444,10 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'DELETE',
-        path: options.basePath + '/admins/{id}',
+        path: '/admins/{id}',
         config: {
             auth: {
-                strategy: 'session',
+                strategy: 'simple',
                 scope: 'admin'
             },
             pre: [
@@ -483,16 +456,15 @@ exports.register = function (server, options, next) {
         },
         handler: function (request, reply) {
 
-            var Admin = request.server.plugins['hapi-mongo-models'].Admin;
 
-            Admin.findByIdAndDelete(request.params.id, function (err, admin) {
+            Admin.findByIdAndDelete(request.params.id, (err, admin) => {
 
                 if (err) {
                     return reply(err);
                 }
 
                 if (!admin) {
-                    return reply({ message: 'Document not found.' }).code(404);
+                    return reply(Boom.notFound('Document not found.'));
                 }
 
                 reply({ message: 'Success.' });
@@ -500,6 +472,14 @@ exports.register = function (server, options, next) {
         }
     });
 
+
+    next();
+};
+
+
+exports.register = function (server, options, next) {
+
+    server.dependency(['auth', 'hapi-mongo-models'], internals.applyRoutes);
 
     next();
 };

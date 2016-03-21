@@ -58,7 +58,7 @@
     "glue": "^3.2.0",
     "hapi": "^13.2.1",
     "hapi-auth-basic": "^4.1.0",
-    "hapi-auth-cookie": "^3.1.0",
+    "hapi-auth-cookie": "^6.1.1",
     "hapi-cors-headers": "^1.0.0",
     "hapi-mongo-models": "^4.2.0",
     "hapi-react-views": "^5.0.0",
