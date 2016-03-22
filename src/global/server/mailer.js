@@ -1,5 +1,3 @@
-'use strict';
-
 const Hoek = require('hoek');
 const Fs = require('fs');
 const Handlebars = require('handlebars');
