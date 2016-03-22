@@ -114,6 +114,8 @@ internals.applyRoutes = function (server, next) {
                 authHeader: authHeader
             };
 
+            console.log(request.auth);
+
             request.auth.session.set(result);
             reply(result);
         }

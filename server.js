@@ -25,6 +25,6 @@ Composer(function (err, server) {
         console.info("==> ✅  Server is listening");
         var url = util.format('http://%s:%d', Config.get('/devHost'), Config.get('/devPort'));
         console.log('==> 🌎  Listening at %s', url);
-        opn(url + '/login/forgot');
+        opn(url + '/login');
     });
 });
