@@ -18,7 +18,7 @@ import {
     doLogout
 } from '../../actions';
 
-import jsonFetch, { IJSONFetch } from '../../../../api/jsonfetch'
+
 // Interfaces
 interface ILogoutProps {
     dispatch?: (func: any) => void;
