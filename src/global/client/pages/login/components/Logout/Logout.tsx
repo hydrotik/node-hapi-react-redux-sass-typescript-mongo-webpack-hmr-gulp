@@ -2,8 +2,8 @@
 
 // Core Imports
 import * as React from 'react';
+import { connect } from 'react-redux';
 import * as activeComponent from 'react-router-active-component';
-// import { connect } from 'react-redux';
 
 // Styles
 import './_Logout.scss';
@@ -13,9 +13,12 @@ import './_Logout.scss';
 
 // Behaviors and Actions
 import {
+    onLogoutRequest,
+    onLogoutResponse,
+    doLogout
 } from '../../actions';
 
-import jsonFetch, { IJSONFetch } from '../../../../api/jsonfetch'
+
 // Interfaces
 interface ILogoutProps {
     dispatch?: (func: any) => void;
@@ -32,32 +35,14 @@ let ac: any = activeComponent;
 const NavLink: any = ac('li');
 
 // Decorators
-/*
-function select(state: { account: IAccountMapping; }): ILogoutState {
-    const { account }: { account: IAccountMapping; } = state;
-    const {
-        password,
-        passwordConfirm,
-        hasError,
-        help,
-        loading,
-        passwordsuccess,
-        error
-    }: IAccountMapping = account;
+
+function select(state: {  }): ILogoutProps {
 
     return {
-        password,
-        passwordConfirm,
-        hasError,
-        help,
-        loading,
-        passwordsuccess,
-        error
     };
 
 }
-
-@connect(select)*/
+@connect(select)
 export class Logout extends React.Component<ILogoutProps, ILogoutState> {
 
     public constructor(props: any = {}) {
@@ -65,12 +50,9 @@ export class Logout extends React.Component<ILogoutProps, ILogoutState> {
     }
 
     public componentDidMount(): void {
-        // TODO: refactor this so that it is in an action?
-        jsonFetch({ url: "/api/logout", method: "DELETE" } as IJSONFetch, (err: Error, result: string) => {
-          console.log(result)
-        })
+        const { dispatch }: ILogoutProps = this.props;
 
-
+        dispatch(doLogout({}));
     }
 
     public render(): React.ReactElement<{}> {

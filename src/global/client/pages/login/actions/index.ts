@@ -22,11 +22,16 @@ export {
     LOGOUT_RESPONSE,
 
     ILoginMapping,
-
+    ILoginRequest,
+    ILoginResponse,
+    
     onFormInit,
     onFormReset,
     onFormUpdate,
-    doLogin
+    onLogoutRequest,
+    onLogoutResponse,
+    doLogin,
+    doLogout
 
 } from './login';
 

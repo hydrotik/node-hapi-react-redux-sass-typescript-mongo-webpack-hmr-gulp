@@ -18,7 +18,8 @@ exports.register = function (plugin, options, next) {
             auth: {
                 strategy: 'session',
                 scope: 'account'
-            }
+            },
+            cors: true
         },
         handler: function(request, response) {
             console.log('LOADING ACCOUNT');
@@ -31,9 +32,6 @@ exports.register = function (plugin, options, next) {
 
             // Hook into typescript generated files
             response.view('account/Index.tsx', props);
-        },
-        config: {
-            cors: true
         }
     });
 

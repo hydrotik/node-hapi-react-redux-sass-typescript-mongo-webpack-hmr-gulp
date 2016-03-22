@@ -18,10 +18,11 @@ exports.register = function (plugin, options, next) {
             auth: {
                 strategy: 'session',
                 scope: 'admin'
-            }
+            },
+            cors: true
         },
         handler: function(request, response) {
-            console.log('LOADING ACCOUNT');
+            console.log('LOADING ADMIN');
 
             var props = {
                 title: 'Boilerplate Test',
@@ -31,9 +32,6 @@ exports.register = function (plugin, options, next) {
 
             // Hook into typescript generated files
             response.view('account/Index.tsx', props);
-        },
-        config: {
-            cors: true
         }
     });
 

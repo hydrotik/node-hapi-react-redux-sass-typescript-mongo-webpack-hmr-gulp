@@ -118,7 +118,6 @@ export function doLogin(data: any): any {
                 let returnUrl: any = window.localStorage.getItem('returnUrl');
 
                 if (returnUrl) {
-                    // RedirectActions.clearReturnUrl();
                     window.location.href = returnUrl;
                 } else if (response.user.roles.admin) {
                     window.location.href = '/admin';
@@ -131,7 +130,6 @@ export function doLogin(data: any): any {
 
             let validation: IValidation = ParseValidation(response.validation, response.message);
 
-            // dispatch(SERVER_ACTION, Types.LOGIN_RESPONSE, response);
             dispatch(
                 onLoginResponse(
                     response,
@@ -175,7 +173,7 @@ export function onLogoutResponse(
 export function doLogout(data: any): any {
     return (dispatch: any, getState: any) => {
 
-        dispatch(onLoginRequest());
+        dispatch(onLogoutRequest());
 
         let request: any = {
             method: 'DELETE',
@@ -192,9 +190,8 @@ export function doLogout(data: any): any {
                 response.error = err.message;
             }
 
-            // dispatch(SERVER_ACTION, Types.LOGIN_RESPONSE, response);
             dispatch(
-                onLoginResponse(
+                onLogoutResponse(
                     response,
                     response.error,
                     response.hasError,
