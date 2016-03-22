@@ -31,7 +31,7 @@ var manifest = {
     $meta: 'This file defines the plot device.',
     server: {
         debug: {
-            request: ['error']
+            request: [/*'error'*/]
         },
         connections: {
             routes: {
@@ -45,7 +45,21 @@ var manifest = {
     }],
     registrations: [
         {
+            plugin: 'inert'
+        },
+        {
             plugin: 'hapi-auth-basic'
+        },
+        {
+            plugin: 'hapi-auth-cookie'
+        },
+        {
+            plugin: {
+                register: 'crumb',
+                options: {
+                    restful: true
+                }
+            }
         },
         {
             plugin: 'lout'
@@ -200,6 +214,12 @@ var manifest = {
         {
             plugin: {
                 register: './global/server/views/about',
+                options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+            }
+        },
+        {
+            plugin: {
+                register: './global/server/views/contact',
                 options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
             }
         },

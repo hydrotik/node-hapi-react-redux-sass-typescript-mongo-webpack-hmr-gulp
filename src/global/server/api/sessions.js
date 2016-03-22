@@ -18,7 +18,7 @@ internals.applyRoutes = function (server, next) {
         path: '/sessions',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             validate: {
@@ -58,7 +58,7 @@ internals.applyRoutes = function (server, next) {
         path: '/sessions/{id}',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             pre: [
@@ -88,7 +88,7 @@ internals.applyRoutes = function (server, next) {
         path: '/sessions/{id}',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             pre: [

@@ -103,7 +103,7 @@ internals.applyRoutes = function (server, next) {
             const credentials = request.pre.session._id.toString() + ':' + request.pre.session.key;
             const authHeader = 'Basic ' + new Buffer(credentials).toString('base64');
 
-            reply({
+            var result = {
                 user: {
                     _id: request.pre.user._id,
                     username: request.pre.user.username,
@@ -112,7 +112,10 @@ internals.applyRoutes = function (server, next) {
                 },
                 session: request.pre.session,
                 authHeader: authHeader
-            });
+            };
+
+            request.auth.session.set(result);
+            reply(result);
         }
     });
 
@@ -180,6 +183,8 @@ internals.applyRoutes = function (server, next) {
                     };
                     const template = 'forgot-password';
                     const context = {
+                        baseHref: Config.get('/baseUrl') + '/login/reset',
+                        email: results.user.email,
                         key: results.keyHash.key
                     };
 

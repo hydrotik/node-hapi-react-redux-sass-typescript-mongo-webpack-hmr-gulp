@@ -1,10 +1,6 @@
-// Type definitions for React Slick v0.9.2
-// Project: https://github.com/akiran/react-slick
-// Definitions by: Donovan Adams <https://github.com/hydrotik> and @alihammad-gist <https://github.com/alihammad-gist>
-// Definitions: https://github.com/borisyankov/DefinitelyTyped
-
 /// <reference path="../react/react.d.ts" />
-/*
+
+
 declare module "react-slick" {
     interface __config {
         className?: string
@@ -42,14 +38,9 @@ declare module "react-slick" {
     }
 
     interface P extends __config {
-        responsive?: { breakpoint: number; settings: __config }[]
+        responsive?: { breakpoint: number; settings: __config}[]
     }
 
     var foo: __React.ClassicComponentClass<P>;
     export = foo;
-}
-*/
-declare module "react-slick" {
-
-    export var Slider: any;
 }

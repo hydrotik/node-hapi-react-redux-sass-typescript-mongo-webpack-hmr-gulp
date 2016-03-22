@@ -1,20 +1,26 @@
-var React = require('react/addons');
-var Layout = require('../layouts/Default.jsx');
+/// <reference path="../../../../../typings/tsd.d.ts" />
 
+import * as React from 'react';
+import Layout from '../layouts/Default';
 
-var Component = React.createClass({
-    render: function () {
+interface IIndexProps {
+    js?: string;
+}
 
-        var feet = <script src="/public/pages/contact.min.js"></script>;
+class Index extends React.Component<IIndexProps, {}> {
+
+    public render(): React.ReactElement<{}> {
+        
+        const script = <script src={this.props.js}></script>;
 
         return (
             <Layout
                 title="Contact us"
-                feet={feet}
-                activeTab="contact">
+                activeTab="contact"
+                script={script}>
 
                 <div className="row">
-                    <div className="col-sm-6" id="app-mount"></div>
+                    <div className="col-sm-6" id="app"></div>
                     <div className="col-sm-6 text-center">
                         <h1 className="page-header">Contact us</h1>
                         <p className="lead">
@@ -29,7 +35,6 @@ var Component = React.createClass({
             </Layout>
         );
     }
-});
+}
 
-
-module.exports = Component;
+export default Index;

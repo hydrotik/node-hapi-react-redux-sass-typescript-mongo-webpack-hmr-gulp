@@ -1,24 +1,28 @@
 'use strict';
 
-const Boom = require('boom');
 const Async = require('async');
+const Config = require('../../../config');
 
 
-const internals = {};
-
-
-internals.applyStrategy = function (server, next) {
+exports.register = function (server, options, next) {
 
     const Session = server.plugins['hapi-mongo-models'].Session;
     const User = server.plugins['hapi-mongo-models'].User;
 
-    server.auth.strategy('simple', 'basic', {
-        validateFunc: function (request, username, password, callback) {
+
+    server.auth.strategy('session', 'cookie', {
+        password: Config.get('/cookieSecret'),
+        cookie: 'sid-aqua',
+        isSecure: false,
+        redirectTo: '/login',
+        validateFunc: function (request, data, callback) {
 
             Async.auto({
                 session: function (done) {
 
-                    Session.findByCredentials(username, password, done);
+                    const id = data.session._id;
+                    const key = data.session.key;
+                    Session.findByCredentials(id, key, done);
                 },
                 user: ['session', function (done, results) {
 
@@ -64,42 +68,36 @@ internals.applyStrategy = function (server, next) {
 };
 
 
-internals.preware = {
-    ensureAdminGroup: function (groups) {
+exports.preware = {};
 
-        return {
-            assign: 'ensureAdminGroup',
-            method: function (request, reply) {
 
-                if (Object.prototype.toString.call(groups) !== '[object Array]') {
-                    groups = [groups];
-                }
+exports.preware.ensureAdminGroup = function (groups) {
 
-                const groupFound = groups.some((group) => {
+    return {
+        assign: 'ensureAdminGroup',
+        method: function (request, reply) {
 
-                    return request.auth.credentials.roles.admin.isMemberOf(group);
-                });
-
-                if (!groupFound) {
-                    return reply(Boom.notFound('Permission denied to this resource.'));
-                }
-
-                reply();
+            if (Object.prototype.toString.call(groups) !== '[object Array]') {
+                groups = [groups];
             }
-        };
-    }
+
+            const groupFound = groups.some((group) => {
+
+                return request.auth.credentials.roles.admin.isMemberOf(group);
+            });
+
+            if (!groupFound) {
+                const response = {
+                    message: 'Permission denied to this resource.'
+                };
+
+                return reply(response).takeover().code(403);
+            }
+
+            reply();
+        }
+    };
 };
-
-
-exports.register = function (server, options, next) {
-
-    server.dependency('hapi-mongo-models', internals.applyStrategy);
-
-    next();
-};
-
-
-exports.preware = internals.preware;
 
 
 exports.register.attributes = {

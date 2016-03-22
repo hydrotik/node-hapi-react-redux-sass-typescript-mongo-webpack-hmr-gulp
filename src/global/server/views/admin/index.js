@@ -1,8 +1,10 @@
+'use strict';
+
 var Hoek = require('hoek');
 var path = require('path');
 var pkg = require('../../../../../package.json');
+var page = require('./package.json');
 var util = require('util');
-
 
 exports.register = function (plugin, options, next) {
 
@@ -21,16 +23,16 @@ exports.register = function (plugin, options, next) {
             }
         },
         handler: function(request, response) {
-            console.log('LOADING ACCOUNT');
+            console.log('LOADING ADMIN');
 
             var props = {
-                title: 'Boilerplate Test',
+                title: 'Admin',
                 js: js,
                 css: css
             }
 
             // Hook into typescript generated files
-            response.view('account/Index.tsx', props);
+            response.view('admin/Index.tsx', props);
         },
         config: {
             cors: true
@@ -41,6 +43,8 @@ exports.register = function (plugin, options, next) {
     next();
 };
 
+
 exports.register.attributes = {
-    pkg: require('./package.json')
+    name: page.name,
+    version: page.version
 };

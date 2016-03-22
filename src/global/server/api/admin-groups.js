@@ -18,11 +18,12 @@ internals.applyRoutes = function (server, next) {
         path: '/admin-groups',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             validate: {
                 query: {
+                    name: Joi.string().allow(''),
                     fields: Joi.string(),
                     sort: Joi.string().default('_id'),
                     limit: Joi.number().default(20),
@@ -36,6 +37,9 @@ internals.applyRoutes = function (server, next) {
         handler: function (request, reply) {
 
             const query = {};
+            if (request.query.name) {
+                query.name = new RegExp('^.*?' + request.query.name + '.*$', 'i');
+            }
             const fields = request.query.fields;
             const sort = request.query.sort;
             const limit = request.query.limit;
@@ -58,7 +62,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admin-groups/{id}',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             pre: [
@@ -88,7 +92,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admin-groups',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             validate: {
@@ -121,7 +125,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admin-groups/{id}',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             validate: {
@@ -163,7 +167,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admin-groups/{id}/permissions',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             validate: {
@@ -201,7 +205,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admin-groups/{id}',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             pre: [

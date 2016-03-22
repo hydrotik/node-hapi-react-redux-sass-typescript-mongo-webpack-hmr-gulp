@@ -1,8 +1,10 @@
+'use strict';
+
 var Hoek = require('hoek');
 var path = require('path');
 var pkg = require('../../../../../package.json');
+var page = require('./package.json');
 var util = require('util');
-
 
 exports.register = function (plugin, options, next) {
 
@@ -20,11 +22,11 @@ exports.register = function (plugin, options, next) {
                 scope: 'account'
             }
         },
-        handler: function(request, response) {
+        handler: function (request, reply) {
             console.log('LOADING ACCOUNT');
 
             var props = {
-                title: 'Boilerplate Test',
+                title: 'Account',
                 js: js,
                 css: css
             }
@@ -43,5 +45,7 @@ exports.register = function (plugin, options, next) {
 
 
 exports.register.attributes = {
-    pkg: require('./package.json')
+    name: page.name,
+    version: page.version
 };
+

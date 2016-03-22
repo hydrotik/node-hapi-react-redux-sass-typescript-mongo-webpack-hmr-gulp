@@ -20,11 +20,12 @@ internals.applyRoutes = function (server, next) {
         path: '/admins',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             validate: {
                 query: {
+                    username: Joi.string().allow(''),
                     fields: Joi.string(),
                     sort: Joi.string().default('_id'),
                     limit: Joi.number().default(20),
@@ -38,6 +39,9 @@ internals.applyRoutes = function (server, next) {
         handler: function (request, reply) {
 
             const query = {};
+            if (request.query.username) {
+                query['user.name'] = new RegExp('^.*?' + request.query.username + '.*$', 'i');
+            }
             const fields = request.query.fields;
             const sort = request.query.sort;
             const limit = request.query.limit;
@@ -60,7 +64,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admins/{id}',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             pre: [
@@ -90,7 +94,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admins',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             validate: {
@@ -123,16 +127,14 @@ internals.applyRoutes = function (server, next) {
         path: '/admins/{id}',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             validate: {
                 payload: {
-                    name: Joi.object().keys({
-                        first: Joi.string().required(),
-                        middle: Joi.string().allow(''),
-                        last: Joi.string().required()
-                    }).required()
+                    nameFirst: Joi.string().required(),
+                    nameMiddle: Joi.string().allow(['', null]),
+                    nameLast: Joi.string().required()
                 }
             },
             pre: [
@@ -144,7 +146,11 @@ internals.applyRoutes = function (server, next) {
             const id = request.params.id;
             const update = {
                 $set: {
-                    name: request.payload.name
+                    name: {
+                        first: request.payload.nameFirst,
+                        middle: request.payload.nameMiddle,
+                        last: request.payload.nameLast
+                    }
                 }
             };
 
@@ -169,7 +175,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admins/{id}/permissions',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             validate: {
@@ -207,7 +213,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admins/{id}/groups',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             validate: {
@@ -245,7 +251,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admins/{id}/user',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             validate: {
@@ -359,7 +365,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admins/{id}/user',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             pre: [
@@ -447,7 +453,7 @@ internals.applyRoutes = function (server, next) {
         path: '/admins/{id}',
         config: {
             auth: {
-                strategy: 'simple',
+                strategy: 'session',
                 scope: 'admin'
             },
             pre: [
