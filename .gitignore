@@ -29,6 +29,7 @@ Thumbs.db
 # IDE generated files #
 #######################
 .idea
+.vscode
 
 # --------------------
 # MongoDB
