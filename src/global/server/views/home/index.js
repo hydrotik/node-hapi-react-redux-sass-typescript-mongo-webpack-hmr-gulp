@@ -1,15 +1,14 @@
+'use strict';
+
 var Hoek = require('hoek');
 var path = require('path');
 var pkg = require('../../../../../package.json');
+var page = require('./package.json');
 var util = require('util');
-
 
 exports.register = function (plugin, options, next) {
 
     options = Hoek.applyToDefaults({ basePath: '' }, options);
-
-    //var js = options.artifactRoot + path.join('js', util.format(options.bundleName + '.%s.js', pkg.version))
-    //var css = options.artifactRoot + path.join('css', util.format(options.bundleName + '.%s.css', pkg.version));
 
     var js = options.artifactRoot + path.join('js', 'home.min.js')
     var css = options.artifactRoot + path.join('css', 'home.min.css');
@@ -21,7 +20,7 @@ exports.register = function (plugin, options, next) {
             console.log('LOADING INDEX/HOME');
 
             var props = {
-                title: 'Boilerplate Test',
+                title: 'Home',
                 js: js,
                 css: css
             }
@@ -39,5 +38,6 @@ exports.register = function (plugin, options, next) {
 
 
 exports.register.attributes = {
-    pkg: require('./package.json')
+    name: page.name,
+    version: page.version
 };

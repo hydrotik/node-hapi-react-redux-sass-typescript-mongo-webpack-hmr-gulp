@@ -1,15 +1,11 @@
-var Hoek = require('hoek');
+'use strict';
+
 var path = require('path');
 var pkg = require('../../../../../package.json');
+var page = require('./package.json');
 var util = require('util');
 
-
 exports.register = function (plugin, options, next) {
-
-    options = Hoek.applyToDefaults({ basePath: '' }, options);
-
-    //var js = options.artifactRoot + path.join('js', util.format(options.bundleName + '.%s.js', pkg.version))
-    //var css = options.artifactRoot + path.join('css', util.format(options.bundleName + '.%s.css', pkg.version));
 
     var js = options.artifactRoot + path.join('js', 'about.min.js')
     var css = options.artifactRoot + path.join('css', 'about.min.css');
@@ -17,17 +13,17 @@ exports.register = function (plugin, options, next) {
     plugin.route({
         method: 'GET',
         path: '/about',
-        handler: function(request, response) {
+        handler: function (request, reply) {
+
             console.log('LOADING ABOUT');
 
             var props = {
-                title: 'Boilerplate Test',
+                title: 'About',
                 js: js,
                 css: css
             }
 
-            // Hook into typescript generated files
-            response.view('about/Index.tsx', props);
+            reply.view('about/Index.tsx', props);
         },
         config: {
             cors: true
@@ -40,5 +36,6 @@ exports.register = function (plugin, options, next) {
 
 
 exports.register.attributes = {
-    pkg: require('./package.json')
+    name: page.name,
+    version: page.version
 };

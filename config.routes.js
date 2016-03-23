@@ -5,13 +5,63 @@ var helpers = {
     artifactRoot : process.env.NODE_ENV === 'production' ? '' : 'http://' + Config.get('/devHost') + ':' + Config.get('/webpackPort') + '/'
 }
 
-var routes = {
-    './global/server/views/home': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
-    './global/server/views/about': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
-    './global/server/views/signup': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
-    './global/server/views/account': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
-    './global/server/views/admin': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers),
-    './global/server/views/login': Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
-}
+var routes = [
+    {
+        plugin: {
+            register: './global/server/misc/build',
+            options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        }
+    },
+    {
+        plugin: {
+            register: './global/server/misc/assets',
+            options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        }
+    },
+
+
+    {
+        plugin: {
+            register: './global/server/views/home',
+            options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        }
+    },
+    {
+        plugin: {
+            register: './global/server/views/about',
+            options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        }
+    },
+    {
+        plugin: {
+            register: './global/server/views/contact',
+            options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        }
+    },
+    {
+        plugin: {
+            register: './global/server/views/signup',
+            options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        }
+    },
+    {
+        plugin: {
+            register: './global/server/views/account',
+            options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        }
+    },
+    {
+        plugin: {
+            register: './global/server/views/admin',
+            options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        }
+    },
+    {
+        plugin: {
+            register: './global/server/views/login',
+            options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        }
+    }
+]
 
 exports.routes = routes;

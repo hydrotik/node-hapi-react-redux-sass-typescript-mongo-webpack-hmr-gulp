@@ -1,6 +1,9 @@
+'use strict';
+
 var Hoek = require('hoek');
 var path = require('path');
 var pkg = require('../../../../../package.json');
+var page = require('./package.json');
 var util = require('util');
 
 
@@ -38,13 +41,12 @@ exports.register = function (plugin, options, next) {
             }
 
             var props = {
-                title: 'Boilerplate Test',
+                title: 'Login',
                 js: js,
                 css: css
             }
 
-            // Hook into typescript generated files
-            var response = reply.view('signup/Index.tsx', props);
+            const response = reply.view('login/Index.tsx', props);
             response.header('x-auth-required', true);
         }
     });
@@ -53,7 +55,7 @@ exports.register = function (plugin, options, next) {
     next();
 };
 
-
 exports.register.attributes = {
-    pkg: require('./package.json')
+    name: page.name,
+    version: page.version
 };

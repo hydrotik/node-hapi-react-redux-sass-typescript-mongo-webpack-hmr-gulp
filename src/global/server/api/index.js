@@ -1,14 +1,10 @@
-var Hoek = require('hoek');
-
+'use strict';
 
 exports.register = function (server, options, next) {
 
-    options = Hoek.applyToDefaults({ basePath: '' }, options);
-
-
     server.route({
         method: 'GET',
-        path: options.basePath + '/api',
+        path: '/',
         handler: function (request, reply) {
 
             reply({ message: 'Welcome to the plot device.' });
@@ -21,5 +17,5 @@ exports.register = function (server, options, next) {
 
 
 exports.register.attributes = {
-    name: 'api'
+    name: 'index'
 };

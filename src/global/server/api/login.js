@@ -1,18 +1,25 @@
-var Joi = require('joi');
-var Hoek = require('hoek');
-var Async = require('async');
-var Bcrypt = require('bcrypt');
-var Config = require('../../../../config');
+'use strict';
+
+const Boom = require('boom');
+const Joi = require('joi');
+const Async = require('async');
+const Bcrypt = require('bcrypt');
+const Config = require('../../../../config');
 
 
-exports.register = function (server, options, next) {
+const internals = {};
 
-    options = Hoek.applyToDefaults({ basePath: '' }, options);
+
+internals.applyRoutes = function (server, next) {
+
+    const AuthAttempt = server.plugins['hapi-mongo-models'].AuthAttempt;
+    const Session = server.plugins['hapi-mongo-models'].Session;
+    const User = server.plugins['hapi-mongo-models'].User;
 
 
     server.route({
         method: 'POST',
-        path: options.basePath + '/login',
+        path: '/login',
         config: {
             validate: {
                 payload: {
@@ -20,33 +27,21 @@ exports.register = function (server, options, next) {
                     password: Joi.string().required().label('Password')
                 }
             },
-            plugins: {
-                'hapi-auth-cookie': {
-                    redirectTo: false
-                }
-            },
-            auth: {
-                mode: 'try',
-                strategy: 'session'
-            },
             pre: [{
                 assign: 'abuseDetected',
                 method: function (request, reply) {
 
-                    var AuthAttempt = request.server.plugins['hapi-mongo-models'].AuthAttempt;
-                    var ip = request.info.remoteAddress;
-                    var username = request.payload.username;
+                    const ip = request.info.remoteAddress;
+                    const username = request.payload.username;
 
-                    AuthAttempt.abuseDetected(ip, username, function (err, detected) {
+                    AuthAttempt.abuseDetected(ip, username, (err, detected) => {
 
                         if (err) {
                             return reply(err);
                         }
 
                         if (detected) {
-                            return reply({
-                                message: 'Maximum number of auth attempts reached. Please try again later.'
-                            }).takeover().code(400);
+                            return reply(Boom.badRequest('Maximum number of auth attempts reached. Please try again later.'));
                         }
 
                         reply();
@@ -56,11 +51,10 @@ exports.register = function (server, options, next) {
                 assign: 'user',
                 method: function (request, reply) {
 
-                    var User = request.server.plugins['hapi-mongo-models'].User;
-                    var username = request.payload.username;
-                    var password = request.payload.password;
+                    const username = request.payload.username;
+                    const password = request.payload.password;
 
-                    User.findByCredentials(username, password, function (err, user) {
+                    User.findByCredentials(username, password, (err, user) => {
 
                         if (err) {
                             return reply(err);
@@ -77,28 +71,23 @@ exports.register = function (server, options, next) {
                         return reply();
                     }
 
-                    var AuthAttempt = request.server.plugins['hapi-mongo-models'].AuthAttempt;
-                    var ip = request.info.remoteAddress;
-                    var username = request.payload.username;
+                    const ip = request.info.remoteAddress;
+                    const username = request.payload.username;
 
-                    AuthAttempt.create(ip, username, function (err, authAttempt) {
+                    AuthAttempt.create(ip, username, (err, authAttempt) => {
 
                         if (err) {
                             return reply(err);
                         }
 
-                        return reply({
-                            message: 'Username and password combination not found or account is inactive.'
-                        }).takeover().code(400);
+                        return reply(Boom.badRequest('Username and password combination not found or account is inactive.'));
                     });
                 }
             }, {
                 assign: 'session',
                 method: function (request, reply) {
 
-                    var Session = request.server.plugins['hapi-mongo-models'].Session;
-
-                    Session.create(request.pre.user._id.toString(), function (err, session) {
+                    Session.create(request.pre.user._id.toString(), (err, session) => {
 
                         if (err) {
                             return reply(err);
@@ -111,8 +100,8 @@ exports.register = function (server, options, next) {
         },
         handler: function (request, reply) {
 
-            var credentials = request.pre.session._id.toString() + ':' + request.pre.session.key;
-            var authHeader = 'Basic ' + new Buffer(credentials).toString('base64');
+            const credentials = request.pre.session._id.toString() + ':' + request.pre.session.key;
+            const authHeader = 'Basic ' + new Buffer(credentials).toString('base64');
 
             var result = {
                 user: {
@@ -125,7 +114,8 @@ exports.register = function (server, options, next) {
                 authHeader: authHeader
             };
 
-            request.auth.session.set(result);
+            request.cookieAuth.set(result);
+
             reply(result);
         }
     });
@@ -133,7 +123,7 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'POST',
-        path: options.basePath + '/login/forgot',
+        path: '/login/forgot',
         config: {
             validate: {
                 payload: {
@@ -144,17 +134,11 @@ exports.register = function (server, options, next) {
                 assign: 'user',
                 method: function (request, reply) {
 
-                    var User = request.server.plugins['hapi-mongo-models'].User;
-                    var conditions = {
+                    const conditions = {
                         email: request.payload.email
                     };
 
-                    console.log('pre() email: ' + request.payload.email);
-
-                    User.findOne(conditions, function (err, user) {
-
-                        console.log(err);
-                        console.log(user);
+                    User.findOne(conditions, (err, user) => {
 
                         if (err) {
                             return reply(err);
@@ -171,9 +155,7 @@ exports.register = function (server, options, next) {
         },
         handler: function (request, reply) {
 
-            var Session = request.server.plugins['hapi-mongo-models'].Session;
-            var User = request.server.plugins['hapi-mongo-models'].User;
-            var mailer = request.server.plugins.mailer;
+            const mailer = request.server.plugins.mailer;
 
             Async.auto({
                 keyHash: function (done) {
@@ -182,8 +164,8 @@ exports.register = function (server, options, next) {
                 },
                 user: ['keyHash', function (done, results) {
 
-                    var id = request.pre.user._id.toString();
-                    var update = {
+                    const id = request.pre.user._id.toString();
+                    const update = {
                         $set: {
                             resetPassword: {
                                 token: results.keyHash.hash,
@@ -191,30 +173,28 @@ exports.register = function (server, options, next) {
                             }
                         }
                     };
-                    console.log('mailer.sendEmail() :: ' + results.keyHash.hash);
+
                     User.findByIdAndUpdate(id, update, done);
                 }],
                 email: ['user', function (done, results) {
 
-                    var emailOptions = {
+                    const emailOptions = {
                         subject: 'Reset your ' + Config.get('/projectName') + ' password',
                         to: request.payload.email
                     };
-                    var template = 'forgot-password';
-                    var context = {
-                        baseHref: Config.get('/baseUrl') + '/login/reset',
-                        email: request.payload.email,
+                    const template = 'forgot-password';
+                    const context = {
                         key: results.keyHash.key
                     };
-                    console.log('mailer.sendEmail()');
+
                     mailer.sendEmail(emailOptions, template, context, done);
                 }]
-            }, function (err, results) {
+            }, (err, results) => {
 
                 if (err) {
                     return reply(err);
                 }
-                console.log({ message: 'Success.' });
+
                 reply({ message: 'Success.' });
             });
         }
@@ -223,7 +203,7 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'POST',
-        path: options.basePath + '/login/reset',
+        path: '/login/reset',
         config: {
             validate: {
                 payload: {
@@ -236,20 +216,19 @@ exports.register = function (server, options, next) {
                 assign: 'user',
                 method: function (request, reply) {
 
-                    var User = request.server.plugins['hapi-mongo-models'].User;
-                    var conditions = {
+                    const conditions = {
                         email: request.payload.email,
                         'resetPassword.expires': { $gt: Date.now() }
                     };
 
-                    User.findOne(conditions, function (err, user) {
+                    User.findOne(conditions, (err, user) => {
 
                         if (err) {
                             return reply(err);
                         }
 
                         if (!user) {
-                            return reply({ message: 'Invalid email or key.' }).takeover().code(400);
+                            return reply(Boom.badRequest('Invalid email or key.'));
                         }
 
                         reply(user);
@@ -259,27 +238,25 @@ exports.register = function (server, options, next) {
         },
         handler: function (request, reply) {
 
-            var User = request.server.plugins['hapi-mongo-models'].User;
-
             Async.auto({
                 keyMatch: function (done) {
 
-                    var key = request.payload.key;
-                    var token = request.pre.user.resetPassword.token;
+                    const key = request.payload.key;
+                    const token = request.pre.user.resetPassword.token;
                     Bcrypt.compare(key, token, done);
                 },
                 passwordHash: ['keyMatch', function (done, results) {
 
                     if (!results.keyMatch) {
-                        return reply({ message: 'Invalid email or key.' }).takeover().code(400);
+                        return reply(Boom.badRequest('Invalid email or key.'));
                     }
 
                     User.generatePasswordHash(request.payload.password, done);
                 }],
                 user: ['passwordHash', function (done, results) {
 
-                    var id = request.pre.user._id.toString();
-                    var update = {
+                    const id = request.pre.user._id.toString();
+                    const update = {
                         $set: {
                             password: results.passwordHash.hash
                         },
@@ -290,7 +267,7 @@ exports.register = function (server, options, next) {
 
                     User.findByIdAndUpdate(id, update, done);
                 }]
-            }, function (err, results) {
+            }, (err, results) => {
 
                 if (err) {
                     return reply(err);
@@ -301,6 +278,14 @@ exports.register = function (server, options, next) {
         }
     });
 
+
+    next();
+};
+
+
+exports.register = function (server, options, next) {
+
+    server.dependency(['mailer', 'hapi-mongo-models'], internals.applyRoutes);
 
     next();
 };

@@ -1,8 +1,10 @@
+'use strict';
+
 var Hoek = require('hoek');
 var path = require('path');
 var pkg = require('../../../../../package.json');
+var page = require('./package.json');
 var util = require('util');
-
 
 exports.register = function (plugin, options, next) {
 
@@ -18,7 +20,7 @@ exports.register = function (plugin, options, next) {
             console.log('LOADING SIGNUP');
 
             var props = {
-                title: 'Boilerplate Test',
+                title: 'Signup',
                 js: js,
                 css: css
             }
@@ -37,5 +39,6 @@ exports.register = function (plugin, options, next) {
 
 
 exports.register.attributes = {
-    pkg: require('./package.json')
+    name: page.name,
+    version: page.version
 };

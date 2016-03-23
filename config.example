@@ -35,7 +35,7 @@ var config = {
     cookieSecret: {
         $filter: 'env',
         production: process.env.COOKIE_SECRET,
-        $default: '~k3yb04rdK4tz!'
+        $default: 'sezEhj(@#05Jxgnd5CTCGktuiXldIae3'
     },
     hapiMongoModels: {
         $filter: 'env',
