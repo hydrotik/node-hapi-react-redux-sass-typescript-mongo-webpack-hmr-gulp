@@ -112,9 +112,13 @@ internals.applyRoutes = function (server, next) {
                 authHeader: authHeader
             };
 
-            console.log(request.auth);
+            console.log(request.cookieAuth);
 
-            request.auth.session.set(result);
+            request.cookieAuth.set(result);
+
+            console.log(result);
+
+            //request.auth.session.set(result);
             reply(result);
         }
     });
