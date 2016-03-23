@@ -1,23 +1,9 @@
 var Confidence = require('confidence');
 var Hoek = require('hoek');
 var Config = require('./config');
-
-// var Routes = require('./config.routes').routes;
+var Routes = require('./config.routes').routes;
 var pkg = require('./package');
-
-// if (typeof define !== 'function') {
-//     const define = require('requirejs').define;
-// }
-
-//require("amd-loader");
-
-//var define;
-
-//if (typeof define !== 'function') { define = require('amdefine')(module) }
-
 var HapiTypescriptViews = require('./src/global/server/plugins/hapi-typescript-react-views');
-//HapiTypescriptViews.register(define);
-
 
 var criteria = {
     env: process.env.NODE_ENV
@@ -149,16 +135,9 @@ var manifest = {
             }
         },
         {
-            plugin: {
-                register: './global/server/api/login',
-                options: {
-                }
-            },
+            plugin: './global/server/api/login',
             options: {
-                select: [],
-                routes: {
-                    prefix: '/api'
-                }
+                routes: { prefix: '/api' }
             }
         },
         {
@@ -190,67 +169,11 @@ var manifest = {
             options: {
                 routes: { prefix: '/api' }
             }
-        },
-        {
-            plugin: {
-                register: './global/server/misc/build',
-                options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
-            }
-        },
-        {
-            plugin: {
-                register: './global/server/misc/assets',
-                options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
-            }
-        },
-
-
-        {
-            plugin: {
-                register: './global/server/views/home',
-                options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
-            }
-        },
-        {
-            plugin: {
-                register: './global/server/views/about',
-                options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
-            }
-        },
-        {
-            plugin: {
-                register: './global/server/views/contact',
-                options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
-            }
-        },
-        {
-            plugin: {
-                register: './global/server/views/signup',
-                options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
-            }
-        },
-        {
-            plugin: {
-                register: './global/server/views/account',
-                options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
-            }
-        },
-        {
-            plugin: {
-                register: './global/server/views/admin',
-                options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
-            }
-        },
-        {
-            plugin: {
-                register: './global/server/views/login',
-                options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
-            }
         }
     ]
 };
 
-
+manifest.registrations = manifest.registrations.concat(Routes);
 
 var store = new Confidence.Store(manifest);
 
