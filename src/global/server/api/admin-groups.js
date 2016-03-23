@@ -1,3 +1,5 @@
+'use strict';
+
 const Boom = require('boom');
 const Joi = require('joi');
 const AuthPlugin = require('../auth');
@@ -21,7 +23,6 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 query: {
-                    name: Joi.string().allow(''),
                     fields: Joi.string(),
                     sort: Joi.string().default('_id'),
                     limit: Joi.number().default(20),
@@ -35,9 +36,6 @@ internals.applyRoutes = function (server, next) {
         handler: function (request, reply) {
 
             const query = {};
-            if (request.query.name) {
-                query.name = new RegExp('^.*?' + request.query.name + '.*$', 'i');
-            }
             const fields = request.query.fields;
             const sort = request.query.sort;
             const limit = request.query.limit;

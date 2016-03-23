@@ -1,3 +1,5 @@
+'use strict';
+
 const Boom = require('boom');
 const Joi = require('joi');
 const Async = require('async');
@@ -187,8 +189,6 @@ internals.applyRoutes = function (server, next) {
                     };
                     const template = 'forgot-password';
                     const context = {
-                        baseHref: Config.get('/baseUrl') + '/login/reset',
-                        email: results.user.email,
                         key: results.keyHash.key
                     };
 

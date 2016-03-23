@@ -1,3 +1,5 @@
+'use strict';
+
 const Boom = require('boom');
 const Async = require('async');
 const Joi = require('joi');
@@ -23,7 +25,6 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 query: {
-                    username: Joi.string().allow(''),
                     fields: Joi.string(),
                     sort: Joi.string().default('_id'),
                     limit: Joi.number().default(20),
@@ -37,9 +38,6 @@ internals.applyRoutes = function (server, next) {
         handler: function (request, reply) {
 
             const query = {};
-            if (request.query.username) {
-                query['user.name'] = new RegExp('^.*?' + request.query.username + '.*$', 'i');
-            }
             const fields = request.query.fields;
             const sort = request.query.sort;
             const limit = request.query.limit;
@@ -130,9 +128,11 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 payload: {
-                    nameFirst: Joi.string().required(),
-                    nameMiddle: Joi.string().allow(['', null]),
-                    nameLast: Joi.string().required()
+                    name: Joi.object().keys({
+                        first: Joi.string().required(),
+                        middle: Joi.string().allow(''),
+                        last: Joi.string().required()
+                    }).required()
                 }
             },
             pre: [
@@ -144,11 +144,7 @@ internals.applyRoutes = function (server, next) {
             const id = request.params.id;
             const update = {
                 $set: {
-                    name: {
-                        first: request.payload.nameFirst,
-                        middle: request.payload.nameMiddle,
-                        last: request.payload.nameLast
-                    }
+                    name: request.payload.name
                 }
             };
 

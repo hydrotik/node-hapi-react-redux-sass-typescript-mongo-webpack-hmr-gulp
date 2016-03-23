@@ -1,3 +1,5 @@
+'use strict';
+
 const Boom = require('boom');
 const Joi = require('joi');
 const AuthPlugin = require('../auth');
@@ -21,9 +23,9 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 query: {
-                    username: Joi.string().token().lowercase().allow(''),
-                    isActive: Joi.string().allow(''),
-                    role: Joi.string().allow(''),
+                    username: Joi.string().token().lowercase(),
+                    isActive: Joi.string(),
+                    role: Joi.string(),
                     fields: Joi.string(),
                     sort: Joi.string().default('_id'),
                     limit: Joi.number().default(20),

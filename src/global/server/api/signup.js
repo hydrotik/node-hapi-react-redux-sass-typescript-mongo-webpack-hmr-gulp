@@ -1,3 +1,5 @@
+'use strict';
+
 const Boom = require('boom');
 const Joi = require('joi');
 const Async = require('async');
@@ -18,15 +20,6 @@ internals.applyRoutes = function (server, next) {
         method: 'POST',
         path: '/signup',
         config: {
-            plugins: {
-                'hapi-auth-cookie': {
-                    redirectTo: false
-                }
-            },
-            auth: {
-                mode: 'try',
-                strategy: 'session'
-            },
             validate: {
                 payload: {
                     name: Joi.string().required(),
@@ -159,9 +152,10 @@ internals.applyRoutes = function (server, next) {
                 }
 
                 const user = results.linkAccount;
-                const credentials = user.username + ':' + results.session.key;
+                const credentials = results.session._id + ':' + results.session.key;
                 const authHeader = 'Basic ' + new Buffer(credentials).toString('base64');
-                const result = {
+
+                reply({
                     user: {
                         _id: user._id,
                         username: user.username,
@@ -170,10 +164,7 @@ internals.applyRoutes = function (server, next) {
                     },
                     session: results.session,
                     authHeader: authHeader
-                };
-
-                request.auth.session.set(result);
-                reply(result);
+                });
             });
         }
     });
