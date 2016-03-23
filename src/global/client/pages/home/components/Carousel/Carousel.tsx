@@ -7,7 +7,7 @@ import './_Carousel.scss';
 
 import { map } from 'lodash';
 
-import * as Slick from 'react-slick';
+import * as Slider from 'react-slick';
 
 import { CarouselItem } from '../../../../components/CarouselItem/CarouselItem';
 
@@ -16,8 +16,6 @@ import '../../../../../../../node_modules/slick-carousel/slick/slick-theme.scss'
 
 import { connect } from 'react-redux';
 import { fetchContentIfNeeded, CAROUSEL, ICarouselAction} from '../../actions';
-
-const Slider: any = Slick.Slider;
 
 interface ICarouselProps {
     dispatch?: (func: any) => void;

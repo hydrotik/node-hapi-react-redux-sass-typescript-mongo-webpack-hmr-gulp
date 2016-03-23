@@ -70,6 +70,11 @@ module.exports = {
             'webpack/hot/only-dev-server',
             path.resolve(__dirname, './src/global/client/pages/about/index')
         ],
+        contact: [
+            'webpack-dev-server/client?http://localhost:8080',
+            'webpack/hot/only-dev-server',
+            path.resolve(__dirname, './src/global/client/pages/contact/index')
+        ],
         signup: [
             'webpack-dev-server/client?http://localhost:8080',
             'webpack/hot/only-dev-server',

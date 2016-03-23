@@ -112,7 +112,12 @@ export function doLogin(data: any): any {
             data: data
         };
 
+        console.warn(data);
+
         Fetch(request, (err: any, response: any) => {
+
+            console.warn(err);
+            console.warn(response);
 
             if (!err) {
                 let returnUrl: any = window.localStorage.getItem('returnUrl');
