@@ -93,8 +93,8 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 payload: {
-                    pivot: Joi.string().required(),
-                    name: Joi.string().required()
+                    pivot: Joi.string().required().label('Pivot'),
+                    name: Joi.string().required().label('Name')
                 }
             },
             pre: [
@@ -128,7 +128,7 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 payload: {
-                    name: Joi.string().required()
+                    name: Joi.string().required().label('Name')
                 }
             },
             pre: [

@@ -95,7 +95,7 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 payload: {
-                    name: Joi.string().required()
+                    name: Joi.string().required().label('Name')
                 }
             },
             pre: [
@@ -129,9 +129,9 @@ internals.applyRoutes = function (server, next) {
             validate: {
                 payload: {
                     name: Joi.object().keys({
-                        first: Joi.string().required(),
-                        middle: Joi.string().allow(''),
-                        last: Joi.string().required()
+                        first: Joi.string().required().label('First name'),
+                        middle: Joi.string().allow('').label('Middle name'),
+                        last: Joi.string().required().label('Last name')
                     }).required()
                 }
             },
@@ -250,7 +250,7 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 payload: {
-                    username: Joi.string().lowercase().required()
+                    username: Joi.string().lowercase().required().label('Username')
                 }
             },
             pre: [

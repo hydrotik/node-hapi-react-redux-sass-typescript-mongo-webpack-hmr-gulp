@@ -23,8 +23,8 @@ internals.applyRoutes = function (server, next) {
         config: {
             validate: {
                 payload: {
-                    username: Joi.string().lowercase().required(),
-                    password: Joi.string().required()
+                    username: Joi.string().lowercase().required().label('Username'),
+                    password: Joi.string().required().label('Password')
                 }
             },
             pre: [{
@@ -114,13 +114,8 @@ internals.applyRoutes = function (server, next) {
                 authHeader: authHeader
             };
 
-            console.log(request.cookieAuth);
-
             request.cookieAuth.set(result);
 
-            console.log(result);
-
-            //request.auth.session.set(result);
             reply(result);
         }
     });
@@ -132,7 +127,7 @@ internals.applyRoutes = function (server, next) {
         config: {
             validate: {
                 payload: {
-                    email: Joi.string().email().lowercase().required()
+                    email: Joi.string().email().lowercase().required().label('Email')
                 }
             },
             pre: [{
@@ -212,9 +207,9 @@ internals.applyRoutes = function (server, next) {
         config: {
             validate: {
                 payload: {
-                    key: Joi.string().required(),
-                    email: Joi.string().email().lowercase().required(),
-                    password: Joi.string().required()
+                    key: Joi.string().required().label('Key'),
+                    email: Joi.string().email().lowercase().required().label('Email'),
+                    password: Joi.string().required().label('Password')
                 }
             },
             pre: [{

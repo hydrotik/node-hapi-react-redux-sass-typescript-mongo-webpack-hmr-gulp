@@ -135,9 +135,9 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 payload: {
-                    username: Joi.string().token().lowercase().required(),
-                    password: Joi.string().required(),
-                    email: Joi.string().email().lowercase().required()
+                    username: Joi.string().token().lowercase().required().label('Username'),
+                    password: Joi.string().required().label('Password'),
+                    email: Joi.string().email().lowercase().required().label('Email')
                 }
             },
             pre: [
@@ -216,8 +216,8 @@ internals.applyRoutes = function (server, next) {
             validate: {
                 payload: {
                     isActive: Joi.boolean().required(),
-                    username: Joi.string().token().lowercase().required(),
-                    email: Joi.string().email().lowercase().required()
+                    username: Joi.string().token().lowercase().required().label('Username'),
+                    email: Joi.string().email().lowercase().required().label('Email')
                 }
             },
             pre: [
@@ -306,8 +306,8 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 payload: {
-                    username: Joi.string().token().lowercase().required(),
-                    email: Joi.string().email().lowercase().required()
+                    username: Joi.string().token().lowercase().required().label('Username'),
+                    email: Joi.string().email().lowercase().required().label('Email')
                 }
             },
             pre: [{
@@ -391,7 +391,7 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 payload: {
-                    password: Joi.string().required()
+                    password: Joi.string().required().label('Password')
                 }
             },
             pre: [
@@ -443,7 +443,7 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 payload: {
-                    password: Joi.string().required()
+                    password: Joi.string().required().label('Password')
                 }
             },
             pre: [{
