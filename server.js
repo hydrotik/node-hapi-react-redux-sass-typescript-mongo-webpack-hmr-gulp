@@ -6,12 +6,6 @@ var pkg = require('./package.json');
 var util = require('util');
 var Config = require('./config');
 
-require('babel-core/register')({
-    presets: ['react', 'es2015']
-});
-
-// require("amd-loader");
-
 
 Composer(function (err, server) {
 
