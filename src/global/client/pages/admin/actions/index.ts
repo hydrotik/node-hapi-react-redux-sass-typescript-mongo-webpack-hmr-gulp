@@ -40,3 +40,13 @@ export {
 
 } from './account';
 */
+
+export {
+    IAccountsSortFilter,
+    IAccountsRequest,
+    IAccountsResponse,
+    getResults,
+    setSortFilter,
+    SET_SORT_FILTER,
+    GET_RESULTS_RESPONSE
+} from './accounts'

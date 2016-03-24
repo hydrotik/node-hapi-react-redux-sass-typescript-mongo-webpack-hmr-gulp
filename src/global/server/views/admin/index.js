@@ -20,7 +20,8 @@ exports.register = function (plugin, options, next) {
             auth: {
                 strategy: 'session',
                 scope: 'admin'
-            }
+            },
+            cors: true
         },
         handler: function(request, response) {
             console.log('LOADING ADMIN');
@@ -33,9 +34,6 @@ exports.register = function (plugin, options, next) {
 
             // Hook into typescript generated files
             response.view('admin/Index.tsx', props);
-        },
-        config: {
-            cors: true
         }
     });
 

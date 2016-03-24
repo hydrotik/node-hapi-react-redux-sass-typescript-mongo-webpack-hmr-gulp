@@ -6,6 +6,7 @@
 
 // Core Imports
 import * as React from 'react';
+import {connect, Provider} from 'react-redux';
 
 // Styles
 import './_AccountSearch.scss';
@@ -18,12 +19,18 @@ import { ResultsHead } from './components/ResultsHead/ResultsHead';
 import { ResultsRow } from './components/ResultsRow/ResultsRow';
 import { FilterFormRow } from './components/FilterFormRow/FilterFormRow';
 
+// Actions
+import {IAccountsRequest, IAccountsResponse, getResults, setSortFilter} from '../../actions'
+
+
 // Interfaces
 interface IAccountSearchProps {
+    dispatch?: (func: any) => void;
+    store?: any;
     children?: any;
     routes?: any[];
     data?: any;
-
+    sortFilter: string;
     results?: any;
 
     location?: any;
@@ -76,6 +83,14 @@ const MockData: any[] = [
     }
 ];
 
+function mapStateToProps(state : any) : IAccountSearchProps {
+    return {
+        sortFilter: state.accounts['sortFilter'],
+        data: state.accounts['data']
+    }
+}
+
+@connect(mapStateToProps)
 export class AccountSearch extends React.Component<IAccountSearchProps, IAccountSearchState> {
 
     public constructor(props: IAccountSearchProps) {
@@ -86,16 +101,33 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
     }
 
     public componentDidMount(): void {
-
+        const {dispatch} : IAccountSearchProps = this.props
+        dispatch(getResults({}))
     }
 
+    public getData(): any {
+        switch(this.props.sortFilter) {
+            case "username":
+                return this.props.data.sort(this.sortHelper(this.props.sortFilter, false, function(a){return a.toUpperCase()}))
+            case "_id":
+                return this.props.data.sort(this.sortHelper(this.props.sortFilter, false, parseInt))
+            
+            case "-username":
+                return this.props.data.sort(this.sortHelper(this.props.sortFilter, true, function(a){return a.toUpperCase()}))
+            case "-_id":
+                return this.props.data.sort(this.sortHelper(this.props.sortFilter, true, parseInt))
+        }
+        return this.props.data
+    }
+    
     public context: IRouterContext;
 
     public onFiltersChange: any = (event: any): void => {
-
+        const {dispatch} : IAccountSearchProps = this.props
+        dispatch(setSortFilter(event.target.value))
         console.warn('AccountSearch :: onFiltersChange()');
         console.warn(event.target.name + ': ' + event.target.value);
-
+        
         if (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -164,7 +196,7 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
                 </FilterForm>
                 <Results>
                     <ResultsHead />
-                    <ResultsRow linkTo='accounts' data={this.state.data} />
+                    <ResultsRow linkTo='accounts' data={this.getData()}/>
                 </Results>
                 {/*<Paging
                     ref='paging'
@@ -178,3 +210,8 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
         );
     }
 }
+AccountSearch.contextTypes = {
+    store: React.PropTypes.object
+}
+
+
