@@ -1,5 +1,4 @@
-/// <reference path="../../../../../../../typings/tsd.d.ts" />
-/// <reference path="../../../../../../../typings/react-slick/react-slick.d.ts" />
+/// <reference path="../../../../../../../typings/main.d.ts" />
 
 import * as React from 'react';
 

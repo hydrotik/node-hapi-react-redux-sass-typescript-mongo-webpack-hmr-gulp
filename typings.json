@@ -11,12 +11,17 @@
     "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#421d6610bdb09e1015b71f5991d7a68d079eca21",
     "qs": "github:DefinitelyTyped/DefinitelyTyped/qs/qs.d.ts#b10e5ade29708bb0a7d21916a9fe289973520e89",
     "react": "registry:dt/react#0.14.0+20160319053454",
-    "react-dom": "github:DefinitelyTyped/DefinitelyTyped/react-dom/react-dom.d.ts#af5b8275d1f2b92738b93fddabc461fc20c553a1",
-    "react-global": "github:DefinitelyTyped/DefinitelyTyped/react/react-global.d.ts#421d6610bdb09e1015b71f5991d7a68d079eca21",
+    "react-addons-linked-state-mixin": "registry:dt/react-addons-linked-state-mixin#0.14.0+20160316155526",
+    "react-dom": "registry:dt/react-dom#0.14.0+20160316155526",
+    "react-global": "registry:dt/react-global#0.14.0+20160316155526",
+    "react-motion": "file:/Users/dadams/Desktop/typings/react-motion/react-motion.d.ts",
     "react-redux": "github:DefinitelyTyped/DefinitelyTyped/react-redux/react-redux.d.ts#af5b8275d1f2b92738b93fddabc461fc20c553a1",
     "react-router": "github:DefinitelyTyped/DefinitelyTyped/react-router/react-router.d.ts#ba4c4fc6c9ec3d1b9b7e26437d6e0f4f8337c948",
+    "react-router-active-component": "file:/Users/dadams/Desktop/typings/react-router-active-component/react-router-active-component.d.ts",
+    "react-slick": "file:/Users/dadams/Desktop/typings/react-slick/react-slick.d.ts",
     "redux": "github:DefinitelyTyped/DefinitelyTyped/redux/redux.d.ts#fc341765ebbb04b7109981a25dced01f488f4d94",
     "redux-logger": "github:DefinitelyTyped/DefinitelyTyped/redux-logger/redux-logger.d.ts#fc341765ebbb04b7109981a25dced01f488f4d94",
-    "redux-thunk": "github:DefinitelyTyped/DefinitelyTyped/redux-thunk/redux-thunk.d.ts#fc341765ebbb04b7109981a25dced01f488f4d94"
+    "redux-thunk": "github:DefinitelyTyped/DefinitelyTyped/redux-thunk/redux-thunk.d.ts#fc341765ebbb04b7109981a25dced01f488f4d94",
+    "xhr": "file:/Users/dadams/Desktop/typings/xhr/xhr.d.ts"
   }
 }

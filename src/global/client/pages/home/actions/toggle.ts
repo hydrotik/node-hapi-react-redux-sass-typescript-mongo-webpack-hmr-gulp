@@ -1,4 +1,4 @@
-/// <reference path="../../../../../../typings/tsd.d.ts" />
+/// <reference path="../../../../../../typings/main.d.ts" />
 
 export const ON_TOGGLE: string = 'ON_TOGGLE';
 
