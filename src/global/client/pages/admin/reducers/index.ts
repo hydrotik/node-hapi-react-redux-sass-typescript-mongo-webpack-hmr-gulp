@@ -11,9 +11,9 @@ import { onExampleReducer } from '../../../reducers';
 /* *********** LOCALS *********** */
 
 // Account Form
-// import { account } from './account';
+import accounts from './accounts';
 
 export const rootReducer: Reducer = combineReducers({
-    onExampleReducer
+    accounts
 });
 

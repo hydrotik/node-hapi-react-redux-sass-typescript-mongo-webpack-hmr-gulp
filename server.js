@@ -6,6 +6,8 @@ var pkg = require('./package.json');
 var util = require('util');
 var Config = require('./config');
 
+// require("amd-loader");
+
 
 Composer(function (err, server) {
 

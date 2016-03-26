@@ -57,10 +57,10 @@ export class FilterFormRow extends React.Component<IFilterFormRowProps, IFilterF
                         onChange={this.props.onMenuChange}
                         value={this.props.sort}>
 
-                        <option value='_id'>id &#9650;</option>
-                        <option value='-_id'>id &#9660;</option>
-                        <option value='username'>username &#9650;</option>
-                        <option value='-username'>username &#9660;</option>
+                        <option value='_id'>{'id ' + String.fromCharCode(9650)}</option>
+                        <option value='-_id'>{'id ' + String.fromCharCode(9660)}</option>
+                        <option value='username'>{'username ' + String.fromCharCode(9650)}</option>
+                        <option value='-username'>{'username ' + String.fromCharCode(9660)}</option>
                     </SelectControl>
                 </div>
                 <div className='col-sm-4'>

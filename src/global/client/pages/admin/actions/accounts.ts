@@ -15,10 +15,17 @@ export const CREATE_NEW_RESPONSE: string = 'CREATE_NEW_RESPONSE';
 export const DELETE_REQUEST: string = 'DELETE_REQUEST';
 export const DELETE_RESPONSE: string = 'DELETE_RESPONSE';
 
+export const SET_SORT_FILTER: string = 'SET_SORT_FILTER';
+
 const SECTION_NAME: string = 'accounts';
+
 
 export interface IAccountsAbstract {
     type: string;
+}
+
+export interface IAccountsSortFilter extends IAccountsAbstract {
+    setting: string
 }
 
 export interface IAccountsRequest extends IAccountsAbstract {
@@ -60,6 +67,15 @@ export function onResultsAction(
         success,
         loading
     };
+}
+
+export function setSortFilter(sortOrFilter: string): any {
+
+            return {
+                type: SET_SORT_FILTER,
+                setting: sortOrFilter
+            }
+
 }
 
 export function getResults(data: any): any {
