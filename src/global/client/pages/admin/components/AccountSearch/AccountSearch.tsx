@@ -1,4 +1,4 @@
-/// <reference path='../../../../../../../typings/tsd.d.ts' />
+/// <reference path='../../../../../../../typings/main.d.ts' />
 
 /*
     Maps to components/accounts/Search.jsx
@@ -99,6 +99,10 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
             data: MockData
         };
     }
+
+    static contextTypes: React.ValidationMap<any> = {
+      router: React.PropTypes.func.isRequired
+    };
 
     public componentDidMount(): void {
         const {dispatch} : IAccountSearchProps = this.props

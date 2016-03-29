@@ -1,4 +1,4 @@
-/// <reference path="../../../../typings/tsd.d.ts" />
+/// <reference path="../../../../typings/main.d.ts" />
 
 export function thunkMiddleware(_ref: any): any {
     const dispatch: any = _ref.dispatch;

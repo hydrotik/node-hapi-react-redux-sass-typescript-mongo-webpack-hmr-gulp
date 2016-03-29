@@ -1,4 +1,4 @@
-/// <reference path="../../../../typings/tsd.d.ts" />
+/// <reference path="../../../../typings/main.d.ts" />
 
 import * as lodash from 'lodash';
 var _fluxStandardAction = require('flux-standard-action');

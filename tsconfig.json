@@ -9,6 +9,12 @@
     "sourceMap": true,
     "sourceRoot": "src/global"
   },
-  "exclude" : ["node_modules", "config", "dev_server.js"],
+  "exclude": [
+    "typings/browser.d.ts",
+    "typings/browser",
+    "node_modules",
+    "config", 
+    "dev_server.js"
+  ],
   "compileOnSave": false
 }
