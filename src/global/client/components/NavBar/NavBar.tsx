@@ -4,7 +4,8 @@
 import * as React from 'react';
 import * as ClassNames from 'classnames';
 import { map } from 'lodash';
-// import { Link } from 'react-router';
+
+import { browserHistory } from 'react-router';
 
 // https://github.com/insin/react-router-active-component
 import * as activeComponent from 'react-router-active-component';
@@ -61,11 +62,13 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
     public constructor(props: INavBarProps = { navBarOpen: false, pages: {}, navStyle: 'navbar-default'}) {
         super(props);
+
+        browserHistory.listen(this.resetMenu);
     }
 
-    public componentDidMount(): void {
+    public resetMenu: any = (event: any): void => {
         const { dispatch }: INavBarProps = this.props
-        dispatch(collapseNavBar())
+        dispatch(collapseNavBar());
     }
 
     public toggleMenu: any = (event: any): void => {
