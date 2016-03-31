@@ -5,7 +5,7 @@ import { Reducer, combineReducers } from 'redux';
 /* *********** GLOBALS *********** */
 
 // Example in Global
-import { onExampleReducer } from '../../../reducers';
+import { onExampleReducer, onNavBarReducer } from '../../../reducers';
 
 /* ****************************** */
 /* *********** LOCALS *********** */
@@ -14,6 +14,7 @@ import { onExampleReducer } from '../../../reducers';
 import accounts from './accounts';
 
 export const rootReducer: Reducer = combineReducers({
+    onNavBarReducer,
     accounts
 });
 

@@ -4,11 +4,12 @@
 import * as React from 'react';
 import * as ClassNames from 'classnames';
 import { map } from 'lodash';
-// import { Link } from 'react-router';
+
+import { browserHistory } from 'react-router';
 
 // https://github.com/insin/react-router-active-component
 import * as activeComponent from 'react-router-active-component';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 // Styles
 import './_NavBar.scss';
@@ -18,7 +19,9 @@ import './_NavBar.scss';
 
 // Behaviors and Actions
 import {
-
+    INavBarAction,
+    collapseNavBar,
+    openNavBar
 } from '../../actions';
 
 // Interfaces
@@ -32,7 +35,7 @@ interface INavBarProps {
 }
 
 interface INavBarState {
-    // navBarOpen: boolean;
+    navBarOpen: boolean;
 }
 
 
@@ -42,33 +45,35 @@ const NavLink: any = ac('li');
 
 
 // Decorators
-/*
-function select(state: { formSignup: IReducer; }): INavBarState {
-    const { formSignup }: { formSignup: IReducer; } = state;
+function select(state: { onNavBarReducer: INavBarAction; }): INavBarState {
+    const { onNavBarReducer }: { onNavBarReducer: INavBarAction; } = state;
     const {
-    }: IReducer = formSignup;
+        navBarOpen
+    }: INavBarAction = onNavBarReducer;
 
     return {
+        navBarOpen
     };
 
 }
 
-@connect(select) */
+@connect(select)
 export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
     public constructor(props: INavBarProps = { navBarOpen: false, pages: {}, navStyle: 'navbar-default'}) {
         super(props);
+
+        browserHistory.listen(this.resetMenu);
     }
 
-    public componentWillReceiveProps(): void {
-
-        // this.setState({ navBarOpen: false });
+    public resetMenu: any = (event: any): void => {
+        const { dispatch }: INavBarProps = this.props
+        dispatch(collapseNavBar());
     }
 
-    public toggleMenu(): void {
-        // this.props.navBarOpen = !this.props.navBarOpen;
-        // 
-        // dispatch(toogleMenu(!this.props.navBarOpen));
+    public toggleMenu: any = (event: any): void => {
+        const { dispatch }: INavBarProps = this.props
+        dispatch(this.props.navBarOpen ? collapseNavBar() : openNavBar())
     }
 
     public createNavItem(object: any, i: number): any {
@@ -81,9 +86,11 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
     public render(): React.ReactElement<{}> {
 
+        const { navBarOpen }: INavBarProps = this.props;
+
         let navBarCollapse: any = ClassNames({
-            'navbar-collapse': true,
-            collapse: true /*!this.props.navBarOpen*/
+            'navbar-collapse': !navBarOpen,
+            collapse: !navBarOpen
         });
 
         let navStyleMain: any = ClassNames(
@@ -98,11 +105,9 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             <div className={navStyleMain}>
                 <div className="container">
                     <div className="navbar-header">
-                        <div className='navbar-header'>
-                            <a className='navbar-brand' href='/'>
-                                <img className='navbar-logo' src='/assets/logo-square.png' height='64' width='64' />
-                            </a>
-                        </div>
+                        <a className='navbar-brand' href='/'>
+                            <img className='navbar-logo' src='/assets/logo-square.png' height='64' width='64' />
+                        </a>
                         <button
                             className="navbar-toggle collapsed"
                             onClick={this.toggleMenu}>
