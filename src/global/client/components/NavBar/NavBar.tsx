@@ -102,11 +102,9 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             <div className={navStyleMain}>
                 <div className="container">
                     <div className="navbar-header">
-                        <div className='navbar-header'>
-                            <a className='navbar-brand' href='/'>
-                                <img className='navbar-logo' src='/assets/logo-square.png' height='64' width='64' />
-                            </a>
-                        </div>
+                        <a className='navbar-brand' href='/'>
+                            <img className='navbar-logo' src='/assets/logo-square.png' height='64' width='64' />
+                        </a>
                         <button
                             className="navbar-toggle collapsed"
                             onClick={this.toggleMenu}>
