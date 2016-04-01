@@ -42,23 +42,7 @@ interface IHomeState {
     day?: number;
 }
 
-
-// Decorators
-/*
-function select(state: { formSignup: IReducer; }): IHomeState {
-    const { formSignup }: { formSignup: IReducer; } = state;
-    const {
-    }: IReducer = formSignup;
-
-    return {
-    };
-
-}
-
-@connect(select) */
 export class Home extends React.Component<IHomeProps, IHomeState> implements IHome {
-
-
 
     public constructor(props: any = {}) {
         super(props);
@@ -113,60 +97,60 @@ export class Home extends React.Component<IHomeProps, IHomeState> implements IHo
                                 <div className='well text-center'>
                                     <div className='stat-value'>
                                         {this.state.hour}
-                                        </div>
-                                    <div className='stat-label'>hour</div>
                                     </div>
+                                    <div className='stat-label'>hour</div>
                                 </div>
+                            </div>
                             <div className='col-sm-4'>
                                 <div className='well text-center'>
                                     <div className='stat-value'>
                                         {this.state.minute}
-                                        </div>
-                                    <div className='stat-label'>minute</div>
                                     </div>
+                                    <div className='stat-label'>minute</div>
                                 </div>
+                            </div>
                             <div className='col-sm-4'>
                                 <div className='well text-center'>
                                     <div className='stat-value'>
                                         {this.state.second}
-                                        </div>
-                                    <div className='stat-label'>second</div>
                                     </div>
+                                    <div className='stat-label'>second</div>
                                 </div>
+                            </div>
                             <div className='col-sm-4'>
                                 <div className='well text-center'>
                                     <div className='stat-value'>
                                         {this.state.year}
-                                        </div>
-                                    <div className='stat-label'>year</div>
                                     </div>
+                                    <div className='stat-label'>year</div>
                                 </div>
+                            </div>
                             <div className='col-sm-4'>
                                 <div className='well text-center'>
                                     <div className='stat-value'>
                                         {this.state.month}
-                                        </div>
-                                    <div className='stat-label'>month</div>
                                     </div>
+                                    <div className='stat-label'>month</div>
                                 </div>
+                            </div>
                             <div className='col-sm-4'>
                                 <div className='well text-center'>
                                     <div className='stat-value'>
                                         {this.state.day}
-                                        </div>
-                                    <div className='stat-label'>day</div>
                                     </div>
+                                    <div className='stat-label'>day</div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <div className='col-sm-5'>
                         <h1 className='page-header'>Throttle guage</h1>
                         <div className='text-center'>
                             <i className='fa fa-dashboard bamf'></i>
-                            </div>
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
         );
     }
 }
