@@ -61,6 +61,7 @@
     "hapi-auth-cookie": "^6.1.1",
     "hapi-cors-headers": "^1.0.0",
     "hapi-mongo-models": "^4.2.0",
+    "hapi-typescript-views": "hydrotik/hapi-typescript-views",
     "history": "^1.17.0",
     "hoek": "^3.0.4",
     "inert": "^3.2.0",

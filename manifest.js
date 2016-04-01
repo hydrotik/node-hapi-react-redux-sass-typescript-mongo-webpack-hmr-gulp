@@ -3,7 +3,11 @@ var Hoek = require('hoek');
 var Config = require('./config');
 var Routes = require('./config.routes').routes;
 var pkg = require('./package');
-var HapiTypescriptViews = require('./src/global/server/plugins/hapi-typescript-react-views');
+var HapiTypescriptViews = require('hapi-typescript-views');
+
+console.log('HapiTypescriptViews');
+console.log(HapiTypescriptViews);
+
 
 var criteria = {
     env: process.env.NODE_ENV
