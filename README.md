@@ -1,7 +1,7 @@
 # Watts
 **The F√©k $#!† St∆ck.**
 
-At the moment I am using awesome-typescript-loader, but I plan on testing ts-loader as well. Once that is complete, I will continue to incorporate backend and micro service based communication between front and back. If you are considering running this project, feel free to reach out to me as docs are lacking and the struggle is real.
+Rapid prototyping full stack framework using our favorite technologies. Inspired by Aqua with a sprinkle of Mean.io and Mean.js
 
 **Requirements**
 * NVM is recommended
@@ -19,6 +19,11 @@ At the moment I am using awesome-typescript-loader, but I plan on testing ts-loa
 * Using hapi-typescript-views module
 
 **Working/Completed Sections**
+
+**Roadmap**
+* Extensible styling
+* Admin Dashboard via bootstrap
+* Feasibility of using either React or Angular as rendering framework
 
 #### Run
 
