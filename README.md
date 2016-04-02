@@ -1,7 +1,7 @@
 # Watts
 **The F√©k $#!† St∆ck.**
 
-Rapid prototyping full stack framework using our favorite technologies. Inspired by Aqua with a sprinkle of Mean.io and Mean.js
+Rapid prototyping full stack framework using our favorite technologies. Inspired by [Aqua](https://github.com/jedireza/aqua) with a sprinkle of Mean.io and Mean.js
 
 **Requirements**
 * NVM is recommended
