@@ -21,21 +21,6 @@ At the moment I am using awesome-typescript-loader, but I plan on testing ts-loa
 **Working/Completed Sections**
 * Signup
 
-**Installation Notes**
-* Follow thes instructions closely
-* After running the below installation process. To get the Carousel working you need to edit ```node_modules/react-slick/lib/index.js``` and make the adjustment below:
-
-**Fix strange react-slick bug with using Typescript**
-Reason for this issue is that the default export isn't properly linking. Still being looked at and creating a forked repo and loading into NPM doesn't run prepublish to generate the lib folder.
-Change ```node_modules/react-slick/lib/index.js```:
-```javascript
-module.exports = require('./slider');
-```
-to:
-```javascript
-module.exports.Slider = require('./slider');
-```
-
 #### Run
 
 ```bash
