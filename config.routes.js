@@ -61,6 +61,12 @@ var routes = [
             register: './global/server/views/login',
             options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
         }
+    },
+    {
+        plugin: {
+            register: './global/server/views/dashboard',
+            options: Object.assign({bundleName: 'app'}, Config, pkg.config, helpers)
+        }
     }
 ]
 
