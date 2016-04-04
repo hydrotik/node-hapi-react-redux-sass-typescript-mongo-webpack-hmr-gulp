@@ -39,7 +39,7 @@ export class App extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<{}> {
 
         return (
-            <div>
+            <div className='wrapper'>
                 <NavBar pages={Sections} navStyle='navbar-inverse' />
                 <SideNavigation />
                 {this.props.children}
