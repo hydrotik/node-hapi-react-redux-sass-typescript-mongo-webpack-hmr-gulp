@@ -12,7 +12,6 @@ class Index extends React.Component<IIndexProps, {}> {
     public render(): React.ReactElement<{}> {
         
         const styles = [
-            <link type="text/css" key="layout" rel="stylesheet" href="layouts/default.min.css" />,
             <link type="text/css" key="page" rel="stylesheet" href="pages/dashboard.min.css" />
         ];
         
