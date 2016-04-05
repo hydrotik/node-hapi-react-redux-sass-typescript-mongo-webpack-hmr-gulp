@@ -3,9 +3,7 @@
 // Core Imports
 import * as React from 'react';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
-import { MapGL } from 'react-map-gl';
-import * as Immutable from 'immutable';
-import { rasterTileStyle } from 'raster-tile-style';
+import { Map, PolygonGroup } from 'react-d3-map';
 
 // Styles
 import './_DashBoardVisitors.scss';
@@ -14,49 +12,80 @@ const MAPBOX_API:string = 'pk.eyJ1IjoiZGpkb25vdmFuIiwiYSI6ImNpbW1wa3FvYjAwNWt0cG
 
 // Page Components
 
-// console.warn(MapGL);
-
 // Behaviors and Actions
 import {
 
 } from '../../actions';
 
 
+// const width: number = 1000;
+// const height: number = 800;
+const scale: number = 1 << 12;
+const scaleExtent: any[] = [1 << 10, 1 << 14]
+const center: number[] = [-100.95, 40.7];
+const data: any = require('./data/states.json');
+const mapRatio: number = .5;
+
 // Interfaces
+interface IDashBoardVisitors {
+    refs: {
+        mapContainer?: any;
+    }
+}
+
 interface IDashBoardVisitorsProps {
 
 }
 
 interface IDashBoardVisitorsState {
-
+  width?: number;
+  height?: number;
 }
 
-export class DashBoardVisitors extends React.Component<IDashBoardVisitorsProps, IDashBoardVisitorsState> {
+export class DashBoardVisitors extends React.Component<IDashBoardVisitorsProps, IDashBoardVisitorsState> implements IDashBoardVisitors {
 
     public constructor(props: any = {}) {
         super(props);
+
+        this.state = {
+            width: 0,
+            height: 0
+        };
     }
+
+
+    // https://github.com/react-d3/react-d3-map
+    // http://eyeseast.github.io/visible-data/2013/08/26/responsive-d3/
+    // http://stackoverflow.com/questions/25371926/using-react-how-can-i-get-the-width-of-an-auto-sized-dom-element
+    // https://medium.com/@basarat/strongly-typed-refs-for-react-typescript-9a07419f807#.su1nktywj
+    
+    ctrls: {
+        mapContainer?: HTMLElement;
+    } = {};
+
+    public updateSize: any = (e: any): void => {
+        let w: number = this.ctrls.mapContainer.clientWidth - (20);
+        let h: number = w * mapRatio;
+
+
+        this.setState({
+          width: w,
+          height: h
+        });
+    };
+
+    public componentDidMount():void {
+      this.updateSize();
+      window.addEventListener('resize', this.updateSize);
+    };
+
+    public componentWillUnmount(): void {
+      window.removeEventListener('resize', this.updateSize);
+    };
 
     public render(): React.ReactElement<{}> {
 
-        // https://github.com/caspg/simple-data-table-map
-
-        const tileSource: string = '//tile.stamen.com/toner/{z}/{x}/{y}.png';
-
-        console.warn(rasterTileStyle);
-
-        const rts: any = rasterTileStyle([tileSource]);
-        console.warn(rts);
-        const mapStyle: any = Immutable.fromJS(rts);
-        const viewport: any = {
-          latitude: 37.78,
-          longitude: -122.45,
-          zoom: 11,
-          width: 800,
-          height: 800,
-          startDragLngLat: null,
-          isDragging: null
-        };
+        let { width, height } = this.state;
 
 
         return (
@@ -75,19 +104,39 @@ export class DashBoardVisitors extends React.Component<IDashBoardVisitorsProps, 
                     Visitors
                   </h3>
                 </div>
-                <div className="box-body">
+                <div className="box-body" ref={(mapContainer) => this.ctrls.mapContainer = mapContainer} >
                   {/* <div id="world-map" style={{height: 250, width: '100%'}} /> */ }
+
+                  <Map
+                    width= {width}
+                    height= {height}
+                    scale= {scale}
+                    scaleExtent= {scaleExtent}
+                    center= {center}
+                    clip={true}
+                    bounds={[[0, 0], [width, height]]}
+                  >
+                    <g>
+                      <PolygonGroup
+                        key= {"polygon-test"}
+                        data= {data}
+                        popupContent= {(e: any) => console.warn('popup content')}
+                        onClick= {(e: any) => console.warn('onClick')}
+                        polygonClass= {"your-polygon-css-class"}
+                      />
+                    </g>
+                  </Map>
 
                   {/*
                   https://mikewilliamson.wordpress.com/2016/02/24/using-mapbox-gl-and-webpack-together/
                 */}
 
-
+                  {/*
                   <MapGL
                     mapStyle={mapStyle}
                     {...viewport}
                   />
-
+                  */}
                 </div>
                 {/* /.box-body*/}
                 <div className="box-footer no-border">

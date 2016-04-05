@@ -12,6 +12,7 @@
 /// <reference path="browser/ambient/raster-tile-style/index.d.ts" />
 /// <reference path="browser/ambient/react-addons-linked-state-mixin/index.d.ts" />
 /// <reference path="browser/ambient/react-bootstrap/index.d.ts" />
+/// <reference path="browser/ambient/react-d3-map/index.d.ts" />
 /// <reference path="browser/ambient/react-dom/index.d.ts" />
 /// <reference path="browser/ambient/react-global/index.d.ts" />
 /// <reference path="browser/ambient/react-map-gl/index.d.ts" />
