@@ -50,6 +50,7 @@
     "confidence": "^1.4.2",
     "cookie": "^0.2.3",
     "crumb": "^6.0.0",
+    "d3": "^3.5.16",
     "dateformat": "^1.0.12",
     "es6-promise": "^3.1.2",
     "falcor": "^0.1.13",
@@ -66,6 +67,7 @@
     "hapi-typescript-views": "hydrotik/hapi-typescript-views",
     "history": "^1.17.0",
     "hoek": "^3.0.4",
+    "immutable": "^3.7.6",
     "inert": "^3.2.0",
     "isomorphic-fetch": "^2.2.0",
     "joi": "^8.0.5",
@@ -78,12 +80,15 @@
     "normalize.css": "^3.0.3",
     "object-assign": "^4.0.1",
     "qs": "^5.2.0",
+    "r-dom": "^2.1.0",
     "react": "^0.14.7",
     "react-addons-create-fragment": "^0.14.3",
     "react-bootstrap": "^0.28.5",
+    "react-d3-map": "^0.8.3",
     "react-dom": "^0.14.2",
     "react-imation": "^0.5.3",
     "react-lazy-load": "^2.0.1",
+    "react-map-gl": "^0.6.8",
     "react-motion": "^0.3.1",
     "react-notification": "^5.0.0",
     "react-picture": "0.0.4",
@@ -104,6 +109,9 @@
     "slug": "^0.9.1",
     "superagent": "^1.4.0",
     "susy": "^2.2.6",
+    "topojson": "^1.6.24",
+    "typescript-parser.jsx": "^0.1.0",
+    "typescript-simple": "^3.0.2",
     "vision": "^3.0.0",
     "visionary": "^3.0.1",
     "xhr": "^2.2.0"
@@ -172,6 +180,7 @@
     "striptags": "^2.1.1",
     "style-loader": "^0.13.0",
     "to-double-quotes": "^2.0.0",
+    "transform-loader": "^0.2.3",
     "ts-loader": "^0.7.1",
     "ts-node": "^0.5.5",
     "tslint": "^3.2.0-dev.2",
@@ -184,6 +193,7 @@
     "webpack": "^1.12.6",
     "webpack-dev-server": "^1.12.1",
     "webpack-error-notification": "^0.1.4",
-    "webpack-hot-middleware": "^2.4.1"
+    "webpack-hot-middleware": "^2.4.1",
+    "webworkify-webpack": "^1.0.6"
   }
 }
