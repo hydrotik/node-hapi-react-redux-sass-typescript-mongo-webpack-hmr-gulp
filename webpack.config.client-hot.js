@@ -122,7 +122,10 @@ module.exports = {
     resolve: {
         extensions: ['', '.js', '.json', '.jsx', '.scss', '.ts', '.tsx'],
         root: ['${__dirname}/src/global/client/'],
-        fallback: path.join(__dirname, "node_modules")
+        fallback: path.join(__dirname, "node_modules"),
+        alias: {
+            webworkify: 'webworkify-webpack'
+        }
     },
     resolveLoader: {
         root: path.join(__dirname, "node_modules")
@@ -146,7 +149,6 @@ module.exports = {
             loader: fileLoader
         }, {
             test: /\.json$/,
-            exclude: /node_modules/,
             loaders: jsonLoader
         }, {
             test: /\.(jsx|es6)$/,
@@ -160,6 +162,14 @@ module.exports = {
             test: /\.ts(x?)$/,
             loader: 'react-hot!awesome-typescript-loader',
             exclude: [/bower_components/, /node_modules/]
+        }, {
+            test: /\.js$/,
+            include: path.resolve(__dirname, 'node_modules/mapbox-gl/js/render/shaders.js'),
+            loader: 'transform/cacheable?brfs'
+        }, {
+            test: /\.js$/,
+            include: path.resolve(__dirname, 'node_modules/webworkify/index.js'),
+            loader: 'worker'
         }]
     },
     tslint: {
