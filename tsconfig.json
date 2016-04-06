@@ -12,9 +12,7 @@
   "exclude": [
     "typings/browser.d.ts",
     "typings/browser",
-    "node_modules",
-    "config", 
-    "dev_server.js"
+    "node_modules"
   ],
   "compileOnSave": false
 }
