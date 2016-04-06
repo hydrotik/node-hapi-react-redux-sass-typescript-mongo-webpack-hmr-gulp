@@ -15,6 +15,8 @@
     "raster-tile-style": "file:/Users/dadams/Desktop/Code/typings/raster-tile-style/raster-tile-style.d.ts",
     "react": "registry:dt/react#0.14.0+20160319053454",
     "react-addons-linked-state-mixin": "registry:dt/react-addons-linked-state-mixin#0.14.0+20160316155526",
+    "react-d3-basic": "file:/Users/dadams/Desktop/Code/typings/react-d3-basic/react-d3-basic.d.ts",
+    "react-d3-core": "file:/Users/dadams/Desktop/Code/typings/react-d3-core/react-d3-core.d.ts",
     "react-d3-map": "file:/Users/dadams/Desktop/Code/typings/react-d3-map/react-d3-map.d.ts",
     "react-dom": "registry:dt/react-dom#0.14.0+20160316155526",
     "react-global": "registry:dt/react-global#0.14.0+20160316155526",
