@@ -84,6 +84,8 @@
     "react": "^0.14.7",
     "react-addons-create-fragment": "^0.14.3",
     "react-bootstrap": "^0.28.5",
+    "react-d3-basic": "^1.6.11",
+    "react-d3-core": "^1.2.8",
     "react-d3-map": "^0.8.3",
     "react-dom": "^0.14.2",
     "react-imation": "^0.5.3",

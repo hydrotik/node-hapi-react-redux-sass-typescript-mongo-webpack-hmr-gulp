@@ -20,7 +20,7 @@ import {
 
 // const width: number = 1000;
 // const height: number = 800;
-const scale: number = 1 << 12;
+const scale: number = .25 << 4;
 const scaleExtent: any[] = [1 << 10, 1 << 14]
 const center: number[] = [-100.95, 40.7];
 const data: any = require('./data/states.json');
