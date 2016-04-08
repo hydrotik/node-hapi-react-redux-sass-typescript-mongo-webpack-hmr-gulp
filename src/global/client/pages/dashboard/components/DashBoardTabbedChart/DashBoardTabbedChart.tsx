@@ -2,8 +2,10 @@
 
 // Core Imports
 import * as React from 'react';
-import { Chart } from 'react-d3-core';
-import { LineChart } from 'react-d3-basic';
+// import { Chart } from 'react-d3-core';
+// import { LineChart } from 'react-d3-basic';
+import { Line } from 'react-chartjs';
+
 
 // Styles
 import './_DashBoardTabbedChart.scss';
@@ -21,65 +23,84 @@ import {
 // https://github.com/codesuki/react-d3-components/issues/9
 
 
-const data: any[] = [
-  {
-    name: "Lavon Hilll I",
-    BMI: 20.57,
-    age: 12,
-    birthday: "1994-10-26T00:00:00.000Z",
-    city: "Annatown",
-    married: true,
-    index: 1
-  },
-  {
-    name: "Clovis Pagac",
-    BMI: 24.28,
-    age: 26,
-    birthday: "1995-11-10T00:00:00.000Z",
-    city: "South Eldredtown",
-    married: false,
-    index: 3
-  },
-  {
-    name: "Gaylord Paucek",
-    BMI: 24.41,
-    age: 30,
-    birthday: "1975-06-12T00:00:00.000Z",
-    city: "Koeppchester",
-    married: true,
-    index: 5
-  },
-  {
-    name: "Ashlynn Kuhn MD",
-    BMI: 23.77,
-    age: 32,
-    birthday: "1985-08-09T00:00:00.000Z",
-    city: "West Josiemouth",
-    married: false,
-    index: 6
-  }
-];
+const data: any = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+        {
+            label: "My First dataset",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+            label: "My Second dataset",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: [28, 48, 40, 19, 86, 27, 90]
+        }
+    ]
+};
 
-const width = 100,
-    height = 50,
-    margins = {left: 0, right: 0, top: 0, bottom: 0},
-    title = "User sample",
-    // chart series,
-    // field: is what field your data want to be selected
-    // name: the name of the field that display in legend
-    // color: what color is the line
-    chartSeries = [
-      {
-        field: 'BMI',
-        name: 'BMI',
-        color: '#ff7f0e'
-      }
-    ],
-    // your x accessor
-    x = function(d) {
-      return d.index;
-    }
+const chartOptions: any = {
 
+    responsive: true,
+
+    maintainAspectRatio: true,
+
+    ///Boolean - Whether grid lines are shown across the chart
+    scaleShowGridLines : true,
+
+    //String - Colour of the grid lines
+    scaleGridLineColor : "rgba(0,0,0,.05)",
+
+    //Number - Width of the grid lines
+    scaleGridLineWidth : 1,
+
+    //Boolean - Whether to show horizontal lines (except X axis)
+    scaleShowHorizontalLines: true,
+
+    //Boolean - Whether to show vertical lines (except Y axis)
+    scaleShowVerticalLines: true,
+
+    //Boolean - Whether the line is curved between points
+    bezierCurve : true,
+
+    //Number - Tension of the bezier curve between points
+    bezierCurveTension : 0.4,
+
+    //Boolean - Whether to show a dot for each point
+    pointDot : true,
+
+    //Number - Radius of each point dot in pixels
+    pointDotRadius : 4,
+
+    //Number - Pixel width of point dot stroke
+    pointDotStrokeWidth : 1,
+
+    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+    pointHitDetectionRadius : 20,
+
+    //Boolean - Whether to show a stroke for datasets
+    datasetStroke : true,
+
+    //Number - Pixel width of dataset stroke
+    datasetStrokeWidth : 2,
+
+    //Boolean - Whether to fill the dataset with a colour
+    datasetFill : true,
+
+    //String - A legend template
+    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+
+};
 
 // Interfaces
 interface IDashBoardTabbedChartProps {
@@ -109,6 +130,11 @@ export class DashBoardTabbedChart extends React.Component<IDashBoardTabbedChartP
                 <div className="tab-content no-padding">
                     {/* Morris chart - Sales
                     <div className="chart tab-pane active" id="revenue-chart" style={{position: 'relative', height: 300}} /> */}
+
+                    <Line data={data} options={chartOptions}/>
+
+
+                    {/*}
                     <Chart
                     title={title}
                     width={width}
@@ -126,6 +152,7 @@ export class DashBoardTabbedChart extends React.Component<IDashBoardTabbedChartP
                       x={x}
                     />
                   </Chart>
+                    */}
 
                     <div className="chart tab-pane" id="sales-chart" style={{position: 'relative', height: 300}} />
                 </div>
