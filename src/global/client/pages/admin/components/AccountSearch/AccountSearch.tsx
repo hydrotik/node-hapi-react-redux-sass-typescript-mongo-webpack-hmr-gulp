@@ -18,9 +18,13 @@ import { FilterForm } from '../FilterForm/FilterForm';
 import { ResultsHead } from './components/ResultsHead/ResultsHead';
 import { ResultsRow } from './components/ResultsRow/ResultsRow';
 import { FilterFormRow } from './components/FilterFormRow/FilterFormRow';
+import {Button} from '../../../../components/Button/Button';
+import {TextControl} from '../../../../components/TextControl/TextControl';
+import CreateNewAccountForm from './components/CreateNewAccountForm/CreateNewAccountForm';
+import {Modal, ButtonToolbar, ButtonGroup} from 'react-bootstrap';
 
 // Actions
-import {IAccountsRequest, IAccountsResponse, getResults, setSortFilter} from '../../actions'
+import {IAccountsRequest, IAccountsResponse, getResults, setSortFilter, createNewAsync, createNewShowModal, createNewHideModal} from '../../actions'
 
 
 // Interfaces
@@ -32,7 +36,7 @@ interface IAccountSearchProps {
     data?: any;
     sortFilter: string;
     results?: any;
-
+    addNewAccount?: any;
     location?: any;
 }
 
@@ -48,60 +52,28 @@ interface IRouterContext {
     router: IRouter;
 }
 
-const MockData: any[] = [
-    {
-        _id : '12345004',
-        username: 'superman',
-        name: {
-            first: 'Super',
-            last: 'Man'
-        }
-    },
-    {
-        _id : '12345001',
-        username: 'johnsmith',
-        name: {
-            first: 'John',
-            last: 'Smith'
-        }
-    },
-    {
-        _id : '12345002',
-        username: 'jamesdoe',
-        name: {
-            first: 'James',
-            last: 'Doe'
-        }
-    },
-    {
-        _id : '12345003',
-        username: 'fredalan',
-        name: {
-            first: 'Fred',
-            last: 'Alan'
-        }
-    }
-];
-
 function mapStateToProps(state : any) : IAccountSearchProps {
     return {
         sortFilter: state.accounts['sortFilter'],
-        data: state.accounts['data']
+        data: state.accounts['data'],
+        addNewAccount: state.accounts['addNewAccount']
     }
 }
 
 @connect(mapStateToProps)
 export class AccountSearch extends React.Component<IAccountSearchProps, IAccountSearchState> {
-
+    
     public constructor(props: IAccountSearchProps) {
         super(props);
-        this.state = {
-            data: MockData
-        };
+    }
+    
+    refs: {
+        [key: string]: (Element);
+        createnewform: (any);
     }
 
     static contextTypes: React.ValidationMap<any> = {
-      router: React.PropTypes.func.isRequired
+      //router: React.PropTypes.func.isRequired
     };
 
     public componentDidMount(): void {
@@ -124,7 +96,7 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
         return this.props.data
     }
     
-    public context: IRouterContext;
+    //public context: IRouterContext;
 
     public onFiltersChange: any = (event: any): void => {
         const {dispatch} : IAccountSearchProps = this.props
@@ -163,7 +135,13 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
     }
 
     public onNewClick(): void {
-        // Actions.showCreateNew();
+        const {dispatch}: IAccountSearchProps = this.props;
+        dispatch(createNewShowModal())
+    }
+    
+    public onCancelClick(): void {
+        const {dispatch}: IAccountSearchProps = this.props;
+        dispatch(createNewHideModal());
     }
 
     public sortHelper(field, reverse, primer) {
@@ -174,6 +152,19 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
          } 
     }
 
+    createNew() {
+        this.refs.createnewform.submit();
+    }
+    
+    createNewOnSubmit(values: { username?, password?, email? }) {
+        const {dispatch} : IAccountSearchProps = this.props;
+        return dispatch(createNewAsync(values));
+    }
+    
+    hideModal() {
+        
+    }
+    
     public render(): React.ReactElement<{}> {
 
         let { query } = this.props.location;
@@ -182,11 +173,47 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
 
         return (
             <section className='section-accounts container'>
+            {
+                <Modal show={this.props.addNewAccount && this.props.addNewAccount.active} onHide={this.hideModal.bind(this)}>
+                         <Modal.Header>
+                             <Modal.Title>Create new</Modal.Title>
+                         </Modal.Header>
+                         <Modal.Body>
+                            <CreateNewAccountForm 
+                                ref={"createnewform"}
+                                onSubmit={this.createNewOnSubmit.bind(this)}
+                                {...this.props} />
+                            <ButtonToolbar>
+                            <ButtonGroup>
+                            <Button
+                                type={"submit"}
+                                inputClasses={{"btn-primary": true}}
+                                name={"create"}
+                                value={"Create new"}
+                                onClick={this.createNew.bind(this)}>
+                                Create new
+                            </Button>
+                            </ButtonGroup>
+                            <ButtonGroup>
+                            <Button
+                                type={"submit"}
+                                inputClasses={{"btn-default": true}}
+                                name={"cancel"}
+                                value={"Cancel"}
+                                onClick={this.onCancelClick.bind(this)}
+                                >
+                                Cancel
+                            </Button>
+                            </ButtonGroup>
+                            </ButtonToolbar>
+                         </Modal.Body>
+                     </Modal>
+                    }
                 <div className='page-header'>
                     <button
                         ref='createNew'
                         className='btn btn-default pull-right'
-                        onClick={(e: any) => this.onNewClick}>
+                        onClick={this.onNewClick.bind(this)}>
                         Create new
                     </button>
                     <h1>Accounts</h1>
@@ -214,8 +241,6 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
         );
     }
 }
-AccountSearch.contextTypes = {
-    store: React.PropTypes.object
-}
+
 
 

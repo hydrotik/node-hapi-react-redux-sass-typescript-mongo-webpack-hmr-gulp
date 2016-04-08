@@ -17,6 +17,9 @@ export const DELETE_RESPONSE: string = 'DELETE_RESPONSE';
 
 export const SET_SORT_FILTER: string = 'SET_SORT_FILTER';
 
+export const SHOW_CREATE_ACCOUNT_MODAL: string = 'SHOW_CREATE_ACCOUNT_MODAL';
+export const HIDE_CREATE_ACCOUNT_MODAL: string = 'HIDE_CREATE_ACCOUNT_MODAL';
+
 const SECTION_NAME: string = 'accounts';
 
 
@@ -56,10 +59,11 @@ export function onResultsAction(
     hasError: any,
     help: any,
     success: boolean,
-    loading: boolean
+    loading: boolean,
+    type: string = GET_RESULTS_RESPONSE
 ): IAccountsResponse {
     return {
-        type: GET_RESULTS_RESPONSE,
+        type,
         response,
         message,
         hasError,
@@ -152,3 +156,53 @@ export function doDelete(data: any, router: any): any {
         });
     };
 }
+export function createNewShowModal(): any {
+    return {
+        type: SHOW_CREATE_ACCOUNT_MODAL
+    }
+}
+export function createNewHideModal(): any {
+    return {
+        type: HIDE_CREATE_ACCOUNT_MODAL
+    }
+}
+
+export function createNewAsync(data: { accountName? }): any {
+
+    return (dispatch: any, getState: any) => {
+        dispatch(onRequestAction(CREATE_NEW_REQUEST, data));
+        
+        /*
+        let id = data.id;
+        delete data.id;
+
+        let request: any = {
+            method: 'DELETE',
+            url: '/api/' + SECTION_NAME + '/' + id,
+            data: data,
+            useAuth: true
+        };
+        
+
+        Fetch(request, (err: any, response: any) => {
+
+            if (!err) {
+                response.success = true;
+
+                if (router) {
+                    router.transitionTo(SECTION_NAME);
+                    window.scrollTo(0, 0);
+                }
+            }
+
+            // dispatch delete action
+        });
+        */
+        
+        setTimeout(() => {
+            dispatch(onResultsAction({success: true}, "ok", false, "help", true, false, CREATE_NEW_RESPONSE));
+            console.log('done');
+        },1000);
+    };
+}
+

@@ -22,11 +22,12 @@ interface ITextControlProps {
     help?: string; // = { this.state.help.name }
     disabled: boolean; // = { this.state.loading }
 
-    autoCapitalize?: boolean;
+    autoCapitalize?: string;
     inputClasses?: any;
     placeholder?: string;
     value?: any;
     onChange?: (func: any) => void;
+    onBlur?: (func: any) => void;
 
 }
 interface ITextControlState {
@@ -66,6 +67,8 @@ export class TextControl extends React.Component<ITextControlProps, ITextControl
                     value={this.props.value}
                     disabled={this.props.disabled ? true : false}
                     onChange={this.props.onChange}
+                    onBlur={this.props.onBlur}
+                    {...this.props}
                     />
                 </ControlGroup>
             );

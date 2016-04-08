@@ -17,13 +17,13 @@ class Component extends React.Component<IDefaultProps, {}> {
                 <head>
                     <title>{this.props.title}</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                    <link rel="stylesheet" href="core.min.css" /> 
+                    <link rel="stylesheet" href="/core.min.css" /> 
                     <link rel="shortcut icon" href="media/favicon.ico" />
                     {this.props.styles}
                     </head>
                 <body>
                     {this.props.children}
-                    <script src="core.min.js"></script>
+                    <script src="/core.min.js"></script>
                     {this.props.script}
                     </body>
                 </html>
