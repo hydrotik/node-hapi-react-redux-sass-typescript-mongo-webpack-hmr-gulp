@@ -10,6 +10,7 @@
 /// <reference path="main/ambient/qs/index.d.ts" />
 /// <reference path="main/ambient/raster-tile-style/index.d.ts" />
 /// <reference path="main/ambient/react-addons-linked-state-mixin/index.d.ts" />
+/// <reference path="main/ambient/react-chartjs/index.d.ts" />
 /// <reference path="main/ambient/react-d3-basic/index.d.ts" />
 /// <reference path="main/ambient/react-d3-core/index.d.ts" />
 /// <reference path="main/ambient/react-d3-map/index.d.ts" />

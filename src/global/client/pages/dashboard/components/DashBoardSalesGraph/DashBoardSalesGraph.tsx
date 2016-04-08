@@ -2,8 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
-// import { connect } from 'react-redux';
-import * as Moment from 'moment';
+import { Knob } from '../../../../components/Knob/Knob';
 
 // Styles
 import './_DashBoardSalesGraph.scss';
@@ -53,18 +52,21 @@ export class DashBoardSalesGraph extends React.Component<IDashBoardSalesGraphPro
                 <div className="box-footer no-border">
                   <div className="row">
                     <div className="col-xs-4 text-center" style={{borderRight: '1px solid #f4f4f4'}}>
-                      <input type="text" className="knob" data-readonly="true" defaultValue={20} data-width={60} data-height={60} data-fgcolor="#39CCCC" />
+                      {/*<input type="text" className="knob" data-readonly="true" defaultValue={20} data-width={60} data-height={60} data-fgcolor="#39CCCC" /> */}
+                      <Knob value={20} onChangeValue={(e: any) => console.warn(e)} />
                       <div className="knob-label">Mail-Orders</div>
                     </div>
                     {/* ./col */}
                     <div className="col-xs-4 text-center" style={{borderRight: '1px solid #f4f4f4'}}>
-                      <input type="text" className="knob" data-readonly="true" defaultValue={50} data-width={60} data-height={60} data-fgcolor="#39CCCC" />
+                      {/* <input type="text" className="knob" data-readonly="true" defaultValue={50} data-width={60} data-height={60} data-fgcolor="#39CCCC" /> */}
+                      <Knob value={50} onChangeValue={(e: any) => console.warn(e)} />
                       <div className="knob-label">Online</div>
                     </div>
                     {/* ./col */}
                     <div className="col-xs-4 text-center">
-                      <input type="text" className="knob" data-readonly="true" defaultValue={30} data-width={60} data-height={60} data-fgcolor="#39CCCC" />
-                      <div className="knob-label">In-Store</div>
+                      {/* <input type="text" className="knob" data-readonly="true" defaultValue={30} data-width={60} data-height={60} data-fgcolor="#39CCCC" /> */}
+                      <Knob value={30} onChangeValue={(e: any) => console.warn(e)} readOnly={true} className="knob" />
+                      <div className="knob-label">In-Store Read Only</div>
                     </div>
                     {/* ./col */}
                   </div>
