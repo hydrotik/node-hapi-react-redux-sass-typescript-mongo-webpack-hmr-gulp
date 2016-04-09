@@ -5,6 +5,7 @@ import {
     SET_SORT_FILTER,
     IAccountsSortFilter,
     IAccountsResponse,
+    GET_RESULTS_REQUEST,
     GET_RESULTS_RESPONSE,
     CREATE_NEW_REQUEST,
     CREATE_NEW_RESPONSE,
@@ -18,7 +19,7 @@ function setSortFilter(state: any, action : IAccountsSortFilter) : any {
 }
 
 function setAccountsData(state: any, action : IAccountsResponse) : any {
-    return _.merge({}, state, { data: action.response.data })
+    return _.merge({}, state, { loading: false, data: action.response.data })
 }
 
 function startCreateNew(state: any, action: any): any {
@@ -45,8 +46,21 @@ function endCreateNew(state: any, action: any): any {
     )
 }
 
+function waitingForResults(state: any, action: any): any {
+    return _.merge(
+        {},
+        state,
+        {
+            loading: true
+        }
+    )
+    
+}
+
 export default function (state = {data:[], sortFilter: ''}, action: any) : any {
     switch (action.type) {
+        case GET_RESULTS_REQUEST:
+            return waitingForResults(state, action)
         case SET_SORT_FILTER:
             return setSortFilter(state, action as IAccountsSortFilter)
         case GET_RESULTS_RESPONSE:

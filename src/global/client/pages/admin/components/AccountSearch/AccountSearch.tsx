@@ -21,7 +21,7 @@ import { FilterFormRow } from './components/FilterFormRow/FilterFormRow';
 import {Button} from '../../../../components/Button/Button';
 import {TextControl} from '../../../../components/TextControl/TextControl';
 import CreateNewAccountForm from './components/CreateNewAccountForm/CreateNewAccountForm';
-import {Modal, ButtonToolbar, ButtonGroup} from 'react-bootstrap';
+import {Overlay, Modal, ButtonToolbar, ButtonGroup} from 'react-bootstrap';
 
 // Actions
 import {IAccountsRequest, IAccountsResponse, getResults, setSortFilter, createNewAsync, createNewShowModal, createNewHideModal} from '../../actions'
@@ -38,6 +38,8 @@ interface IAccountSearchProps {
     results?: any;
     addNewAccount?: any;
     location?: any;
+    loading?: boolean;
+    submitting?: boolean;
 }
 
 interface IAccountSearchState {
@@ -56,7 +58,8 @@ function mapStateToProps(state : any) : IAccountSearchProps {
     return {
         sortFilter: state.accounts['sortFilter'],
         data: state.accounts['data'],
-        addNewAccount: state.accounts['addNewAccount']
+        addNewAccount: state.accounts['addNewAccount'],
+        loading: _.get(state, "accounts.loading", false)
     }
 }
 
@@ -83,13 +86,13 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
 
     public getData(): any {
         switch(this.props.sortFilter) {
-            case "username":
-                return this.props.data.sort(this.sortHelper(this.props.sortFilter, false, function(a){return a.toUpperCase()}))
+            case "name":
+                return this.props.data.sort(this.rowSortHelper(false, (x) => { return x.name.first + ' ' + x.name.last}))
             case "_id":
                 return this.props.data.sort(this.sortHelper(this.props.sortFilter, false, parseInt))
             
-            case "-username":
-                return this.props.data.sort(this.sortHelper(this.props.sortFilter, true, function(a){return a.toUpperCase()}))
+            case "-name":
+                return this.props.data.sort(this.rowSortHelper(true, (x) => { return x.name.first + ' ' + x.name.last}))
             case "-_id":
                 return this.props.data.sort(this.sortHelper(this.props.sortFilter, true, parseInt))
         }
@@ -98,40 +101,9 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
     
     //public context: IRouterContext;
 
-    public onFiltersChange: any = (event: any): void => {
-        const {dispatch} : IAccountSearchProps = this.props
-        dispatch(setSortFilter(event.target.value))
-        console.warn('AccountSearch :: onFiltersChange()');
-        console.warn(event.target.name + ': ' + event.target.value);
-        
-        if (event) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        let delta;
-
-        switch(event.target.value){
-            case '_id':
-                delta = this.state.data.sort(this.sortHelper('_id', false, parseInt));
-                break;
-            case '-_id':
-                delta = this.state.data.sort(this.sortHelper('_id', true, parseInt));
-                break;
-            case 'username':
-                delta = this.state.data.sort(this.sortHelper('username', false, function(a){return a.toUpperCase()}));
-                break;
-            case '-username':
-                delta = this.state.data.sort(this.sortHelper('username', true, function(a){return a.toUpperCase()}));
-                break;
-        } 
-
-        console.warn(delta);
-
-        this.setState({data : delta});
-
-        // this.context.router.transitionTo('accounts', {}, this.refs.filters.state);
-        window.scrollTo(0, 0);
+    public onFiltersChange(e): void {
+        const {dispatch}: IAccountSearchProps = this.props;
+        dispatch(setSortFilter(e.target.value));
     }
 
     public onNewClick(): void {
@@ -151,14 +123,23 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
            return a = key(a), b = key(b), reverse * (+(a > b) - +(b > a));
          } 
     }
+    public rowSortHelper(reverse, primer) {
+       let key = function(x) {return primer(x)}
+       reverse = !reverse ? 1 : -1;
+       return function (a, b) {
+           return a = key(a), b = key(b), reverse * (+(a > b) - +(b > a));
+         } 
+    }
 
     createNew() {
         this.refs.createnewform.submit();
     }
     
-    createNewOnSubmit(values: { username?, password?, email? }) {
+    createNewOnSubmit(values) {
         const {dispatch} : IAccountSearchProps = this.props;
-        return dispatch(createNewAsync(values));
+        const {lastName, firstName, middleName} = values;
+        
+        return dispatch(createNewAsync({last: lastName, first: firstName, middle: middleName}));
     }
     
     hideModal() {
@@ -173,7 +154,8 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
 
         return (
             <section className='section-accounts container'>
-            {
+            
+                
                 <Modal show={this.props.addNewAccount && this.props.addNewAccount.active} onHide={this.hideModal.bind(this)}>
                          <Modal.Header>
                              <Modal.Title>Create new</Modal.Title>
@@ -190,7 +172,8 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
                                 inputClasses={{"btn-primary": true}}
                                 name={"create"}
                                 value={"Create new"}
-                                onClick={this.createNew.bind(this)}>
+                                onClick={this.createNew.bind(this)}
+                                disabled={this.props.submitting}>
                                 Create new
                             </Button>
                             </ButtonGroup>
@@ -201,14 +184,14 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
                                 name={"cancel"}
                                 value={"Cancel"}
                                 onClick={this.onCancelClick.bind(this)}
-                                >
+                                disabled={this.props.submitting}>
                                 Cancel
                             </Button>
                             </ButtonGroup>
                             </ButtonToolbar>
                          </Modal.Body>
                      </Modal>
-                    }
+                    
                 <div className='page-header'>
                     <button
                         ref='createNew'
@@ -222,10 +205,10 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
                     ref='filters'
                     query={query}
                     loading={loading}
-                    onChange={this.onFiltersChange}>
+                    onChange={this.onFiltersChange.bind(this)}>
                         <FilterFormRow />
                 </FilterForm>
-                <Results>
+                <Results waiting={this.props.loading}>
                     <ResultsHead />
                     <ResultsRow linkTo='accounts' data={this.getData()}/>
                 </Results>

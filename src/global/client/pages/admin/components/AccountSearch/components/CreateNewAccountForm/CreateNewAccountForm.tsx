@@ -5,7 +5,9 @@ import {reduxForm} from 'redux-form';
 
 interface ICreateNewAccountFormProps {
     fields?: {
-        accountName: any
+        lastName: any,
+        firstName: any,
+        middleName: any
     },
     handleSubmit?: (func: any) => any,
     onSubmit?: (func: any) => any,
@@ -13,18 +15,30 @@ interface ICreateNewAccountFormProps {
     
     submitting?: boolean
 }
+
 const validate = (values) => {
-    const accountNameRegex = /^[a-zA-Z][a-zA-Z0-9]*$/;
+    const nameRegex = /^[a-zA-Z][a-zA-Z\-\.\'\ ]*$/;
     const errors:any = {  };
-    if (!values.accountName) {
-        errors.username = 'Required';
+    
+    const runValidations = (name: string, value?: string, isRequired: boolean = true) => {
+        
+        if (!value && !isRequired) {
+            return;
+        }
+        
+        if (!value) {
+            errors[name] = 'Required';
+        }
+        else if (value.length > 32) {
+            errors[name] = "Must be less than 32 characters";
+        }
+        else if (!nameRegex.test(value)) {
+            errors[name] = 'Invalid characters';
+        }
     }
-    else if (values.accountName.length > 32 || values.accountName.length < 3) {
-        errors.accountName = "Must be between 3 and 32 characters";
-    }
-    else if (!accountNameRegex.test(values.accountName)) {
-        errors.accountName = 'Must start with a letter, and can only contain letters and numbers';
-    }
+    runValidations('firstName', values.firstName)
+    runValidations('lastName', values.lastName);
+    runValidations('middleName', values.middleName, false);
     
     return errors;
 }
@@ -38,13 +52,17 @@ class CreateNewAccountForm extends React.Component<ICreateNewAccountFormProps, I
     
     public refs:{
         [key: string]: (Element);
-        accountName: (HTMLInputElement);
+        lastname: (HTMLInputElement);
+        middleName: (HTMLInputElement);
+        firstname: (HTMLInputElement);
     }
     
     render() {
         const {
             fields: {
-                accountName
+                firstName,
+                middleName,
+                lastName
             },
             handleSubmit,
             submitting,
@@ -54,14 +72,38 @@ class CreateNewAccountForm extends React.Component<ICreateNewAccountFormProps, I
              <div className="container-fluid">
                 <div className='row'>
                     <TextControl 
-                        help={accountName.touched && accountName.error ? accountName.error : ""}
-                        hasError={accountName.touched && accountName.error }
+                        help={lastName.touched && lastName.error ? lastName.error : ""}
+                        hasError={lastName.touched && lastName.error }
                         disabled={submitting}
-                        name={"accountName"}
-                        ref="accountName"
-                        label={"Account Name"}
-                        value={accountName.value}
-                        {...accountName}>
+                        name={"lastName"}
+                        ref="lastName"
+                        label={"Last Name"}
+                        value={lastName.value}
+                        {...lastName}>
+                    </TextControl>
+                </div>
+                <div className='row'>
+                    <TextControl 
+                        help={firstName.touched && firstName.error ? firstName.error : ""}
+                        hasError={firstName.touched && firstName.error }
+                        disabled={submitting}
+                        name={"firstName"}
+                        ref="firstName"
+                        label={"First Name"}
+                        value={firstName.value}
+                        {...firstName}>
+                    </TextControl>
+                </div>
+                <div className='row'>
+                    <TextControl 
+                        help={middleName.touched && middleName.error ? middleName.error : ""}
+                        hasError={middleName.touched && middleName.error }
+                        disabled={submitting}
+                        name={"middleName"}
+                        ref="middleName"
+                        label={"Middle Name"}
+                        value={middleName.value}
+                        {...middleName}>
                     </TextControl>
                 </div>
              </div>
@@ -72,6 +114,6 @@ class CreateNewAccountForm extends React.Component<ICreateNewAccountFormProps, I
 
 export default reduxForm({
     form: 'createNewAccountForm',
-    fields: ['accountName'],
+    fields: ['lastName','firstName','middleName'],
     validate
 })(CreateNewAccountForm)

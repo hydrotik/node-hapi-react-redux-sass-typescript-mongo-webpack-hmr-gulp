@@ -49,6 +49,7 @@ export {
     setSortFilter,
     SET_SORT_FILTER,
     GET_RESULTS_RESPONSE,
+    GET_RESULTS_REQUEST,
     createNewAsync,
     CREATE_NEW_REQUEST,
     CREATE_NEW_RESPONSE,
