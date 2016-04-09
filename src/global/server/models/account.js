@@ -49,17 +49,22 @@ Account.indexes = [
 
 
 Account.create = function (name, callback) {
+    var document = {
+        name
+    }
+    
+    if (typeof(name) === "string") {
+        const nameParts = name.trim().split(/\s/);
 
-    const nameParts = name.trim().split(/\s/);
-
-    const document = {
-        name: {
-            first: nameParts.shift(),
-            middle: nameParts.length > 1 ? nameParts.shift() : undefined,
-            last: nameParts.join(' ')
-        },
-        timeCreated: new Date()
-    };
+        document = {
+            name: {
+                first: nameParts.shift(),
+                middle: nameParts.length > 1 ? nameParts.shift() : undefined,
+                last: nameParts.join(' ')
+            }
+        };
+    }
+    document.timeCreated = new Date();
 
     this.insertOne(document, (err, docs) => {
 

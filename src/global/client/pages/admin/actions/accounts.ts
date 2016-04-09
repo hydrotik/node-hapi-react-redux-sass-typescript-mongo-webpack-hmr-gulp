@@ -95,26 +95,26 @@ export function getResults(data: any): any {
             query: data,
             useAuth: true
         };
+            Fetch(request, (err: any, response: any) => {
 
-        Fetch(request, (err: any, response: any) => {
+                if (!err) {
+                    response.success = true;
+                }
 
-            if (!err) {
-                response.success = true;
-            }
+                validation = ParseValidation(response.validation, response.message);
 
-            validation = ParseValidation(response.validation, response.message);
-
-            dispatch(
-                onResultsAction(
-                    response,
-                    validation.error,
-                    validation.hasError,
-                    validation.help,
-                    response.success,
-                    response.loading
-                )
-            );
-        });
+                dispatch(
+                    onResultsAction(
+                        response,
+                        validation.error,
+                        validation.hasError,
+                        validation.help,
+                        response.success,
+                        response.loading
+                    )
+                );
+            });
+        
     };
 }
 
@@ -141,6 +141,8 @@ export function doDelete(data: any, router: any): any {
             useAuth: true
         };
 
+            
+        
         Fetch(request, (err: any, response: any) => {
 
             if (!err) {
@@ -167,42 +169,37 @@ export function createNewHideModal(): any {
     }
 }
 
-export function createNewAsync(data: { accountName? }): any {
+export function createNewAsync(data: { first: string, last: string, middle: string }): any {
 
-    return (dispatch: any, getState: any) => {
-        dispatch(onRequestAction(CREATE_NEW_REQUEST, data));
+    return (dispatch: any, getState: any, router: any) => {
+        dispatch(onRequestAction(CREATE_NEW_REQUEST, data))
         
-        /*
-        let id = data.id;
-        delete data.id;
-
+        
         let request: any = {
-            method: 'DELETE',
-            url: '/api/' + SECTION_NAME + '/' + id,
-            data: data,
+            method: 'POST',
+            url: '/api/' + SECTION_NAME,
+            data: {name: data},
             useAuth: true
         };
         
+        return Fetch(request)
+        .then(
+            (result) => {
 
-        Fetch(request, (err: any, response: any) => {
-
-            if (!err) {
-                response.success = true;
-
+                dispatch(onResultsAction({success: true}, "ok", false, "help", true, false, CREATE_NEW_RESPONSE));
+                
+                dispatch(getResults({}))
                 if (router) {
                     router.transitionTo(SECTION_NAME);
                     window.scrollTo(0, 0);
                 }
             }
-
-            // dispatch delete action
-        });
-        */
-        
-        setTimeout(() => {
-            dispatch(onResultsAction({success: true}, "ok", false, "help", true, false, CREATE_NEW_RESPONSE));
-            console.log('done');
-        },1000);
+        )
+        .catch(
+            (result) => {
+                console.log(result.err);
+            }
+        )
     };
 }
 
