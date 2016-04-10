@@ -130,8 +130,7 @@ export class DashBoardTabbedChart extends React.Component<IDashBoardTabbedChartP
                 <div className="tab-content no-padding">
                     {/* Morris chart - Sales
                     <div className="chart tab-pane active" id="revenue-chart" style={{position: 'relative', height: 300}} /> */}
-
-                    <Line data={data} options={chartOptions}/>
+                    <Line data={data} options={chartOptions} className="chart-container" />
 
 
                     {/*}

@@ -59,6 +59,8 @@ declare module __ReactChartJS {
         data: any;
 
         options?: IChartOptions;
+
+        className?: any;
     }
 
     export class Line extends React.Component<ILineProps, {}>{ }
@@ -67,6 +69,8 @@ declare module __ReactChartJS {
         data: any;
 
         options?: IChartOptions;
+
+        className?: any;
     }
 
     export class Bar extends React.Component<IBarProps, {}>{ }
@@ -75,6 +79,8 @@ declare module __ReactChartJS {
         data: any;
 
         options?: IChartOptions;
+
+        className?: any;
     }
 
     export class Radar extends React.Component<IRadarProps, {}>{ }
@@ -83,6 +89,8 @@ declare module __ReactChartJS {
         data: any;
 
         options?: IChartOptions;
+
+        className?: any;
     }
 
     export class PolarArea extends React.Component<IPolarAreaProps, {}>{ }
@@ -91,6 +99,8 @@ declare module __ReactChartJS {
         data: any;
 
         options?: IChartOptions;
+
+        className?: any;
     }
 
     export class Pie extends React.Component<IPieProps, {}>{ }
@@ -99,6 +109,8 @@ declare module __ReactChartJS {
         data: any;
 
         options?: IChartOptions;
+
+        className?: any;
     }
 
     export class Doughnut extends React.Component<IDoughnutProps, {}>{ }
