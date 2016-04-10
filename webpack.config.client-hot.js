@@ -94,6 +94,11 @@ module.exports = {
             'webpack-dev-server/client?http://localhost:8080',
             'webpack/hot/only-dev-server',
             path.resolve(__dirname, './src/global/client/pages/login/index')
+        ],
+        dashboard: [
+            'webpack-dev-server/client?http://localhost:8080',
+            'webpack/hot/only-dev-server',
+            path.resolve(__dirname, './src/global/client/pages/dashboard/index')
         ]
         /* etc */
     },
@@ -116,11 +121,7 @@ module.exports = {
     ],
     resolve: {
         extensions: ['', '.js', '.json', '.jsx', '.scss', '.ts', '.tsx'],
-<<<<<<< HEAD
         root: [`${__dirname}/src/global/client/`],
-=======
-        root: ['${__dirname}/src/global/client/'],
->>>>>>> started charts
         fallback: path.join(__dirname, "node_modules")
     },
     resolveLoader: {
