@@ -23,7 +23,7 @@ class Component extends React.Component<IDefaultProps, {}> {
                     </head>
                 <body className="hold-transition skin-blue sidebar-mini">
                     {this.props.children}
-                    <script src="core.min.js"></script>
+                    {/* <script src="core.min.js"></script> */}
                     {this.props.script}
                     </body>
                 </html>

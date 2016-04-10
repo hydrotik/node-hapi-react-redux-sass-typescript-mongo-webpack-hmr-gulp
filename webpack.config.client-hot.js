@@ -146,7 +146,6 @@ module.exports = {
             loader: fileLoader
         }, {
             test: /\.json$/,
-            exclude: /node_modules/,
             loaders: jsonLoader
         }, {
             test: /\.(jsx|es6)$/,
