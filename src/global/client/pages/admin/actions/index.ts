@@ -48,5 +48,13 @@ export {
     getResults,
     setSortFilter,
     SET_SORT_FILTER,
-    GET_RESULTS_RESPONSE
+    GET_RESULTS_RESPONSE,
+    GET_RESULTS_REQUEST,
+    createNewAsync,
+    CREATE_NEW_REQUEST,
+    CREATE_NEW_RESPONSE,
+    SHOW_CREATE_ACCOUNT_MODAL,
+    HIDE_CREATE_ACCOUNT_MODAL,
+    createNewShowModal,
+    createNewHideModal
 } from './accounts'

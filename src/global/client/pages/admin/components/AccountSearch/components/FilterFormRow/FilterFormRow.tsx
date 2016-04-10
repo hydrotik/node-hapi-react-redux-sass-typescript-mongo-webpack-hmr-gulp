@@ -20,7 +20,7 @@ interface IFilterFormRowProps {
 
     loading?: boolean;
     sort?: boolean;
-    username?: string;
+    name?: string;
     limit?: number;
 
     handleChange?: (e: any) => void;
@@ -42,9 +42,9 @@ export class FilterFormRow extends React.Component<IFilterFormRowProps, IFilterF
             <div className='row'>
                 <div className='col-sm-4'>
                     <TextControl
-                        name='username'
-                        label='Username search'
-                        value={this.props.username}
+                        name='name'
+                        label='Name search'
+                        value={this.props.name}
                         onChange={this.props.handleChange}
                         disabled={this.props.loading}
                     />
@@ -59,8 +59,8 @@ export class FilterFormRow extends React.Component<IFilterFormRowProps, IFilterF
 
                         <option value='_id'>{'id ' + String.fromCharCode(9650)}</option>
                         <option value='-_id'>{'id ' + String.fromCharCode(9660)}</option>
-                        <option value='username'>{'username ' + String.fromCharCode(9650)}</option>
-                        <option value='-username'>{'username ' + String.fromCharCode(9660)}</option>
+                        <option value='name'>{'name ' + String.fromCharCode(9650)}</option>
+                        <option value='-name'>{'name ' + String.fromCharCode(9660)}</option>
                     </SelectControl>
                 </div>
                 <div className='col-sm-4'>

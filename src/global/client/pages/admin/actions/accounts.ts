@@ -17,6 +17,9 @@ export const DELETE_RESPONSE: string = 'DELETE_RESPONSE';
 
 export const SET_SORT_FILTER: string = 'SET_SORT_FILTER';
 
+export const SHOW_CREATE_ACCOUNT_MODAL: string = 'SHOW_CREATE_ACCOUNT_MODAL';
+export const HIDE_CREATE_ACCOUNT_MODAL: string = 'HIDE_CREATE_ACCOUNT_MODAL';
+
 const SECTION_NAME: string = 'accounts';
 
 
@@ -56,10 +59,11 @@ export function onResultsAction(
     hasError: any,
     help: any,
     success: boolean,
-    loading: boolean
+    loading: boolean,
+    type: string = GET_RESULTS_RESPONSE
 ): IAccountsResponse {
     return {
-        type: GET_RESULTS_RESPONSE,
+        type,
         response,
         message,
         hasError,
@@ -91,26 +95,26 @@ export function getResults(data: any): any {
             query: data,
             useAuth: true
         };
+            Fetch(request, (err: any, response: any) => {
 
-        Fetch(request, (err: any, response: any) => {
+                if (!err) {
+                    response.success = true;
+                }
 
-            if (!err) {
-                response.success = true;
-            }
+                validation = ParseValidation(response.validation, response.message);
 
-            validation = ParseValidation(response.validation, response.message);
-
-            dispatch(
-                onResultsAction(
-                    response,
-                    validation.error,
-                    validation.hasError,
-                    validation.help,
-                    response.success,
-                    response.loading
-                )
-            );
-        });
+                dispatch(
+                    onResultsAction(
+                        response,
+                        validation.error,
+                        validation.hasError,
+                        validation.help,
+                        response.success,
+                        response.loading
+                    )
+                );
+            });
+        
     };
 }
 
@@ -137,6 +141,8 @@ export function doDelete(data: any, router: any): any {
             useAuth: true
         };
 
+            
+        
         Fetch(request, (err: any, response: any) => {
 
             if (!err) {
@@ -152,3 +158,48 @@ export function doDelete(data: any, router: any): any {
         });
     };
 }
+export function createNewShowModal(): any {
+    return {
+        type: SHOW_CREATE_ACCOUNT_MODAL
+    }
+}
+export function createNewHideModal(): any {
+    return {
+        type: HIDE_CREATE_ACCOUNT_MODAL
+    }
+}
+
+export function createNewAsync(data: { first: string, last: string, middle: string }): any {
+
+    return (dispatch: any, getState: any, router: any) => {
+        dispatch(onRequestAction(CREATE_NEW_REQUEST, data))
+        
+        
+        let request: any = {
+            method: 'POST',
+            url: '/api/' + SECTION_NAME,
+            data: {name: data},
+            useAuth: true
+        };
+        
+        return Fetch(request)
+        .then(
+            (result) => {
+
+                dispatch(onResultsAction({success: true}, "ok", false, "help", true, false, CREATE_NEW_RESPONSE));
+                
+                dispatch(getResults({}))
+                if (router) {
+                    router.transitionTo(SECTION_NAME);
+                    window.scrollTo(0, 0);
+                }
+            }
+        )
+        .catch(
+            (result) => {
+                console.log(result.err);
+            }
+        )
+    };
+}
+
