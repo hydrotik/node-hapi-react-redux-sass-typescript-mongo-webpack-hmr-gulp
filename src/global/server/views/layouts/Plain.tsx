@@ -21,9 +21,9 @@ class Component extends React.Component<IDefaultProps, {}> {
                     <link rel="shortcut icon" href="media/favicon.ico" />
                     {this.props.styles}
                     </head>
-                <body>
+                <body className="hold-transition skin-blue sidebar-mini">
                     {this.props.children}
-                    <script src="/core.min.js"></script>
+                    {/* <script src="core.min.js"></script> */}
                     {this.props.script}
                     </body>
                 </html>
