@@ -210,7 +210,7 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
                 </FilterForm>
                 <Results waiting={this.props.loading}>
                     <ResultsHead />
-                    <ResultsRow linkTo='accounts' data={this.getData()}/>
+                    <ResultsRow linkTo='admin/accounts' data={this.getData()}/>
                 </Results>
                 {/*<Paging
                     ref='paging'
