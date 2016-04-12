@@ -27,6 +27,8 @@ Rapid prototyping full stack framework using our favorite technologies. Inspired
 
 #### Run
 
+* Be sure you clear your localhost cookies before running the project
+
 ```bash
 git clone https://github.com/hydrotik/node-hapi-react-redux-sass-typescript-mongo-webpack-hmr-gulp.git wattsproject
 cd wattsproject
