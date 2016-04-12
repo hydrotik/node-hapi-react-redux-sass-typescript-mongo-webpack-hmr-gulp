@@ -105,7 +105,7 @@ fi
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \█
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \═
 echo "Starting installation tool ${DATE}$(echo_clear)"
-
+echo "Be sure to have Mongo running in another process during this installation$(echo_clear)"
 
 #########################################################################################
 #
@@ -331,23 +331,30 @@ fi
 # Run Local instance?
 #
 echo "\n$(echo_cause)Finalizing project setup$(echo_clear)"
-read -p "Would you like to start the local instance? " -n 1 -r
-echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    clear
+echo "\n$(echo_cause)You may stop Mongo now$(echo_clear)"
+# read -p "Would you like to start the local instance? " -n 1 -r
+# echo    # (optional) move to a new line
+# if [[ $REPLY =~ ^[Yy]$ ]]
+# then
+#     clear
+#     DELTADATE=`date +%m-%d-%Y" "%r`
+#     echo "\n$(echo_cause)"
+#     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \*
+#     echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)\n\n"
+#     echo "$(echo_effect)Installation started ${DATE} and finished ${DELTADATE} $(echo_if 1)$(echo_clear)"
+#     echo "$(echo_cause)Starting local instance...$(echo_clear)\n\n"
+#     run "npm run watch"
+# else
+#     clear
+#     DELTADATE=`date +%m-%d-%Y" "%r`
+#     echo "\n$(echo_cause)"
+#     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \*
+#     echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)\n\n"
+#     echo "$(echo_effect)Installation started ${DATE} and finished ${DELTADATE} $(echo_if 1)$(echo_clear)"
+# fi
     DELTADATE=`date +%m-%d-%Y" "%r`
     echo "\n$(echo_cause)"
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \*
     echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)\n\n"
     echo "$(echo_effect)Installation started ${DATE} and finished ${DELTADATE} $(echo_if 1)$(echo_clear)"
-    echo "$(echo_cause)Starting local instance...$(echo_clear)\n\n"
-    run "npm run watch"
-else
-    clear
-    DELTADATE=`date +%m-%d-%Y" "%r`
-    echo "\n$(echo_cause)"
-    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \*
-    echo "$(echo_success)SUCCESS $(echo_if 1)$(echo_if 1)$(echo_if 1)$(echo_if 1): NPM Setup complete!$(echo_clear)\n\n"
-    echo "$(echo_effect)Installation started ${DATE} and finished ${DELTADATE} $(echo_if 1)$(echo_clear)"
-fi
+    echo "$(echo_effect)Start the project locally by running npm run watch$(echo_clear)"

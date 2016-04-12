@@ -28,6 +28,7 @@ Rapid prototyping full stack framework using our favorite technologies. Inspired
 #### Run
 
 * Be sure you clear your localhost cookies before running the project
+* When you do run setup, be sure to have Mongo Running. After config setup is complete, you can stop Mongo and npm run watch will automatically start Mongo
 
 ```bash
 git clone https://github.com/hydrotik/node-hapi-react-redux-sass-typescript-mongo-webpack-hmr-gulp.git wattsproject
