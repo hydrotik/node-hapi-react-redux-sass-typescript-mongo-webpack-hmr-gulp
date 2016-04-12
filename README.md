@@ -22,7 +22,7 @@ Rapid prototyping full stack framework using our favorite technologies. Inspired
 
 **Roadmap**
 * Extensible styling
-* Admin Dashboard via bootstrap
+* Admin Dashboard via bootstrap. Started converting [AdminLTE](https://almsaeedstudio.com/preview) over to React
 * Feasibility of using either React or Angular as rendering framework
 
 #### Run
