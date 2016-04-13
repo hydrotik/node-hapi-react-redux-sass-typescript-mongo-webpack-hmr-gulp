@@ -84,8 +84,8 @@ module.exports = {
     entry: Entries,
     output: {
         path: buildDir,
-        filename: 'js/[name].min.js',
-        sourceMapFilename: 'js/[name].min.map',
+        filename: '[name].min.js',
+        sourceMapFilename: '[name].min.map',
         publicPath: "http://localhost:8080/",
         devtoolModuleFilenameTemplate: "../[resource-path]",
         devtoolFallbackModuleFilenameTemplate:"../[resource-path]"

@@ -1,8 +1,9 @@
 var Gulp = require('gulp');
 
 
-Gulp.task('watch', function () {
+Gulp.task('watch', ['sass'], function () {
 
     global.isWatching = true;
-    Gulp.watch('./client/**/*.less', ['less']);
+    Gulp.watch('./src/global/client/**/*.scss', ['sass']);
+    Gulp.watch('./src/global/server/**/*.scss', ['sass']);
 });
