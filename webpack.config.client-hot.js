@@ -8,6 +8,28 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var util = require('util');
 var webpack = require('webpack');
+var Pages = require('./config.pages').pages;
+
+var processEntries = function(pages){
+    var entry = {}, webpack, src, id;
+    for (var i = pages.length - 1; i >= 0; i--) {
+        if(pages[i].hasOwnProperty('webpack') && pages[i].webpack.hasOwnProperty('id') && pages[i].webpack.id !== ''){
+            webpack = pages[i].webpack;
+            id = webpack.id;
+            src = webpack.src;
+
+            entry[id] = [
+                'webpack-dev-server/client?http://localhost:8080',
+                'webpack/hot/only-dev-server',
+                path.resolve(__dirname, src),
+            ]
+        }
+        
+    }
+    return entry;
+}
+
+var Entries = processEntries(Pages);
 
 var buildDir = path.resolve(Config.get('/buildDir'));
 
@@ -59,49 +81,7 @@ cssLoader = [
 
 module.exports = {
     devtool: 'source-map',
-    entry: {
-        home: [
-            'webpack-dev-server/client?http://localhost:8080',
-            'webpack/hot/only-dev-server',
-            path.resolve(__dirname, './src/global/client/pages/home/index'),
-        ],
-        about: [
-            'webpack-dev-server/client?http://localhost:8080',
-            'webpack/hot/only-dev-server',
-            path.resolve(__dirname, './src/global/client/pages/about/index')
-        ],
-        contact: [
-            'webpack-dev-server/client?http://localhost:8080',
-            'webpack/hot/only-dev-server',
-            path.resolve(__dirname, './src/global/client/pages/contact/index')
-        ],
-        signup: [
-            'webpack-dev-server/client?http://localhost:8080',
-            'webpack/hot/only-dev-server',
-            path.resolve(__dirname, './src/global/client/pages/signup/index')
-        ],
-        account: [
-            'webpack-dev-server/client?http://localhost:8080',
-            'webpack/hot/only-dev-server',
-            path.resolve(__dirname, './src/global/client/pages/account/index')
-        ],
-        admin: [
-            'webpack-dev-server/client?http://localhost:8080',
-            'webpack/hot/only-dev-server',
-            path.resolve(__dirname, './src/global/client/pages/admin/index')
-        ],
-        login: [
-            'webpack-dev-server/client?http://localhost:8080',
-            'webpack/hot/only-dev-server',
-            path.resolve(__dirname, './src/global/client/pages/login/index')
-        ],
-        dashboard: [
-            'webpack-dev-server/client?http://localhost:8080',
-            'webpack/hot/only-dev-server',
-            path.resolve(__dirname, './src/global/client/pages/dashboard/index')
-        ]
-        /* etc */
-    },
+    entry: Entries,
     output: {
         path: buildDir,
         filename: 'js/[name].min.js',
