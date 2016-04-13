@@ -11,7 +11,7 @@ import { Home } from './components/Home/Home';
 import { NotFound } from '../../components/NotFound/NotFound';
 
 import { AccountSearch } from './components/AccountSearch/AccountSearch';
-import { AccountDetails } from './components/AccountDetails/AccountDetails';
+import { AccountDetails, AccountDetailsForm } from './components/AccountDetails/AccountDetails';
 import { AdminSearch } from './components/AdminSearch/AdminSearch';
 import { AdminDetails } from './components/AdminDetails/AdminDetails';
 import { AdminGroupSearch } from './components/AdminGroupSearch/AdminGroupSearch';
@@ -75,7 +75,7 @@ class Bootstrap extends React.Component<IBootstrapProps, IBootstrapState> {
                     <Route path='/admin' component={App}>
                         <IndexRoute component={Home} />
                         <Route path='accounts' component={AccountSearch} />
-                        <Route path='accounts/:id' component={AccountDetails} />
+                        <Route path='accounts/:id' component={AccountDetailsForm} />
                         <Route path='admins' component={AdminSearch} />
                         <Route path='admins/:id' component={AdminDetails} />
                         <Route path='admin-groups' component={AdminGroupSearch} />
