@@ -1,7 +1,7 @@
 var Confidence = require('confidence');
 var Hoek = require('hoek');
 var Config = require('./config');
-var Routes = require('./config.routes').routes;
+var Pages = require('./config.pages').pages;
 var pkg = require('./package');
 var HapiTypescriptViews = require('hapi-typescript-views');
 
@@ -12,6 +12,22 @@ var criteria = {
 var helpers = {
     artifactRoot : process.env.NODE_ENV === 'production' ? '' : 'http://' + Config.get('/devHost') + ':' + Config.get('/webpackPort') + '/'
 }
+
+var processRoutes = function(pages){
+    var routes = [], route;
+    for (var i = pages.length - 1; i >= 0; i--) {
+        route = pages[i].route;
+        if(route.plugin.options.hasOwnProperty('bundleName')){
+            route.plugin.options = Object.assign(route.plugin.options, Config, pkg.config, helpers);
+
+        }
+        routes.push(route);
+        
+    }
+    return routes;
+}
+
+var Routes = processRoutes(Pages);
 
 var manifest = {
     $meta: 'This file defines the plot device.',
