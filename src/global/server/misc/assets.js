@@ -7,6 +7,19 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'GET',
+        path: '/js/{param*}',
+        handler: {
+            directory: {
+                path: 'static/pages/js'
+            }
+        },
+        config: {
+            cors: true
+        }
+    });
+
+    server.route({
+        method: 'GET',
         path: '/{param*}',
         handler: {
             directory: {
@@ -17,6 +30,8 @@ exports.register = function (server, options, next) {
             cors: true
         }
     });
+    
+    
 
 
     next();
