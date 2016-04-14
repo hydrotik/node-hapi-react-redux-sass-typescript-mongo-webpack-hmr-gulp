@@ -3,7 +3,7 @@
 // Core Imports
 import * as React from 'react';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
-import { Map, PolygonGroup } from 'react-d3-map';
+// import { Map, PolygonGroup } from 'react-d3-map';
 
 
 // Uber - Map - GL
@@ -38,22 +38,11 @@ import {
 // const data: any = require('./data/states.json');
 const mapRatio: number = .5;
 
-let initialPoints: any[] = [
-  {location: [-122.39508481737994, 37.79450507471435], id: 0},
-  {location: [-122.39750244137034, 37.79227619464379], id: 1},
-  {location: [-122.4013303460217, 37.789251178427776], id: 2},
-  {location: [-122.40475531334141, 37.786862920252986], id: 3},
-  {location: [-122.40505751634022, 37.78861431712821], id: 4},
-  {location: [-122.40556118800487, 37.79060449046487], id: 5},
-  {location: [-122.4088854209916, 37.790047247333675], id: 6},
-  {location: [-122.4091876239904, 37.79275381746233], id: 7},
-  {location: [-122.40989276432093, 37.795619489534374], id: 8},
-  {location: [-122.41049717031848, 37.79792786675678], id: 9},
-  {location: [-122.4109001076502, 37.80031576728801], id: 10},
-  {location: [-122.41916032295062, 37.79920142331301], id: 11}
-];
-
-let ids: number = initialPoints[initialPoints.length - 1].id;
+var points: any = Immutable.fromJS([
+  {location:[-122.39508481737994, 37.79450507471435 ], id: 0},
+  {location:[-122.39750244137034, 37.79227619464379 ], id: 1},
+  {location:[-122.4013303460217,  37.789251178427776], id: 2}
+]);
 
 // Interfaces
 interface IDashBoardVisitors {
@@ -93,8 +82,7 @@ export class DashBoardVisitors extends React.Component<IDashBoardVisitorsProps, 
             startDragLngLat: null,
             isDragging: null
           },
-          mapStyle: mapStyle,
-          points: Immutable.fromJS(initialPoints)
+          mapStyle: mapStyle
         }
 
         /*
@@ -118,12 +106,6 @@ export class DashBoardVisitors extends React.Component<IDashBoardVisitorsProps, 
     public updateSize: any = (e: any): void => {
         let w: number = this.ctrls.mapContainer.clientWidth - (20);
         let h: number = w * mapRatio;
-        /*
-        this.setState({
-          width: w,
-          height: h
-        });
-        */
 
         let newViewport: any = this.state.viewport;
         newViewport.width = w;
@@ -142,25 +124,6 @@ export class DashBoardVisitors extends React.Component<IDashBoardVisitorsProps, 
       window.removeEventListener('resize', this.updateSize);
     };
 
-    public onAddPoint: any = (location: any): void => {
-      var points = this.state.points.push(new Immutable.Map({
-        location: new Immutable.List(location),
-        id: ++ids
-      }));
-      this.setState({points: points});
-    };
-
-    public onUpdatePoint: any = (opt: any): any => {
-      var index = this.state.points.findIndex(function filter(p) {
-        return p.get('id') === opt.key;
-      });
-      var point = this.state.points.get(index);
-      point = point.set('location', new Immutable.List(opt.location));
-      var points = this.state.points.set(index, point);
-      this.setState({points: points});
-    };
-
-
     public onChangeViewport: any = (newViewport: any): void => {
       let w: number = this.ctrls.mapContainer.clientWidth - (20);
       let h: number = w * mapRatio;
@@ -170,45 +133,6 @@ export class DashBoardVisitors extends React.Component<IDashBoardVisitorsProps, 
 
       let viewport = assign({}, this.state.viewport, newViewport);
       this.setState({viewport});
-    };
-
-    public renderOverlays: any = (viewport: any): any => {
-      return [
-        r(SVGOverlay, assign({}, viewport, {
-          redraw: function _redraw(opt) {
-            if (!this.state.points.size) {
-              return null;
-            }
-            var d = 'M' + this.state.points.map(function _map(point) {
-              return opt.project(point.get('location').toArray());
-            }).join('L');
-            return r.path({
-              style: {stroke: '#1FBAD6', strokeWidth: 2, fill: 'none'},
-              d: d
-            });
-          }.bind(this)
-        })),
-        r(DraggableOverlay, assign({}, viewport, {
-          points: this.state.points,
-          onAddPoint: this.onAddPoint,
-          onUpdatePoint: this.onUpdatePoint,
-          renderPoint: function renderPoint(point, pixel) {
-            return r.g({}, [
-              r.circle({
-                r: 10,
-                style: {
-                  fill: '#1FBAD6',
-                  pointerEvents: 'all'
-                }
-              }),
-              r.text({
-                style: {fill: 'white', textAnchor: 'middle'},
-                y: 5
-              }, point.get('id'))
-            ]);
-          }
-        }))
-      ];
     };
 
     public render(): React.ReactElement<{}> {
@@ -238,45 +162,41 @@ export class DashBoardVisitors extends React.Component<IDashBoardVisitorsProps, 
                   {/* <div id="world-map" style={{height: 250, width: '100%'}} /> */ }
 
                   {/*
-                  <Map
-                    width= {width}
-                    height= {height}
-                    scale= {scale}
-                    scaleExtent= {scaleExtent}
-                    center= {center}
-                    clip={true}
-                    bounds={[[0, 0], [width, height]]}
-                  >
-                    <g>
-                      <PolygonGroup
-                        key= {"polygon-test"}
-                        data= {data}
-                        popupContent= {(e: any) => console.warn('popup content')}
-                        onClick= {(e: any) => console.warn('onClick')}
-                        polygonClass= {"your-polygon-css-class"}
-                      />
-                    </g>
-                  </Map>
-                  */}
-                  {/*
                   https://mikewilliamson.wordpress.com/2016/02/24/using-mapbox-gl-and-webpack-together/
                 */}
                 <MapGL
                     onChangeViewport={this.onChangeViewport}
                     mapboxApiAccessToken="pk.eyJ1IjoiZGpkb25vdmFuIiwiYSI6ImNpbW1wODk4ejAwNHB2N2tyaDk4aTZrczcifQ.fqZLlfKuakeEd02cNMklRQ"
                     mapStyle={mapStyle}
+                    {...viewport}>
+                  <DraggableOverlay
                     {...viewport}
+                    points={points}
+                    isDragging={false}
+                    renderPoint={point => {
+                      let scale = .20;
+                      return <g transform={'scale(' + scale + '), translate(-40, -115)'}>
+                        
+
+                      <path style={{'fill': '#c64242', 'fillOpacity': '0.98823529'}} d="M 46.977003,126.64334 C 46.693972,125.95584 40.813862,120.20567 36.603071,114.98067 11.655836,81.858372 -16.158365,51.082905 16.319943,13.682837 30.700637,-0.21083367 48.43303,-1.0034227 66.662563,5.4726973 117.9922,35.174601 80.828906,83.627914 56.427079,115.48067 l -9.450076,11.16267 z M 62.417383,75.872046 C 96.654166,51.387445 70.185413,4.2391813 32.569429,19.913013 21.585178,25.769872 16.134954,35.960547 15.944071,47.980664 c -0.524495,11.693153 5.685418,21.471037 15.526227,27.460808 7.055481,3.840074 10.157178,4.533661 18.145697,4.057654 5.177622,-0.308516 8.161127,-1.153847 12.801388,-3.62708 z" id="path4127" />
+                      <path style={{'fill': '#c64242', 'fillOpacity': '0.98823529', 'fillRule': 'nonzero', 'stroke': 'none'}} id="path4129" d="m 41.682107,89.891342 a 51.222816,41.754009 0 1 1 1.276617,0.208091" transform="matrix(0.87829487,0,0,1.0519028,0.55474126,-6.9952658)"/>
+                      <path style={{'opacity': '0.34016395', 'fill': '#000000', 'fillOpacity': '0', 'fillRule': 'nonzero', 'stroke': 'none'}} id="path4131" d="m 43.631232,69.128546 a 26.010695,20.991087 0 1 1 0.64826,0.104614" transform="translate(0.64534523,0)"/>
+                      <path style={{'fill': '#000080', 'fillOpacity': '0', 'fillRule': 'nonzero', 'stroke': 'none'}} id="path4135" d="m 31.892136,114.28 a 16.655972,11.750445 0 1 1 0.415114,0.0586" transform="translate(0.64534523,0)"/>
+                      <path style={{'fill': '#b72c2c', 'fillOpacity': '1', 'fillRule': 'nonzero', 'stroke': 'none'}} id="path4149" d="m 45.521425,84.824145 a 34.452763,33.540108 0 1 1 0.85866,0.167155" transform="matrix(0.97020484,0,0,1.0272058,-4.0587829,-5.7503824)"/>
+                      <path style={{'fill': '#ffffff', 'fillOpacity': '1', 'fillRule': 'nonzero', 'stroke': 'none'}} id="path4184" d="m 57.079416,104.60778 a 34.203297,36.623341 0 1 1 0.852443,0.18252" transform="matrix(0.64629924,0,0,0.61681122,5.1261236,4.9013803)"/>
+
+
+
+
+
+
+                        <text style={{fill: 'white', textAnchor: 'middle'}} y="6">
+                          {point.get('id')}
+                        </text>
+                      </g>;
+                    }}
                   />
-                  {/* r.div([
-                    r(<MapGL
-                    onChangeViewport={this.onChangeViewport}
-                    mapboxApiAccessToken="pk.eyJ1IjoiZGpkb25vdmFuIiwiYSI6ImNpbW1wODk4ejAwNHB2N2tyaDk4aTZrczcifQ.fqZLlfKuakeEd02cNMklRQ"
-                    mapStyle={mapStyle}
-                    {...viewport}
-                  />, assign({}, viewport, {
-                      onChangeViewport: this.onChangeViewport
-                    }), [this.renderOverlays(viewport)])
-                  ]) */}
+                </MapGL>
                   
                 </div>
                 {/* /.box-body*/}
