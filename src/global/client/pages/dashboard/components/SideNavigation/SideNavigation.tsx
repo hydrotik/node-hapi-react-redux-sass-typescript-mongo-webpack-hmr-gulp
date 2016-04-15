@@ -69,7 +69,8 @@ export class SideNavigation extends React.Component<ISideNavigationProps, ISideN
                     <ul className="treeview-menu">
                       <li className="active"><a href="index.html"><i className="fa fa-circle-o" /> Dashboard v1</a></li>
                       <li><a href="index2.html"><i className="fa fa-circle-o" /> Dashboard v2</a></li>
-                      <NavLink to="/dashboard/video"><i className="fa fa-circle-o" /> Video Player</NavLink>;
+                      <NavLink to="/dashboard/video"><i className="fa fa-circle-o" /> Video Player </NavLink>
+                      <NavLink to="/dashboard/drawing"><i className="fa fa-circle-o" /> Drawing </NavLink>
                     </ul>
                   </li>
                   <li className="treeview">
