@@ -9,6 +9,7 @@ import { browserHistory, Router, IndexRoute, Route} from 'react-router';
 import { App } from './components/App/App';
 import { Home } from './components/Home/Home';
 import { Video } from './components/Video/Video';
+import { Drawing } from './components/Drawing/Drawing';
 import { NotFound } from '../../components/NotFound/NotFound';
 
 
@@ -65,6 +66,7 @@ class Bootstrap extends React.Component<IBootstrapProps, IBootstrapState> {
                     <Route path='/dashboard' component={App}>
                         <IndexRoute component={Home} />
                         <Route path='video' component={Video} />
+                        <Route path='drawing' component={Drawing} />
                         <Route path='*' component={ NotFound }/>
                     </Route>
                 </Router>

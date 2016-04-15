@@ -114,7 +114,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
 
     public renderLoadButton = (url, label) => {
       return (
-        <button onClick={() => this.load(url)}>
+        <button className="btn bg-teal btn-sm" onClick={() => this.load(url)}>
           {label}
         </button>
       )
