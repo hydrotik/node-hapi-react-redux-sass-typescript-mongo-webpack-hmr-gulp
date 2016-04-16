@@ -202,5 +202,8 @@
     "webpack-error-notification": "^0.1.4",
     "webpack-hot-middleware": "^2.4.1",
     "webworkify-webpack": "^1.0.6"
+  },
+  "browser": {
+    "fs": false
   }
 }
