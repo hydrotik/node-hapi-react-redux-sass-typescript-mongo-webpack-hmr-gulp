@@ -50,6 +50,8 @@ export class Drawing extends React.Component<IDrawingPageProps, IDrawingPageStat
 
     // https://github.com/sebmarkbage/art/
     // https://github.com/pughpugh/react-countdown-clock
+    // https://github.com/flipboard/react-canvas
+    // https://www.tensorflow.org/versions/r0.8/tutorials/image_recognition/index.html
 
     public render(): React.ReactElement<{}> {
 
