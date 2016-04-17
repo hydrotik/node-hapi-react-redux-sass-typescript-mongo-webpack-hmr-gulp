@@ -110,6 +110,10 @@ module.exports = {
     resolveLoader: {
         root: path.join(__dirname, "node_modules")
     },
+    node: {
+        console: true,
+        fs: "empty"
+    },
     module: {
         preloaders: [{
             test: /\.ts(x?)$/,
