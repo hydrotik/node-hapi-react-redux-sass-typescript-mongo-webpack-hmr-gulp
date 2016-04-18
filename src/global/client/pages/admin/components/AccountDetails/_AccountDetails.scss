@@ -1,0 +1,16 @@
+.section-account-details {
+    .list-group-statuses, .list-group-notes {
+        li:nth-child(odd) {background-color:#eee}
+        
+        .badge {color:#666;font-weight:normal;background-color:transparent;border:1px solid #ccc}
+    }
+    
+    .form-group-notes {
+        textarea {
+            border-bottom-right-radius:0;border-bottom-left-radius:0
+        }
+        
+        .btn-block{border-top-right-radius:0;border-top-left-radius:0}
+    }
+}
+

@@ -34,11 +34,21 @@ var Entries = processEntries(Pages);
 var buildDir = path.resolve(Config.get('/buildDir'));
 
 var DEBUG = process.env.NODE_ENV === 'development';
+var PRODUCTION = process.env.NODE_ENV === 'production';
 var TEST = process.env.NODE_ENV === 'test';
 
 var cssBundle = path.join('css', util.format('app.%s.css', pkg.version));
 var jsBundle = path.join('js', util.format('app.%s.js', pkg.version));
 var jsMapBundle = path.join('js', 'index.js.map');
+
+var extractCSS = new ExtractTextPlugin(
+    '[name].min.css',
+    {
+        allChunks: true,
+        publicPath: 'http://localhost:8080/'
+    }
+)
+
 
 var jsxLoader;
 var sassLoader;
@@ -67,7 +77,6 @@ jsxLoader.push('react-hot');
 jsxLoader.push('babel-loader');
 sassParams.push('sourceMap', 'sourceMapContents=true');
 sassLoader = [
-    'style-loader',
     'css-loader?sourceMap',
     'sass-loader?' + sassParams.join('&')
 ].join('!');
@@ -91,10 +100,7 @@ module.exports = {
         devtoolFallbackModuleFilenameTemplate:"../[resource-path]"
     },
     plugins: [
-        new ExtractTextPlugin(cssBundle, {
-            allChunks: true,
-            publicPath: 'http://localhost:8080/'
-        }),
+        extractCSS,
         new webpack.optimize.DedupePlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new ForkCheckerPlugin()
@@ -127,7 +133,7 @@ module.exports = {
             loader: 'style!css'
         }, {
             test: /\.scss$/,
-            loader: sassLoader
+            loader: PRODUCTION ? extractCSS.extract('style-loader', sassLoader) : 'style-loader!' +sassLoader
         }, {
             test: /\.jpe?g$|\.gif$|\.png$|\.ico|\.svg$|\.woff$|\.ttf$|\.eot$/,
             loader: fileLoader
