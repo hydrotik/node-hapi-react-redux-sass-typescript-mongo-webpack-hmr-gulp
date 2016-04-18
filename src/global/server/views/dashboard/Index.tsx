@@ -14,7 +14,7 @@ class Index extends React.Component<IIndexProps, {}> {
         const styles = [
             <link type="text/css" key="font-awesome" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />,
             <link type="text/css" key="ionicons" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />,
-            <link type="text/css" key="page" rel="stylesheet" href="pages/dashboard.min.css" />
+            <link type="text/css" key="dashboard" rel="stylesheet" href="/assets/dashboard/dashboard.min.css" />,
         ];
         
         const script = <script src={this.props.js}></script>;

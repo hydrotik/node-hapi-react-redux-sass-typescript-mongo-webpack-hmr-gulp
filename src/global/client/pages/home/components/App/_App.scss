@@ -9,3 +9,18 @@
     padding : 0;
     /*max-width: 960px;*/
 }
+
+.jumbotron{
+    background-color:transparent;
+    text-align:center;
+    padding: 30px 60px;
+    h1{font-weight:bold}
+    .panel h3{margin-top:0}
+    @media (max-width:768px) {
+         h1{font-size:49px}
+    }
+    
+    @media (min-width:768px) {
+        h1{font-size:105px}
+    }
+}

@@ -25,6 +25,7 @@
     "test-chromedriver-start": "bash ./script/chromedriver.sh start",
     "test-chromedriver-stop": "bash ./script/chromedriver.sh stop",
     "start": "gulp",
+    "build-production-client": "NODE_ENV=production gulp clean; gulp media; gulp sass; webpack -p --verbose --colors --display-error-details --config webpack.config.client-hot.js",
     "watch-client": "node ./webpack.server.client-hot.js --verbose --colors --display-error-details --config webpack.config.client-hot.js --projectpath $PROJECTPATH",
     "lint-ts": "tslint --config tslint.json --ext .ts,.tsx",
     "lint-jsc": "jscs . --config .jscsrc",
@@ -44,6 +45,7 @@
     "bcrypt": "^0.8.5",
     "boom": "^3.1.2",
     "bootstrap": "^3.3.6",
+    "bootstrap-sass": "^3.3.6",
     "breakpoint-sass": "^2.6.1",
     "btns": "^1.1.0",
     "chart.js": "^1.1.1",
@@ -57,6 +59,7 @@
     "falcor": "^0.1.13",
     "falcor-hapi": "0.0.2",
     "flux": "^2.1.1",
+    "font-awesome": "^4.5.0",
     "functional-easing": "^1.0.8",
     "global-define": "^2.2.0",
     "glue": "^3.2.0",
@@ -202,5 +205,8 @@
     "webpack-error-notification": "^0.1.4",
     "webpack-hot-middleware": "^2.4.1",
     "webworkify-webpack": "^1.0.6"
+  },
+  "browser": {
+    "fs": false
   }
 }

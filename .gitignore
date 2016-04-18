@@ -37,6 +37,7 @@ Thumbs.db
 data/*
 mongod.pid
 
+static/*
 public/*
 test/artifacts/*
 /config.js
