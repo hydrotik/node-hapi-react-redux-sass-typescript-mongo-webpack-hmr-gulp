@@ -8,7 +8,10 @@ Gulp.task('media', function () {
     // Copy all client-side media to static folder
     var general = Gulp.src('./src/global/client/media/**/*')
         .pipe(Gulp.dest(Path.join('./static', 'media')));
-
+        
+    var general = Gulp.src('./src/global/client/assets/**/*')
+        .pipe(Gulp.dest(Path.join('./static', 'assets')));
+        
     // Copy Font Awesome
     var fonts = Gulp.src('./node_modules/font-awesome/fonts/**')
         .pipe(Gulp.dest(Path.join('./static', 'media', 'font-awesome', 'fonts')));
