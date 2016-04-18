@@ -8,10 +8,7 @@ import './_Drawing.scss';
 
 // Page Components
 import { CanvasContainer } from './components/CanvasContainer/CanvasContainer';
-// Behaviors and Actions
-import {
 
-} from '../../actions';
 
 // Interfaces
 interface IDrawingPageProps {
@@ -20,7 +17,7 @@ interface IDrawingPageProps {
 }
 
 interface IDrawingPageState {
-    rotation?: number;
+    // rotation?: number;
 }
 
 export class Drawing extends React.Component<IDrawingPageProps, IDrawingPageState> {
@@ -28,14 +25,16 @@ export class Drawing extends React.Component<IDrawingPageProps, IDrawingPageStat
     public constructor(props: any = {}) {
         super(props);
 
+        /*
         this.state = {
             rotation: 0
         };
+        */
     }
 
 
     public componentDidMount(): void {
-        requestAnimationFrame(this.tick);
+        //requestAnimationFrame(this.tick);
     }
 
     public componentWillUnmount(): void {
@@ -43,8 +42,8 @@ export class Drawing extends React.Component<IDrawingPageProps, IDrawingPageStat
     }
 
     public tick = () => {
-        this.setState({ rotation: this.state.rotation + .01 });
-        requestAnimationFrame(this.tick);
+        // this.setState({ rotation: this.state.rotation + .01 });
+        // requestAnimationFrame(this.tick);
     }
 
 
@@ -52,6 +51,10 @@ export class Drawing extends React.Component<IDrawingPageProps, IDrawingPageStat
     // https://github.com/pughpugh/react-countdown-clock
     // https://github.com/flipboard/react-canvas
     // https://www.tensorflow.org/versions/r0.8/tutorials/image_recognition/index.html
+
+
+    // https://github.com/kangax/fabric.js/
+    // http://reactkomik.jscomic.net
 
     public render(): React.ReactElement<{}> {
 
@@ -73,7 +76,8 @@ export class Drawing extends React.Component<IDrawingPageProps, IDrawingPageStat
                     <div className="row">
                         <div className="col-lg-3 col-xs-6">
                             <h1>Drawing Demo</h1>
-                            <CanvasContainer rotation={this.state.rotation} />
+                            {/* <CanvasContainer rotation={this.state.rotation} /> */}
+                            <CanvasContainer />
                         </div>
                     </div>
                 </section>
