@@ -17,12 +17,20 @@ var processEntries = function(pages){
             webpack = pages[i].webpack;
             id = webpack.id;
             src = webpack.src;
-
-            entry[id] = [
-                'webpack-dev-server/client?http://localhost:8080',
-                'webpack/hot/only-dev-server',
-                path.resolve(__dirname, src),
-            ]
+            
+            if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
+                entry[id] = [
+                    path.resolve(__dirname, src),
+                ]
+            }
+            else {
+                entry[id] = [
+                    'webpack-dev-server/client?http://localhost:8080',
+                    'webpack/hot/only-dev-server',
+                    path.resolve(__dirname, src),
+                ]
+            }
+            
         }
         
     }
