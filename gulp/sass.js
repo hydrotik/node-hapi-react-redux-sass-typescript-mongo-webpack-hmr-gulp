@@ -3,6 +3,7 @@ var sass = require('gulp-sass');
 var newer = require('gulp-newer');
 var concat = require('gulp-concat');
 var path = require('path');
+var Config = require('../config.js');
 
 // Compile sass to be served from the static folder by the server
 var bundleConfigs = [
@@ -10,12 +11,12 @@ var bundleConfigs = [
         entries: [
             './src/global/server/scss/core.scss'
         ],
-        dest: './static',
+        dest: Config.get('/buildDir'),
         outputName: 'core.min.css'
     },
     {
         entries: './src/global/client/scss/app.scss',
-        dest: './static/layouts',
+        dest: path.join(Config.get('/buildDir'), 'layouts'),
         outputName: 'default.min.css'
     },
     /*

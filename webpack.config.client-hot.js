@@ -100,7 +100,7 @@ module.exports = {
     devtool: 'source-map',
     entry: Entries,
     output: {
-        path: buildDir,
+        path: path.join(buildDir, 'pages'),
         filename: 'js/[name].min.js',
         sourceMapFilename: 'js/[name].min.map',
         publicPath: "http://localhost:8080/",
