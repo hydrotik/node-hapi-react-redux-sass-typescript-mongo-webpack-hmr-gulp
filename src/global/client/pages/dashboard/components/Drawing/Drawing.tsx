@@ -8,7 +8,7 @@ import './_Drawing.scss';
 
 // Page Components
 import { CanvasContainer } from './components/CanvasContainer/CanvasContainer';
-
+import { TimelineGui } from './components/TimelineGui/TimelineGui';
 
 // Interfaces
 interface IDrawingPageProps {
@@ -74,10 +74,11 @@ export class Drawing extends React.Component<IDrawingPageProps, IDrawingPageStat
 
                 <section className="content">
                     <div className="row">
-                        <div className="col-lg-3 col-xs-6">
+                        <div className="col-lg">
                             <h1>Drawing Demo</h1>
                             {/* <CanvasContainer rotation={this.state.rotation} /> */}
                             <CanvasContainer />
+                            <TimelineGui />
                         </div>
                     </div>
                 </section>

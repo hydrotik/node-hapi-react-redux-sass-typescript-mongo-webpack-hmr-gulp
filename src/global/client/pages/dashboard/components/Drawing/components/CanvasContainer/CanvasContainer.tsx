@@ -20,7 +20,7 @@ interface ICanvasContainerPageState {
 
 }
 
-let canvas;
+let canvas, timer;
 
 let startPoints = [
     {x: 0, y: 42},
@@ -47,7 +47,7 @@ let polygon = new fabric.Polygon(clonedStartPoints, {
     selectable: false
 });
 
-let even = true;
+let even: boolean;
 
 export class CanvasContainer extends React.Component<ICanvasContainerPageProps, ICanvasContainerPageState> {
 
@@ -68,11 +68,16 @@ export class CanvasContainer extends React.Component<ICanvasContainerPageProps, 
         
         canvas.add(polygon);
         
-        requestAnimationFrame(this.tick);
+        //requestAnimationFrame(this.tick);
+
+        even = true;
+
+        timer = setTimeout(this.animate, 1000);
     }
 
     public componentWillUnmount(): void {
-
+        clearTimeout(timer);
+        even = false;
     }
 
     public componentDidUpdate(): void {
@@ -82,8 +87,8 @@ export class CanvasContainer extends React.Component<ICanvasContainerPageProps, 
     }
 
     public tick = () => {
-        this.animate();
-        requestAnimationFrame(this.tick);
+        //this.animate();
+        //requestAnimationFrame(this.tick);
     }
 
     public paint(context): void {
@@ -96,7 +101,7 @@ export class CanvasContainer extends React.Component<ICanvasContainerPageProps, 
     }
 
     
-    public animatePoint(i, prop, endPoints): void {
+    public animatePoint = (i: number, prop: string, endPoints: any[]) => {
 
         let opts: any = {
           startValue: polygon.points[i][prop],
@@ -123,10 +128,10 @@ export class CanvasContainer extends React.Component<ICanvasContainerPageProps, 
 
 
 
-        fabric.util.animate(opts as IUtilAnimationOptions);
+        fabric.util.animate(opts);
     }
 
-    public animate(): void {
+    public animate = () => {
         for (var i = 0, len = startPoints.length; i < len; i++) {
             this.animatePoint(i, 'x', even ? endPoints : startPoints);
             this.animatePoint(i, 'y', even ? endPoints : startPoints);
