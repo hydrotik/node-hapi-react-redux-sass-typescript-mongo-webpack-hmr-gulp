@@ -20,7 +20,11 @@ interface ICanvasContainerPageState {
 
 }
 
+<<<<<<< HEAD
 let canvas, timer;
+=======
+let canvas;
+>>>>>>> f627eed69da491a632155dc31dd99fc14742bce2
 
 let startPoints = [
     {x: 0, y: 42},
@@ -47,7 +51,11 @@ let polygon = new fabric.Polygon(clonedStartPoints, {
     selectable: false
 });
 
+<<<<<<< HEAD
 let even: boolean;
+=======
+let even = true;
+>>>>>>> f627eed69da491a632155dc31dd99fc14742bce2
 
 export class CanvasContainer extends React.Component<ICanvasContainerPageProps, ICanvasContainerPageState> {
 
@@ -68,6 +76,7 @@ export class CanvasContainer extends React.Component<ICanvasContainerPageProps, 
         
         canvas.add(polygon);
         
+<<<<<<< HEAD
         //requestAnimationFrame(this.tick);
 
         even = true;
@@ -78,6 +87,13 @@ export class CanvasContainer extends React.Component<ICanvasContainerPageProps, 
     public componentWillUnmount(): void {
         clearTimeout(timer);
         even = false;
+=======
+        requestAnimationFrame(this.tick);
+    }
+
+    public componentWillUnmount(): void {
+
+>>>>>>> f627eed69da491a632155dc31dd99fc14742bce2
     }
 
     public componentDidUpdate(): void {
@@ -87,8 +103,13 @@ export class CanvasContainer extends React.Component<ICanvasContainerPageProps, 
     }
 
     public tick = () => {
+<<<<<<< HEAD
         //this.animate();
         //requestAnimationFrame(this.tick);
+=======
+        this.animate();
+        requestAnimationFrame(this.tick);
+>>>>>>> f627eed69da491a632155dc31dd99fc14742bce2
     }
 
     public paint(context): void {
@@ -101,7 +122,11 @@ export class CanvasContainer extends React.Component<ICanvasContainerPageProps, 
     }
 
     
+<<<<<<< HEAD
     public animatePoint = (i: number, prop: string, endPoints: any[]) => {
+=======
+    public animatePoint(i, prop, endPoints): void {
+>>>>>>> f627eed69da491a632155dc31dd99fc14742bce2
 
         let opts: any = {
           startValue: polygon.points[i][prop],
@@ -128,10 +153,17 @@ export class CanvasContainer extends React.Component<ICanvasContainerPageProps, 
 
 
 
+<<<<<<< HEAD
         fabric.util.animate(opts);
     }
 
     public animate = () => {
+=======
+        fabric.util.animate(opts as IUtilAnimationOptions);
+    }
+
+    public animate(): void {
+>>>>>>> f627eed69da491a632155dc31dd99fc14742bce2
         for (var i = 0, len = startPoints.length; i < len; i++) {
             this.animatePoint(i, 'x', even ? endPoints : startPoints);
             this.animatePoint(i, 'y', even ? endPoints : startPoints);

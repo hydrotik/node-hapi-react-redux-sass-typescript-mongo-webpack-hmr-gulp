@@ -8,7 +8,11 @@ import './_Drawing.scss';
 
 // Page Components
 import { CanvasContainer } from './components/CanvasContainer/CanvasContainer';
+<<<<<<< HEAD
 import { TimelineGui } from './components/TimelineGui/TimelineGui';
+=======
+
+>>>>>>> f627eed69da491a632155dc31dd99fc14742bce2
 
 // Interfaces
 interface IDrawingPageProps {
