@@ -25,7 +25,7 @@
     "test-chromedriver-start": "bash ./script/chromedriver.sh start",
     "test-chromedriver-stop": "bash ./script/chromedriver.sh stop",
     "start": "gulp",
-    "build-production-client": "NODE_ENV=production gulp clean; gulp media; gulp sass; webpack -p --verbose --colors --display-error-details --config webpack.config.client-hot.js",
+    "build-production-client": "NODE_ENV=production bash -c 'gulp clean; gulp media; gulp sass; ./node_modules/.bin/webpack -p --verbose --colors --display-error-details --config webpack.config.client-hot.js'",
     "watch-client": "node ./webpack.server.client-hot.js --verbose --colors --display-error-details --config webpack.config.client-hot.js --projectpath $PROJECTPATH",
     "lint-ts": "tslint --config tslint.json --ext .ts,.tsx",
     "lint-jsc": "jscs . --config .jscsrc",
