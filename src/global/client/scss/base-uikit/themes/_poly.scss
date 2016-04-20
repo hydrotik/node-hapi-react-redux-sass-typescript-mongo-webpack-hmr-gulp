@@ -1,0 +1,34 @@
+// =============================================================================
+// Poly Theme Styles
+// =============================================================================
+
+// Grid display background colors
+
+$poly-grid: (
+        grid__column--12 : #def4e5,
+        grid__column--8 : #dce0f2,
+        grid__column--7 : #dcf0ef,
+        grid__column--6 : #ffe3db,
+        grid__column--4 : #f8edd0,
+        grid__column--5 : #eaebec,
+        grid__column--2 : #c5e2ce,
+        grid__column--3 : #d6eef5
+);
+
+// Generate Poly grid display classes
+
+@each $value, $color in $poly-grid {
+    .theme__poly .#{$value} {
+        background-color: $color;
+    }
+}
+
+// Poly Grid display
+
+.theme__poly {
+    .grid [class*="grid__column"] {
+        font-weight: $font-weight--thin;
+        margin-bottom: em(16px);
+        padding: 1.75%;
+    }
+}

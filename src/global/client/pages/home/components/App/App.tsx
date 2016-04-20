@@ -12,6 +12,8 @@ import { Header } from '../Header/Header';
 import { Footer } from '../../../../components/Footer/Footer';
 import { Carousel } from '../Carousel/Carousel';
 import { Strip } from '../Strip/Strip';
+import { TextControl } from 'components/BaseUIKitSamples/TextControl/TextControl'
+import { Button } from 'components/BaseUIKitSamples/Button/Button'
 
 // Behaviors and Actions
 import { fetchContentIfNeeded, EDITORIAL, IEditorialAction} from '../../actions';
@@ -61,10 +63,11 @@ export class App extends React.Component<IAppProps, IAppState> {
     public render(): React.ReactElement<{}> {
         return (
             <div className = 'app'>
-                <Header />
-                <Strip />
-                <Carousel />
-                <Footer />
+                <form className={"centered grid__column--6"}>
+                    <legend>Some Poly UI Kit Examples</legend>
+                    <TextControl name={"someText"} placeholder={"Put something here..."} disabled={false} label={"Type stuff"} />
+                    <Button type={"button"} name={"someBtn"}>Click ME</Button>
+                </form>
             </div>
         );
     }

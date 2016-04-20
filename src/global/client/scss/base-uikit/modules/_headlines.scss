@@ -1,0 +1,28 @@
+// ==========================================================================
+// Headlines
+// ==========================================================================
+
+.headline {
+
+	&-primary {
+		@extend %headline-primary;
+		margin-bottom: em(70px, 42px);
+
+		@include modifier(grouped) {
+			@extend %headline-primary;
+			margin-bottom: 0;
+		}
+	}
+
+ 	&-secondary {
+		@extend %headline-secondary;
+		margin-bottom: em(22px, 24px);
+
+		@include modifier(grouped) {
+			@extend %headline-secondary;
+			margin-top: em(10px, 24px);
+	 		margin-bottom: em(54px, 24px);
+		}		
+	}
+
+}
