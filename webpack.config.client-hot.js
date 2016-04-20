@@ -86,6 +86,7 @@ jsxLoader.push('babel-loader');
 sassParams.push('sourceMap', 'sourceMapContents=true');
 sassLoader = [
     'css-loader?sourceMap',
+    'resolve-url',
     'sass-loader?' + sassParams.join('&')
 ].join('!');
 cssLoader = [

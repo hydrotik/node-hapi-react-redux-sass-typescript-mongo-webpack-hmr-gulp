@@ -1,0 +1,88 @@
+// ==========================================================================
+// Placeholders
+// ==========================================================================
+
+// Nav Items
+
+%nav-item-horizontal {
+    @include media-query(medium) {
+        display: inline-block;
+        margin: 0 em(20px);
+    }
+}
+
+%nav-item-link {
+    font-weight: $font-weight--light;
+    text-align: center;
+    font-size: em(18px);
+    display: block;
+    padding: em(8px, 20px) 0;
+    border-bottom: 1px solid transparent;
+    @include media-query(small) {
+        border-bottom-color: palette(grey, xx-light);
+        padding-top: em(14px, 18px);
+        padding-bottom: em(14px, 18px);
+    }
+}
+
+%nav-item-on {
+    color: palette(black);
+    border-color: $color-primary;
+}
+
+// Headlines
+
+%headline-primary {
+    color: palette(grey, x-dark);
+    font-weight: $font-weight--light;
+    font-size: em(42px);
+    line-height: (46px/42px);
+    margin-top: 0;
+}
+
+%headline-secondary {
+    color: palette(grey, light);
+    letter-spacing: $letter-space;
+    font-weight: $font-weight--thin;
+    font-size: em(24px);
+    font-family: $font-family--secondary;
+}
+
+// Buttons
+
+%btn {
+    padding: 15px 25px;
+    border: 0;
+    border-radius: $border-radius--default;
+    color: $white;
+    text-transform: uppercase;
+    font-size: em(14px);
+    font-weight: $font-weight--medium;
+    transition: opacity $transition-duration;
+    display: block;
+    &:hover {
+        opacity: .75;
+    }
+    &:active {
+        opacity: initial;
+    }
+}
+
+// Menu link
+
+%menu-link {
+    display: block;
+    padding-top: em(16px);
+    padding-bottom: em(16px);
+    color: $white;
+    text-align: center;
+    text-shadow: 0 1px $color-shadow;
+    font-size: em(18px);
+}
+
+// Icons
+
+%icon--ui {
+    line-height: 0;
+    cursor: pointer;
+}

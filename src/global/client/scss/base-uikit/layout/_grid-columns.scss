@@ -1,0 +1,32 @@
+// ==========================================================================
+// Grid Columns
+// ==========================================================================
+
+// Generates grid columns
+
+.grid__column {
+    @include media-query(medium) {
+        @include g-columns;
+    }
+}
+
+// Column styles
+
+[class^="grid__column--"] {
+    @include media-query(small) {
+        margin-top: em(12px);
+        margin-bottom: em(12px);
+    }
+
+    @include media-query(medium) {
+        @include doubly(percentage($grid-gutter-width / $context));
+        float: left;
+        min-height: 1px;
+        padding-left: 10px;
+        padding-right: 10px;
+        
+        &:last-of-type {
+            float: right;
+        }
+    }
+}
