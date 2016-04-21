@@ -2,8 +2,8 @@
 
 // Core Imports
 import * as React from 'react';
-import { IUtilAnimationOptions } from 'fabric';
-const fabric = require('fabric').fabric;
+import { IUtilAnimationOptions } from 'fabric-browserify';
+const fabric = require('fabric-browserify').fabric;
 
 // Styles
 import './_CanvasContainer.scss';

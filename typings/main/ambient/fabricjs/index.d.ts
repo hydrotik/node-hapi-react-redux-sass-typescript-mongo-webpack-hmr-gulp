@@ -10,7 +10,7 @@
 /* tslint:disable:typedef */
 
 // Support AMD require
-declare module "fabric" {
+declare module "fabric-browserify" {
   export = fabric;
 }
 

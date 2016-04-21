@@ -19,12 +19,90 @@ interface ITimelineGuiState {
     height?: number;
 }
 
+interface ITimelineGuiSettings {
+    trackLabelWidth: number;
+    trackLabelHeight: number;
+    tracksScrollWidth: number;
+    tracksScrollHeight: number;
+    tracksScrollThumbPos: number;
+    tracksScrollThumbHeight: number;
+    tracksScrollY: number;
+    timeScrollWidth: number;
+    timeScrollHeight: number;
+    timeScrollThumbPos: number;
+    timeScrollThumbWidth: number;
+    timeScrollX: number;
+    headerHeight: number;
+    canvasHeight: number;
+    draggingTime: boolean;
+    draggingTracksScrollThumb: boolean;
+    draggingTimeScrollThumb: boolean;
+    draggingKeys: boolean;
+    draggingTimeScale: boolean;
+    selectedKeys: any[];
+    timeScale: number;
+    trackNameCounter: number;
+}
+
+interface IContainerProps {
+    height: string | number;
+}
+
+interface ISplitterProps {
+    bottom: string | number;
+}
+
+// Settings
+let settings: ITimelineGuiSettings = {
+    trackLabelWidth: 108,
+    trackLabelHeight: 20,
+    tracksScrollWidth: 16,
+    tracksScrollHeight: 0,
+    tracksScrollThumbPos: 0,
+    tracksScrollThumbHeight: 0,
+    tracksScrollY: 0,
+    timeScrollWidth: 0,
+    timeScrollHeight: 16,
+    timeScrollThumbPos: 0,
+    timeScrollThumbWidth: 0,
+    timeScrollX: 0,
+    headerHeight: 30,
+    canvasHeight: 200,
+    draggingTime: false,
+    draggingTracksScrollThumb: false,
+    draggingTimeScrollThumb: false,
+    draggingKeys: false,
+    draggingTimeScale: false,
+    selectedKeys: [],
+    timeScale: 1,
+    trackNameCounter: 0
+}
+
+let containerProps: IContainerProps = {
+    height: settings.canvasHeight + 'px'
+}
+
+let splitterProps: ISplitterProps = {
+    bottom: (settings.canvasHeight - 2) + 'px'
+}
+
 let width: number = 0;
 let height: number = 0;
+
 // TODO Properly Type!
 let canvas: any;
 // TODO Properly Type!
 let c: any;
+// TODO Properly Type!
+let tracks: any[];
+
+let time: number;
+
+// TEMP!!
+let anims: any[] = [
+    { type: 'object', endTime: 1 },
+    { type: 'property', endTime: 2.5 }
+];
 
 // https://github.com/dalisoft/timeline.js/blob/master/src/timeline-gui.js
 
@@ -42,7 +120,8 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
     refs: {
         [key: string]: (Element);
         canv: Element;
-        canvContainer: Element;
+        wrapper: Element;
+        container: Element;
     }
 
     public componentDidMount(): void {
@@ -51,6 +130,9 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
         c = canvas.getContext('2d');
 
         window.addEventListener('resize', this.updateSize);
+
+
+        this.initTracks();
 
         setTimeout(this.updateSize, 100);
     }
@@ -64,30 +146,205 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
     }
 
     public updateSize: any = (e: any): void => {
-        width = this.refs.canvContainer.clientWidth;
-        height = this.refs.canvContainer.clientHeight;
+        width = this.refs.wrapper.clientWidth;
+        height = this.refs.wrapper.clientHeight;
         this.setState({ width: width, height: height });
 
-        this.updateGui();
+        this.updateGUI();
     };
 
-    public updateGui: any = (): void => {
+    public updateGUI(): void {
 
-        var w = this.state.width;
-        var h = this.state.height;
+        let w = this.state.width;
+        let h = this.state.height;
+
+        this.drawRect(0, 0, w, h, '#FF0000');
+
+
+        // if (!this.canvas) {
+        //     this.initGUI();
+        // }
+
+        // this.state.width = window.innerWidth;
+        // this.state.height = this.canvasHeight;
+        // let w = this.state.width;
+        // let h = this.state.height;
+
+        settings.tracksScrollHeight = this.state.height - settings.headerHeight - settings.timeScrollHeight;
+        let totalTracksHeight: number = tracks.length * settings.trackLabelHeight;
+        let tracksScrollRatio: number = settings.tracksScrollHeight / totalTracksHeight;
+        settings.tracksScrollThumbHeight = Math.min(Math.max(20, settings.tracksScrollHeight * tracksScrollRatio), settings.tracksScrollHeight);
+
+        settings.timeScrollWidth = this.state.width - settings.trackLabelWidth - settings.tracksScrollWidth;
+        let animationEnd = this.findAnimationEnd();
+        let visibleTime = this.xToTime(this.state.width - settings.trackLabelWidth - settings.tracksScrollWidth) - this.xToTime(0); //100 to get some space after lask key
+        let timeScrollRatio = Math.max(0, Math.min(visibleTime / animationEnd, 1));
+        settings.timeScrollThumbWidth = timeScrollRatio * settings.timeScrollWidth;
+        if (settings.timeScrollThumbPos + settings.timeScrollThumbWidth > settings.timeScrollWidth) {
+            settings.timeScrollThumbPos = Math.max(0, settings.timeScrollWidth - settings.timeScrollThumbWidth);
+        }
+
 
         c.clearRect(0, 0, w, h);
 
-        let topBar = 24;
-        let leftPanel = 200;
+        //buttons
+        this.drawRect(0 * settings.headerHeight - 4 * -1, 5, settings.headerHeight - 8, settings.headerHeight - 8, "#DDDDDD");
+        this.drawRect(1 * settings.headerHeight - 4 * 0, 5, settings.headerHeight - 8, settings.headerHeight - 8, "#DDDDDD");
+        this.drawRect(2 * settings.headerHeight - 4 * 1, 5, settings.headerHeight - 8, settings.headerHeight - 8, "#DDDDDD");
+        this.drawRect(3 * settings.headerHeight - 4 * 2, 5, settings.headerHeight - 8, settings.headerHeight - 8, "#DDDDDD");
 
-        // Background
-        this.drawRect(0, 0, w, h, '#cccccc');
-        // Top Bar
-        this.drawRectStroke(0, 0, w, topBar, '#b0b0b0', '#8aa4af');
-        // Left Panel
-        this.drawRect(0, topBar, leftPanel, h - topBar, '#c0c0c0');
-    }
+        //play
+        c.strokeStyle = "#777777";
+        c.beginPath();
+        c.moveTo(4 + 6.5, 5 + 5);
+        c.lineTo(settings.headerHeight - 8, settings.headerHeight / 2 + 1.5);
+        c.lineTo(4 + 6.5, settings.headerHeight - 8);
+        c.lineTo(4 + 6.5, 5 + 5);
+        c.stroke();
+
+        //pause
+        c.strokeRect(settings.headerHeight + 5.5, 5 + 5.5, settings.headerHeight / 6, settings.headerHeight - 8 - 11);
+        c.strokeRect(settings.headerHeight + 5.5 + settings.headerHeight / 6 + 2, 5 + 5.5, settings.headerHeight / 6, settings.headerHeight - 8 - 11);
+
+        //stop
+        c.strokeRect(2 * settings.headerHeight - 4 + 5.5, 5 + 5.5, settings.headerHeight - 8 - 11, settings.headerHeight - 8 - 11);
+
+        //export
+        c.beginPath();
+        c.moveTo(3 * settings.headerHeight - 4 * 2 + 5.5, settings.headerHeight - 9.5);
+        c.lineTo(3 * settings.headerHeight - 4 * 2 + 11.5, settings.headerHeight - 9.5);
+        c.moveTo(3 * settings.headerHeight - 4 * 2 + 5.5, settings.headerHeight - 13.5);
+        c.lineTo(3 * settings.headerHeight - 4 * 2 + 13.5, settings.headerHeight - 13.5);
+        c.moveTo(3 * settings.headerHeight - 4 * 2 + 5.5, settings.headerHeight - 17.5);
+        c.lineTo(3 * settings.headerHeight - 4 * 2 + 15.5, settings.headerHeight - 17.5);
+        c.stroke();
+
+        //tracks area clipping path
+        c.save();
+        c.beginPath();
+        c.moveTo(0, settings.headerHeight + 1);
+        c.lineTo(this.state.width, settings.headerHeight + 1);
+        c.lineTo(this.state.width, this.state.height - settings.timeScrollHeight);
+        c.lineTo(0, this.state.height - settings.timeScrollHeight);
+        c.clip();
+
+        for (let i = 0; i < tracks.length; i++) {
+            let yshift = settings.headerHeight + settings.trackLabelHeight * (i + 1);
+            let scrollY = settings.tracksScrollY * (tracks.length * settings.trackLabelHeight - this.state.height + settings.headerHeight);
+            yshift -= scrollY;
+            if (yshift < settings.headerHeight) continue;
+            this.drawTrack(tracks[i], yshift);
+        }
+
+        c.restore();
+
+        //end of label panel
+        this.drawLine(settings.trackLabelWidth, 0, settings.trackLabelWidth, h, "#000000");
+
+        //timeline
+
+        let timelineStart = 0;
+        let timelineEnd = 10;
+        let lastTimeLabelX = 0;
+
+        c.fillStyle = "#666666";
+        let x = this.timeToX(0);
+        //for(let sec=timelineStart; sec<timelineEnd; sec++) {
+        let sec = timelineStart;
+        while (x < this.state.width) {
+            x = this.timeToX(sec);
+            this.drawLine(x, 0, x, settings.headerHeight * 0.3, "#999999");
+
+            let minutes = Math.floor(sec / 60);
+            let seconds = sec % 60;
+            let time = minutes + ":" + ((seconds < 10) ? "0" : "") + seconds;
+
+            if (x - lastTimeLabelX > 30) {
+                c.fillText(time, x - 6, settings.headerHeight * 0.8);
+                lastTimeLabelX = x;
+            }
+            sec += 1;
+        }
+
+        //time ticker
+        this.drawLine(this.timeToX(time), 0, this.timeToX(time), h, "#FF0000");
+
+        //time scale
+
+        for (let j = 2; j < 20; j++) {
+            let f = 1.0 - (j * j) / 361;
+            this.drawLine(7 + f * (settings.trackLabelWidth - 10), h - settings.timeScrollHeight + 4, 7 + f * (settings.trackLabelWidth - 10), h - 3, "#999999");
+        }
+
+        c.fillStyle = "#666666";
+        c.beginPath();
+        c.moveTo(7 + (1.0 - settings.timeScale) * (settings.trackLabelWidth - 10), h - 7);
+        c.lineTo(11 + (1.0 - settings.timeScale) * (settings.trackLabelWidth - 10), h - 1);
+        c.lineTo(3 + (1.0 - settings.timeScale) * (settings.trackLabelWidth - 10), h - 1);
+        c.fill();
+
+        //tracks scrollbar
+        this.drawRect(this.state.width - settings.tracksScrollWidth, settings.headerHeight + 1, settings.tracksScrollWidth, settings.tracksScrollHeight, "#DDDDDD");
+        if (settings.tracksScrollThumbHeight < settings.tracksScrollHeight) {
+            this.drawRect(this.state.width - settings.tracksScrollWidth, settings.headerHeight + 1 + settings.tracksScrollThumbPos, settings.tracksScrollWidth, settings.tracksScrollThumbHeight, "#999999");
+        }
+
+        //time scrollbar
+        this.drawRect(settings.trackLabelWidth, h - settings.timeScrollHeight, w - settings.trackLabelWidth - settings.tracksScrollWidth, settings.timeScrollHeight, "#DDDDDD");
+        if (settings.timeScrollThumbWidth < settings.timeScrollWidth) {
+            this.drawRect(settings.trackLabelWidth + 1 + settings.timeScrollThumbPos, h - settings.timeScrollHeight, settings.timeScrollThumbWidth, settings.timeScrollHeight, "#999999");
+        }
+
+        //header borders
+        this.drawLine(0, 0, w, 0, "#000000");
+        this.drawLine(0, settings.headerHeight, w, settings.headerHeight, "#000000");
+        this.drawLine(0, h - settings.timeScrollHeight, settings.trackLabelWidth, h - settings.timeScrollHeight, "#000000");
+        this.drawLine(settings.trackLabelWidth, h - settings.timeScrollHeight - 1, settings.trackLabelWidth, h, "#000000");
+    };
+
+    public drawTrack(track, y) {
+        let xshift = 5;
+        if (track.type == "object") {
+            //object track header background
+            this.drawRect(0, y - settings.trackLabelHeight + 1, settings.trackLabelWidth, settings.trackLabelHeight - 1, "#FFFFFF");
+            //label color
+            c.fillStyle = "#000000";
+        }
+        else {
+            xshift += 10;
+            //label color
+            c.fillStyle = "#555555";
+        }
+
+        //bottom track line
+        this.drawLine(0, y, this.state.width, y, "#FFFFFF");
+        //draw track label
+        c.fillText(track.name, xshift, y - settings.trackLabelHeight / 4);
+
+        //if it's property track then draw anims
+        if (track.type == "property") {
+            for (let i = 0; i < track.keys.length; i++) {
+                let key = track.keys[i];
+                let selected = false;
+                if (settings.selectedKeys.indexOf(key) > -1) {
+                    selected = true;
+                }
+                let first = (i === 0);
+                let last = (i == track.keys.length - 1);
+                this.drawRombus(this.timeToX(key.time), y - settings.trackLabelHeight * 0.5, settings.trackLabelHeight * 0.5, settings.trackLabelHeight * 0.5, "#999999", true, true, selected ? "#FF0000" : "#666666");
+                this.drawRombus(this.timeToX(key.time), y - settings.trackLabelHeight * 0.5, settings.trackLabelHeight * 0.5, settings.trackLabelHeight * 0.5, "#DDDDDD", !first, !last);
+            }
+        }
+    };
+
+
+    public drawLine(x1: number, y1: number, x2: number, y2: number, color: string): void {
+        c.strokeStyle = color;
+        c.beginPath();
+        c.moveTo(x1 + 0.5, y1 + 0.5);
+        c.lineTo(x2 + 0.5, y2 + 0.5);
+        c.stroke();
+    };
 
     public drawRect(x: number, y: number, w: number, h: number, color: string): void {
         c.save();
@@ -103,12 +360,200 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
         c.strokeRect(x + .5, .5, w - 1, h - 1);
         c.restore();
     };
+
+    public drawCenteredRect(x: number, y: number, w: number, h: number, color: string): void {
+        c.fillStyle = color;
+        c.fillRect(x - w / 2, y - h / 2, w, h);
+    };
+
+    public drawRombus(x: number, y: number, w: number, h: number, color: string, drawLeft?: boolean, drawRight?: boolean, strokeColor?: string): void {
+        c.fillStyle = color;
+        if (strokeColor) {
+            c.lineWidth = 2;
+            c.strokeStyle = strokeColor;
+            c.beginPath();
+            c.moveTo(x, y - h / 2);
+            c.lineTo(x + w / 2, y);
+            c.lineTo(x, y + h / 2);
+            c.lineTo(x - w / 2, y);
+            c.lineTo(x, y - h / 2);
+            c.stroke();
+            c.lineWidth = 1;
+        }
+
+        if (drawLeft) {
+            c.beginPath();
+            c.moveTo(x, y - h / 2);
+            c.lineTo(x - w / 2, y);
+            c.lineTo(x, y + h / 2);
+            c.fill();
+        }
+
+        if (drawRight) {
+            c.beginPath();
+            c.moveTo(x, y - h / 2);
+            c.lineTo(x + w / 2, y);
+            c.lineTo(x, y + h / 2);
+            c.fill();
+        }
+    };
+
+    public timeToX(time: number): number {
+        let animationEnd = this.findAnimationEnd();
+        let visibleTime = this.xToTime(this.state.width - settings.trackLabelWidth - settings.tracksScrollWidth) - this.xToTime(20); //50 to get some additional space
+        if (visibleTime < animationEnd) {
+            time -= (animationEnd - visibleTime) * settings.timeScrollX;
+        }
+
+        return settings.trackLabelWidth + time * (settings.timeScale * 200) + 10;
+    };
+
+    public xToTime(x: number): number {
+        let animationEnd = this.findAnimationEnd();
+        let visibleTime = (this.state.width - settings.trackLabelWidth - settings.tracksScrollWidth - 20) / (settings.timeScale * 200);
+        let timeShift = Math.max(0, (animationEnd - visibleTime) * settings.timeScrollX);
+        return (x - settings.trackLabelWidth - 10) / (settings.timeScale * 200) + timeShift;
+    };
+
+
+    public initTracks(): void {
+        tracks = [];
+        let i, j;
+        let anim;
+        for (i = 0; i < anims.length; i++) {
+            anim = anims[i];
+            let objectTrack = null;
+            let propertyTrack = null;
+            for (j = 0; j < tracks.length; j++) {
+                if (tracks[j].type == "object" && tracks[j].target == anim.target) {
+                    objectTrack = tracks[j];
+                }
+                if (tracks[j].type == "property" && tracks[j].target == anim.target && tracks[j].propertyName == anim.propertyName) {
+                    propertyTrack = tracks[j];
+                }
+            }
+            if (!objectTrack) {
+                objectTrack = {
+                    type: "object",
+                    id: anim.targetName,
+                    name: anim.targetName,
+                    target: anim.target,
+                    propertyTracks: []
+                };
+                if (!objectTrack.name) {
+                    objectTrack.name = "Object" + settings.trackNameCounter++;
+                }
+                tracks.push(objectTrack);
+            }
+
+            if (!propertyTrack) {
+                propertyTrack = {
+                    type: "property",
+                    id: objectTrack.name + "." + anim.propertyName,
+                    name: anim.propertyName,
+                    propertyName: anim.propertyName,
+                    target: anim.target,
+                    parent: objectTrack,
+                    anims: []
+                };
+
+                //find place to insert
+                let parentObjectTrack = null;
+                let nextObjectTrack = null;
+                for (let k = 0; k < tracks.length; k++) {
+                    if (tracks[k].type == "object") {
+                        if (parentObjectTrack && !nextObjectTrack) {
+                            nextObjectTrack = tracks[k];
+                        }
+                        if (tracks[k].target == propertyTrack.target) {
+                            parentObjectTrack = tracks[k];
+                        }
+                    }
+                }
+
+                if (nextObjectTrack) {
+                    //add ad the end of this object property tracks, just before next one
+                    let nextTrackIndex = tracks.indexOf(nextObjectTrack);
+                    tracks.splice(nextTrackIndex, 0, propertyTrack);
+                }
+                else {
+                    //add to end of all track
+                    tracks.push(propertyTrack);
+                }
+
+                parentObjectTrack.propertyTracks.push(propertyTrack);
+
+            }
+
+            propertyTrack.anims.push(anim);
+        }
+        //convert anims to keys
+        for (i = 0; i < tracks.length; i++) {
+            let track = tracks[i];
+            track.keys = [];
+            if (track.type == "object") continue;
+            for (j = 0; j < track.anims.length; j++) {
+                anim = track.anims[j];
+                if (anim.delay > 0) {
+                    let startValue = 0;
+                    let easing = anim.easing;
+                    if (j === 0) {
+                        startValue = track.target[track.propertyName];
+                    }
+                    else {
+                        startValue = track.anims[j - 1].endValue;
+                    }
+                    track.keys.push({
+                        time: anim.startTime,
+                        value: startValue,
+                        easing: easing,
+                        track: track
+                    });
+                }
+                let easingFunc = this.EaseNone;
+                if (j < track.anims.length - 1) {
+                    if (track.anims[j + 1].delay === 0) {
+                        easingFunc = track.anims[j + 1].easing;
+                    }
+                }
+                track.keys.push({
+                    time: anim.endTime,
+                    value: anim.endValue,
+                    easing: easingFunc,
+                    track: track
+                });
+            }
+        }
+    };
+
+
+
+    // From Timeline
+
+    public findAnimationEnd(): number {
+        let endTime = 0;
+        for (let i = 0; i < anims.length; i++) {
+            if (anims[i].endTime > endTime) {
+                endTime = anims[i].endTime;
+            }
+        }
+        return endTime;
+    };
+
+    public EaseNone = function(k: number): number {
+        return k;
+    };
     
     public render(): React.ReactElement<{}> {
 
         return (
-            <div ref="canvContainer" className="timeline-gui">
-                <canvas ref="canv" width={this.state.width} height={this.state.height} />
+            <div ref="wrapper" className="timeline-gui">
+                <div ref="container" style={{ height: this.state.height }} className="timeline-gui-container">
+                    <canvas ref="canv" width={this.state.width} height={this.state.height} />
+                </div>
+                <div ref="splitter" style={{ bottom: this.state.height - 2 }} className="timeline-gui-splitter">
+
+                </div>
             </div>
         );
     }

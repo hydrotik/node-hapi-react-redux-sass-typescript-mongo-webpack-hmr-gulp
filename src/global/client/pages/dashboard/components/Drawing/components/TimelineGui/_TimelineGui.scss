@@ -1,12 +1,24 @@
 .timeline-gui {
     width: 100%;
-    height: 200px;
-    background-color: #454545;
+    height: 400px;
     margin: 0;
     padding: 0;
+    position: relative;
+}
 
-    canvas {
-        margin: 0;
-        padding: 0;
-    }
+.timeline-gui-container {
+    width: 100%;
+    height: 300px;
+    background-color: #454545;
+    left: 0;
+    bottom: 0;
+
+}
+
+.timeline-gui-splitter {
+    width: 100%;
+    height: 4px;
+    left: 0;
+    cursor: ns-resize;
+    background-color: #FFFF00;
 }
