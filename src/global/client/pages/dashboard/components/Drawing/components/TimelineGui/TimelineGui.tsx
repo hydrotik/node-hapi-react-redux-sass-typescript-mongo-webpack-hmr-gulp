@@ -42,6 +42,10 @@ interface ITimelineGuiSettings {
     selectedKeys: any[];
     timeScale: number;
     trackNameCounter: number;
+    tracksScrollThumbDragOffset: number;
+    cancelKeyClick: boolean;
+    timeScrollThumbDragOffset: number;
+    totalTime: number;
 }
 
 interface IContainerProps {
@@ -75,7 +79,11 @@ let settings: ITimelineGuiSettings = {
     draggingTimeScale: false,
     selectedKeys: [],
     timeScale: 1,
-    trackNameCounter: 0
+    trackNameCounter: 0,
+    tracksScrollThumbDragOffset: 0,
+    cancelKeyClick: false,
+    timeScrollThumbDragOffset: 0,
+    totalTime: 0
 }
 
 let containerProps: IContainerProps = {
@@ -133,6 +141,9 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
 
 
         this.initTracks();
+
+        //TODO
+        // this.buildInputDialog();
 
         setTimeout(this.updateSize, 100);
     }
@@ -526,6 +537,303 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
         }
     };
 
+    public onMouseDown(event): void {
+        settings.selectedKeys = [];
+
+        var x = event.layerX;
+        var y = event.layerY;
+
+        if (x > settings.trackLabelWidth && y < settings.headerHeight) {
+            //timeline
+            settings.draggingTime = true;
+            this.onCanvasMouseMove(event);
+        }
+        else if (x > this.state.width - settings.tracksScrollWidth && y > settings.headerHeight) {
+            //tracks scroll
+            if (y >= settings.headerHeight + settings.tracksScrollThumbPos && y <= settings.headerHeight + settings.tracksScrollThumbPos + settings.tracksScrollThumbHeight) {
+                settings.tracksScrollThumbDragOffset = y - settings.headerHeight - settings.tracksScrollThumbPos;
+                settings.draggingTracksScrollThumb = true;
+            }
+        }
+        else if (x > settings.trackLabelWidth && y > settings.headerHeight && y < settings.canvasHeight - settings.timeScrollHeight) {
+            //keys
+            this.selectKeys(event.layerX, event.layerY);
+            if (settings.selectedKeys.length > 0) {
+                settings.draggingKeys = true;
+            }
+            settings.cancelKeyClick = false;
+        }
+        else if (x < settings.trackLabelWidth && y > settings.canvasHeight - settings.timeScrollHeight) {
+            //time scale
+            settings.timeScale = Math.max(0.01, Math.min((settings.trackLabelWidth - x) / settings.trackLabelWidth, 1));
+            settings.draggingTimeScale = true;
+            // this.save();
+        }
+        else if (x > settings.trackLabelWidth && y > settings.canvasHeight - settings.timeScrollHeight) {
+            //time scroll
+            if (x >= settings.trackLabelWidth + settings.timeScrollThumbPos && x <= settings.trackLabelWidth + settings.timeScrollThumbPos + settings.timeScrollThumbWidth) {
+                settings.timeScrollThumbDragOffset = x - settings.trackLabelWidth - settings.timeScrollThumbPos;
+                settings.draggingTimeScrollThumb = true;
+            }
+        }
+    };
+
+    public onDocumentMouseMove(event: any): void {
+        var x = event.layerX;
+        var y = event.layerY;
+
+        if (settings.draggingTime) {
+            time = this.xToTime(x);
+            var animationEnd = this.findAnimationEnd();
+            if (time < 0) time = 0;
+            if (time > animationEnd) time = animationEnd;
+        }
+        if (settings.draggingKeys) {
+            for (var i = 0; i < settings.selectedKeys.length; i++) {
+                var draggedKey = settings.selectedKeys[i];
+                draggedKey.time = Math.max(0, this.xToTime(x));
+                this.sortTrackKeys(draggedKey.track);
+                this.rebuildSelectedTracks();
+            }
+            settings.cancelKeyClick = true;
+            settings.timeScrollThumbPos = settings.timeScrollX * (settings.timeScrollWidth - settings.timeScrollThumbWidth);
+        }
+        if (settings.draggingTimeScale) {
+            settings.timeScale = Math.max(0.01, Math.min((settings.trackLabelWidth - x) / settings.trackLabelWidth, 1));
+            // this.save();
+        }
+    };
+
+    public onCanvasMouseMove(event: any): void {
+        var x = event.layerX;
+        var y = event.layerY;
+
+        if (settings.draggingTracksScrollThumb) {
+            settings.tracksScrollThumbPos = y - settings.headerHeight - settings.tracksScrollThumbDragOffset;
+            if (settings.tracksScrollThumbPos < 0) {
+                settings.tracksScrollThumbPos = 0;
+            }
+            if (settings.tracksScrollThumbPos + settings.tracksScrollThumbHeight > settings.tracksScrollHeight) {
+                settings.tracksScrollThumbPos = Math.max(0, settings.tracksScrollHeight - settings.tracksScrollThumbHeight);
+            }
+            if (settings.tracksScrollHeight - settings.tracksScrollThumbHeight > 0) {
+                settings.tracksScrollY = settings.tracksScrollThumbPos / (settings.tracksScrollHeight - settings.tracksScrollThumbHeight);
+            }
+            else {
+                settings.tracksScrollY = 0;
+            }
+        }
+        if (settings.draggingTimeScrollThumb) {
+            settings.timeScrollThumbPos = x - settings.trackLabelWidth - settings.timeScrollThumbDragOffset;
+            if (settings.timeScrollThumbPos < 0) {
+                settings.timeScrollThumbPos = 0;
+            }
+            if (settings.timeScrollThumbPos + settings.timeScrollThumbWidth > settings.timeScrollWidth) {
+                settings.timeScrollThumbPos = Math.max(0, settings.timeScrollWidth - settings.timeScrollThumbWidth);
+            }
+            if (settings.timeScrollWidth - settings.timeScrollThumbWidth > 0) {
+                settings.timeScrollX = settings.timeScrollThumbPos / (settings.timeScrollWidth - settings.timeScrollThumbWidth);
+            }
+            else {
+                settings.timeScrollX = 0;
+            }
+        }
+    };
+
+    public onMouseUp(event: any): void {
+        if (settings.draggingTime) {
+            settings.draggingTime = false;
+        }
+        if (settings.draggingKeys) {
+            settings.draggingKeys = false;
+        }
+        if (settings.draggingTracksScrollThumb) {
+            settings.draggingTracksScrollThumb = false;
+        }
+        if (settings.draggingTimeScale) {
+            settings.draggingTimeScale = false;
+        }
+        if (settings.draggingTimeScrollThumb) {
+            settings.draggingTimeScrollThumb = false;
+        }
+    };
+
+    public onMouseClick(event: any): void {
+        if (event.layerX < 1 * settings.headerHeight - 4 * 0 && event.layerY < settings.headerHeight) {
+            console.warn('play()');
+            // this.play();
+        }
+        if (event.layerX > 1 * settings.headerHeight - 4 * 0 && event.layerX < 2 * settings.headerHeight - 4 * 1 && event.layerY < settings.headerHeight) {
+            console.warn('pause()');
+            // this.pause();
+        }
+
+        if (event.layerX > 2 * settings.headerHeight - 4 * 1 && event.layerX < 3 * settings.headerHeight - 4 * 2 && event.layerY < settings.headerHeight) {
+            console.warn('stop()');
+            // this.stop();
+        }
+
+        if (event.layerX > 3 * settings.headerHeight - 4 * 2 && event.layerX < 4 * settings.headerHeight - 4 * 3 && event.layerY < settings.headerHeight) {
+            console.warn('exportCode()');
+            // this.exportCode();
+        }
+
+        if (settings.selectedKeys.length > 0 && !settings.cancelKeyClick) {
+            console.warn('showKeyEditDialog()');
+            // this.showKeyEditDialog(event.pageX, event.pageY);
+        }
+    };
+
+    public onMouseDoubleClick(event: any): void {
+        var x = event.layerX;
+        var y = event.layerY;
+
+        if (x > settings.trackLabelWidth && y < settings.headerHeight) {
+            //timeline
+            var timeStr = prompt("Enter time") || "0:0:0";
+            var timeArr = timeStr.split(":");
+            var seconds = 0;
+            var minutes = 0;
+            var hours = 0;
+            if (timeArr.length > 0) seconds = parseInt(timeArr[timeArr.length - 1], 10);
+            if (timeArr.length > 1) minutes = parseInt(timeArr[timeArr.length - 2], 10);
+            if (timeArr.length > 2) hours = parseInt(timeArr[timeArr.length - 3], 10);
+            time = settings.totalTime = hours * 60 * 60 + minutes * 60 + seconds;
+        }
+        else if (x > settings.trackLabelWidth && settings.selectedKeys.length === 0 && y > settings.headerHeight && y < settings.canvasHeight - settings.timeScrollHeight) {
+            this.addKeyAt(x, y);
+        }
+    };
+
+    public selectKeys(mouseX: number, mouseY: number): void {
+        settings.selectedKeys = [];
+
+        var selectedTrack = this.getTrackAt(mouseX, mouseY);
+
+        if (!selectedTrack) {
+            return;
+        }
+
+        for (var i = 0; i < selectedTrack.keys.length; i++) {
+            var key = selectedTrack.keys[i];
+            var x = this.timeToX(key.time);
+
+            if (x >= mouseX - settings.trackLabelHeight * 0.3 && x <= mouseX + settings.trackLabelHeight * 0.3) {
+                settings.selectedKeys.push(key);
+                break;
+            }
+        }
+    };
+
+    public addKeyAt(mouseX: number, mouseY: number): void {
+        var selectedTrack = this.getTrackAt(mouseX, mouseY);
+
+        if (!selectedTrack) {
+            return;
+        }
+
+        var newKey = {
+            time: this.xToTime(mouseX),
+            value: selectedTrack.target[selectedTrack.propertyName],
+            easing: this.EaseNone,
+            track: selectedTrack
+        };
+        if (selectedTrack.keys.length === 0) {
+            selectedTrack.keys.push(newKey);
+        }
+        else if (newKey.time < selectedTrack.keys[0].time) {
+            newKey.value = selectedTrack.keys[0].value;
+            selectedTrack.keys.unshift(newKey);
+        }
+        else if (newKey.time > selectedTrack.keys[selectedTrack.keys.length - 1].time) {
+            newKey.value = selectedTrack.keys[selectedTrack.keys.length - 1].value;
+            selectedTrack.keys.push(newKey);
+        }
+        else for (var i = 1; i < selectedTrack.keys.length; i++) {
+            if (selectedTrack.keys[i].time > newKey.time) {
+                var k = (selectedTrack.keys[i].time - newKey.time) / (selectedTrack.keys[i].time - selectedTrack.keys[i - 1].time);
+                var delta = selectedTrack.keys[i].value - selectedTrack.keys[i - 1].value;
+                newKey.easing = selectedTrack.keys[i - 1].easing;
+                newKey.value = selectedTrack.keys[i - 1].value + delta * newKey.easing(k);
+                selectedTrack.keys.splice(i, 0, newKey);
+                break;
+            }
+        }
+        settings.selectedKeys = [newKey];
+        this.rebuildSelectedTracks();
+    };
+
+    public getTrackAt(mouseX: number, mouseY: number): any {
+        var scrollY = settings.tracksScrollY * (tracks.length * settings.trackLabelHeight - this.state.height + settings.headerHeight);
+        var clickedTrackNumber = Math.floor((mouseY - settings.headerHeight + scrollY) / settings.trackLabelHeight);
+
+        if (clickedTrackNumber >= 0 && clickedTrackNumber >= tracks.length || tracks[clickedTrackNumber].type == "object") {
+            return null;
+        }
+
+        return tracks[clickedTrackNumber];
+    };
+
+    public sortTrackKeys(track: any): void {
+        track.keys.sort(function(a, b) { return a.time - b.time; });
+
+        var result = "";
+        for (var i = 0; i < track.keys.length; i++) {
+            result += track.keys[i].time + " ";
+        }
+    };
+
+    public rebuildSelectedTracks(): void {
+        for (var i = 0; i < settings.selectedKeys.length; i++) {
+            this.rebuildTrackAnimsFromKeys(settings.selectedKeys[i].track);
+        }
+        // this.save();
+    };
+
+    public rebuildTrackAnimsFromKeys(track: any): void {
+        var deletedAnims = [];
+        var j;
+
+        //remove all track's anims from the timeline
+        for (j = 0; j < track.anims.length; j++) {
+            var index = anims.indexOf(track.anims[j]);
+            deletedAnims.push(track.anims[j]);
+            anims.splice(index, 1);
+        }
+
+        //remove all anims from the track
+        track.anims.splice(0, track.anims.length);
+
+        if (track.keys.length === 0) {
+            return;
+        }
+
+        var delay = track.keys[0].time;
+        var prevKeyTime = track.keys[0].time;
+        var prevKeyValue = track.keys[0].value;
+        var prevKeyEasing = this.EaseNone;
+        //create new anims based on keys
+        for (j = 0; j < track.keys.length; j++) {
+            var key = track.keys[j];
+            var anim = {
+                timeline: this,
+                target: track.target,
+                propertyName: track.propertyName,
+                startValue: prevKeyValue,
+                endValue: key.value,
+                delay: delay,
+                startTime: prevKeyTime,
+                endTime: key.time,
+                easing: prevKeyEasing
+            };
+            track.anims.push(anim);
+            anims.push(anim);
+            delay = 0;
+            prevKeyTime = key.time;
+            prevKeyValue = key.value;
+            prevKeyEasing = key.easing;
+        }
+    };
 
 
     // From Timeline
