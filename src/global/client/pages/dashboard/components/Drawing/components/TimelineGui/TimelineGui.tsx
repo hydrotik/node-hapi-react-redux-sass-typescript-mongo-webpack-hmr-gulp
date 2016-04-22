@@ -106,6 +106,8 @@ let tracks: any[];
 
 let time: number;
 
+let initGui: boolean = false;
+
 // TEMP!!
 let anims: any[] = [
     { type: 'object', endTime: 1 },
@@ -168,6 +170,40 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
 
         let w = this.state.width;
         let h = this.state.height;
+
+        if (!initGui) {
+            canvas.addEventListener('click', (event) => {
+                console.warn(event.type);
+                this.onMouseClick(event);
+            }, false);
+
+            canvas.addEventListener('mousedown', (event) => {
+                console.warn(event.type);
+                this.onMouseDown(event);
+            }, false);
+
+            document.body.addEventListener('mousemove', (event) => {
+                console.warn(event.type);
+                this.onDocumentMouseMove(event);
+            }, false);
+
+            canvas.addEventListener('mousemove', (event) => {
+                console.warn(event.type);
+                this.onCanvasMouseMove(event);
+            }, false);
+
+            document.body.addEventListener('mouseup', (event) => {
+                console.warn(event.type);
+                this.onMouseUp(event);
+            }, false);
+
+            canvas.addEventListener('dblclick', (event) => {
+                console.warn(event.type);
+                this.onMouseDoubleClick(event);
+            }, false);
+
+            initGui = true;
+        }
 
         this.drawRect(0, 0, w, h, '#FF0000');
 
@@ -537,7 +573,7 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
         }
     };
 
-    public onMouseDown(event): void {
+    public onMouseDown = (event: any) => {
         settings.selectedKeys = [];
 
         var x = event.layerX;
@@ -578,7 +614,7 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
         }
     };
 
-    public onDocumentMouseMove(event: any): void {
+    public onDocumentMouseMove = (event: any) => {
         var x = event.layerX;
         var y = event.layerY;
 
@@ -604,7 +640,7 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
         }
     };
 
-    public onCanvasMouseMove(event: any): void {
+    public onCanvasMouseMove = (event: any) => {
         var x = event.layerX;
         var y = event.layerY;
 
@@ -640,7 +676,7 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
         }
     };
 
-    public onMouseUp(event: any): void {
+    public onMouseUp = (event: any) => {
         if (settings.draggingTime) {
             settings.draggingTime = false;
         }
@@ -658,7 +694,7 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
         }
     };
 
-    public onMouseClick(event: any): void {
+    public onMouseClick = (event: any) => {
         if (event.layerX < 1 * settings.headerHeight - 4 * 0 && event.layerY < settings.headerHeight) {
             console.warn('play()');
             // this.play();
@@ -684,7 +720,7 @@ export class TimelineGui extends React.Component<ITimelineGuiProps, ITimelineGui
         }
     };
 
-    public onMouseDoubleClick(event: any): void {
+    public onMouseDoubleClick = (event: any) => {
         var x = event.layerX;
         var y = event.layerY;
 
