@@ -24,7 +24,7 @@ var pages = [
             id: '',
             src: ''
         }
-    },
+    }/*,
     {
         route: {
             plugin: {
@@ -122,7 +122,7 @@ var pages = [
             id: 'login',
             src: './src/global/client/pages/login/index'
         }
-    },
+    }*/,
     {
         route: {
             plugin: {
