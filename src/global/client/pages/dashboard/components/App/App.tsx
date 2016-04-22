@@ -7,9 +7,10 @@ import * as React from 'react';
 import './_App.scss';
 
 // Page Components
-import { NavBar } from '../NavBar/NavBar';
+import { NavBar } from '../../../../components/NavBar/NavBar';
 import { SideNavigation } from '../SideNavigation/SideNavigation';
 import { Footer } from '../../../../components/Footer/Footer';
+import {NavElementCustom} from '../NavElementCustom/NavElementCustom';
 
 // Interfaces
 
@@ -40,7 +41,9 @@ export class App extends React.Component<IAppProps, IAppState> {
 
         return (
             <div className='wrapper'>
-                <NavBar pages={Sections} navStyle='navbar-inverse' />
+                <NavBar pages={Sections} navStyle='navbar-inverse'>
+                    <NavElementCustom {...this.props} />
+                </NavBar>
                 <SideNavigation />
                 {this.props.children}
                 <Footer />

@@ -1,124 +1,18 @@
-/// <reference path='../../../../../../../typings/main.d.ts' />
-
-// Core Imports
 import * as React from 'react';
-import * as ClassNames from 'classnames';
-import { map } from 'lodash';
 
-import { browserHistory } from 'react-router';
-
-// https://github.com/insin/react-router-active-component
-import * as activeComponent from 'react-router-active-component';
-import { connect } from 'react-redux';
-
-// Styles
-import './_NavBar.scss';
-
-// Page Components
-
-
-// Behaviors and Actions
-import {
-    INavBarAction,
-    collapseNavBar,
-    openNavBar
-} from '../../../../actions';
-
-// Interfaces
-interface INavBarProps {
-    dispatch?: (func: any) => void;
-    store?: any;
-    navBarOpen?: boolean;
-
-    pages: any;
-    navStyle: string;
+interface INavElementCustomProps {
+    
 }
 
-interface INavBarState {
-    navBarOpen: boolean;
-}
-
-
-
-let ac: any = activeComponent;
-const NavLink: any = ac('li');
-
-
-// Decorators
-function select(state: { onNavBarReducer: INavBarAction; }): INavBarState {
-    const { onNavBarReducer }: { onNavBarReducer: INavBarAction; } = state;
-    const {
-        navBarOpen
-    }: INavBarAction = onNavBarReducer;
-
-    return {
-        navBarOpen
-    };
-
-}
-
-@connect(select)
-export class NavBar extends React.Component<INavBarProps, INavBarState> {
-
-    public constructor(props: INavBarProps = { navBarOpen: false, pages: {}, navStyle: 'navbar-default'}) {
+export class NavElementCustom extends React.Component<INavElementCustomProps, {}> {
+    constructor(props: INavElementCustomProps) {
         super(props);
 
-        browserHistory.listen(this.resetMenu);
     }
-
-    public resetMenu: any = (event: any): void => {
-        const { dispatch }: INavBarProps = this.props
-        dispatch(collapseNavBar());
-    }
-
-    public toggleMenu: any = (event: any): void => {
-        const { dispatch }: INavBarProps = this.props
-        dispatch(this.props.navBarOpen ? collapseNavBar() : openNavBar())
-    }
-
-    public createNavItem(object: any, i: number): any {
-        if( object.hasOwnProperty('onlyActiveOnIndex') && object.onlyActiveOnIndex ){
-            return <NavLink onlyActiveOnIndex to={object.path} key={i}>{object.title}</NavLink>;
-        }else{
-            return <NavLink to={object.path} key={i}>{object.title}</NavLink>;
-        }
-    }
-
-    public render(): React.ReactElement<{}> {
-
-        const { navBarOpen }: INavBarProps = this.props;
-
-        let navBarCollapse: any = ClassNames({
-            'navbar-collapse': !navBarOpen,
-            collapse: !navBarOpen
-        });
-
-        let navStyleMain: any = ClassNames(
-            'main-header',
-            'navbar',
-            'navbar-fixed-top',
-            this.props.navStyle
-        );
-
-        
-
+    
+    public render() : React.ReactElement<{}> {
         return (
-            <header className='main-header'>
-            {/* Logo */}
-            <a href="index2.html" className="logo">
-              {/* mini logo for sidebar mini 50x50 pixels */}
-              <span className="logo-mini"><img className='navbar-logo' src='/assets/logo-square.png' height='32' width='32' /></span>
-              {/* logo for regular state and mobile devices */}
-              <span className="logo-lg"><img className='navbar-logo' src='/assets/logo-square.png' height='32' width='32' /></span>
-            </a>
-            {/* Header Navbar: style can be found in header.less */}
-            <nav className="navbar navbar-static-top">
-              {/* Sidebar toggle button*/}
-              <a href="#" className="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span className="sr-only">Toggle navigation</span>
-              </a>
-              <div className="navbar-custom-menu">
-                <ul className="nav navbar-nav">
+            <ul className="nav navbar-nav">
                   {/* Messages: style can be found in dropdown.less*/}
                   <li className="dropdown messages-menu">
                     <a href="#" className="dropdown-toggle" data-toggle="dropdown">
@@ -358,9 +252,6 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                     <a href="#" data-toggle="control-sidebar"><i className="fa fa-gears" /></a>
                   </li>
                 </ul>
-              </div>
-            </nav>
-          </header>
-        );
+        )
     }
 }

@@ -11,6 +11,8 @@ import { browserHistory } from 'react-router';
 import * as activeComponent from 'react-router-active-component';
 import { connect } from 'react-redux';
 
+// Child components of the NavBar
+import {NavElementPages} from './NavElementPages/NavElementPages';
 // Styles
 import './_NavBar.scss';
 
@@ -30,7 +32,7 @@ interface INavBarProps {
     store?: any;
     navBarOpen?: boolean;
 
-    pages: any;
+    pages?: any;
     navStyle: string;
 }
 
@@ -118,15 +120,20 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                         </button>
                     </div>
                     <div className={navBarCollapse}>
-                        <ul className="nav navbar-nav">
-                            { map(this.props.pages, this.createNavItem) }
-                        </ul>
+                        {
+                              this.props.pages ? <NavElementPages {...this.props} /> : null
+                        }
+
+                        { this.props.children }
+
                         <ul className="nav navbar-nav navbar-right">
                             <li>
                                 <a href="/login/logout">Sign out</a>
                             </li>
                         </ul>
+
                     </div>
+                    
                 </div>
             </div>
         );
