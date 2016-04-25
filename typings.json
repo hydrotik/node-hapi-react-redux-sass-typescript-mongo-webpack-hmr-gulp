@@ -5,6 +5,7 @@
     "classnames": "registry:dt/classnames#0.0.0+20160316155526",
     "cookie": "github:DefinitelyTyped/DefinitelyTyped/cookie/cookie.d.ts#b10e5ade29708bb0a7d21916a9fe289973520e89",
     "d3": "registry:dt/d3#0.0.0+20160317120654",
+    "fabricjs": "registry:dt/fabricjs#1.5.0+20160317120654",
     "history": "github:DefinitelyTyped/DefinitelyTyped/react-router/history.d.ts#ba4c4fc6c9ec3d1b9b7e26437d6e0f4f8337c948",
     "immutable": "file:/Users/dadams/Desktop/Code/typings/immutable/immutable.d.ts",
     "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#fc341765ebbb04b7109981a25dced01f488f4d94",
