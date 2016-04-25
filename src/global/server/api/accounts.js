@@ -160,7 +160,7 @@ internals.applyRoutes = function (server, next) {
                 payload: {
                     name: Joi.object().keys({
                         first: Joi.string().required().label('First name'),
-                        middle: Joi.string().allow('').label('Middle name'),
+                        middle: Joi.string().optional().allow('').label('Middle name'),
                         last: Joi.string().required().label('Last name')
                     }).required()
                 }

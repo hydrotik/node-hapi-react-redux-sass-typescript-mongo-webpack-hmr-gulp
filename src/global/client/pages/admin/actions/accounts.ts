@@ -20,6 +20,9 @@ export const SET_SORT_FILTER: string = 'SET_SORT_FILTER';
 export const SHOW_CREATE_ACCOUNT_MODAL: string = 'SHOW_CREATE_ACCOUNT_MODAL';
 export const HIDE_CREATE_ACCOUNT_MODAL: string = 'HIDE_CREATE_ACCOUNT_MODAL';
 
+export const DETAILS_SAVECHANGES_REQUEST: string = 'DETAILS_SAVECHANGES_REQUEST';
+export const DETAILS_SAVECHANGES_RESPONSE: string = 'DETAILS_SAVECHANGES_RESPONSE';
+
 const SECTION_NAME: string = 'accounts';
 
 
@@ -202,4 +205,71 @@ export function createNewAsync(data: { first: string, last: string, middle: stri
         )
     };
 }
+
+export function detailsSaveChanges(id, data: { first: string, last: string, middle: string }): any {
+
+    return (dispatch: any, getState: any, router: any) => {
+        dispatch(onRequestAction(DETAILS_SAVECHANGES_REQUEST, data))
+        
+        
+        let request: any = {
+            method: 'PUT',
+            url: '/api/' + SECTION_NAME + '/' + id,
+            data: {name: data},
+            useAuth: true
+        };
+        
+        return Fetch(request)
+        .then(
+            (result) => {
+
+                dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, DETAILS_SAVECHANGES_RESPONSE));
+                
+                dispatch(getResults({}))
+                if (router) {
+                    router.transitionTo(SECTION_NAME);
+                    window.scrollTo(0, 0);
+                }
+            }
+        )
+        .catch(
+            (result) => {
+                console.log(result.err);
+            }
+        )
+    };
+}
+
+export function detailsFetch(id: string): any {
+
+    return (dispatch: any, getState: any, router: any) => {
+        dispatch(onRequestAction(GET_DETAILS_REQUEST, id))
+        
+        
+        let request: any = {
+            method: 'GET',
+            url: '/api/' + SECTION_NAME + '/' + id,
+            useAuth: true
+        };
+        
+        return Fetch(request)
+        .then(
+            (result) => {
+                dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, GET_DETAILS_RESPONSE));
+            
+                if (router) {
+                    router.transitionTo(SECTION_NAME);
+                    window.scrollTo(0, 0);
+                }
+            }
+        )
+        .catch(
+            (result) => {
+                console.log(result.err);
+            }
+        )
+    };
+}
+
+
 

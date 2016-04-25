@@ -1,0 +1,14 @@
+// ==========================================================================
+// Menu
+// ==========================================================================
+
+.menu {
+	margin-top: em(20px);
+	@include element(link) {
+		@extend %menu-link;
+		border-bottom: solid 1px rgba($white,.3);
+		@include modifier(end) {
+			@extend %menu-link;
+		}
+	}
+}

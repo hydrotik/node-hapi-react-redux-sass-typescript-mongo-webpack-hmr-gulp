@@ -7,6 +7,8 @@ import {
     IAccountsResponse,
     GET_RESULTS_REQUEST,
     GET_RESULTS_RESPONSE,
+    GET_DETAILS_REQUEST,
+    GET_DETAILS_RESPONSE,
     CREATE_NEW_REQUEST,
     CREATE_NEW_RESPONSE,
     SHOW_CREATE_ACCOUNT_MODAL,
@@ -54,7 +56,37 @@ function waitingForResults(state: any, action: any): any {
             loading: true
         }
     )
+}
+
+function loadDetailsStart(state: any, action: any): any {
+    return _.merge(
+        {},
+        state,
+        {
+            details: {
+                loading: true
+                
+            }
+        }
+    )
+}
+function loadDetailsDone(state: any, action: any) : any{
     
+    return _.merge(
+        {},
+        state,
+        {
+            details: {
+                loading: false,
+                initialValues: {
+                    firstName: _.get(action, 'response.data.name.first'),
+                    lastName: _.get(action, "response.data.name.last"),
+                    middleName: _.get(action, "response.data.name.middle"),
+                    username: _.get(action, "response.data.user.name")
+                }
+            }
+        }
+    )
 }
 
 export default function (state = {data:[], sortFilter: ''}, action: any) : any {
@@ -71,6 +103,10 @@ export default function (state = {data:[], sortFilter: ''}, action: any) : any {
             return endCreateNew(state, action)
         case CREATE_NEW_RESPONSE:
             return endCreateNew(state, action)
+        case GET_DETAILS_REQUEST:
+            return loadDetailsStart(state, action);
+        case GET_DETAILS_RESPONSE:
+            return loadDetailsDone(state, action);
     }
     return state
 }

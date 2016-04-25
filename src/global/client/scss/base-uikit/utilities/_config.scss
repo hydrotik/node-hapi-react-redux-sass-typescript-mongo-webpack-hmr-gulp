@@ -1,0 +1,102 @@
+// ==========================================================================
+// Global Config
+// ==========================================================================
+
+// Font Stacks
+
+$font-url--google: 'http://fonts.googleapis.com/css?family=Open+Sans:100,300,400,700,900';
+$font-family--primary: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-family--secondary: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+// Font Weights
+
+$font-weight--thin: 100;
+$font-weight--light: 300;
+$font-weight--medium: 400;
+$font-weight--bold: 700;
+$font-weight--ultra-bold: 900;
+
+// Descriptive Base Colors
+
+$white: #ffffff;
+$black: #0b0b0b;
+$grey: #797e83;
+
+$fountain-blue: #3c8dbc;
+$emerald: #5ece7f;
+$sunglo: #e67478;
+$coral: #ff784f;
+$purple-majesty: #9279c3;
+$scooter: #00264b;
+
+$aqua: #00bcd4;
+$gold: #ff9800;
+$green: #8bc34a;
+
+// Color Usage
+
+$color-primary: $fountain-blue;
+$color-secondary: $scooter;
+$color-accent: $fountain-blue;
+$color-shadow: rgba($black, .2);
+
+// Color Palette Modifiers
+
+$color-palettes: (
+        grey: (
+                xx-light : lighten($grey, 43%),
+                x-light : lighten($grey, 35%),
+                light : lighten($grey, 12%),
+                base : $grey,
+                dark : darken($grey, 8%),
+                x-dark : darken($grey, 16%)
+        ),
+        black: (
+                light : lighten($black, 10%),
+                base : $black,
+                dark : darken($black, 10%)
+        )
+);
+
+// UI Colors
+
+$ui-colors: (
+        default : $fountain-blue,
+        success : $aqua,
+        error : $sunglo,
+        warning : $gold,
+        info : $green,
+        reset : lighten($grey, 35%)
+);
+
+// Text
+
+$base__font-size: 16px;
+$base__line: 24px;
+$letter-space: 2px;
+
+// Border radius
+
+$border-radius--default: .2em;
+$border-radius--round: 50%;
+
+// Transitions
+
+$transition-duration: .3s;
+
+// Path to Assets
+
+$path--rel: "http://localhost:3000/assets/images";
+
+// Grid
+
+$grid-column-width: 65px !default;
+$grid-gutter-width: 20px !default;
+$grid-column-count: 12 !default;
+$grid-content-max-width: 1050px !default;
+
+// Breakpoints
+
+$breakpoint--sm: 1px;
+$breakpoint--md: 768px;
+$breakpoint--lg: 1100px;

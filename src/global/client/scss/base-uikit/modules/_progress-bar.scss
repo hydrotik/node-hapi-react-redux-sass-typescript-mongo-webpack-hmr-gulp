@@ -1,0 +1,30 @@
+// ==========================================================================
+// Progress Bars
+// ==========================================================================
+
+.progress-bar {
+	@include element(status) {
+		@include ui-colors($ui-colors, el);
+	}
+	height: 4px;
+	border-radius: 2px;
+	background: palette(grey, x-light);
+	position: relative;
+	margin-bottom: em(46px);
+}
+
+// Classes that begin with progress-bar__
+
+[class^="progress-bar__"] {
+	@include p-el(after, 20px, 20px) {
+		border-radius: $border-radius--round;
+		right: -10px;
+		top: -8px;
+	}
+
+	display: block;
+	width: 50%;
+	height: 100%;
+	border-radius: inherit;
+	position: relative;
+}

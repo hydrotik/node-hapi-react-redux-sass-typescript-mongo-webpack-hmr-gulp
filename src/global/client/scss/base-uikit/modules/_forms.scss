@@ -1,0 +1,33 @@
+// ==========================================================================
+// Form Elements
+// ==========================================================================
+
+.form {
+	@include element(label) {
+		@include modifier(hidden) {
+			@extend .srt;
+		}
+		display: block;
+		margin-bottom: em(10px);
+	}
+
+	@include element(input) {
+		font-size : em(18px);
+		margin-bottom: em(20px, 18px);
+		border-bottom: 1px solid palette(grey, x-light);
+		border-radius: 0; // $border-radius--default;
+		background: none;  // palette(grey, xx-light)
+		color: palette(black, dark);
+		font-weight: $font-weight--light;
+		resize: none;
+
+		&:focus {	
+			border-color: $color-primary;
+		}
+	}
+
+	@include element(btn) {
+		@extend %btn;
+		background: $color-primary;
+	}
+}

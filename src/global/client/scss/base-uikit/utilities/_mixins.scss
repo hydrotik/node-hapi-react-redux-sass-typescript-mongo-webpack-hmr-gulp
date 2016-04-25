@@ -1,0 +1,105 @@
+// ==========================================================================
+// Mixins
+// ==========================================================================
+
+// BEM selectors
+
+@mixin element($element) {
+    &__#{$element} {
+        @content;
+    }
+}
+
+@mixin modifier($modifier) {
+    &--#{$modifier} {
+        @content;
+    }
+}
+
+// Media queries
+
+@mixin media-query($break) {
+    @if $break == "small" {
+        @media (min-width: $breakpoint--sm) and (max-width: $breakpoint--md) {
+            @content;
+        }
+    } @else if $break == "medium" {
+        @media (min-width: $breakpoint--md + 1) {
+            @content;
+        }
+    } @else if $break == "large" {
+        @media (min-width: $breakpoint--lg) {
+            @content;
+        }
+    } @else {
+        @error "No value could be retrieved for `#{$break}`. "
+    }
+}
+
+// Generate modifier color classes
+
+@mixin ui-colors($map, $p-el:null) {
+    @each $theme, $color in $map {
+        @include modifier($theme) {
+            background-color: $color;
+
+            // If an $p-el value is passed, generate pseudo-element bg colors. Used on progress-bars.
+            @if $p-el {
+                &:after {
+                    background-color: lighten($color, 8%);
+                }
+            }
+        }
+    }
+}
+
+// Generating :before or :after pseudo-element shapes
+
+@mixin p-el(
+    $el,
+    $el-w: null,
+    $el-h: null) {
+    @if $el == "before" or $el == "after" {
+        &:#{$el} {
+            @extend %pseudos;
+            width: $el-w;
+            height: $el-h;
+            @content;
+        }
+    } @else {
+        @error "`#{$el}` is not a valid pseudo-element.";
+    }
+}
+
+// Image replacement
+
+@mixin img-replace($img, $w, $h, $disp: block) {
+    background-image: url('#{$path--rel}/#{$img}');
+    background-repeat: no-repeat;
+    width: $w;
+    height: $h;
+    display: $disp;
+}
+
+// Adjacent sibling margins
+
+@mixin doubly($margin: 1em) {
+    & + & {
+        margin-left: $margin;
+        @content;
+    }
+}
+
+// Grid columns
+
+@mixin g-columns {
+    @for $i from 1 through $grid-column-count {
+        $context: g-context($grid-column-width, $grid-column-count, $grid-gutter-width) !global;
+        $target: ($grid-column-width * $i) + ($grid-gutter-width * ($i - 1));
+
+        // Generate and output the column modifier classes
+        &--#{$i} {
+            width: percentage($target / $context);
+        }
+    }
+}

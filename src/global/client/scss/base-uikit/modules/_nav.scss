@@ -1,0 +1,27 @@
+// ==========================================================================
+// Nav
+// ==========================================================================
+
+.nav {
+    margin-top: em(20px);
+    margin-bottom: em(30px);
+    @include element(item) {
+        @extend %nav-item-horizontal;
+
+        @include modifier(current) {
+            @extend %nav-item-horizontal;
+            a {
+                @extend %nav-item-link;
+                @extend %nav-item-on;
+            }
+        }
+        a {
+            transition: all $transition-duration ease-in-out;
+            @extend %nav-item-link;
+            color: palette(grey);
+            &:hover {
+                @extend %nav-item-on;
+            }
+        }
+    }
+}
