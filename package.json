@@ -56,7 +56,6 @@
     "d3": "^3.5.16",
     "dateformat": "^1.0.12",
     "es6-promise": "^3.1.2",
-    "fabric": "^1.6.0",
     "fabric-browserify": "^1.4.13",
     "falcor": "^0.1.13",
     "falcor-hapi": "0.0.2",
