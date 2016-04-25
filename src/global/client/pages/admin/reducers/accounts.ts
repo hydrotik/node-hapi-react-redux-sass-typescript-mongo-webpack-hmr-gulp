@@ -13,6 +13,10 @@ import {
     CREATE_NEW_RESPONSE,
     SHOW_CREATE_ACCOUNT_MODAL,
     HIDE_CREATE_ACCOUNT_MODAL,
+    ACCOUNT_LINK_REQUEST,
+    ACCOUNT_LINK_RESPONSE,
+    ACCOUNT_UNLINK_REQUEST,
+    ACCOUNT_UNLINK_RESPONSE,
     createNewAsync
 } from '../actions'
 
@@ -87,6 +91,22 @@ function loadDetailsDone(state: any, action: any) : any{
             }
         }
     )
+}
+
+function startAccountLink(state: any, action: any): any {
+    
+}
+
+function endAccountLink(state: any, action: any): any {
+    
+}
+
+function startAccountUnlink(state: any, action: any): any {
+    
+}
+
+function endAccountUnlink(state: any, action: any): any {
+    
 }
 
 export default function (state = {data:[], sortFilter: ''}, action: any) : any {

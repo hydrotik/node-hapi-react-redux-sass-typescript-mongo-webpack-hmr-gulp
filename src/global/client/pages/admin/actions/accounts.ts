@@ -23,6 +23,11 @@ export const HIDE_CREATE_ACCOUNT_MODAL: string = 'HIDE_CREATE_ACCOUNT_MODAL';
 export const DETAILS_SAVECHANGES_REQUEST: string = 'DETAILS_SAVECHANGES_REQUEST';
 export const DETAILS_SAVECHANGES_RESPONSE: string = 'DETAILS_SAVECHANGES_RESPONSE';
 
+export const ACCOUNT_UNLINK_REQUEST: string = 'ACCOUNT_UNLINK_REQUEST';
+export const ACCOUNT_UNLINK_RESPONSE: string = 'ACCOUNT_UNLINK_RESPONSE';
+export const ACCOUNT_LINK_REQUEST: string = 'ACCOUNT_LINK_REQUEST';
+export const ACCOUNT_LINK_RESPONSE: string = 'ACCOUNT_LINK_RESPONSE';
+
 const SECTION_NAME: string = 'accounts';
 
 
@@ -226,6 +231,70 @@ export function detailsSaveChanges(id, data: { first: string, last: string, midd
                 dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, DETAILS_SAVECHANGES_RESPONSE));
                 
                 dispatch(getResults({}))
+                if (router) {
+                    router.transitionTo(SECTION_NAME);
+                    window.scrollTo(0, 0);
+                }
+            }
+        )
+        .catch(
+            (result) => {
+                console.log(result.err);
+            }
+        )
+    };
+}
+
+export function unlinkAccount(id: string): any {
+    return (dispatch: any, getState: any, router: any) => {
+        dispatch(onRequestAction(ACCOUNT_UNLINK_REQUEST));
+
+        let request: any = {
+            method: 'DELETE',
+            url: '/api/' + SECTION_NAME + '/' + id + '/user',
+            useAuth: true
+        };
+        
+        return Fetch(request)
+        .then(
+            (result) => {
+                dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, ACCOUNT_UNLINK_RESPONSE));
+            
+                if (router) {
+                    router.transitionTo(SECTION_NAME);
+                    window.scrollTo(0, 0);
+                }
+            }
+        )
+        .catch(
+            (result) => {
+                console.log(result.err);
+            }
+        )
+    };
+}
+
+export function linkAccount(id: string, username: string): any {
+    return (dispatch: any, getState: any, router: any) => {
+        dispatch(onRequestAction(ACCOUNT_LINK_REQUEST, username))
+
+        let request: any = {
+            method: 'PUT',
+            url: '/api/' + SECTION_NAME + '/' + id + '/user',
+            data: {
+                username
+            },
+            useAuth: true
+        };
+        
+        return Fetch(request)
+        .then(
+            (result) => {
+                if (result.status != 200) {
+                    console.log(result);
+                }
+                dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, ACCOUNT_LINK_RESPONSE));
+            
                 if (router) {
                     router.transitionTo(SECTION_NAME);
                     window.scrollTo(0, 0);

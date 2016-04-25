@@ -6,13 +6,16 @@
 
 // Core Imports
 import * as React from 'react';
+import * as _ from 'lodash';
 
 import {
     detailsFetch,
-    detailsSaveChanges
+    detailsSaveChanges,
+    linkAccount,
+    unlinkAccount
 } from '../../actions'
 
-import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input} from 'react-bootstrap';
+import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Well} from 'react-bootstrap';
 import {TextControl} from '../../../../components/TextControl/TextControl';
 import { reduxForm }  from 'redux-form';
 
@@ -28,10 +31,12 @@ interface IAccountDetailsProps {
     submitting?: boolean
     initialValues?: any
     handleSubmit?: any
+    error?: string
     
     // From MapDispatchToProps
     onNameDetailsSubmit?: (func: any) => any
     onUnlinkUserSubmit?: (func: any) => any
+    onLinkUserSubmit?: (func: any) => any
     onDeleteAccountSubmit?: (func: any) => any
     onLoadDetails?: (func: string) => any
     
@@ -89,8 +94,11 @@ const mapDispatchToProps = (dispatch: (func: any) => any, ownProps: IAccountDeta
                 last: data.lastName
             }));
         },
+        onLinkUserSubmit: (data: any) => {
+            return dispatch(linkAccount(ownProps.params.id, data.username));
+        },
         onUnlinkUserSubmit: (data: any) => {
-            console.log(data);
+            return dispatch(unlinkAccount(ownProps.params.id));
         },
         onDeleteAccountSubmit: (data: any) => {
             console.log(data);
@@ -138,6 +146,7 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                 {!loading ?
                 <div className='row'>
                     <Glyphicon glyph="glyphicon-refresh" />
+                    {this.props.error && <Well bsStyle="error">Error</Well>}
                     <div className='col-sm-8'>
                         <form onSubmit={handleSubmit(this.props.onNameDetailsSubmit)}>
                             <legend>Details</legend>
@@ -187,21 +196,24 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                                 </Button>
                              </div>
                         </form>
-                        <form  onSubmit={handleSubmit(this.props.onUnlinkUserSubmit)}>
+                        
+                        <form onSubmit={handleSubmit(_.get('initialValues.username', undefined) ? this.props.onUnlinkUserSubmit : this.props.onLinkUserSubmit)}>
                             <legend>User</legend>
+                            
+                            
                             <div className="row">
                                <Input
                                     type={"text"}
                                     help={username.touched && username.error ? username.error : ""}
                                     bsStyle={username.touched && username.error ? "error": null}
                                     hasFeedBack={username.touched && username.error }
-                                    disabled={submitting || username}
+                                    disabled={submitting || _.get('initialState.username', undefined)}
                                     name={"username"}
                                     ref="username"
                                     label={"Username"}
                                     value={username.value}
                                     buttonAfter={
-                                        username ? <Button disabled={!username}>View</Button>
+                                        username ? <Button disabled={!_.get('initialState.username', undefined)}>View</Button>
                                         : null
                                     }
                                     {...username}>
@@ -210,11 +222,11 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                             <div className="row">
                                 <Button
                                     bsStyle={null}
-                                    className="btn btn-danger"
+                                    className={_.get('initialValues.username', undefined) ? "btn btn-danger" : "btn btn-primary"}
                                     disabled={submitting}
                                     type={"submit"}
                                 >
-                                    Unlink user {submitting? <Glyphicon className="rotate-forever" glyph="glyphicon-refresh" /> : null}
+                                    {_.get('initialValues.username', undefined) ? 'Unlink user' : 'Link user'} {submitting? <Glyphicon className="rotate-forever" glyph="glyphicon-refresh" /> : null}
                                 </Button>
                             </div>
                         </form>
