@@ -3,6 +3,7 @@
 // Core Imports
 import * as React from 'react';
 import * as ClassNames from 'classnames';
+import * as activeComponent from 'react-router-active-component';
 import { map } from 'lodash';
 
 // Styles
@@ -21,6 +22,9 @@ interface ISideNavigationProps {
 interface ISideNavigationState {
     navBarOpen: boolean;
 }
+
+let ac: any = activeComponent;
+const NavLink: any = ac('li');
 
 export class SideNavigation extends React.Component<ISideNavigationProps, ISideNavigationState> {
 
@@ -63,8 +67,10 @@ export class SideNavigation extends React.Component<ISideNavigationProps, ISideN
                       <i className="fa fa-dashboard" /> <span>Dashboard</span> <i className="fa fa-angle-left pull-right" />
                     </a>
                     <ul className="treeview-menu">
-                      <li className="active"><a href="index.html"><i className="fa fa-circle-o" /> Dashboard v1</a></li>
+                      <NavLink to="/dashboard"><i className="fa fa-circle-o" /> Dashboard v1</NavLink>
                       <li><a href="index2.html"><i className="fa fa-circle-o" /> Dashboard v2</a></li>
+                      <NavLink to="/dashboard/video"><i className="fa fa-circle-o" /> Video Player </NavLink>
+                      <NavLink to="/dashboard/drawing"><i className="fa fa-circle-o" /> Drawing </NavLink>
                     </ul>
                   </li>
                   <li className="treeview">

@@ -128,6 +128,9 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
                         <ul className="nav navbar-nav navbar-right">
                             <li>
+                                <a href="/dashboard">Dashboard</a>
+                            </li>
+                            <li>
                                 <a href="/login/logout">Sign out</a>
                             </li>
                         </ul>
