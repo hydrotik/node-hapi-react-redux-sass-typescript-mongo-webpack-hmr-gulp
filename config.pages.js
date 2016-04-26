@@ -1,3 +1,7 @@
+var _ = require('lodash');
+
+var delta = [];
+
 var pages = [
     {
         route: {
@@ -139,4 +143,52 @@ var pages = [
     }
 ]
 
-exports.pages = pages;
+if(process.env.EXCLUDE != undefined){
+
+    var keys = process.env.EXCLUDE.split(',');
+    var plength = pages.length, klength = keys.length;
+
+    console.log('Excluding Pages: ' + keys.join(', '));
+
+    for(var p = 0; p < plength; p += 1){
+
+        var pid = pages[p].webpack.id;
+        var flag = false;
+
+        keyloop: for(var k = 0; k < klength; k += 1){
+            if(keys[k] === pid){
+                flag = true;
+                break keyloop;
+            }
+        }
+
+        if(!flag) delta.push(pages[p]);
+    }
+
+
+}else if(process.env.INCLUDE != undefined){
+
+    var keys = process.env.INCLUDE.split(',');
+    var plength = pages.length, klength = keys.length;
+
+    console.log('Including Pages: ' + keys.join(', '));
+
+    delta.push(pages[0]);
+    delta.push(pages[1]);
+
+    for(var p = 0; p < plength; p += 1){
+
+        var pid = pages[p].webpack.id;
+
+        keyloop: for(var k = 0; k < klength; k += 1){
+            if(keys[k] === pid){
+                delta.push(pages[p]);
+                break keyloop;
+            }
+        }
+    }
+
+
+}
+
+exports.pages = (delta.length > 2) ? delta : pages;
