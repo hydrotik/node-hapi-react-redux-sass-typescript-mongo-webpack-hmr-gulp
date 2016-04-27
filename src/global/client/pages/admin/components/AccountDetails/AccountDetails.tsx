@@ -197,7 +197,7 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                              </div>
                         </form>
                         
-                        <form onSubmit={handleSubmit(_.get('initialValues.username', undefined) ? this.props.onUnlinkUserSubmit : this.props.onLinkUserSubmit)}>
+                        <form onSubmit={handleSubmit(_.get(initialValues, 'username', undefined) ? this.props.onUnlinkUserSubmit : this.props.onLinkUserSubmit)}>
                             <legend>User</legend>
                             
                             
@@ -207,13 +207,13 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                                     help={username.touched && username.error ? username.error : ""}
                                     bsStyle={username.touched && username.error ? "error": null}
                                     hasFeedBack={username.touched && username.error }
-                                    disabled={submitting || _.get('initialState.username', undefined)}
+                                    disabled={submitting || !_.isUndefined(_.get(initialValues, 'username', undefined))}
                                     name={"username"}
                                     ref="username"
                                     label={"Username"}
                                     value={username.value}
                                     buttonAfter={
-                                        username ? <Button disabled={!_.get('initialState.username', undefined)}>View</Button>
+                                        username ? <Button disabled={!_.get(initialValues, 'username', undefined)}>View</Button>
                                         : null
                                     }
                                     {...username}>
@@ -222,11 +222,11 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                             <div className="row">
                                 <Button
                                     bsStyle={null}
-                                    className={_.get('initialValues.username', undefined) ? "btn btn-danger" : "btn btn-primary"}
+                                    className={_.get(initialValues, 'username', undefined) ? "btn btn-danger" : "btn btn-primary"}
                                     disabled={submitting}
                                     type={"submit"}
                                 >
-                                    {_.get('initialValues.username', undefined) ? 'Unlink user' : 'Link user'} {submitting? <Glyphicon className="rotate-forever" glyph="glyphicon-refresh" /> : null}
+                                    {_.get(initialValues, 'username', undefined) ? 'Unlink user' : 'Link user'} {submitting? <Glyphicon className="rotate-forever" glyph="glyphicon-refresh" /> : null}
                                 </Button>
                             </div>
                         </form>
