@@ -36,3 +36,12 @@ cd wattsproject
 npm run setup -s
 npm run watch
 ```
+
+**For selective building and to exclude/include specific sections you can provide the following arguments into the command line**
+```bash
+INCLUDE=account,login,home,dashboard npm run watch
+```
+
+```bash
+EXCLUDE=dashboard npm run watch
+```
