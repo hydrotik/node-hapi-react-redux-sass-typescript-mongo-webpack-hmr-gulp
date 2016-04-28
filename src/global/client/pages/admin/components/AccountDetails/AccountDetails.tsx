@@ -17,6 +17,8 @@ import {
 
 import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Well} from 'react-bootstrap';
 import {TextControl} from '../../../../components/TextControl/TextControl';
+import UserLinkForm from './UserLinkForm';
+
 import { reduxForm }  from 'redux-form';
 
 // Styles
@@ -35,8 +37,8 @@ interface IAccountDetailsProps {
     
     // From MapDispatchToProps
     onNameDetailsSubmit?: (func: any) => any
-    onUnlinkUserSubmit?: (func: any) => any
-    onLinkUserSubmit?: (func: any) => any
+    onUserUnlinkSubmit?: () => any
+    onUserLinkSubmit?: (username: string) => any
     onDeleteAccountSubmit?: (func: any) => any
     onLoadDetails?: (func: string) => any
     
@@ -94,10 +96,10 @@ const mapDispatchToProps = (dispatch: (func: any) => any, ownProps: IAccountDeta
                 last: data.lastName
             }));
         },
-        onLinkUserSubmit: (data: any) => {
-            return dispatch(linkAccount(ownProps.params.id, data.username));
+        onUserLinkSubmit: (username: string) => {
+            return dispatch(linkAccount(ownProps.params.id, username));
         },
-        onUnlinkUserSubmit: (data: any) => {
+        onUserUnlinkSubmit: () => {
             return dispatch(unlinkAccount(ownProps.params.id));
         },
         onDeleteAccountSubmit: (data: any) => {
@@ -113,7 +115,7 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
 
     }
     
-    public componentDidMount() {
+    public componentWillMount() {
         this.props.onLoadDetails(this.props.params.id);
     }
 
@@ -129,7 +131,9 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
             loading,
             initialValues,
             submitting,
-            handleSubmit
+            handleSubmit,
+            onUserLinkSubmit,
+            onUserUnlinkSubmit
         } = this.props;
         
         const viewBtn = <Button>View</Button>;
@@ -197,39 +201,9 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                              </div>
                         </form>
                         
-                        <form onSubmit={handleSubmit(_.get(initialValues, 'username', undefined) ? this.props.onUnlinkUserSubmit : this.props.onLinkUserSubmit)}>
-                            <legend>User</legend>
-                            
-                            
-                            <div className="row">
-                               <Input
-                                    type={"text"}
-                                    help={username.touched && username.error ? username.error : ""}
-                                    bsStyle={username.touched && username.error ? "error": null}
-                                    hasFeedBack={username.touched && username.error }
-                                    disabled={submitting || !_.isUndefined(_.get(initialValues, 'username', undefined))}
-                                    name={"username"}
-                                    ref="username"
-                                    label={"Username"}
-                                    value={username.value}
-                                    buttonAfter={
-                                        username ? <Button disabled={!_.get(initialValues, 'username', undefined)}>View</Button>
-                                        : null
-                                    }
-                                    {...username}>
-                                </Input>
-                            </div>
-                            <div className="row">
-                                <Button
-                                    bsStyle={null}
-                                    className={_.get(initialValues, 'username', undefined) ? "btn btn-danger" : "btn btn-primary"}
-                                    disabled={submitting}
-                                    type={"submit"}
-                                >
-                                    {_.get(initialValues, 'username', undefined) ? 'Unlink user' : 'Link user'} {submitting? <Glyphicon className="rotate-forever" glyph="glyphicon-refresh" /> : null}
-                                </Button>
-                            </div>
-                        </form>
+                        {/* Rule of thumb: ONLY pass props needed from parent to child. */}
+                        <UserLinkForm initialUsername={username.initialValue} onUserUnlinkSubmit={onUserUnlinkSubmit} onUserLinkSubmit={onUserLinkSubmit} />
+                        
                         <form onSubmit={handleSubmit(this.props.onDeleteAccountSubmit)}> 
                             <legend>Danger zone</legend>
                             <div className="row">
