@@ -98,7 +98,7 @@ cssLoader = [
 
 
 module.exports = {
-    devtool: 'source-map',
+    // devtool: 'eval-cheap-module-source-map',
     entry: Entries,
     output: {
         path: path.join(buildDir, 'pages'),

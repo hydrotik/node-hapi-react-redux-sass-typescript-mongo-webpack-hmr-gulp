@@ -27,10 +27,10 @@ $emerald: #5ece7f;
 $sunglo: #e67478;
 $coral: #ff784f;
 $purple-majesty: #9279c3;
-$scooter: #00264b;
+$scooter: #A8CBE7;
 
 $aqua: #00bcd4;
-$gold: #ff9800;
+$gold: #ffB800;
 $green: #8bc34a;
 
 // Color Usage
@@ -44,34 +44,34 @@ $color-shadow: rgba($black, .2);
 
 $color-palettes: (
         grey: (
-                xx-light : lighten($grey, 43%),
-                x-light : lighten($grey, 35%),
-                light : lighten($grey, 12%),
-                base : $grey,
-                dark : darken($grey, 8%),
-                x-dark : darken($grey, 16%)
+                xx-light: lighten($grey, 43%),
+                x-light: lighten($grey, 35%),
+                light: lighten($grey, 12%),
+                base: $grey,
+                dark: darken($grey, 8%),
+                x-dark: darken($grey, 16%)
         ),
         black: (
-                light : lighten($black, 10%),
-                base : $black,
-                dark : darken($black, 10%)
+                light: lighten($black, 10%),
+                base: $black,
+                dark: darken($black, 10%)
         )
 );
 
 // UI Colors
 
 $ui-colors: (
-        default : $fountain-blue,
-        success : $aqua,
-        error : $sunglo,
-        warning : $gold,
-        info : $green,
-        reset : lighten($grey, 35%)
+        default: $fountain-blue,
+        success: $aqua,
+        error: $sunglo,
+        warning: $gold,
+        info: $scooter,
+        reset: lighten($grey, 35%)
 );
 
 // Text
 
-$base__font-size: 16px;
+$base__font-size: 14px;
 $base__line: 24px;
 $letter-space: 2px;
 
@@ -82,11 +82,12 @@ $border-radius--round: 50%;
 
 // Transitions
 
-$transition-duration: .3s;
+$transition-duration: .2s;
+$btn-transition: opacity $transition-duration, color $transition-duration, background-color $transition-duration;
 
 // Path to Assets
 
-$path--rel: "http://localhost:3000/assets/images";
+$path--rel: "assets/images";
 
 // Grid
 

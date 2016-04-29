@@ -16,10 +16,10 @@
 // Classes that begin with progress-bar__
 
 [class^="progress-bar__"] {
-	@include p-el(after, 20px, 20px) {
+	@include p-el(after, 10px, 10px) {
 		border-radius: $border-radius--round;
 		right: -10px;
-		top: -8px;
+		top: -3px;
 	}
 
 	display: block;

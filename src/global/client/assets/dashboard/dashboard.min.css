@@ -1184,10 +1184,10 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: inherit;
-  font-weight: 500;
-  line-height: 1.1;
-  color: inherit;
+  /*font-family: inherit;*/
+  /*font-weight: 500;*/
+  /*line-height: 1.1;*/
+  /*color: inherit;*/
 }
 h1 small,
 h2 small,
@@ -5126,7 +5126,7 @@ a.thumbnail.active {
     background-position: 0 0;
   }
 }
-.progress {
+/*.progress {
   height: 20px;
   margin-bottom: 20px;
   overflow: hidden;
@@ -5195,7 +5195,7 @@ a.thumbnail.active {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
   background-image:      -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
   background-image:         linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
-}
+}*/
 .media {
   margin-top: 15px;
 }
@@ -5866,7 +5866,7 @@ button.close {
   background: transparent;
   border: 0;
 }
-.modal-open {
+/*.modal-open {
   overflow: hidden;
 }
 .modal {
@@ -5988,7 +5988,7 @@ button.close {
   .modal-lg {
     width: 900px;
   }
-}
+}*/
 .tooltip {
   position: absolute;
   z-index: 1070;
@@ -9898,7 +9898,7 @@ a:focus {
  * Component: Progress Bar
  * -----------------------
  */
-.progress,
+/*.progress,
 .progress > .progress-bar {
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -9908,9 +9908,9 @@ a:focus {
 .progress .progress-bar,
 .progress > .progress-bar .progress-bar {
   border-radius: 1px;
-}
+}*/
 /* size variation */
-.progress.sm,
+/*.progress.sm,
 .progress-sm {
   height: 10px;
 }
@@ -9939,9 +9939,9 @@ a:focus {
 .progress.xxs .progress-bar,
 .progress-xxs .progress-bar {
   border-radius: 1px;
-}
+}*/
 /* Vertical bars */
-.progress.vertical {
+/*.progress.vertical {
   position: relative;
   width: 30px;
   height: 200px;
@@ -9970,9 +9970,9 @@ a:focus {
 }
 .progress-group .progress-number {
   float: right;
-}
+}*/
 /* Remove margins from progress bars when put in a table */
-.table tr > td .progress {
+/*.table tr > td .progress {
   margin: 0;
 }
 .progress-bar-light-blue,
@@ -10024,7 +10024,7 @@ a:focus {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-}
+}*/
 /*
  * Component: Small Box
  * --------------------
@@ -10385,13 +10385,13 @@ a:focus {
   border-bottom-left-radius: 0;
 }
 .box-footer {
-  border-top-left-radius: 0;
+  /*border-top-left-radius: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
   border-top: 1px solid #f4f4f4;
   padding: 10px;
-  background-color: #ffffff;
+  background-color: #ffffff;*/
 }
 .chart-legend {
   margin: 10px 0;

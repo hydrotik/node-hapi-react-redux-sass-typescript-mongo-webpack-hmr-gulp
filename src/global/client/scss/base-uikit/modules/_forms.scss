@@ -11,6 +11,10 @@
 		margin-bottom: em(10px);
 	}
 
+	@include element(title) {
+		@extend %headline-underline;
+	}
+
 	@include element(input) {
 		font-size : em(18px);
 		margin-bottom: em(20px, 18px);

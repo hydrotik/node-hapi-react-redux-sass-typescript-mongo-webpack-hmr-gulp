@@ -34,12 +34,12 @@ const stateDefinitions: any = {
     label: 'Available',
   },
   enquire: {
-    color: '#ffd200',
+    color: '#A8CBE7',
     label: 'Enquire',
   },
   unavailable: {
     selectable: false,
-    color: '#78818b',
+    color: '#999999',
     label: 'Unavailable',
   },
 };
@@ -91,30 +91,35 @@ export class DashBoardCalendar extends React.Component<IDashBoardCalendarProps, 
     public render(): React.ReactElement<{}> {
 
         return (
-            <div className="box box-solid bg-green-gradient">
-                <div className="box-header">
-                  <i className="fa fa-calendar" />
-                  <h3 className="box-title">Calendar</h3>
-                  {/* tools box */}
-                  <div className="pull-right box-tools">
-                    {/* button with a dropdown */}
-                    <div className="btn-group">
-                      <button type="button" className="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
-                        <i className="fa fa-bars" /></button>
-                      <ul className="dropdown-menu pull-right" role="menu">
-                        <li><a href="#">Add new event</a></li>
-                        <li><a href="#">Clear events</a></li>
-                        <li className="divider" />
-                        <li><a href="#">View calendar</a></li>
-                      </ul>
-                    </div>
-                    <button type="button" className="btn btn-success btn-sm" data-widget="collapse"><i className="fa fa-minus" />
-                    </button>
-                    <button type="button" className="btn btn-success btn-sm" data-widget="remove"><i className="fa fa-times" />
-                    </button>
-                  </div>
-                  {/* /. tools */}
+            <div className="calendar">
+                
+                {/* Title */}
+                <h5 className="calendar__title">
+                    <span className="font-awesome font-awesome--calendar font-awesome--left" />
+                    Calendar
+                    <span className="font-awesome font-awesome--bars font-awesome--btn font-awesome--right"/>                    
+                </h5>
+                
+                {/* Tools ? Menu ? */}
+                <div>
+                    <a href="#" className="event-tool">
+                        <span className="font-awesome font-awesome--plus font-awesome--left"/>
+                        Add Event
+                    </a>
+
+                    <a href="#" className="event-tool">
+                        <span className="font-awesome font-awesome--close font-awesome--left"/>
+                        Clear Events
+                    </a>
+                    <a href="#" className="event-tool">
+                        <span className="font-awesome font-awesome--search font-awesome--left"/>
+                        View Calendar
+                    </a>
+
                 </div>
+
+                <div className="box-header"></div>
+
                 {/* /.box-header */}
                 <div className="box-body no-padding">
                     <DateRangePicker
@@ -131,40 +136,41 @@ export class DashBoardCalendar extends React.Component<IDashBoardCalendarProps, 
 
                 </div>
                 {/* /.box-body */}
+                <hr />
                 <div className="box-footer text-black">
                   <div className="row">
                     <div className="col-sm-6">
                       {/* Progress bars */}
                       <div className="clearfix">
-                        <span className="pull-left">Task #1</span>
-                        <small className="pull-right">90%</small>
+                        <span className="task__title">Task #1</span>
+                        <small className="task__completion">90%</small>
                       </div>
-                      <div className="progress xs">
-                        <div className="progress-bar progress-bar-green" style={{width: '90%'}} />
+                      <div className="progress-bar">
+                        <div className="progress-bar__status progress-bar__status--default" style={{width: '90%'}} />
                       </div>
                       <div className="clearfix">
-                        <span className="pull-left">Task #2</span>
-                        <small className="pull-right">70%</small>
+                        <span className="task__title">Task #2</span>
+                        <small className="task__completion">70%</small>
                       </div>
-                      <div className="progress xs">
-                        <div className="progress-bar progress-bar-green" style={{width: '70%'}} />
+                      <div className="progress-bar">
+                        <div className="progress-bar__status progress-bar__status--info" style={{width: '70%'}} />
                       </div>
                     </div>
                     {/* /.col */}
                     <div className="col-sm-6">
                       <div className="clearfix">
-                        <span className="pull-left">Task #3</span>
-                        <small className="pull-right">60%</small>
+                        <span className="task__title">Task #3</span>
+                        <small className="task__completion">60%</small>
                       </div>
-                      <div className="progress xs">
-                        <div className="progress-bar progress-bar-green" style={{width: '60%'}} />
+                      <div className="progress-bar">
+                        <div className="progress-bar__status progress-bar__status--error" style={{width: '60%'}} />
                       </div>
                       <div className="clearfix">
-                        <span className="pull-left">Task #4</span>
-                        <small className="pull-right">40%</small>
+                        <span className="task__title">Task #4</span>
+                        <small className="task__completion">40%</small>
                       </div>
-                      <div className="progress xs">
-                        <div className="progress-bar progress-bar-green" style={{width: '40%'}} />
+                      <div className="progress-bar">
+                        <div className="progress-bar__status progress-bar__status--warning" style={{width: '40%'}} />
                       </div>
                     </div>
                     {/* /.col */}
@@ -175,4 +181,3 @@ export class DashBoardCalendar extends React.Component<IDashBoardCalendarProps, 
         );
     }
 }
-  

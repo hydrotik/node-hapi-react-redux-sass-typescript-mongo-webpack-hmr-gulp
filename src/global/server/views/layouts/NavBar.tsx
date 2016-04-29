@@ -13,6 +13,32 @@ class NavBar extends React.Component<INavBarProps, {}> {
 
         return (
             <div className="navbar navbar-default navbar-fixed-top">
+
+
+            <nav>
+                <div>
+                    <nav className="navbar" role="navigation">
+        <a className="logo" href="/" >
+        <img src='assets/images/logo.svg' />
+        </a>
+        <span id="toggle" className="icn--nav-toggle is-displayed-mobile">
+        <b className="srt">Toggle</b>
+        </span>
+        <ul className="nav is-collapsed-mobile">
+        <li className="nav__item--current"><a href="#">Home</a></li>
+        <li className="nav__item"><a href="#">About</a></li>
+        <li className="nav__item"><a href="#">Contact</a></li>
+        </ul>
+        <ul className="nav nav--right is-collapsed-mobile">
+        <li className="nav__item"><a href="#">Sign Up</a></li>
+        <li className="nav__item"><a href="#">Sign In</a></li>
+        </ul>
+
+        </nav>
+        <nav className="navspacer"></nav>
+        </div>
+        </nav>
+
                 <div className="container">
                     <div className="navbar-header">
                         <a className="navbar-brand" href="/">

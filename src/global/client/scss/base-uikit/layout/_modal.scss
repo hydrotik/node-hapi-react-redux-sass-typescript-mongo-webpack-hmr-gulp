@@ -1,0 +1,36 @@
+.modal {
+    background: white;
+    border-radius: $border-radius--default;
+    padding: em(20px);
+    position: relative;
+    
+    @include element(close-btn) {
+        background: $white;
+        border-radius: $border-radius--round;
+        box-shadow:0 0 em(5px) rgba(0, 0, 0, .225);
+        color: palette(grey);
+        cursor: pointer;
+        float: right;
+        font-family: FontAwesome;
+        font-size:em(14px);
+        height: 10px;
+        line-height: 0;
+        margin: 0;
+        padding: em(14px);
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        transition: $btn-transition;
+        width: 10px;
+        
+        &:hover {
+            background-color: palette(grey);
+            color:white;
+        }
+        
+        &:after {
+            content:'\f00d';
+            margin:0 0 0 -5px;
+        }
+    }
+}

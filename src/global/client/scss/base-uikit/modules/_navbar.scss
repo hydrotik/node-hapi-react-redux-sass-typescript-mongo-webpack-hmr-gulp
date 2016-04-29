@@ -2,10 +2,18 @@
 // Navbar
 // ==========================================================================
 
-.navbar {	
-	position: relative;
-	@include media-query(medium) {
-		margin-top: em(54px);
-		margin-bottom: 0;
-	}
+.navbar {
+    background-color: #ffffff;
+    border-bottom: thin solid palette(grey, xx-light);
+
+    @include modifier(fixed) {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    @include media-query(medium) {
+        margin-top: em(0px);
+        margin-bottom: 0;
+    }
 }

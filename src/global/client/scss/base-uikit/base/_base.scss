@@ -14,10 +14,20 @@ body {
   line-height: ($base__line/$base__font-size);
 }
 
+// Horizontal Rule 
+
+hr {
+	border: none;
+	border-bottom: 1px solid palette(grey);
+	height: 0;
+	padding: 0;
+	margin:em(20px) 0 em(40px);
+}
+
 // Text
 
 h1 {
-	@extend %hdln-prim;
+	@extend %headline-primary;
 }
 
 h2 {
@@ -38,6 +48,10 @@ h4 {
 	text-transform: uppercase;
 	letter-spacing: $letter-space;
 	font-weight: $font-weight--medium;
+	font-size: em(14px);
+}
+
+h5 {
 	font-size: em(14px);
 }
 

@@ -1,0 +1,15 @@
+.logo {
+    display: inline-block;
+    background-position: center;
+    background-size: contain;
+    height: 50px;
+    margin: em(20px) em(20px);
+    vertical-align: middle;
+    width: 50px;
+
+    @include media-query(small) {
+        height: 40px;
+        margin: 10px;
+        width: 40px;
+    }
+}

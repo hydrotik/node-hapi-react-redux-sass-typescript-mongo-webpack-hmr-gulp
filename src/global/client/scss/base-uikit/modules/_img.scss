@@ -8,7 +8,6 @@
 		padding: em(12px);
 	}
 	@include modifier(avatar) {
-		display: block;
 		margin-left: auto;
 		margin-right: auto;
 		border-radius: $border-radius--round;

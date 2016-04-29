@@ -7,17 +7,20 @@
 %nav-item-horizontal {
     @include media-query(medium) {
         display: inline-block;
-        margin: 0 em(20px);
+        margin: em(10px) em(20px);
     }
 }
 
 %nav-item-link {
-    font-weight: $font-weight--light;
+    font-weight: $font-weight--medium;
     text-align: center;
-    font-size: em(18px);
+    font-size: em(12px);
     display: block;
     padding: em(8px, 20px) 0;
-    border-bottom: 1px solid transparent;
+    border-bottom: 2px solid transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.075em;
+
     @include media-query(small) {
         border-bottom-color: palette(grey, xx-light);
         padding-top: em(14px, 18px);
@@ -48,24 +51,39 @@
     font-family: $font-family--secondary;
 }
 
+%headline-underline {
+    padding-bottom: em(20px, 18px);
+    border-bottom: 1px #999da1 solid;
+}
+
 // Buttons
 
 %btn {
-    padding: 15px 25px;
+    padding: em(10px) em(20px);
     border: 0;
     border-radius: $border-radius--default;
     color: $white;
     text-transform: uppercase;
-    font-size: em(14px);
-    font-weight: $font-weight--medium;
-    transition: opacity $transition-duration;
+    font-size: em(12px);
+    font-weight: $font-weight--bold;
+    transition: $btn-transition;;
     display: block;
+    cursor: pointer;
+    
     &:hover {
-        opacity: .75;
+        @extend %btn--hover;
     }
     &:active {
-        opacity: initial;
+        @extend %btn--active;
     }
+}
+
+%btn--hover {
+    opacity: .75;
+}
+
+%btn--active {
+    opacity: .75;
 }
 
 // Menu link

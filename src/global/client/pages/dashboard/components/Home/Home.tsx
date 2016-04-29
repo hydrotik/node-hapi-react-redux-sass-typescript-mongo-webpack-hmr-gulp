@@ -8,6 +8,9 @@ import * as Moment from 'moment';
 // Styles
 import './_Home.scss';
 
+// Modal
+import { Modal } from '../Modal/Modal';
+
 // Page Components
 import { DashBoardVisitors } from '../DashBoardVisitors/DashBoardVisitors';
 import { DashBoardSalesGraph } from '../DashBoardSalesGraph/DashBoardSalesGraph';
@@ -15,7 +18,8 @@ import { DashBoardChatBox } from '../DashBoardChatBox/DashBoardChatBox';
 import { DashBoardToDoList } from '../DashBoardToDoList/DashBoardToDoList';
 import { DashBoardQuickEmail } from '../DashBoardQuickEmail/DashBoardQuickEmail';
 import { DashBoardTabbedChart } from '../DashBoardTabbedChart/DashBoardTabbedChart';
-import { DashBoardCalendar} from '../DashBoardCalendar/DashBoardCalendar';
+import { DashBoardCalendar } from '../DashBoardCalendar/DashBoardCalendar';
+
 
 // Behaviors and Actions
 import {
@@ -195,11 +199,15 @@ export class Home extends React.Component<IHomeProps, IHomeState> implements IHo
             <section className="col-lg-5 connectedSortable">
 
               {/* Map box */}
+              <Modal>
               <DashBoardVisitors />
+              </Modal>
               {/* /.box (Map box) */}
 
               {/* solid sales graph */}
+              <Modal>
               <DashBoardSalesGraph />
+              </Modal>
               {/* /.box (solid sales graph) */}
 
               {/* 
@@ -208,7 +216,9 @@ export class Home extends React.Component<IHomeProps, IHomeState> implements IHo
               https://github.com/onefinestay/react-daterange-picker
 
               */}
-              <DashBoardCalendar />
+              <Modal>
+                <DashBoardCalendar />
+              </Modal>
               {/* /.box (Calendar) */}
 
 

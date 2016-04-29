@@ -20,7 +20,7 @@ class Layout extends React.Component<IDefaultProps, {}> {
                     <title>{this.props.title}</title>
                     <meta charSet="utf-8" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"></link>
+                    {/*<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"></link>*/}
                     <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'></link>
                     <link rel="shortcut icon" href="favicon.ico" />
                 </head>

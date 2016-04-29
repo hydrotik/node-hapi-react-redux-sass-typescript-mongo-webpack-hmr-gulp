@@ -9,7 +9,8 @@
 [class^="btn--"] {
     @extend %btn;
     @extend %center-align;
-    margin-bottom: em(20px, 14px);
+
+     margin-bottom: em(20px, 14px);
 
     @include media-query(small) {
         width: 100%;
