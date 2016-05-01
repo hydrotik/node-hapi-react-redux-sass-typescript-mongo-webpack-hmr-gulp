@@ -8,7 +8,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var util = require('util');
 var webpack = require('webpack');
-var Pages = require('./config.pages').pages;
+var Pages = require('./config.pages').getConfig();
 
 var processEntries = function(pages){
     var entry = {}, webpack, src, id;
