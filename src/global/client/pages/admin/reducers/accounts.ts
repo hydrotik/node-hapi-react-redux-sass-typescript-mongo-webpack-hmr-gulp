@@ -13,6 +13,10 @@ import {
     CREATE_NEW_RESPONSE,
     SHOW_CREATE_ACCOUNT_MODAL,
     HIDE_CREATE_ACCOUNT_MODAL,
+    ACCOUNT_LINK_REQUEST,
+    ACCOUNT_LINK_RESPONSE,
+    ACCOUNT_UNLINK_REQUEST,
+    ACCOUNT_UNLINK_RESPONSE,
     createNewAsync
 } from '../actions'
 
@@ -64,8 +68,13 @@ function loadDetailsStart(state: any, action: any): any {
         state,
         {
             details: {
-                loading: true
-                
+                loading: true,
+                data: {
+                    firstName: "",
+                    lastName: "",
+                    middleName: "",
+                    username: ""
+                }
             }
         }
     )
@@ -78,18 +87,59 @@ function loadDetailsDone(state: any, action: any) : any{
         {
             details: {
                 loading: false,
-                initialValues: {
-                    firstName: _.get(action, 'response.data.name.first'),
-                    lastName: _.get(action, "response.data.name.last"),
-                    middleName: _.get(action, "response.data.name.middle"),
-                    username: _.get(action, "response.data.user.name")
+                data: {
+                    firstName: _.get(action, 'response.data.name.first', ""),
+                    lastName: _.get(action, "response.data.name.last", ""),
+                    middleName: _.get(action, "response.data.name.middle", ""),
+                    username: _.get(action, "response.data.user.name", "")
                 }
             }
         }
     )
 }
 
-export default function (state = {data:[], sortFilter: ''}, action: any) : any {
+function startAccountLink(state: any, action: any): any {
+    return state;
+}
+
+function endAccountLink(state: any, action: any): any {
+    let newState: any = _.merge(
+        {},
+        state,
+        {
+            details: {
+                loading: false
+            }
+        }
+    )
+    
+    newState.details.data.username = _.get(action, "response.username", "");
+    
+    return newState;
+}
+
+function startAccountUnlink(state: any, action: any): any {
+    return state;
+}
+
+function endAccountUnlink(state: any, action: any): any {
+     
+    let newState: any = _.merge(
+        {},
+        state,
+        {
+            details: {
+                loading: false
+            }
+        }
+    )
+    newState.details.data.username = "";
+    
+    return newState;
+}
+
+export default function (state: any = {data:[], sortFilter: ''}, action: any) : any {
+    
     switch (action.type) {
         case GET_RESULTS_REQUEST:
             return waitingForResults(state, action)
@@ -107,6 +157,14 @@ export default function (state = {data:[], sortFilter: ''}, action: any) : any {
             return loadDetailsStart(state, action);
         case GET_DETAILS_RESPONSE:
             return loadDetailsDone(state, action);
+        case ACCOUNT_UNLINK_REQUEST:
+            return startAccountUnlink(state, action);
+        case ACCOUNT_UNLINK_RESPONSE:
+            return endAccountUnlink(state, action);
+        case ACCOUNT_LINK_REQUEST:
+            return startAccountLink(state, action);
+        case ACCOUNT_LINK_RESPONSE:
+            return endAccountLink(state, action);
     }
     return state
 }

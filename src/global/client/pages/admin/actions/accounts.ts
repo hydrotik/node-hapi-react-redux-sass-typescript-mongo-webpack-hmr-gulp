@@ -2,6 +2,7 @@
 
 import Fetch from '../../../api/jsonfetch';
 import ParseValidation, { IValidation } from '../../../api/parsevalidation';
+import {ReduxAlertType, REDUXALERT_DISPLAY} from '../../../components/ReduxAlert/actions'
 
 export const GET_RESULTS_REQUEST: string = 'GET_RESULTS_REQUEST';
 export const GET_RESULTS_RESPONSE: string = 'GET_RESULTS_RESPONSE';
@@ -22,6 +23,11 @@ export const HIDE_CREATE_ACCOUNT_MODAL: string = 'HIDE_CREATE_ACCOUNT_MODAL';
 
 export const DETAILS_SAVECHANGES_REQUEST: string = 'DETAILS_SAVECHANGES_REQUEST';
 export const DETAILS_SAVECHANGES_RESPONSE: string = 'DETAILS_SAVECHANGES_RESPONSE';
+
+export const ACCOUNT_UNLINK_REQUEST: string = 'ACCOUNT_UNLINK_REQUEST';
+export const ACCOUNT_UNLINK_RESPONSE: string = 'ACCOUNT_UNLINK_RESPONSE';
+export const ACCOUNT_LINK_REQUEST: string = 'ACCOUNT_LINK_REQUEST';
+export const ACCOUNT_LINK_RESPONSE: string = 'ACCOUNT_LINK_RESPONSE';
 
 const SECTION_NAME: string = 'accounts';
 
@@ -225,6 +231,15 @@ export function detailsSaveChanges(id, data: { first: string, last: string, midd
 
                 dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, DETAILS_SAVECHANGES_RESPONSE));
                 
+                dispatch({
+                    type: REDUXALERT_DISPLAY,
+                    id: 'nameDetailsFormAlert',
+                    options: {
+                        alertType: ReduxAlertType.Success,
+                        messageText: "Account updated"
+                    }
+                })
+                
                 dispatch(getResults({}))
                 if (router) {
                     router.transitionTo(SECTION_NAME);
@@ -235,6 +250,104 @@ export function detailsSaveChanges(id, data: { first: string, last: string, midd
         .catch(
             (result) => {
                 console.log(result.err);
+            }
+        )
+    };
+}
+
+export function unlinkAccount(id: string): any {
+    return (dispatch: any, getState: any, router: any) => {
+        dispatch(onRequestAction(ACCOUNT_UNLINK_REQUEST));
+
+        let request: any = {
+            method: 'DELETE',
+            url: '/api/' + SECTION_NAME + '/' + id + '/user',
+            useAuth: true
+        };
+        
+        return Fetch(request)
+        .then(
+            (result) => {
+                dispatch({
+                    type: REDUXALERT_DISPLAY,
+                    id: "userLinkFormAlert",
+                    options: {
+                        alertType: ReduxAlertType.Success,
+                        messageText: "User unlinked"
+                    }
+                })
+                dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, ACCOUNT_UNLINK_RESPONSE));
+                
+            }
+        )
+        .catch(
+            (result) => {
+                dispatch(onResultsAction({success: false, data: result.data}, _.get(result, "data.message", ""), _.get(result, "data.error", {}), "help", false, false, ACCOUNT_UNLINK_RESPONSE));
+                
+                dispatch({
+                    type: REDUXALERT_DISPLAY,
+                    id: "userLinkFormAlert",
+                    options: {
+                        alertType: ReduxAlertType.Error,
+                        messageText: _.get(result, "data.message", "")
+                    }
+                })
+                
+                
+            }
+        )
+    };
+}
+
+export function linkAccount(id: string, username: string): any {
+    return (dispatch: any, getState: any, router: any) => {
+        dispatch(onRequestAction(ACCOUNT_LINK_REQUEST, username))
+
+        let request: any = {
+            method: 'PUT',
+            url: '/api/' + SECTION_NAME + '/' + id + '/user',
+            data: {
+                username
+            },
+            useAuth: true
+        };
+        
+        return Fetch(request)
+        .then(
+            (result) => {
+                if (result.status != 200) {
+                    console.log(result);
+                }
+                dispatch(onResultsAction({success: true, data: result.data, username}, "", false, "help", true, false, ACCOUNT_LINK_RESPONSE));
+            
+                dispatch({
+                    type: REDUXALERT_DISPLAY,
+                    id: "userLinkFormAlert",
+                    options: {
+                        alertType: ReduxAlertType.Success,
+                        messageText: "User linked"
+                    }
+                })
+                
+                
+                if (router) {
+                    router.transitionTo(SECTION_NAME);
+                    window.scrollTo(0, 0);
+                }
+            }
+        )
+        .catch(
+            (result) => {
+                dispatch(onResultsAction({success: false, data: result.data}, _.get(result, "data.message", ""), _.get(result, "data", {}), "help", false, false, ACCOUNT_LINK_RESPONSE));
+                
+                dispatch({
+                    type: REDUXALERT_DISPLAY,
+                    id: "userLinkFormAlert",
+                    options: {
+                        alertType: ReduxAlertType.Success,
+                        messageText: _.get(result, "data.message", "")
+                    }
+                })
             }
         )
     };

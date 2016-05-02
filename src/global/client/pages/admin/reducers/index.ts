@@ -1,6 +1,7 @@
 /// <reference path="../../../../../../typings/main.d.ts" />
 import { Reducer, combineReducers } from 'redux';
 import {reducer as formReducer} from 'redux-form';
+import { reducer as reduxAlertReducer } from '../../../components/ReduxAlert/reducers'
 
 /* ******************************* */
 /* *********** GLOBALS *********** */
@@ -16,6 +17,7 @@ import accounts from './accounts';
 export const rootReducer: Reducer = combineReducers({
     form: formReducer,
     onNavBarReducer,
-    accounts
+    accounts,
+    reduxAlertReducer
 });
 
