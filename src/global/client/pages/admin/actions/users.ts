@@ -49,10 +49,11 @@ export function onResultsAction(
     hasError: any,
     help: any,
     success: boolean,
-    loading: boolean
+    loading: boolean,
+    type: string = GET_RESULTS_RESPONSE
 ): IUsersResponse {
     return {
-        type: GET_RESULTS_RESPONSE,
+        type,
         response,
         message,
         hasError,
@@ -134,5 +135,36 @@ export function doDelete(data: any, router: any): any {
 
             // dispatch delete action
         });
+    };
+}
+
+export function detailsFetch(id: string): any {
+
+    return (dispatch: any, getState: any, router: any) => {
+        dispatch(onRequestAction(GET_DETAILS_REQUEST, id))
+        
+        
+        let request: any = {
+            method: 'GET',
+            url: '/api/' + SECTION_NAME + '/' + id,
+            useAuth: true
+        };
+        
+        return Fetch(request)
+        .then(
+            (result) => {
+                dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, GET_DETAILS_RESPONSE));
+            
+                if (router) {
+                    router.transitionTo(SECTION_NAME);
+                    window.scrollTo(0, 0);
+                }
+            }
+        )
+        .catch(
+            (result) => {
+                console.log(result.err);
+            }
+        )
     };
 }

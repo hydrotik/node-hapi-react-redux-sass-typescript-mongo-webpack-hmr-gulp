@@ -26,8 +26,8 @@ function dismissAllState(state: actions.IReduxAlertCollectionState) {
         { ids: {} }
     );
     
-    state.ids = _.mapValues(state.ids, function(r) {
-        return {visible: false};
+    _.forEach(state.ids, function(r) {
+        r.visible = false;
     })
     
     return state;
@@ -49,6 +49,33 @@ function displayState(state: actions.IReduxAlertCollectionState, action: actions
     return state;
 }
 
+function initializeState(state: actions.IReduxAlertCollectionState, action: actions.IReduxAlertAction) {
+    state = _.merge(
+        {},
+        state,
+        { ids: {} }
+    );
+    
+    state.ids[action.id] = {
+        visible: action.visible,
+        options: action.options
+    }
+    
+    return state;
+}
+
+function destroyState(state: actions.IReduxAlertCollectionState, action: actions.IReduxAlertAction) {
+    state = _.merge(
+        {},
+        state,
+        { ids: {} }
+    );
+    
+    delete state.ids[action.id];
+    
+    return state;
+}
+
 export function reducer(state: actions.IReduxAlertCollectionState = { ids: {} }, action: actions.IReduxAlertAction) : any {
     
     switch (action.type) {
@@ -61,6 +88,12 @@ export function reducer(state: actions.IReduxAlertCollectionState = { ids: {} },
 
         case (actions.REDUXALERT_DISPLAY):
             return displayState(state, action);
+            
+        case (actions.REDUXALERT_INITIALIZE):
+            return initializeState(state, action);
+        
+        case (actions.REDUXALERT_DESTROY):
+            return destroyState(state, action);
 
     }
     

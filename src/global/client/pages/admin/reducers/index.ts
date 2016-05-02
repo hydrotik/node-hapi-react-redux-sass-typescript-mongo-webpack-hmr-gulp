@@ -13,11 +13,13 @@ import { onExampleReducer, onNavBarReducer } from '../../../reducers';
 
 // Account Form
 import accounts from './accounts';
+import users from '../components/UserDetails/reducers';
 
 export const rootReducer: Reducer = combineReducers({
     form: formReducer,
     onNavBarReducer,
     accounts,
-    reduxAlertReducer
+    reduxAlertReducer,
+    users
 });
 

@@ -4,43 +4,24 @@ import * as _ from 'lodash';
 
 import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from 'react-bootstrap';
 
-import {MessageText, Custom, ReduxAlert, ReduxAlertType} from '../../../../components/ReduxAlert/ReduxAlert';
 import {TextControl} from '../../../../components/TextControl/TextControl';
 import { reduxForm }  from 'redux-form';
 
 interface IUserLinkFormProps extends React.Props<UserLinkForm> {
     // From redux-form
     fields?: {
+        userId: any
         username: any
     }
     submitting?: boolean
     initialValues?: any
-    handleSubmit?: any
+    handleSubmit?: (data) => any
     onSubmit?: (data) => any
-    
+    initializeForm?: (data) => any
     
     initialUsername?: string
     onUserLinkSubmit?: (username: string) => any
     onUserUnlinkSubmit?: () => any
-    
-    message?: {
-        cssClass: string,
-        text: string
-    }
-}
-
-function formatMessage(message) {
-    if (_.isEmpty(message)) {
-        return undefined;
-    }
-    let classMap = {
-        "error": "danger",
-        "success": "success"
-    }
-    return {
-        cssClass: classMap[message.type] || "info",
-        text: message.text
-    }
 }
 
 const validate = (values) => {
@@ -68,36 +49,79 @@ const validate = (values) => {
     return errors;
 }
 
-class UserLinkForm extends React.Component<IUserLinkFormProps, {}> {
+class UserLinkForm extends React.Component<IUserLinkFormProps, any> {
 
     constructor(props: IUserLinkFormProps) {
         super(props);
+        this.state = {};
     }
     
-    public render(): React.ReactElement<{}> {
+    public render(): React.ReactElement<any> {
         const {
             fields: {
+                userId,
                 username
             },
             onUserUnlinkSubmit,
             onUserLinkSubmit,
             handleSubmit,
-            submitting,
-            message
+            initializeForm,
+            submitting
         } = this.props;
         
         
         return (
             <form onSubmit={handleSubmit((data) => {
-                if (!_.isEmpty(_.get(username, 'initialValue', undefined)) && onUserUnlinkSubmit) {
-                    onUserUnlinkSubmit();
-                }
-                else if (onUserLinkSubmit) {
-                    onUserLinkSubmit(username.value);
-                }
-            })}>
+                    if (!_.isEmpty(_.get(username, 'initialValue', undefined)) && onUserUnlinkSubmit) {
+                        return onUserUnlinkSubmit()
+                        .then((result) => {
+                            this.setState({
+                                message: {
+                                    visible: true,
+                                    bsStyle: "success",
+                                    content: (<span>User unlinked</span>)
+                                }
+                            })
+                            initializeForm({
+                                username: "",
+                                userId: ""
+                            });
+                            
+                        })
+                        .catch((err) => {
+                            return Promise.reject({username: "User does not exist", _error: "User unlink failed"})
+                        })
+                    }
+                    else if (onUserLinkSubmit) {
+                        return onUserLinkSubmit(username.value)
+                        .then((result) => {
+                            this.setState({
+                                message: {
+                                    visible: true,
+                                    bsStyle: "success",
+                                    content: (<span>User linked</span>)
+                                }
+                            })
+
+                            
+                            initializeForm({
+                                username: result.user.name,
+                                userId: result.user.id
+                            });
+                        })
+                        .catch((err) => {
+                            return Promise.reject({username: "User does not exist", _error: "User unlink failed"})
+                        })
+                    }
+                })}>
                 <legend>User</legend>
-                <ReduxAlert id="userLinkFormAlert"/>
+                
+                {
+                    this.state.message && this.state.message.visible &&
+                    <Alert bsStyle={this.state.message.bsStyle} onDismiss={(e) => {this.setState({message: {visible: false}})}}>
+                        {this.state.message.content}
+                    </Alert>
+                }
 
                 <div className="row">
                     <Input
@@ -111,7 +135,7 @@ class UserLinkForm extends React.Component<IUserLinkFormProps, {}> {
                         label={"Username"}
                         value={username.value}
                         buttonAfter={
-                            username ? <Button disabled={!_.get(username, 'initialValue', undefined)}>View</Button>
+                            !_.isEmpty(username.initialValue) ? <Button disabled={submitting} href={"/admin/users/"+userId.value}>View</Button>
                             : null
                         }
                         {...username}>
@@ -135,6 +159,7 @@ class UserLinkForm extends React.Component<IUserLinkFormProps, {}> {
 
 export default reduxForm({
     form: 'userLinkForm',
-    fields: ['username'],
-    validate
+    fields: ['username', 'userId'],
+    validate,
+    returnRejectedSubmitPromise: true
 })(UserLinkForm);

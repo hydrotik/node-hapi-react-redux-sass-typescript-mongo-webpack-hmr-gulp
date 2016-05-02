@@ -2,9 +2,9 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 
-import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Well} from 'react-bootstrap';
+import {ButtonToolbar, ButtonGroup, Button, Label, Input, Alert} from 'react-bootstrap';
 import {TextControl} from '../../../../components/TextControl/TextControl';
-import {ReduxAlertType, ReduxAlert} from '../../../../components/ReduxAlert/ReduxAlert';
+import {Spinner} from '../../../../components/Spinner/Spinner';
 import { reduxForm }  from 'redux-form';
 
 interface INameDetailsFormProps {
@@ -17,8 +17,9 @@ interface INameDetailsFormProps {
     submitting?: boolean
     initialValues?: any
 
-    handleSubmit?: any
+    handleSubmit?: (data) => any
     onSubmit?: (data) => any
+    initializeForm?: (data) => any
     error?: string
 }
 
@@ -49,12 +50,13 @@ const validate = (values) => {
     return errors;
 }
 
-class NameDetailsForm extends React.Component<INameDetailsFormProps, {}> {
+class NameDetailsForm extends React.Component<INameDetailsFormProps, any> {
     constructor(props: INameDetailsFormProps) {
         super(props);
+        this.state = {};
     }
     
-    public render(): React.ReactElement<{}> {
+    public render(): React.ReactElement<any> {
         const {
             handleSubmit,
             onSubmit,
@@ -63,13 +65,39 @@ class NameDetailsForm extends React.Component<INameDetailsFormProps, {}> {
                 lastName,
                 middleName,
             },
-            submitting
+            submitting,
+            initializeForm
         } = this.props;
         
+        
         return (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={
+                    (e) => { return handleSubmit(e).then((result) => {
+                        
+                        this.setState({ 
+                                message: {
+                                    visible: true,
+                                    bsStyle: "success",
+                                    content: (<span>Name saved</span>)
+                                }
+                            });
+                            
+                        initializeForm({
+                            firstName: result.firstName,
+                            lastName: result.lastName,
+                            middleName: result.middleName
+                        })
+                    
+                    })}
+            }>
                 <legend>Details</legend>
-                <ReduxAlert id="nameDetailsFormAlert" />
+                {
+                    this.state.message && this.state.message.visible &&
+                    <Alert bsStyle={this.state.message.bsStyle} onDismiss={(e) => {this.setState({message: {visible: false}})}}>
+                        {this.state.message.content}
+                    </Alert>
+                }
+                
                 <div className="row">
                     <TextControl 
                         help={firstName.touched && firstName.error ? firstName.error : ""}
@@ -112,7 +140,7 @@ class NameDetailsForm extends React.Component<INameDetailsFormProps, {}> {
                         disabled={submitting}
                         type={"submit"}
                     >
-                        Save changes {submitting? <Glyphicon className="rotate-forever" glyph="glyphicon-refresh" /> : null}
+                        Save changes <Spinner show={submitting} space="left" />
                     </Button>
                 </div>
             </form>
@@ -123,5 +151,6 @@ class NameDetailsForm extends React.Component<INameDetailsFormProps, {}> {
 export default reduxForm({
     form: "nameDetailsForm",
     fields: ['lastName', 'firstName', 'middleName'],
-    validate
+    validate,
+    returnRejectedSubmitPromise: true
 })(NameDetailsForm)
