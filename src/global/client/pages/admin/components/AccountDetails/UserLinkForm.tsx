@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from 'react-bootstrap';
 
-import {ReduxAlert, ReduxAlertType} from '../../../../components/ReduxAlert/ReduxAlert';
+import {MessageText, Custom, ReduxAlert, ReduxAlertType} from '../../../../components/ReduxAlert/ReduxAlert';
 import {TextControl} from '../../../../components/TextControl/TextControl';
 import { reduxForm }  from 'redux-form';
 
@@ -79,7 +79,6 @@ class UserLinkForm extends React.Component<IUserLinkFormProps, {}> {
             fields: {
                 username
             },
-            initialUsername,
             onUserUnlinkSubmit,
             onUserLinkSubmit,
             handleSubmit,
@@ -90,7 +89,7 @@ class UserLinkForm extends React.Component<IUserLinkFormProps, {}> {
         
         return (
             <form onSubmit={handleSubmit((data) => {
-                if (initialUsername && onUserUnlinkSubmit) {
+                if (!_.isEmpty(_.get(username, 'initialValue', undefined)) && onUserUnlinkSubmit) {
                     onUserUnlinkSubmit();
                 }
                 else if (onUserLinkSubmit) {
@@ -98,8 +97,8 @@ class UserLinkForm extends React.Component<IUserLinkFormProps, {}> {
                 }
             })}>
                 <legend>User</legend>
-                {message && <Alert bsStyle={message.cssClass}>{message.text}</Alert>}
-                <ReduxAlert id="userLinkFormAlert" />
+                <ReduxAlert id="userLinkFormAlert"/>
+
                 <div className="row">
                     <Input
                         type={"text"}
@@ -138,13 +137,4 @@ export default reduxForm({
     form: 'userLinkForm',
     fields: ['username'],
     validate
-},
-(state, ownProps) => {
-    return {
-        initialValues: {
-            username: ownProps.initialUsername
-        }
-    }
-    
-}
-)(UserLinkForm);
+})(UserLinkForm);

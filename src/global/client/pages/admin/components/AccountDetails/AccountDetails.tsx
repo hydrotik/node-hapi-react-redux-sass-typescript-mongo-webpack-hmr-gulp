@@ -134,15 +134,19 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                     <div className='col-sm-8'>
                         
                         <NameDetailsForm 
-                            initialFirstName={firstName}
-                            initialLastName={lastName}
-                            initialMiddleName={middleName}
+                            initialValues={
+                                {
+                                    firstName,
+                                    lastName,
+                                    middleName
+                                }
+                            }
                             onSubmit={onNameDetailsSubmit} 
                         />
                         
                         {/* Rule of thumb: ONLY pass props needed from parent to child. */}
                         
-                        <UserLinkForm initialUsername={username} onUserUnlinkSubmit={onUserUnlinkSubmit} onUserLinkSubmit={onUserLinkSubmit} />
+                        <UserLinkForm initialValues={{username}} onUserUnlinkSubmit={onUserUnlinkSubmit} onUserLinkSubmit={onUserLinkSubmit} />
                         
                         <DeleteAccountForm onSubmit={onDeleteAccountSubmit} />
                         
