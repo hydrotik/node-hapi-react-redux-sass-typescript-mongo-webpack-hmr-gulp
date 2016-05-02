@@ -1,7 +1,7 @@
 var Confidence = require('confidence');
 var Hoek = require('hoek');
 var Config = require('./config');
-var Pages = require('./config.pages').pages;
+var Pages = require('./config.pages').getConfig();
 var pkg = require('./package');
 var HapiTypescriptViews = require('hapi-typescript-views');
 
