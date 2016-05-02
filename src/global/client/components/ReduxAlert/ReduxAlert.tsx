@@ -5,7 +5,7 @@ import * as actions from './actions';
 
 export {ReduxAlertType} from './actions';
 
-interface IReduxAlert extends React.Props<ReduxAlert> {
+interface IReduxAlert {
     id: string
     visible?: boolean
     options?: {
@@ -38,6 +38,19 @@ export class ReduxAlert extends React.Component<IReduxAlert, {}> {
         type: actions.ReduxAlertType.Info,
         visible: false
     }
+    
+    static childContextTypes = {
+        visible: React.PropTypes.bool,
+        options: React.PropTypes.object
+    }
+    
+    getChildContext() {
+        return {
+            visible: this.props.visible,
+            options: this.props.options
+        }
+    }
+
     
     constructor(props: IReduxAlert) {
         super(props);
@@ -74,7 +87,7 @@ export class ReduxAlert extends React.Component<IReduxAlert, {}> {
              
                         <Alert bsStyle={this.bsStyleMap(options.alertType)} onDismiss={onDismissHandler.bind(this)}>
                             {
-                                children ? children : options.messageText
+                                children || options.messageText
                             }
                         </Alert>
                     :
@@ -85,3 +98,59 @@ export class ReduxAlert extends React.Component<IReduxAlert, {}> {
     }
 }
 
+interface IMessageTextProps {
+    visible?: boolean
+    options?: {
+        messageText?: string
+        alertType?: actions.ReduxAlertType,
+        custom?: any
+    }
+}
+export class MessageText extends React.Component<IMessageTextProps, any> {
+    constructor(props: IMessageTextProps = {}) {
+        super(props);
+    }
+    
+    context: {
+        visible?: boolean,
+        options?: {
+            messageText?: string
+            alertType?: actions.ReduxAlertType,
+            custom?: any
+        }
+    }
+    
+    static contextTypes = {
+        visible: React.PropTypes.bool,
+        options: React.PropTypes.object
+        
+    }
+    
+    public render(): React.ReactElement<any> {
+
+        return (
+            <span>{_.get(this.context, 'options.messageText', '')}</span>
+        )
+    }
+}
+
+interface ICustomProps {
+    customRender: (alertState: actions.IReduxAlertState) => React.ReactElement<any>
+}
+export class Custom extends React.Component<ICustomProps, any> {
+    constructor(props: ICustomProps) {
+        super(props);
+    }
+    
+    context: actions.IReduxAlertState
+    
+    static contextTypes = {
+        visible: React.PropTypes.bool,
+        options: React.PropTypes.object
+        
+    }
+    
+    public render(): React.ReactElement<any> {
+        return this.props.customRender(this.context);
+    }
+}

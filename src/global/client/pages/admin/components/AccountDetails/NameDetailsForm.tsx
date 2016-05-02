@@ -16,9 +16,6 @@ interface INameDetailsFormProps {
     }
     submitting?: boolean
     initialValues?: any
-    initialLastName?: string
-    initialFirstName?: string
-    initialMiddleName?: string
 
     handleSubmit?: any
     onSubmit?: (data) => any
@@ -127,12 +124,4 @@ export default reduxForm({
     form: "nameDetailsForm",
     fields: ['lastName', 'firstName', 'middleName'],
     validate
-},
-(state, ownProps) => ({
-    initialValues: {
-        lastName: ownProps.initialLastName,
-        firstName: ownProps.initialFirstName,
-        middleName: ownProps.initialMiddleName
-    }
-})
-)(NameDetailsForm)
+})(NameDetailsForm)
