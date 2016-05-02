@@ -103,16 +103,19 @@ function startAccountLink(state: any, action: any): any {
 }
 
 function endAccountLink(state: any, action: any): any {
-    return _.merge(
+    let newState: any = _.merge(
         {},
         state,
         {
             details: {
-                loading: false,
-                message: _.isEmpty(action.message) ? {type: "success", text: "Linked user"} : { type: "error", text: action.message }
+                loading: false
             }
         }
     )
+    
+    newState.details.data.username = _.get(action, "response.username", "");
+    
+    return newState;
 }
 
 function startAccountUnlink(state: any, action: any): any {
@@ -120,16 +123,19 @@ function startAccountUnlink(state: any, action: any): any {
 }
 
 function endAccountUnlink(state: any, action: any): any {
-    return _.merge(
+     
+    let newState: any = _.merge(
         {},
         state,
         {
             details: {
-                loading: false,
-                message: _.isEmpty(action.message) ? {type: "success", text: "Unlinked user"} : { type: "error", text: action.message }
+                loading: false
             }
         }
     )
+    newState.details.data.username = "";
+    
+    return newState;
 }
 
 export default function (state: any = {data:[], sortFilter: ''}, action: any) : any {

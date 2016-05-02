@@ -277,6 +277,7 @@ export function unlinkAccount(id: string): any {
                     }
                 })
                 dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, ACCOUNT_UNLINK_RESPONSE));
+                
             }
         )
         .catch(
@@ -291,6 +292,8 @@ export function unlinkAccount(id: string): any {
                         messageText: _.get(result, "data.message", "")
                     }
                 })
+                
+                
             }
         )
     };
@@ -315,7 +318,7 @@ export function linkAccount(id: string, username: string): any {
                 if (result.status != 200) {
                     console.log(result);
                 }
-                dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, ACCOUNT_LINK_RESPONSE));
+                dispatch(onResultsAction({success: true, data: result.data, username}, "", false, "help", true, false, ACCOUNT_LINK_RESPONSE));
             
                 dispatch({
                     type: REDUXALERT_DISPLAY,
@@ -325,6 +328,7 @@ export function linkAccount(id: string, username: string): any {
                         messageText: "User linked"
                     }
                 })
+                
                 
                 if (router) {
                     router.transitionTo(SECTION_NAME);
