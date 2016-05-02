@@ -68,8 +68,13 @@ function loadDetailsStart(state: any, action: any): any {
         state,
         {
             details: {
-                loading: true
-                
+                loading: true,
+                data: {
+                    firstName: "",
+                    lastName: "",
+                    middleName: "",
+                    username: ""
+                }
             }
         }
     )
@@ -82,11 +87,11 @@ function loadDetailsDone(state: any, action: any) : any{
         {
             details: {
                 loading: false,
-                initialValues: {
-                    firstName: _.get(action, 'response.data.name.first'),
-                    lastName: _.get(action, "response.data.name.last"),
-                    middleName: _.get(action, "response.data.name.middle"),
-                    username: _.get(action, "response.data.user.name")
+                data: {
+                    firstName: _.get(action, 'response.data.name.first', ""),
+                    lastName: _.get(action, "response.data.name.last", ""),
+                    middleName: _.get(action, "response.data.name.middle", ""),
+                    username: _.get(action, "response.data.user.name", "")
                 }
             }
         }
@@ -94,22 +99,41 @@ function loadDetailsDone(state: any, action: any) : any{
 }
 
 function startAccountLink(state: any, action: any): any {
-    
+    return state;
 }
 
 function endAccountLink(state: any, action: any): any {
-    
+    return _.merge(
+        {},
+        state,
+        {
+            details: {
+                loading: false,
+                message: _.isEmpty(action.message) ? {type: "success", text: "Linked user"} : { type: "error", text: action.message }
+            }
+        }
+    )
 }
 
 function startAccountUnlink(state: any, action: any): any {
-    
+    return state;
 }
 
 function endAccountUnlink(state: any, action: any): any {
-    
+    return _.merge(
+        {},
+        state,
+        {
+            details: {
+                loading: false,
+                message: _.isEmpty(action.message) ? {type: "success", text: "Unlinked user"} : { type: "error", text: action.message }
+            }
+        }
+    )
 }
 
-export default function (state = {data:[], sortFilter: ''}, action: any) : any {
+export default function (state: any = {data:[], sortFilter: ''}, action: any) : any {
+    
     switch (action.type) {
         case GET_RESULTS_REQUEST:
             return waitingForResults(state, action)
@@ -127,6 +151,14 @@ export default function (state = {data:[], sortFilter: ''}, action: any) : any {
             return loadDetailsStart(state, action);
         case GET_DETAILS_RESPONSE:
             return loadDetailsDone(state, action);
+        case ACCOUNT_UNLINK_REQUEST:
+            return startAccountUnlink(state, action);
+        case ACCOUNT_UNLINK_RESPONSE:
+            return endAccountUnlink(state, action);
+        case ACCOUNT_LINK_REQUEST:
+            return startAccountLink(state, action);
+        case ACCOUNT_LINK_RESPONSE:
+            return endAccountLink(state, action);
     }
     return state
 }

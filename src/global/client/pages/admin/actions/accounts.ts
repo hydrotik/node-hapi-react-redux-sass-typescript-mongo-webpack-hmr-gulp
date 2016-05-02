@@ -2,6 +2,7 @@
 
 import Fetch from '../../../api/jsonfetch';
 import ParseValidation, { IValidation } from '../../../api/parsevalidation';
+import {ReduxAlertType, REDUXALERT_DISPLAY} from '../../../components/ReduxAlert/actions'
 
 export const GET_RESULTS_REQUEST: string = 'GET_RESULTS_REQUEST';
 export const GET_RESULTS_RESPONSE: string = 'GET_RESULTS_RESPONSE';
@@ -230,6 +231,15 @@ export function detailsSaveChanges(id, data: { first: string, last: string, midd
 
                 dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, DETAILS_SAVECHANGES_RESPONSE));
                 
+                dispatch({
+                    type: REDUXALERT_DISPLAY,
+                    id: 'nameDetailsFormAlert',
+                    options: {
+                        alertType: ReduxAlertType.Success,
+                        messageText: "Account updated"
+                    }
+                })
+                
                 dispatch(getResults({}))
                 if (router) {
                     router.transitionTo(SECTION_NAME);
@@ -258,17 +268,29 @@ export function unlinkAccount(id: string): any {
         return Fetch(request)
         .then(
             (result) => {
+                dispatch({
+                    type: REDUXALERT_DISPLAY,
+                    id: "userLinkFormAlert",
+                    options: {
+                        alertType: ReduxAlertType.Success,
+                        messageText: "User unlinked"
+                    }
+                })
                 dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, ACCOUNT_UNLINK_RESPONSE));
-            
-                if (router) {
-                    router.transitionTo(SECTION_NAME);
-                    window.scrollTo(0, 0);
-                }
             }
         )
         .catch(
             (result) => {
-                console.log(result.err);
+                dispatch(onResultsAction({success: false, data: result.data}, _.get(result, "data.message", ""), _.get(result, "data.error", {}), "help", false, false, ACCOUNT_UNLINK_RESPONSE));
+                
+                dispatch({
+                    type: REDUXALERT_DISPLAY,
+                    id: "userLinkFormAlert",
+                    options: {
+                        alertType: ReduxAlertType.Error,
+                        messageText: _.get(result, "data.message", "")
+                    }
+                })
             }
         )
     };
@@ -295,6 +317,15 @@ export function linkAccount(id: string, username: string): any {
                 }
                 dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, ACCOUNT_LINK_RESPONSE));
             
+                dispatch({
+                    type: REDUXALERT_DISPLAY,
+                    id: "userLinkFormAlert",
+                    options: {
+                        alertType: ReduxAlertType.Success,
+                        messageText: "User linked"
+                    }
+                })
+                
                 if (router) {
                     router.transitionTo(SECTION_NAME);
                     window.scrollTo(0, 0);
@@ -303,7 +334,16 @@ export function linkAccount(id: string, username: string): any {
         )
         .catch(
             (result) => {
-                console.log(result.err);
+                dispatch(onResultsAction({success: false, data: result.data}, _.get(result, "data.message", ""), _.get(result, "data", {}), "help", false, false, ACCOUNT_LINK_RESPONSE));
+                
+                dispatch({
+                    type: REDUXALERT_DISPLAY,
+                    id: "userLinkFormAlert",
+                    options: {
+                        alertType: ReduxAlertType.Success,
+                        messageText: _.get(result, "data.message", "")
+                    }
+                })
             }
         )
     };

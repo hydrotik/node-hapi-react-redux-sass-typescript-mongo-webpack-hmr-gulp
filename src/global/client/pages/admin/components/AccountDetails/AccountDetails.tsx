@@ -18,7 +18,10 @@ import {
 import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Well} from 'react-bootstrap';
 import {TextControl} from '../../../../components/TextControl/TextControl';
 import UserLinkForm from './UserLinkForm';
+import NameDetailsForm from './NameDetailsForm';
+import DeleteAccountForm from './DeleteAccountForm';
 
+import { connect } from 'react-redux';
 import { reduxForm }  from 'redux-form';
 
 // Styles
@@ -28,12 +31,13 @@ interface IAccountDetailsState {
     
 }
 interface IAccountDetailsProps {
-    // From redux-form
-    fields?: any
-    submitting?: boolean
-    initialValues?: any
-    handleSubmit?: any
-    error?: string
+    // As expected from  mapStateToProps
+    data?: {
+        firstName?: string
+        lastName?: string
+        middleName?: string
+        username?: string
+    }
     
     // From MapDispatchToProps
     onNameDetailsSubmit?: (func: any) => any
@@ -48,38 +52,13 @@ interface IAccountDetailsProps {
     
     // Other
     loading?: boolean
-}
-
-const validate = (values) => {
-    const nameRegex = /^[a-zA-Z][a-zA-Z\-\.\'\ ]*$/;
-    const errors:any = {  };
-    
-    const runValidations = (name: string, value?: string, isRequired: boolean = true) => {
-        
-        if (!value && !isRequired) {
-            return;
-        }
-        
-        if (!value) {
-            errors[name] = 'Required';
-        }
-        else if (value.length > 32) {
-            errors[name] = "Must be less than 32 characters";
-        }
-        else if (!nameRegex.test(value)) {
-            errors[name] = 'Invalid characters';
-        }
-    }
-    runValidations('firstName', values.firstName)
-    runValidations('lastName', values.lastName);
-    runValidations('middleName', values.middleName, false);
-    
-    return errors;
+    errorMsg?: string
+    successMsg?: string
 }
 
 const mapStateToProps = (state: any): IAccountDetailsProps => {
     return {
-        initialValues: _.get(state, 'accounts.details.initialValues'),
+        data: _.get(state, 'accounts.details.data', {}),
         loading: _.get(state, "accounts.details.loading", false)
     }
 }
@@ -108,6 +87,7 @@ const mapDispatchToProps = (dispatch: (func: any) => any, ownProps: IAccountDeta
     }
 }
 
+@connect(mapStateToProps, mapDispatchToProps)
 export class AccountDetails extends React.Component<IAccountDetailsProps, IAccountDetailsState> {
 
     public constructor(props: any = {}) {
@@ -121,19 +101,19 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
 
     public render(): React.ReactElement<{}> {
         const { 
-            fields: {
+            data: {
                 firstName,
                 lastName,
                 middleName,
-                username,
-                
+                username
             },
             loading,
-            initialValues,
-            submitting,
-            handleSubmit,
             onUserLinkSubmit,
-            onUserUnlinkSubmit
+            onUserUnlinkSubmit,
+            onNameDetailsSubmit,
+            onDeleteAccountSubmit,
+            errorMsg,
+            successMsg
         } = this.props;
         
         const viewBtn = <Button>View</Button>;
@@ -150,76 +130,22 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                 {!loading ?
                 <div className='row'>
                     <Glyphicon glyph="glyphicon-refresh" />
-                    {this.props.error && <Well bsStyle="error">Error</Well>}
+                    {this.props.errorMsg && <Well bsStyle="error">{this.props.errorMsg}</Well>}
                     <div className='col-sm-8'>
-                        <form onSubmit={handleSubmit(this.props.onNameDetailsSubmit)}>
-                            <legend>Details</legend>
-                            <div className="row">
-                                <TextControl 
-                                    help={firstName.touched && firstName.error ? firstName.error : ""}
-                                    hasError={lastName.touched && firstName.error }
-                                    disabled={submitting}
-                                    name={"firstName"}
-                                    ref="firstName"
-                                    label={"First Name"}
-                                    value={firstName.value}
-                                    {...firstName}>
-                                </TextControl>
-                            </div>
-                            <div className="row">
-                                <TextControl 
-                                    help={middleName.touched && middleName.error ? middleName.error : ""}
-                                    hasError={middleName.touched && middleName.error }
-                                    disabled={submitting}
-                                    name={"middleName"}
-                                    ref="middleName"
-                                    label={"Middle Name"}
-                                    value={middleName.value}
-                                    {...middleName}>
-                                </TextControl>
-                            </div>
-                            <div className="row">
-                                <TextControl 
-                                    help={lastName.touched && lastName.error ? lastName.error : ""}
-                                    hasError={lastName.touched && lastName.error }
-                                    disabled={submitting}
-                                    name={"lastName"}
-                                    ref="lastName"
-                                    label={"Last Name"}
-                                    value={lastName.value}
-                                    {...lastName}>
-                                </TextControl>
-                             </div>
-                             <div className="row">
-                                <Button
-                                    bsStyle="primary"
-                                    disabled={submitting}
-                                    type={"submit"}
-                                >
-                                    Save changes {submitting? <Glyphicon className="rotate-forever" glyph="glyphicon-refresh" /> : null}
-                                </Button>
-                             </div>
-                        </form>
+                        
+                        <NameDetailsForm 
+                            initialFirstName={firstName}
+                            initialLastName={lastName}
+                            initialMiddleName={middleName}
+                            onSubmit={onNameDetailsSubmit} 
+                        />
                         
                         {/* Rule of thumb: ONLY pass props needed from parent to child. */}
-                        <UserLinkForm initialUsername={username.initialValue} onUserUnlinkSubmit={onUserUnlinkSubmit} onUserLinkSubmit={onUserLinkSubmit} />
                         
-                        <form onSubmit={handleSubmit(this.props.onDeleteAccountSubmit)}> 
-                            <legend>Danger zone</legend>
-                            <div className="row">
-                                <Label bsStyle="danger">Warning</Label>This cannot be undone and could result in orphaned document relationships.
-                            </div>
-                            <div className="row">
-                                <Button
-                                    bsStyle={null}
-                                    className="btn btn-danger"
-                                    disabled={submitting}
-                                    type={"submit"}
-                                >
-                                    Delete {submitting? <Glyphicon className="rotate-forever" glyph="glyphicon-refresh" /> : null}
-                                </Button>
-                            </div>
-                        </form>
+                        <UserLinkForm initialUsername={username} onUserUnlinkSubmit={onUserUnlinkSubmit} onUserLinkSubmit={onUserLinkSubmit} />
+                        
+                        <DeleteAccountForm onSubmit={onDeleteAccountSubmit} />
+                        
                     </div>
                     <div className='col-sm-4'>
                         <form>
@@ -232,13 +158,3 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
         );
     }
 }
-
-export const AccountDetailsForm = reduxForm(
-    {
-        form: 'accountDetailsForm',
-        fields: ['lastName', 'firstName', 'middleName', 'username'],
-        validate,
-    },
-    mapStateToProps,
-    mapDispatchToProps
-)(AccountDetails)

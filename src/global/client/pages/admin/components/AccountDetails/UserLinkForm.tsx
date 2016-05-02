@@ -2,23 +2,45 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 
-import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Well} from 'react-bootstrap';
+import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from 'react-bootstrap';
+
+import {ReduxAlert, ReduxAlertType} from '../../../../components/ReduxAlert/ReduxAlert';
 import {TextControl} from '../../../../components/TextControl/TextControl';
 import { reduxForm }  from 'redux-form';
 
-interface IUserLinkFormProps {
+interface IUserLinkFormProps extends React.Props<UserLinkForm> {
     // From redux-form
     fields?: {
         username: any
     }
     submitting?: boolean
     initialValues?: any
+    handleSubmit?: any
+    onSubmit?: (data) => any
+    
+    
     initialUsername?: string
     onUserLinkSubmit?: (username: string) => any
     onUserUnlinkSubmit?: () => any
-    handleSubmit?: any
-    onSubmit?: (data) => any
-    error?: string
+    
+    message?: {
+        cssClass: string,
+        text: string
+    }
+}
+
+function formatMessage(message) {
+    if (_.isEmpty(message)) {
+        return undefined;
+    }
+    let classMap = {
+        "error": "danger",
+        "success": "success"
+    }
+    return {
+        cssClass: classMap[message.type] || "info",
+        text: message.text
+    }
 }
 
 const validate = (values) => {
@@ -47,6 +69,7 @@ const validate = (values) => {
 }
 
 class UserLinkForm extends React.Component<IUserLinkFormProps, {}> {
+
     constructor(props: IUserLinkFormProps) {
         super(props);
     }
@@ -60,7 +83,8 @@ class UserLinkForm extends React.Component<IUserLinkFormProps, {}> {
             onUserUnlinkSubmit,
             onUserLinkSubmit,
             handleSubmit,
-            submitting
+            submitting,
+            message
         } = this.props;
         
         
@@ -74,13 +98,15 @@ class UserLinkForm extends React.Component<IUserLinkFormProps, {}> {
                 }
             })}>
                 <legend>User</legend>
+                {message && <Alert bsStyle={message.cssClass}>{message.text}</Alert>}
+                <ReduxAlert id="userLinkFormAlert" />
                 <div className="row">
                     <Input
                         type={"text"}
                         help={username.touched && username.error ? username.error : ""}
                         bsStyle={username.touched && username.error ? "error": null}
                         hasFeedBack={username.touched && username.error }
-                        disabled={submitting || !_.isUndefined(_.get(username, 'initialValue', undefined))}
+                        disabled={submitting || !_.isEmpty(_.get(username, 'initialValue', undefined))}
                         name={"username"}
                         ref="username"
                         label={"Username"}
@@ -113,9 +139,12 @@ export default reduxForm({
     fields: ['username'],
     validate
 },
-(state, ownProps) => ({
-    initialValues: {
-        username: ownProps.initialUsername
+(state, ownProps) => {
+    return {
+        initialValues: {
+            username: ownProps.initialUsername
+        }
     }
-})
+    
+}
 )(UserLinkForm);
