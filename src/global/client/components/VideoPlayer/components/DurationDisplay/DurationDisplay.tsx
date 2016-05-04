@@ -15,8 +15,7 @@ import './_DurationDisplay.scss';
 interface IDurationProps {
     dispatch?: (func: any) => void;
     store?: any;
-    duration?: number;
-    seconds?: number;
+    ms?: number;
     className?: any;
 }
 
@@ -54,15 +53,32 @@ export class DurationDisplay extends React.Component<IDurationProps, IDurationSt
         return ('0' + str).slice(-2);
     }
 
+    public fromMilliseconds(ms: number): string {
+
+        let hours, minutes, seconds, group;
+        group = []
+
+        hours = Math.floor(ms / 3600);
+        minutes = Math.floor(ms % 3600 / 60);
+        seconds = Math.floor(ms % 3600 % 60);
+
+        //if (hours > 0) {
+            group.push((hours > 9) ? hours : '0' + hours);
+        //}
+        group.push((minutes > 9) ? minutes : '0' + minutes);
+        group.push((seconds > 9) ? seconds : '0' + seconds);
+
+        return group.join(':');
+
+    }
+
 
     public render(): React.ReactElement<{}> {
 
+        let time = this.fromMilliseconds(this.props.ms);
+
         return (
-            <time dateTime={`P${Math.round(this.props.seconds)}S`} className={this.props.className}>
-                {this.format(this.props.seconds)}
-            </time>
-
-
+            <span className={this.props.className}>{time}</span>
         );
     }
 }
