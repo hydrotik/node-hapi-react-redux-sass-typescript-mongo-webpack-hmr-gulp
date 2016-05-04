@@ -9,7 +9,10 @@ import './_VideoPlayer.scss';
 
 // Page Components
 import { DurationDisplay } from './components/DurationDisplay/DurationDisplay';
-
+import { ProgressBar } from './components/ProgressBar/ProgressBar';
+import { PlayBackToggleButton } from './components/PlayBackToggleButton/PlayBackToggleButton';
+import { VolumeButton } from './components/VolumeButton/VolumeButton';
+import { FullScreenToggleButton } from './components/FullScreenToggleButton/FullScreenToggleButton';
 // Behaviors and Actions
 
 // Interfaces
@@ -22,11 +25,13 @@ interface IVideoPlayerState {
     volume?: number;
     played?: number;
     loaded?: number;
+    muted?: boolean;
     duration?: number;
     seeking?: boolean;
     soundcloudConfig?: any;
     vimeoConfig?: any;
     youtubeConfig?: any;
+    fullScreen?: boolean;
 }
 
 export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayerState> {
@@ -40,7 +45,9 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
             volume: 0.8,
             played: 0,
             loaded: 0,
-            duration: 0
+            duration: 0,
+            muted: false,
+            fullScreen: false
         };
     }
 
@@ -78,7 +85,11 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     };
 
     public setVolume = (e) => {
-        this.setState({ volume: parseFloat(e.target.value) })
+        this.setState({ muted: (parseFloat(e.target.value) == 0) ? true : false, volume: parseFloat(e.target.value) })
+    };
+
+    public toggleMute = (e) => {
+        this.setState({ muted: true, volume: 0 })
     };
 
     public onSeekMouseDown = (e) => {
@@ -100,6 +111,44 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         this.setState(state)
       }
     };
+
+    public toggleFullscreen = () => {
+        let d: any = document;
+
+        this.setState({
+            fullScreen: !this.state.fullScreen
+        }, function() {
+            if (this.state.fullScreen) {
+                
+                let docElm: any = d.documentElement;
+                if (docElm.requestFullscreen) {
+                    this.getDOMNode().requestFullscreen();
+                }
+                if (docElm.webkitRequestFullScreen) {
+                    this.getDOMNode().webkitRequestFullScreen();
+                }
+                if (docElm.mozRequestFullScreen) {
+                    this.getDOMNode().mozRequestFullScreen();
+                }
+                if (docElm.msRequestFullscreen) {
+                    this.getDOMNode().msRequestFullscreen();
+                }
+            } else {
+                if (d.exitFullscreen) {
+                    d.exitFullscreen();
+                }
+                if (d.mozCancelFullScreen) {
+                    d.mozCancelFullScreen();
+                }
+                if (d.webkitCancelFullScreen) {
+                    d.webkitCancelFullScreen();
+                }
+                if (d.msExitFullscreen) {
+                    d.msExitFullscreen();
+                }
+            }
+        });
+    }
 
     public onConfigSubmit = () => {
         let config;
@@ -124,33 +173,52 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     public render(): React.ReactElement<{}> {
 
 
-        const { url, playing, volume, played, loaded, duration, soundcloudConfig, vimeoConfig, youtubeConfig } = this.state;
+        const { url, muted, playing, volume, played, loaded, duration, soundcloudConfig, vimeoConfig, youtubeConfig } = this.state;
+
+
+        const elapsed: number = duration * played;
+        const remaining: number = duration * (1 - played);
 
         return (
-            <div className="video-player">
+            <div className="video-page">
                 <section className='section'>
                     <h1>ReactPlayer Demo</h1>
-                    <ReactPlayer
-                    ref='player'
-                    className='react-player'
-                    width={480}
-                    height={270}
-                    url={url}
-                    playing={playing}
-                    volume={volume}
-                    soundcloudConfig={soundcloudConfig}
-                    vimeoConfig={vimeoConfig}
-                    youtubeConfig={youtubeConfig}
-                    onPlay={() => this.setState({ playing: true })}
-                    onPause={() => this.setState({ playing: false })}
-                    onBuffer={() => console.log('onBuffer')}
-                    onEnded={() => this.setState({ playing: false })}
-                    onError={(e) => console.log('onError', e)}
-                    onProgress={this.onProgress}
-                    onDuration={(duration) => this.setState({ duration })}
-                    />
+                    <div className="video-player">
+                        <ReactPlayer
+                        ref='player'
+                        className='react-player'
+                        width={640}
+                        url={url}
+                        playing={playing}
+                        volume={volume}
+                        soundcloudConfig={soundcloudConfig}
+                        vimeoConfig={vimeoConfig}
+                        youtubeConfig={youtubeConfig}
+                        onPlay={() => this.setState({ playing: true })}
+                        onPause={() => this.setState({ playing: false })}
+                        onBuffer={() => console.log('onBuffer')}
+                        onEnded={() => this.setState({ playing: false })}
+                        onError={(e) => console.log('onError', e)}
+                        onProgress={this.onProgress}
+                        onDuration={(duration) => this.setState({ duration })}
+                        />
 
-                    <table><tbody>
+                        <div className="video_controls" ref="videoControls">
+                            <ProgressBar handleProgressClick={this.onSeekChange} percentPlayed={Math.floor(played * 100)} percentBuffered={Math.floor(loaded * 100)} />
+                            <PlayBackToggleButton handleTogglePlayback={this.playPause} playing={this.state.playing} />
+                            
+                            
+                            <div className="rhs">
+                                <FullScreenToggleButton onToggleFullscreen={this.toggleFullscreen} />
+                            </div>
+                            <div className="time">
+                                <DurationDisplay ms={elapsed} className="elapsed" /> | <DurationDisplay ms={duration} className="duration" />
+                            </div>
+                            <VolumeButton muted={this.state.muted} level={volume} toggleVolume={this.toggleMute} changeVolume={this.setVolume} />
+                        </div>
+                    </div>
+
+                    <table width="100%"><tbody>
                         <tr>
                         <th>Controls</th>
                         <td>
@@ -258,15 +326,15 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
                         </tr>
                         <tr>
                         <th>duration</th>
-                        <td><DurationDisplay seconds={duration} /></td>
+                        <td><DurationDisplay ms={duration} className="duration" /></td>
                         </tr>
                         <tr>
                         <th>elapsed</th>
-                        <td><DurationDisplay seconds={duration * played} /></td>
+                        <td><DurationDisplay ms={elapsed} className="elapsed" /></td>
                         </tr>
                         <tr>
                         <th>remaining</th>
-                        <td><DurationDisplay seconds={duration * (1 - played)} /></td>
+                        <td><DurationDisplay ms={remaining} className="remaining" /></td>
                         </tr>
                     </tbody></table>
                 </section>
