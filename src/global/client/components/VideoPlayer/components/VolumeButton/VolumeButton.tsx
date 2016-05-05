@@ -10,7 +10,7 @@ import './_VolumeButton.scss';
 // Interfaces
 interface IVolumeButtonProps {
     toggleVolume?: (muted: boolean) => void;
-    changeVolume?: (value: number) => void;
+    changeVolume?: (e: any) => void;
     className?: any;
     muted?: boolean;
     level?: number;
@@ -43,16 +43,14 @@ export class VolumeButton extends React.Component<IVolumeButtonProps, IVolumeBut
     }
 
     public toggleVolume = () => {
-        this.props.toggleVolume(!this.props.muted);
-    }
-
-    public changeVolume = (e: Event) => {
-        this.props.changeVolume((e.target as any).value);
+        this.props.muted = !this.props.muted;
+        this.props.toggleVolume(this.props.muted);
     }
 
     public render(): React.ReactElement<{}> {
 
-        let level = this.props.level, l;
+        let { level, muted } = this.props, l;
+
         if (level <= 0) {
             l = 'muted';
         } else if (level > 0 && level <= 0.33) {
@@ -65,10 +63,10 @@ export class VolumeButton extends React.Component<IVolumeButtonProps, IVolumeBut
 
         return (
             <div className={this.props.className}>
-                <button onClick={this.toggleVolume} className="toggle_volume">
+                <button onClick={this.toggleVolume}>
                     <i className={levels[l]}></i>
                 </button>
-                <input className="volume_slider" type="range" min="0" max="100" onInput={this.changeVolume} />
+                <input className="volume_slider" value={level} type="range" min="0" max="1" step="any" onChange={this.props.changeVolume} />
             </div>
         );
     }
