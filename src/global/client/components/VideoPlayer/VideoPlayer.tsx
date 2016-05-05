@@ -4,6 +4,9 @@
 import * as React from 'react';
 const ReactPlayer = require('react-player');
 
+
+
+
 // Styles
 import './_VideoPlayer.scss';
 
@@ -17,6 +20,7 @@ import { FullScreenToggleButton } from './components/FullScreenToggleButton/Full
 
 // Interfaces
 interface IVideoPlayerProps {
+    
 }
 
 interface IVideoPlayerState {
@@ -32,7 +36,11 @@ interface IVideoPlayerState {
     vimeoConfig?: any;
     youtubeConfig?: any;
     fullScreen?: boolean;
+    width?: number;
+    height?: number;
 }
+
+let canvas, context;
 
 export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayerState> {
 
@@ -47,20 +55,29 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
             loaded: 0,
             duration: 0,
             muted: false,
-            fullScreen: false
+            fullScreen: false,
+            width: 0,
+            height: 0
         };
     }
 
     refs: {
         [key: string]: (Element);
         player: any;
+        canv: any;
+        videoWrapper: any;
+        videoControls: any;
+        progressBar: any;
         config: any;
         url: any;
     }
 
 
     public componentDidMount(): void {
+        canvas = this.refs.canv;
+        context = canvas.getContext('2d');
 
+        setTimeout(this.updateSize, 100);
     }
 
     public componentWillUnmount(): void {
@@ -73,6 +90,13 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
           played: 0,
           loaded: 0
         })
+    };
+
+    public updateSize: any = (e: any): void => {
+        const w = this.refs.videoWrapper.clientWidth;
+        const h = this.refs.videoWrapper.clientHeight - this.refs.videoControls.clientHeight - 10;
+        this.setState({ width: w, height: h });
+
     };
 
 
@@ -173,7 +197,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     public render(): React.ReactElement<{}> {
 
 
-        const { url, muted, playing, volume, played, loaded, duration, soundcloudConfig, vimeoConfig, youtubeConfig } = this.state;
+        const { url, muted, playing, volume, played, loaded, duration, soundcloudConfig, vimeoConfig, youtubeConfig, width, height} = this.state;
 
 
         const elapsed: number = duration * played;
@@ -183,7 +207,10 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
             <div className="video-page">
                 <section className='section'>
                     <h1>ReactPlayer Demo</h1>
-                    <div className="video-player">
+                    <div className="video-player" ref="videoWrapper">
+
+                        <canvas className="player-canvas" ref="canv" width={width} height={height}></canvas>
+
                         <ReactPlayer
                         ref='player'
                         className='react-player'
@@ -204,7 +231,15 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
                         />
 
                         <div className="video_controls" ref="videoControls">
-                            <ProgressBar handleProgressClick={this.onSeekChange} percentPlayed={Math.floor(played * 100)} percentBuffered={Math.floor(loaded * 100)} />
+                            <ProgressBar
+                                handleProgressClick={this.onSeekChange}
+                                percentBuffered={Math.floor(loaded * 100)}
+                                played={played}
+                                handleMouseDown={this.onSeekMouseDown}
+                                handleChange={this.onSeekChange}
+                                handleMouseUp={this.onSeekMouseUp}
+                                ref="progressBar"
+                                />
                             <PlayBackToggleButton className="toggle_playback" handleTogglePlayback={this.playPause} playing={this.state.playing} />
                             
                             

@@ -1,15 +1,14 @@
-
-
 $black: #000;
 
 .react-player {
-  margin-bottom: 10px;
-  background: rgba($black, .1);
+    margin-bottom: 10px;
+    background: rgba($black, .1);
 }
 
 .faded {
-  color: rgba($black, .5);
+    color: rgba($black, .5);
 }
+
 
 
 // Styling Cross-Browser Compatible Range Inputs with Sass
@@ -17,10 +16,8 @@ $black: #000;
 // Author: Darlan Rod https://github.com/darlanrod
 // Version 1.0.1
 // MIT License
-
 $track-color: #ccc;
 $thumb-color: #666;
-
 $thumb-radius: 10px;
 $thumb-height: 10px;
 $thumb-width: 10px;
@@ -29,7 +26,6 @@ $thumb-shadow-blur: 0;
 $thumb-shadow-color: #111;
 $thumb-border-width: 0;
 $thumb-border-color: #fff;
-
 $track-width: 100%;
 $track-height: 5px;
 $track-shadow-size: 0;
@@ -37,360 +33,206 @@ $track-shadow-blur: 0;
 $track-shadow-color: #222;
 $track-border-width: 0;
 $track-border-color: #000;
-
 $track-radius: 5px;
 $contrast: 5%;
-
 @mixin shadow($shadow-size, $shadow-blur, $shadow-color) {
-  box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color, 0 0 $shadow-size lighten($shadow-color, 5%);
+    box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color, 0 0 $shadow-size lighten($shadow-color, 5%);
 }
 
 @mixin track() {
-  width: $track-width;
-  height: $track-height;
-  cursor: pointer;
+    width: $track-width;
+    height: $track-height;
+    cursor: pointer;
 }
 
 @mixin thumb() {
-  @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
-  border: $thumb-border-width solid $thumb-border-color;
-  height: $thumb-height;
-  width: $thumb-width;
-  border-radius: $thumb-radius;
-  background: $thumb-color;
-  cursor: pointer;
-  z-index: 100;
+    @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
+    border: $thumb-border-width solid $thumb-border-color;
+    height: $thumb-height;
+    width: $thumb-width;
+    border-radius: $thumb-radius;
+    background: $thumb-color;
+    cursor: pointer;
+    z-index: 100;
 }
 
-input[type=range].volume_slider-demo, input[type=range].seek_slider-demo {
-  -webkit-appearance: none;
-  margin: $thumb-height / 2 0;
-  width: $track-width;
-
-  &:focus {
-    outline: none;
-  }
-
-  &::-webkit-slider-runnable-track {
-    @include track();
-    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
-    background: $track-color;
-    border: $track-border-width solid $track-border-color;
-    border-radius: $track-radius;
-  }
-
-  &::-webkit-slider-thumb {
-    @include thumb();
+input[type=range].volume_slider-demo,
+input[type=range].seek_slider-demo {
     -webkit-appearance: none;
-    margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
-  }
-
-  &:focus::-webkit-slider-runnable-track {
-    background: lighten($track-color, $contrast);
-  }
-
-  &::-moz-range-track {
-    @include track();
-    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
-    background: $track-color;
-    border: $track-border-width solid $track-border-color;
-    border-radius: $track-radius;
-  }
-
-  &::-moz-range-thumb {
-    @include thumb();
-  }
-
-  &::-ms-track {
-    @include track();
-    background: transparent;
-    border-color: transparent;
-    border-width: $thumb-width 0;
-    color: transparent;
-  }
-
-  &::-ms-fill-lower {
-    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
-    background: darken($track-color, $contrast);
-    border: $track-border-width solid $track-border-color;
-    border-radius: $track-radius * 2;
-  }
-
-  &::-ms-fill-upper {
-    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
-    background: $track-color;
-    border: $track-border-width solid $track-border-color;
-    border-radius: $track-radius * 2;
-  }
-
-  &::-ms-thumb {
-    @include thumb();
-  }
-
-  &:focus::-ms-fill-lower {
-    background: $track-color;
-  }
-
-  &:focus::-ms-fill-upper {
-    background: lighten($track-color, $contrast);
-  }
-}
-
-
-@font-face {
-  font-family: 'fontello';
-  src: url('./font/fontello.eot?82764686');
-  src: url('./font/fontello.eot?82764686#iefix') format('embedded-opentype'),
-       url('./font/fontello.woff?82764686') format('woff'),
-       url('./font/fontello.ttf?82764686') format('truetype'),
-       url('./font/fontello.svg?82764686#fontello') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
- 
- [class^="icon-"]:before, [class*=" icon-"]:before {
-  font-family: "fontello";
-  font-style: normal;
-  font-weight: normal;
-  speak: none;
- 
-  display: inline-block;
-  text-decoration: inherit;
-  width: 1em;
-  margin-right: .2em;
-  text-align: center;
-  /* opacity: .8; */
- 
-  /* For safety - reset parent styles, that can break glyph codes*/
-  font-variant: normal;
-  text-transform: none;
-     
-  /* fix buttons height, for twitter bootstrap */
-  line-height: 1em;
- 
-  /* Animation center compensation - margins should be symmetric */
-  /* remove if not needed */
-  margin-left: .2em;
- 
-  /* you can be more comfortable with increased icons size */
-  /* font-size: 120%; */
- 
-  /* Uncomment for 3D effect */
-  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
-}
- 
-.icon-volume-off:before { content: '\e801'; } /* '' */
-.icon-volume-down:before { content: '\e802'; } /* '' */
-.icon-volume:before { content: '\e803'; } /* '' */
-.icon-volume-up:before { content: '\e804'; } /* '' */
-.icon-play:before { content: '\e805'; } /* '' */
-.icon-pause:before { content: '\e806'; } /* '' */
-.icon-fullscreen:before { content: '\e807'; } /* '' */
-.icon-regularscreen:before { content: '\e808'; } /* '' */
-
-
-
-.elapsed{
-  color: #CCC;
-
-}
-
-.duration{
-  color: #999;
-
-}
-
-.remaining{
-  color: #999;
-
-}
-
-.video-player{
-  width: 640px;
-  position: relative;
-  background: black;
-
-  .react-player {
-    max-width: 100%;
-    height: inherit;
-  }
-  .video_controls{
-    height: 30px;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    color: #fff;
-    .rhs{
-      float: right;
-      display: inline;
-      height: 30px;
-    }
-    .toggle_fullscreen_button{
-      color: #fff;
-      font-size: 0.9em;
-      height: 30px;
-      border: none;
-      background: transparent;
-      padding: 0 10px;
-      cursor: pointer;
-      outline: none;
-    }
-    .volume{
-      font-size: 1.3em;
-      height: 30px;
-      float: left;
-      button{
-        background: transparent;
-        color: #fff;
-        line-height: 30px;
-        border: none;
+    margin: $thumb-height / 2 0;
+    width: $track-width;
+    &:focus {
         outline: none;
-        cursor: pointer;
-      }
-      .volume_slider{
-        cursor: ew-resize;
-        max-width: 70px;
-        display: none;
-        margin-top: 0;
-      }
-      &:hover{
-        .volume_slider{
-          display: inline-block;
-        }
-      }
-      input[type=range].volume_slider {
+    }
+    &::-webkit-slider-runnable-track {
+        @include track();
+        @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+        background: $track-color;
+        border: $track-border-width solid $track-border-color;
+        border-radius: $track-radius;
+    }
+    &::-webkit-slider-thumb {
+        @include thumb();
         -webkit-appearance: none;
-      }
-      input[type=range].volume_slider:focus {
-        outline: none;
-      }
-      input[type=range].volume_slider::-webkit-slider-runnable-track {
-        width: 100%;
-        height: 10px;
-        cursor: pointer;
-        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
-        background: #cc00ff;
-        border-radius: 0px;
-        border: 0px solid rgba(0, 0, 0, 0);
-      }
-      input[type=range].volume_slider::-webkit-slider-thumb {
-        box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-        border: 1px solid rgba(0, 0, 0, 0);
-        height: 8px;
-        width: 5px;
-        border-radius: 0px;
-        background: #ffffff;
-        cursor: pointer;
-        -webkit-appearance: none;
-        margin-top: 1px;
-      }
-      input[type=range].volume_slider:focus::-webkit-slider-runnable-track {
-        background: #cc00ff;
-      }
-      input[type=range].volume_slider::-moz-range-track {
-        width: 100%;
-        height: 10px;
-        cursor: pointer;
-        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
-        background: #cc00ff;
-        border-radius: 0px;
-        border: 0px solid rgba(0, 0, 0, 0);
-      }
-      input[type=range].volume_slider::-moz-range-thumb {
-        box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-        border: 1px solid rgba(0, 0, 0, 0);
-        height: 8px;
-        width: 5px;
-        border-radius: 0px;
-        background: #ffffff;
-        cursor: pointer;
-      }
-      input[type=range].volume_slider::-ms-track {
-        width: 100%;
-        height: 10px;
-        cursor: pointer;
+        margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
+    }
+    &:focus::-webkit-slider-runnable-track {
+        background: lighten($track-color, $contrast);
+    }
+    &::-moz-range-track {
+        @include track();
+        @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+        background: $track-color;
+        border: $track-border-width solid $track-border-color;
+        border-radius: $track-radius;
+    }
+    &::-moz-range-thumb {
+        @include thumb();
+    }
+    &::-ms-track {
+        @include track();
         background: transparent;
         border-color: transparent;
+        border-width: $thumb-width 0;
         color: transparent;
-      }
-      input[type=range].volume_slider::-ms-fill-lower {
-        background: #cc00ff;
-        border: 0px solid rgba(0, 0, 0, 0);
-        border-radius: 0px;
-        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
-      }
-      input[type=range].volume_slider::-ms-fill-upper {
-        background: #cc00ff;
-        border: 0px solid rgba(0, 0, 0, 0);
-        border-radius: 0px;
-        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
-      }
-      input[type=range].volume_slider::-ms-thumb {
-        box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-        border: 1px solid rgba(0, 0, 0, 0);
-        width: 5px;
-        border-radius: 0px;
-        background: #ffffff;
-        cursor: pointer;
-        height: 8px;
-      }
-      input[type=range].volume_slider:focus::-ms-fill-lower {
-        background: #cc00ff;
-      }
-      input[type=range].volume_slider:focus::-ms-fill-upper {
-        background: #cc00ff;
-      }
+    }
+    &::-ms-fill-lower {
+        @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+        background: darken($track-color, $contrast);
+        border: $track-border-width solid $track-border-color;
+        border-radius: $track-radius * 2;
+    }
+    &::-ms-fill-upper {
+        @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+        background: $track-color;
+        border: $track-border-width solid $track-border-color;
+        border-radius: $track-radius * 2;
+    }
+    &::-ms-thumb {
+        @include thumb();
+    }
+    &:focus::-ms-fill-lower {
+        background: $track-color;
+    }
+    &:focus::-ms-fill-upper {
+        background: lighten($track-color, $contrast);
+    }
+}
+
+@font-face {
+    font-family: 'fontello';
+    src: url('./font/fontello.eot?82764686');
+    src: url('./font/fontello.eot?82764686#iefix') format('embedded-opentype'), url('./font/fontello.woff?82764686') format('woff'), url('./font/fontello.ttf?82764686') format('truetype'), url('./font/fontello.svg?82764686#fontello') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+    font-family: "fontello";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    /* opacity: .8; */
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
+    /* Animation center compensation - margins should be symmetric */
+    /* remove if not needed */
+    margin-left: .2em;
+    /* you can be more comfortable with increased icons size */
+    /* font-size: 120%; */
+    /* Uncomment for 3D effect */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-volume-off:before {
+    content: '\e801';
+}
+
+
+/* '' */
+
+.icon-volume-down:before {
+    content: '\e802';
+}
+
+
+/* '' */
+
+.icon-volume:before {
+    content: '\e803';
+}
+
+
+/* '' */
+
+.icon-volume-up:before {
+    content: '\e804';
+}
+
+
+/* '' */
+
+.icon-play:before {
+    content: '\e805';
+}
+
+
+/* '' */
+
+.icon-pause:before {
+    content: '\e806';
+}
+
+
+/* '' */
+
+.icon-fullscreen:before {
+    content: '\e807';
+}
+
+
+/* '' */
+
+.icon-regularscreen:before {
+    content: '\e808';
+}
+
+
+/* '' */
+
+.video-player {
+    width: 640px;
+    position: relative;
+    background: black;
+
+    .react-player {
+        max-width: 100%;
+        height: inherit;
     }
 
-    .time {
-      float: right;
-      line-height: 28px;
+    .video_controls {
+        height: 30px;
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        color: #fff;
     }
 
-    .progress_bar{
-      height: 5px;
+    .player-canvas {
       position: absolute;
-      left: 0; right: 0;
-      bottom: 30px;
-      background-color: #333;
-      .playback_percent{
-        top: 0; bottom: 0;
-        position: absolute;
-        width: 0%;
-        background-color: #c0f;
-        z-index: 50;
-        span {
-          width:10px;
-          height:10px;
-          position:absolute;
-          right:0;
-          top:-2px;
-          border-radius:50%;
-          background-color:#c0f;
+      top:0;
+      left:0;
+      z-index: 10;
     }
-      }
-      
-      .buffer_percent{
-        top: 0; bottom: 0;
-        position: absolute;
-        width: 50%;
-        background-color: #666;
-        z-index: 40;
-      }
-    }
-    .toggle_playback{
-      float: left;
-      color: #fff;
-      font-size: 1.3em;
-      height: 30px;
-      border: none;
-      background: transparent;
-      padding: 0 10px;
-      cursor: pointer;
-      outline: none;
-    }
-
-  }
+    
 }

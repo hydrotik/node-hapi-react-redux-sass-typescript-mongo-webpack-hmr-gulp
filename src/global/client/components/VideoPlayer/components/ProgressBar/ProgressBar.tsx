@@ -10,8 +10,13 @@ import './_ProgressBar.scss';
 // Interfaces
 interface IProgressBarProps {
     handleProgressClick?: (e: any) => void;
-    percentPlayed?: number;
     percentBuffered?: number;
+
+    handleMouseDown?: (e: any) => void;
+    handleChange?: (e: any) => void;
+    handleMouseUp?: (e: any) => void;
+
+    played?: number;
 }
 
 interface IProgressBarState {
@@ -35,12 +40,20 @@ export class ProgressBar extends React.Component<IProgressBarProps, IProgressBar
 
     public render(): React.ReactElement<{}> {
 
-        let playedStyle = { width: this.props.percentPlayed + '%' }
+        let playedStyle = { width: (this.props.played * 100) + '%' }
         let bufferStyle = { width: this.props.percentBuffered + '%' }
 
         return (
-            <div className="progress_bar progress_bar_ref" onClick={this.props.handleProgressClick}>
-                <div className="playback_percent" style={playedStyle}><span></span></div>
+            <div className="progress_bar progress_bar_ref" /*onClick={this.props.handleProgressClick}*/ >
+                <input
+                    type='range' min={0} max={1} step='any'
+                    value={this.props.played}
+                    onMouseDown={this.props.handleMouseDown}
+                    onChange={this.props.handleChange}
+                    onMouseUp={this.props.handleMouseUp}
+                    className="seek_slider"
+                    />
+                <div className="playback_percent" style={playedStyle}></div>
                 <div className="buffer_percent" style={bufferStyle}></div>
             </div>
         );
