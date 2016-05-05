@@ -11,6 +11,7 @@ import './_PlayBackToggleButton.scss';
 interface IPlayBackToggleButtonProps {
     handleTogglePlayback?: () => void;
     playing?: boolean;
+    className?: any;
 }
 
 interface IPlayBackToggleButtonState {
@@ -37,7 +38,7 @@ export class PlayBackToggleButton extends React.Component<IPlayBackToggleButtonP
         let icon = this.props.playing ? (<i className="icon-pause"></i>) : (<i className="icon-play"></i>);
 
         return (
-            <button className="toggle_playback" onClick={this.props.handleTogglePlayback}>
+            <button className={this.props.className} onClick={this.props.handleTogglePlayback}>
                 {icon}
             </button>
         );

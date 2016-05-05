@@ -205,7 +205,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
 
                         <div className="video_controls" ref="videoControls">
                             <ProgressBar handleProgressClick={this.onSeekChange} percentPlayed={Math.floor(played * 100)} percentBuffered={Math.floor(loaded * 100)} />
-                            <PlayBackToggleButton handleTogglePlayback={this.playPause} playing={this.state.playing} />
+                            <PlayBackToggleButton className="toggle_playback" handleTogglePlayback={this.playPause} playing={this.state.playing} />
                             
                             
                             <div className="rhs">
@@ -214,7 +214,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
                             <div className="time">
                                 <DurationDisplay ms={elapsed} className="elapsed" /> | <DurationDisplay ms={duration} className="duration" />
                             </div>
-                            <VolumeButton muted={this.state.muted} level={volume} toggleVolume={this.toggleMute} changeVolume={this.setVolume} />
+                            <VolumeButton className="volume" muted={this.state.muted} level={volume} toggleVolume={this.toggleMute} changeVolume={this.setVolume} />
                         </div>
                     </div>
 
@@ -235,13 +235,14 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
                         onMouseDown={this.onSeekMouseDown}
                         onChange={this.onSeekChange}
                         onMouseUp={this.onSeekMouseUp}
+                        className="seek_slider-demo"
                         />
                         </td>
                         </tr>
                         <tr>
                         <th>Volume</th>
                         <td>
-                        <input type='range' min={0} max={1} step='any' value={volume} onChange={this.setVolume} />
+                                <input type='range' min={0} max={1} step='any' value={volume} onChange={this.setVolume} className="volume_slider-demo" />
                         </td>
                         </tr>
                         <tr>
