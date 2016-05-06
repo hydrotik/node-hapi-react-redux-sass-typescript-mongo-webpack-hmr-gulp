@@ -1,10 +1,23 @@
+$expandDuration: .3s;
+$expandEasing: ease-in-out;
+
 .progress_bar {
-    height: 10px;
-    position: absolute;
+    height: 4px;
+    position: relative;
     left: 0;
     right: 0;
-    bottom: 30px;
+    top: 0;
     background-color: #333;
+
+    -webkit-transition: height $expandDuration $expandEasing;
+    -moz-transition: height $expandDuration $expandEasing;
+    -o-transition: height $expandDuration $expandEasing;
+    -ms-transition: height $expandDuration $expandEasing;
+    transition: height $expandDuration $expandEasing;
+
+    &.hovered{
+        height: 10px;
+    }
 
     .playback_percent {
         top: 0;
@@ -52,14 +65,25 @@
     input[type=range].seek_slider::-webkit-slider-thumb {
         box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
         border: 1px solid rgba(0, 0, 0, 0);
-        height: 8px;
+        height: 2px;
         width: 5px;
         border-radius: 0px;
         background: #ffffff;
         cursor: pointer;
         -webkit-appearance: none;
         margin-top: 1px;
+
+        -webkit-transition: height $expandDuration $expandEasing;
+        -moz-transition: height $expandDuration $expandEasing;
+        -o-transition: height $expandDuration $expandEasing;
+        -ms-transition: height $expandDuration $expandEasing;
+        transition: height $expandDuration $expandEasing;
     }
+
+    input[type=range].seek_slider.hovered::-webkit-slider-thumb {
+        height: 8px;
+    }
+
     input[type=range].seek_slider:focus::-webkit-slider-runnable-track {
         background: #cc00ff;
     }
