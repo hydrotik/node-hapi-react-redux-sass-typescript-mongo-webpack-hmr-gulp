@@ -2,6 +2,8 @@
 
 // Core Imports
 import * as React from 'react';
+import * as ClassNames from 'classnames';
+
 const ReactPlayer = require('react-player');
 
 
@@ -38,6 +40,7 @@ interface IVideoPlayerState {
     fullScreen?: boolean;
     width?: number;
     height?: number;
+    hovered?: boolean;
 }
 
 let canvas, context;
@@ -57,14 +60,14 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
             muted: false,
             fullScreen: false,
             width: 0,
-            height: 0
+            height: 0,
+            hovered: false
         };
     }
 
     refs: {
         [key: string]: (Element);
         player: any;
-        canv: any;
         videoWrapper: any;
         videoControls: any;
         progressBar: any;
@@ -74,10 +77,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
 
 
     public componentDidMount(): void {
-        canvas = this.refs.canv;
-        context = canvas.getContext('2d');
 
-        setTimeout(this.updateSize, 100);
     }
 
     public componentWillUnmount(): void {
@@ -92,13 +92,13 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         })
     };
 
-    public updateSize: any = (e: any): void => {
-        const w = this.refs.videoWrapper.clientWidth;
-        const h = this.refs.videoWrapper.clientHeight - this.refs.videoControls.clientHeight - 10;
-        this.setState({ width: w, height: h });
-
+    public handleMouseOver: any = (e: any): void => {
+        this.setState({hovered: true});
     };
 
+    public handleMouseOut: any = (e: any): void => {
+        this.setState({ hovered: false });
+    };
 
     public playPause = () => {
         this.setState({ playing: !this.state.playing })
@@ -130,48 +130,48 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     };
 
     public onProgress = (state) => {
-      // We only want to update time slider if we are not currently seeking
       if (!this.state.seeking) {
         this.setState(state)
       }
     };
 
     public toggleFullscreen = () => {
-        let d: any = document;
+        console.error('implementation needed!');
+        // let d: any = document;
 
-        this.setState({
-            fullScreen: !this.state.fullScreen
-        }, function() {
-            if (this.state.fullScreen) {
+        // this.setState({
+        //     fullScreen: !this.state.fullScreen
+        // }, function() {
+        //     if (this.state.fullScreen) {
                 
-                let docElm: any = d.documentElement;
-                if (docElm.requestFullscreen) {
-                    this.getDOMNode().requestFullscreen();
-                }
-                if (docElm.webkitRequestFullScreen) {
-                    this.getDOMNode().webkitRequestFullScreen();
-                }
-                if (docElm.mozRequestFullScreen) {
-                    this.getDOMNode().mozRequestFullScreen();
-                }
-                if (docElm.msRequestFullscreen) {
-                    this.getDOMNode().msRequestFullscreen();
-                }
-            } else {
-                if (d.exitFullscreen) {
-                    d.exitFullscreen();
-                }
-                if (d.mozCancelFullScreen) {
-                    d.mozCancelFullScreen();
-                }
-                if (d.webkitCancelFullScreen) {
-                    d.webkitCancelFullScreen();
-                }
-                if (d.msExitFullscreen) {
-                    d.msExitFullscreen();
-                }
-            }
-        });
+        //         let docElm: any = d.documentElement;
+        //         if (docElm.requestFullscreen) {
+        //             this.getDOMNode().requestFullscreen();
+        //         }
+        //         if (docElm.webkitRequestFullScreen) {
+        //             this.getDOMNode().webkitRequestFullScreen();
+        //         }
+        //         if (docElm.mozRequestFullScreen) {
+        //             this.getDOMNode().mozRequestFullScreen();
+        //         }
+        //         if (docElm.msRequestFullscreen) {
+        //             this.getDOMNode().msRequestFullscreen();
+        //         }
+        //     } else {
+        //         if (d.exitFullscreen) {
+        //             d.exitFullscreen();
+        //         }
+        //         if (d.mozCancelFullScreen) {
+        //             d.mozCancelFullScreen();
+        //         }
+        //         if (d.webkitCancelFullScreen) {
+        //             d.webkitCancelFullScreen();
+        //         }
+        //         if (d.msExitFullscreen) {
+        //             d.msExitFullscreen();
+        //         }
+        //     }
+        // });
     }
 
     public onConfigSubmit = () => {
@@ -197,19 +197,19 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     public render(): React.ReactElement<{}> {
 
 
-        const { url, muted, playing, volume, played, loaded, duration, soundcloudConfig, vimeoConfig, youtubeConfig, width, height} = this.state;
+        const { hovered, url, muted, playing, volume, played, loaded, duration, soundcloudConfig, vimeoConfig, youtubeConfig, width, height} = this.state;
 
 
         const elapsed: number = duration * played;
         const remaining: number = duration * (1 - played);
 
-        return (
-            <div className="video-page">
-                <section className='section'>
-                    <h1>ReactPlayer Demo</h1>
-                    <div className="video-player" ref="videoWrapper">
+        let controlsClass = ClassNames({
+            'video_controls': true,
+            'hovered': hovered
+        });
 
-                        <canvas className="player-canvas" ref="canv" width={width} height={height}></canvas>
+        return (
+                    <div className="video-player" ref="videoWrapper" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
 
                         <ReactPlayer
                         ref='player'
@@ -228,9 +228,10 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
                         onError={(e) => console.log('onError', e)}
                         onProgress={this.onProgress}
                         onDuration={(duration) => this.setState({ duration })}
+                        
                         />
 
-                        <div className="video_controls" ref="videoControls">
+                        <div className={controlsClass} ref="videoControls">
                             <ProgressBar
                                 handleProgressClick={this.onSeekChange}
                                 percentBuffered={Math.floor(loaded * 100)}
@@ -239,6 +240,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
                                 handleChange={this.onSeekChange}
                                 handleMouseUp={this.onSeekMouseUp}
                                 ref="progressBar"
+                                hovered={hovered}
                                 />
                             <PlayBackToggleButton className="toggle_playback" handleTogglePlayback={this.playPause} playing={this.state.playing} />
                             
@@ -252,7 +254,9 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
                             <VolumeButton className="volume" muted={this.state.muted} level={volume} toggleVolume={this.toggleMute} changeVolume={this.setVolume} />
                         </div>
                     </div>
+        );
 
+        /*
                     <table width="100%"><tbody>
                         <tr>
                         <th>Controls</th>
@@ -372,10 +376,6 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
                         <th>remaining</th>
                         <td><DurationDisplay ms={remaining} className="remaining" /></td>
                         </tr>
-                    </tbody></table>
-                </section>
-            </div>
-
-        );
+                    </tbody></table>*/
     }
 }

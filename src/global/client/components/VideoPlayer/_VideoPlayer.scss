@@ -1,4 +1,6 @@
 $black: #000;
+$expandDuration: .3s;
+$expandEasing: ease-in-out;
 
 .react-player {
     margin-bottom: 10px;
@@ -220,12 +222,24 @@ input[type=range].seek_slider-demo {
     }
 
     .video_controls {
-        height: 30px;
+        height: 4px;
         position: relative;
         bottom: 0;
         left: 0;
         right: 0;
         color: #fff;
+        overflow: hidden;
+
+        /*Animation*/
+        -webkit-transition: height $expandDuration $expandEasing;
+        -moz-transition: height $expandDuration $expandEasing;
+        -o-transition: height $expandDuration $expandEasing;
+        -ms-transition: height $expandDuration $expandEasing;
+        transition: height $expandDuration $expandEasing;
+
+        &.hovered{
+            height: 40px;
+        }
     }
 
     .player-canvas {
