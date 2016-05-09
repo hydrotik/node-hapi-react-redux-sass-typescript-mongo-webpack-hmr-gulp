@@ -32,14 +32,8 @@
 
     @include modifier(btn) {
         @extend %btn;
-        // color: $white;
-        // background-color: $color-primary;
-        padding: em(5px);
-        // margin: 0 0 0 em(10px);
-        // float: right;
-        // line-height: 1em;
+        padding: 0 em(5px);
     }
-
 }
 
 .font-awesome--lg { font-size: 1.33333333em; line-height: .75em; vertical-align: -15% }

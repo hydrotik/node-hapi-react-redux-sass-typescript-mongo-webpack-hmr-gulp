@@ -5,15 +5,53 @@
 .navbar {
     background-color: #ffffff;
     border-bottom: thin solid palette(grey, xx-light);
+    overflow: hidden;
 
     @include modifier(fixed) {
-        position: fixed;
+        position: relative;
         width: 100%;
         z-index: 1000;
     }
 
-    @include media-query(medium) {
+    @include media-query(small) {
         margin-top: em(0px);
         margin-bottom: 0;
+    }
+    
+    @include element(toggle) {
+        @extend %icon--ui;
+        border-top: solid 3px palette(grey);
+        border-bottom: solid 3px palette(grey);
+        display: none;
+        float: right;
+        height: 17px;
+        margin: 20px 20px;
+        position: relative;
+        width: 25px;
+
+        @include p-el(before, 25px, 3px) {
+            background: palette(grey, light);
+            top: 4px;
+        }
+        
+        @include media-query(small) {
+            display: inline-block;
+        }
+    }
+    
+    @include element(logo) {
+        display: inline-block;
+        background-position: center;
+        background-size: contain;
+        height: 50px;
+        margin: em(20px) em(20px);
+        vertical-align: middle;
+        width: 50px;
+        
+        @include media-query(small) {
+            height: 40px;
+            margin: 10px;
+            width: 40px;
+        }
     }
 }

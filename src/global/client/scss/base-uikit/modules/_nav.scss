@@ -5,33 +5,38 @@
 .nav {
     padding: em(20px) 0;
     display: inline-block;
-
+    
     @include modifier(right) {
         float: right;
+        
+         @include media-query(small) {
+            float: none;    
+         }
     }
-
+    
+    @include modifier(sign-in) {
+        float: right;
+    }
+    
     @include element(item) {
         @extend %nav-item-horizontal;
-
         @include modifier(current) {
             @extend %nav-item-horizontal;
+            
             a {
                 @extend %nav-item-link;
                 @extend %nav-item-on;
             }
         }
-
-        @include modifier(sign-in) {
-            float: right;
-        }
-
-        a {
-            transition: all $transition-duration ease-in-out;
-            @extend %nav-item-link;
-            color: palette(grey);
-            &:hover {
-                @extend %nav-item-on;
-            }
+    }
+ 
+    a {
+        @extend %nav-item-link;
+        color: palette(grey);
+        transition: all $transition-duration ease-in-out;
+        
+        &:hover {
+            @extend %nav-item-on;
         }
     }
 
@@ -49,4 +54,50 @@
             width: 100%;
         }
     }
+}
+
+// Mobile Menu Toggle
+.nav {
+    @include media-query(small){
+        display: block;
+        opacity: 0;
+        padding: 0 em(20px) em(40px);
+        text-align: center;
+        transition: padding $transition-duration ease-in-out, opacity $transition-duration ease-in-out;
+            
+        * {
+            transition: height $transition-duration ease-in-out;
+        }
+        
+        @include modifier(expanded) {
+            opacity: 1;
+            visibility: visible;
+            
+             * {
+                height: 40px;
+            }
+        }
+        
+        @include modifier(collapsed) {
+            opacity: 0;
+            padding: 0 em(20px) em(0px);
+            transition: padding $transition-duration cubic-bezier(0,1,0,1), opacity $transition-duration/2 ease-in-out;
+            visibility: hidden;
+            
+            .nav__item,
+            .nav__item--current {
+                a {
+                    padding: 0;
+                }
+            }
+            
+           .nav__icon {
+                display: none 
+            }
+            
+            * {
+               height: 0;
+            }
+        }
+    }   
 }
