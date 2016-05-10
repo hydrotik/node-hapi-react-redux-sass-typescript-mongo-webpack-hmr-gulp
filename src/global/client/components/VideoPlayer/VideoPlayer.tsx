@@ -2,18 +2,27 @@
 
 // Core Imports
 import * as React from 'react';
+import * as ClassNames from 'classnames';
+
 const ReactPlayer = require('react-player');
+
+
+
 
 // Styles
 import './_VideoPlayer.scss';
 
 // Page Components
 import { DurationDisplay } from './components/DurationDisplay/DurationDisplay';
-
+import { ProgressBar } from './components/ProgressBar/ProgressBar';
+import { PlayBackToggleButton } from './components/PlayBackToggleButton/PlayBackToggleButton';
+import { VolumeButton } from './components/VolumeButton/VolumeButton';
+import { FullScreenToggleButton } from './components/FullScreenToggleButton/FullScreenToggleButton';
 // Behaviors and Actions
 
 // Interfaces
 interface IVideoPlayerProps {
+    
 }
 
 interface IVideoPlayerState {
@@ -22,12 +31,19 @@ interface IVideoPlayerState {
     volume?: number;
     played?: number;
     loaded?: number;
+    muted?: boolean;
     duration?: number;
     seeking?: boolean;
     soundcloudConfig?: any;
     vimeoConfig?: any;
     youtubeConfig?: any;
+    fullScreen?: boolean;
+    width?: number;
+    height?: number;
+    hovered?: boolean;
 }
+
+let canvas, context;
 
 export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayerState> {
 
@@ -40,13 +56,21 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
             volume: 0.8,
             played: 0,
             loaded: 0,
-            duration: 0
+            duration: 0,
+            muted: false,
+            fullScreen: false,
+            width: 0,
+            height: 0,
+            hovered: false
         };
     }
 
     refs: {
         [key: string]: (Element);
         player: any;
+        videoWrapper: any;
+        videoControls: any;
+        progressBar: any;
         config: any;
         url: any;
     }
@@ -68,6 +92,13 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         })
     };
 
+    public handleMouseOver: any = (e: any): void => {
+        this.setState({hovered: true});
+    };
+
+    public handleMouseOut: any = (e: any): void => {
+        this.setState({ hovered: false });
+    };
 
     public playPause = () => {
         this.setState({ playing: !this.state.playing })
@@ -78,7 +109,11 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     };
 
     public setVolume = (e) => {
-        this.setState({ volume: parseFloat(e.target.value) })
+        this.setState({ muted: (parseFloat(e.target.value) == 0) ? true : false, volume: parseFloat(e.target.value) })
+    };
+
+    public toggleMute = (e) => {
+        this.setState({ muted: true, volume: 0 })
     };
 
     public onSeekMouseDown = (e) => {
@@ -95,11 +130,49 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     };
 
     public onProgress = (state) => {
-      // We only want to update time slider if we are not currently seeking
       if (!this.state.seeking) {
         this.setState(state)
       }
     };
+
+    public toggleFullscreen = () => {
+        console.error('implementation needed!');
+        // let d: any = document;
+
+        // this.setState({
+        //     fullScreen: !this.state.fullScreen
+        // }, function() {
+        //     if (this.state.fullScreen) {
+                
+        //         let docElm: any = d.documentElement;
+        //         if (docElm.requestFullscreen) {
+        //             this.getDOMNode().requestFullscreen();
+        //         }
+        //         if (docElm.webkitRequestFullScreen) {
+        //             this.getDOMNode().webkitRequestFullScreen();
+        //         }
+        //         if (docElm.mozRequestFullScreen) {
+        //             this.getDOMNode().mozRequestFullScreen();
+        //         }
+        //         if (docElm.msRequestFullscreen) {
+        //             this.getDOMNode().msRequestFullscreen();
+        //         }
+        //     } else {
+        //         if (d.exitFullscreen) {
+        //             d.exitFullscreen();
+        //         }
+        //         if (d.mozCancelFullScreen) {
+        //             d.mozCancelFullScreen();
+        //         }
+        //         if (d.webkitCancelFullScreen) {
+        //             d.webkitCancelFullScreen();
+        //         }
+        //         if (d.msExitFullscreen) {
+        //             d.msExitFullscreen();
+        //         }
+        //     }
+        // });
+    }
 
     public onConfigSubmit = () => {
         let config;
@@ -124,33 +197,67 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     public render(): React.ReactElement<{}> {
 
 
-        const { url, playing, volume, played, loaded, duration, soundcloudConfig, vimeoConfig, youtubeConfig } = this.state;
+        const { hovered, url, muted, playing, volume, played, loaded, duration, soundcloudConfig, vimeoConfig, youtubeConfig, width, height} = this.state;
+
+
+        const elapsed: number = duration * played;
+        const remaining: number = duration * (1 - played);
+
+        let controlsClass = ClassNames({
+            'video_controls': true,
+            'hovered': hovered
+        });
 
         return (
-            <div className="video-player">
-                <section className='section'>
-                    <h1>ReactPlayer Demo</h1>
-                    <ReactPlayer
-                    ref='player'
-                    className='react-player'
-                    width={480}
-                    height={270}
-                    url={url}
-                    playing={playing}
-                    volume={volume}
-                    soundcloudConfig={soundcloudConfig}
-                    vimeoConfig={vimeoConfig}
-                    youtubeConfig={youtubeConfig}
-                    onPlay={() => this.setState({ playing: true })}
-                    onPause={() => this.setState({ playing: false })}
-                    onBuffer={() => console.log('onBuffer')}
-                    onEnded={() => this.setState({ playing: false })}
-                    onError={(e) => console.log('onError', e)}
-                    onProgress={this.onProgress}
-                    onDuration={(duration) => this.setState({ duration })}
-                    />
+                    <div className="video-player" ref="videoWrapper" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
 
-                    <table><tbody>
+                        <ReactPlayer
+                        ref='player'
+                        className='react-player'
+                        width={640}
+                        url={url}
+                        playing={playing}
+                        volume={volume}
+                        soundcloudConfig={soundcloudConfig}
+                        vimeoConfig={vimeoConfig}
+                        youtubeConfig={youtubeConfig}
+                        onPlay={() => this.setState({ playing: true })}
+                        onPause={() => this.setState({ playing: false })}
+                        onBuffer={() => console.log('onBuffer')}
+                        onEnded={() => this.setState({ playing: false })}
+                        onError={(e) => console.log('onError', e)}
+                        onProgress={this.onProgress}
+                        onDuration={(duration) => this.setState({ duration })}
+                        
+                        />
+
+                        <div className={controlsClass} ref="videoControls">
+                            <ProgressBar
+                                handleProgressClick={this.onSeekChange}
+                                percentBuffered={Math.floor(loaded * 100)}
+                                played={played}
+                                handleMouseDown={this.onSeekMouseDown}
+                                handleChange={this.onSeekChange}
+                                handleMouseUp={this.onSeekMouseUp}
+                                ref="progressBar"
+                                hovered={hovered}
+                                />
+                            <PlayBackToggleButton className="toggle_playback" handleTogglePlayback={this.playPause} playing={this.state.playing} />
+                            
+                            
+                            <div className="rhs">
+                                <FullScreenToggleButton onToggleFullscreen={this.toggleFullscreen} />
+                            </div>
+                            <div className="time">
+                                <DurationDisplay ms={elapsed} className="elapsed" /> | <DurationDisplay ms={duration} className="duration" />
+                            </div>
+                            <VolumeButton className="volume" muted={this.state.muted} level={volume} toggleVolume={this.toggleMute} changeVolume={this.setVolume} />
+                        </div>
+                    </div>
+        );
+
+        /*
+                    <table width="100%"><tbody>
                         <tr>
                         <th>Controls</th>
                         <td>
@@ -167,13 +274,14 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
                         onMouseDown={this.onSeekMouseDown}
                         onChange={this.onSeekChange}
                         onMouseUp={this.onSeekMouseUp}
+                        className="seek_slider-demo"
                         />
                         </td>
                         </tr>
                         <tr>
                         <th>Volume</th>
                         <td>
-                        <input type='range' min={0} max={1} step='any' value={volume} onChange={this.setVolume} />
+                                <input type='range' min={0} max={1} step='any' value={volume} onChange={this.setVolume} className="volume_slider-demo" />
                         </td>
                         </tr>
                         <tr>
@@ -258,20 +366,16 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
                         </tr>
                         <tr>
                         <th>duration</th>
-                        <td><DurationDisplay seconds={duration} /></td>
+                        <td><DurationDisplay ms={duration} className="duration" /></td>
                         </tr>
                         <tr>
                         <th>elapsed</th>
-                        <td><DurationDisplay seconds={duration * played} /></td>
+                        <td><DurationDisplay ms={elapsed} className="elapsed" /></td>
                         </tr>
                         <tr>
                         <th>remaining</th>
-                        <td><DurationDisplay seconds={duration * (1 - played)} /></td>
+                        <td><DurationDisplay ms={remaining} className="remaining" /></td>
                         </tr>
-                    </tbody></table>
-                </section>
-            </div>
-
-        );
+                    </tbody></table>*/
     }
 }

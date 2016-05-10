@@ -1,18 +1,16 @@
-.video-player {
-
-}
-
-
 $black: #000;
+$expandDuration: .3s;
+$expandEasing: ease-in-out;
 
 .react-player {
-  margin-bottom: 10px;
-  background: rgba($black, .1);
+    margin-bottom: 10px;
+    background: rgba($black, .1);
 }
 
 .faded {
-  color: rgba($black, .5);
+    color: rgba($black, .5);
 }
+
 
 
 // Styling Cross-Browser Compatible Range Inputs with Sass
@@ -20,10 +18,8 @@ $black: #000;
 // Author: Darlan Rod https://github.com/darlanrod
 // Version 1.0.1
 // MIT License
-
 $track-color: #ccc;
 $thumb-color: #666;
-
 $thumb-radius: 10px;
 $thumb-height: 10px;
 $thumb-width: 10px;
@@ -32,7 +28,6 @@ $thumb-shadow-blur: 0;
 $thumb-shadow-color: #111;
 $thumb-border-width: 0;
 $thumb-border-color: #fff;
-
 $track-width: 100%;
 $track-height: 5px;
 $track-shadow-size: 0;
@@ -40,101 +35,218 @@ $track-shadow-blur: 0;
 $track-shadow-color: #222;
 $track-border-width: 0;
 $track-border-color: #000;
-
 $track-radius: 5px;
 $contrast: 5%;
-
 @mixin shadow($shadow-size, $shadow-blur, $shadow-color) {
-  box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color, 0 0 $shadow-size lighten($shadow-color, 5%);
+    box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color, 0 0 $shadow-size lighten($shadow-color, 5%);
 }
 
 @mixin track() {
-  width: $track-width;
-  height: $track-height;
-  cursor: pointer;
+    width: $track-width;
+    height: $track-height;
+    cursor: pointer;
 }
 
 @mixin thumb() {
-  @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
-  border: $thumb-border-width solid $thumb-border-color;
-  height: $thumb-height;
-  width: $thumb-width;
-  border-radius: $thumb-radius;
-  background: $thumb-color;
-  cursor: pointer;
-  z-index: 100;
+    @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
+    border: $thumb-border-width solid $thumb-border-color;
+    height: $thumb-height;
+    width: $thumb-width;
+    border-radius: $thumb-radius;
+    background: $thumb-color;
+    cursor: pointer;
+    z-index: 100;
 }
 
-[type=range] {
-  -webkit-appearance: none;
-  margin: $thumb-height / 2 0;
-  width: $track-width;
-
-  &:focus {
-    outline: none;
-  }
-
-  &::-webkit-slider-runnable-track {
-    @include track();
-    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
-    background: $track-color;
-    border: $track-border-width solid $track-border-color;
-    border-radius: $track-radius;
-  }
-
-  &::-webkit-slider-thumb {
-    @include thumb();
+input[type=range].volume_slider-demo,
+input[type=range].seek_slider-demo {
     -webkit-appearance: none;
-    margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
-  }
+    margin: $thumb-height / 2 0;
+    width: $track-width;
+    &:focus {
+        outline: none;
+    }
+    &::-webkit-slider-runnable-track {
+        @include track();
+        @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+        background: $track-color;
+        border: $track-border-width solid $track-border-color;
+        border-radius: $track-radius;
+    }
+    &::-webkit-slider-thumb {
+        @include thumb();
+        -webkit-appearance: none;
+        margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
+    }
+    &:focus::-webkit-slider-runnable-track {
+        background: lighten($track-color, $contrast);
+    }
+    &::-moz-range-track {
+        @include track();
+        @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+        background: $track-color;
+        border: $track-border-width solid $track-border-color;
+        border-radius: $track-radius;
+    }
+    &::-moz-range-thumb {
+        @include thumb();
+    }
+    &::-ms-track {
+        @include track();
+        background: transparent;
+        border-color: transparent;
+        border-width: $thumb-width 0;
+        color: transparent;
+    }
+    &::-ms-fill-lower {
+        @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+        background: darken($track-color, $contrast);
+        border: $track-border-width solid $track-border-color;
+        border-radius: $track-radius * 2;
+    }
+    &::-ms-fill-upper {
+        @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+        background: $track-color;
+        border: $track-border-width solid $track-border-color;
+        border-radius: $track-radius * 2;
+    }
+    &::-ms-thumb {
+        @include thumb();
+    }
+    &:focus::-ms-fill-lower {
+        background: $track-color;
+    }
+    &:focus::-ms-fill-upper {
+        background: lighten($track-color, $contrast);
+    }
+}
 
-  &:focus::-webkit-slider-runnable-track {
-    background: lighten($track-color, $contrast);
-  }
+@font-face {
+    font-family: 'fontello';
+    src: url('./font/fontello.eot?82764686');
+    src: url('./font/fontello.eot?82764686#iefix') format('embedded-opentype'), url('./font/fontello.woff?82764686') format('woff'), url('./font/fontello.ttf?82764686') format('truetype'), url('./font/fontello.svg?82764686#fontello') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
-  &::-moz-range-track {
-    @include track();
-    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
-    background: $track-color;
-    border: $track-border-width solid $track-border-color;
-    border-radius: $track-radius;
-  }
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+    font-family: "fontello";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    /* opacity: .8; */
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
+    /* Animation center compensation - margins should be symmetric */
+    /* remove if not needed */
+    margin-left: .2em;
+    /* you can be more comfortable with increased icons size */
+    /* font-size: 120%; */
+    /* Uncomment for 3D effect */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
 
-  &::-moz-range-thumb {
-    @include thumb();
-  }
+.icon-volume-off:before {
+    content: '\e801';
+}
 
-  &::-ms-track {
-    @include track();
-    background: transparent;
-    border-color: transparent;
-    border-width: $thumb-width 0;
-    color: transparent;
-  }
 
-  &::-ms-fill-lower {
-    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
-    background: darken($track-color, $contrast);
-    border: $track-border-width solid $track-border-color;
-    border-radius: $track-radius * 2;
-  }
+/* '' */
 
-  &::-ms-fill-upper {
-    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
-    background: $track-color;
-    border: $track-border-width solid $track-border-color;
-    border-radius: $track-radius * 2;
-  }
+.icon-volume-down:before {
+    content: '\e802';
+}
 
-  &::-ms-thumb {
-    @include thumb();
-  }
 
-  &:focus::-ms-fill-lower {
-    background: $track-color;
-  }
+/* '' */
 
-  &:focus::-ms-fill-upper {
-    background: lighten($track-color, $contrast);
-  }
+.icon-volume:before {
+    content: '\e803';
+}
+
+
+/* '' */
+
+.icon-volume-up:before {
+    content: '\e804';
+}
+
+
+/* '' */
+
+.icon-play:before {
+    content: '\e805';
+}
+
+
+/* '' */
+
+.icon-pause:before {
+    content: '\e806';
+}
+
+
+/* '' */
+
+.icon-fullscreen:before {
+    content: '\e807';
+}
+
+
+/* '' */
+
+.icon-regularscreen:before {
+    content: '\e808';
+}
+
+
+/* '' */
+
+.video-player {
+    width: 640px;
+    position: relative;
+    background: black;
+
+    .react-player {
+        max-width: 100%;
+        height: inherit;
+    }
+
+    .video_controls {
+        height: 4px;
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        color: #fff;
+        overflow: hidden;
+
+        /*Animation*/
+        -webkit-transition: height $expandDuration $expandEasing;
+        -moz-transition: height $expandDuration $expandEasing;
+        -o-transition: height $expandDuration $expandEasing;
+        -ms-transition: height $expandDuration $expandEasing;
+        transition: height $expandDuration $expandEasing;
+
+        &.hovered{
+            height: 40px;
+        }
+    }
+
+    .player-canvas {
+      position: absolute;
+      top:0;
+      left:0;
+      z-index: 10;
+    }
+    
 }
