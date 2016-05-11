@@ -58,6 +58,7 @@ export class Video extends React.Component<IVideoPageProps, IVideoPageState> {
                 <section className="content">
                     <div className="row">
                         <div className="col-lg-3 col-xs-6">
+                            <h1>ReactPlayer Demo</h1>
                             <VideoPlayer />
                         </div>
                     </div>
