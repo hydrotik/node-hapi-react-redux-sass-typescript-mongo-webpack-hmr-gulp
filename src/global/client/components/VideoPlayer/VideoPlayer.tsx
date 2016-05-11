@@ -22,7 +22,7 @@ import { FullScreenToggleButton } from './components/FullScreenToggleButton/Full
 
 // Interfaces
 interface IVideoPlayerProps {
-    
+
 }
 
 interface IVideoPlayerState {
@@ -86,14 +86,14 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
 
     public load = (url) => {
         this.setState({
-          url,
-          played: 0,
-          loaded: 0
+            url,
+            played: 0,
+            loaded: 0
         })
     };
 
     public handleMouseOver: any = (e: any): void => {
-        this.setState({hovered: true});
+        this.setState({ hovered: true });
     };
 
     public handleMouseOut: any = (e: any): void => {
@@ -121,18 +121,18 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     };
 
     public onSeekChange = (e) => {
-      this.setState({ played: parseFloat(e.target.value) })
+        this.setState({ played: parseFloat(e.target.value) })
     };
 
     public onSeekMouseUp = (e) => {
-      this.setState({ seeking: false })
-      this.refs.player.seekTo(parseFloat(e.target.value))
+        this.setState({ seeking: false })
+        this.refs.player.seekTo(parseFloat(e.target.value))
     };
 
     public onProgress = (state) => {
-      if (!this.state.seeking) {
-        this.setState(state)
-      }
+        if (!this.state.seeking) {
+            this.setState(state)
+        }
     };
 
     public toggleFullscreen = () => {
@@ -143,7 +143,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         //     fullScreen: !this.state.fullScreen
         // }, function() {
         //     if (this.state.fullScreen) {
-                
+
         //         let docElm: any = d.documentElement;
         //         if (docElm.requestFullscreen) {
         //             this.getDOMNode().requestFullscreen();
@@ -186,11 +186,11 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     };
 
     public renderLoadButton = (url, label) => {
-      return (
-        <button className="btn bg-teal btn-sm" onClick={() => this.load(url)}>
-          {label}
-        </button>
-      )
+        return (
+            <button className="btn bg-teal btn-sm" onClick={() => this.load(url) }>
+                {label}
+            </button>
+        )
     };
 
 
@@ -209,51 +209,51 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         });
 
         return (
-                    <div className="video-player" ref="videoWrapper" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
+            <div className="video-player" ref="videoWrapper" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
 
-                        <ReactPlayer
-                        ref='player'
-                        className='react-player'
-                        width={640}
-                        url={url}
-                        playing={playing}
-                        volume={volume}
-                        soundcloudConfig={soundcloudConfig}
-                        vimeoConfig={vimeoConfig}
-                        youtubeConfig={youtubeConfig}
-                        onPlay={() => this.setState({ playing: true })}
-                        onPause={() => this.setState({ playing: false })}
-                        onBuffer={() => console.log('onBuffer')}
-                        onEnded={() => this.setState({ playing: false })}
-                        onError={(e) => console.log('onError', e)}
-                        onProgress={this.onProgress}
-                        onDuration={(duration) => this.setState({ duration })}
-                        
+                <ReactPlayer
+                    ref='player'
+                    className='react-player'
+                    width={640}
+                    url={url}
+                    playing={playing}
+                    volume={volume}
+                    soundcloudConfig={soundcloudConfig}
+                    vimeoConfig={vimeoConfig}
+                    youtubeConfig={youtubeConfig}
+                    onPlay={() => this.setState({ playing: true }) }
+                    onPause={() => this.setState({ playing: false }) }
+                    onBuffer={() => console.log('onBuffer') }
+                    onEnded={() => this.setState({ playing: false }) }
+                    onError={(e) => console.log('onError', e) }
+                    onProgress={this.onProgress}
+                    onDuration={(duration) => this.setState({ duration }) }
+
+                    />
+
+                <div className={controlsClass} ref="videoControls">
+                    <ProgressBar
+                        handleProgressClick={this.onSeekChange}
+                        percentBuffered={Math.floor(loaded * 100) }
+                        played={played}
+                        handleMouseDown={this.onSeekMouseDown}
+                        handleChange={this.onSeekChange}
+                        handleMouseUp={this.onSeekMouseUp}
+                        ref="progressBar"
+                        hovered={hovered}
                         />
+                    <PlayBackToggleButton className="toggle_playback" handleTogglePlayback={this.playPause} playing={this.state.playing} />
 
-                        <div className={controlsClass} ref="videoControls">
-                            <ProgressBar
-                                handleProgressClick={this.onSeekChange}
-                                percentBuffered={Math.floor(loaded * 100)}
-                                played={played}
-                                handleMouseDown={this.onSeekMouseDown}
-                                handleChange={this.onSeekChange}
-                                handleMouseUp={this.onSeekMouseUp}
-                                ref="progressBar"
-                                hovered={hovered}
-                                />
-                            <PlayBackToggleButton className="toggle_playback" handleTogglePlayback={this.playPause} playing={this.state.playing} />
-                            
-                            
-                            <div className="rhs">
-                                <FullScreenToggleButton onToggleFullscreen={this.toggleFullscreen} />
-                            </div>
-                            <div className="time">
-                                <DurationDisplay ms={elapsed} className="elapsed" /> | <DurationDisplay ms={duration} className="duration" />
-                            </div>
-                            <VolumeButton className="volume" muted={this.state.muted} level={volume} toggleVolume={this.toggleMute} changeVolume={this.setVolume} />
-                        </div>
+
+                    <div className="rhs">
+                        <FullScreenToggleButton onToggleFullscreen={this.toggleFullscreen} />
                     </div>
+                    <div className="time">
+                        <DurationDisplay ms={elapsed} className="elapsed" /> | <DurationDisplay ms={duration} className="duration" />
+                    </div>
+                    <VolumeButton className="volume" muted={this.state.muted} level={volume} toggleVolume={this.toggleMute} changeVolume={this.setVolume} />
+                </div>
+            </div>
         );
 
         /*
