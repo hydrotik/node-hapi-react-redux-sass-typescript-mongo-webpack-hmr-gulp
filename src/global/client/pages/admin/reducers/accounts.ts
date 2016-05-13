@@ -17,6 +17,8 @@ import {
     ACCOUNT_LINK_RESPONSE,
     ACCOUNT_UNLINK_REQUEST,
     ACCOUNT_UNLINK_RESPONSE,
+    DETAILS_SAVECHANGES_REQUEST,
+    DETAILS_SAVECHANGES_RESPONSE,
     createNewAsync
 } from '../actions'
 
@@ -73,7 +75,8 @@ function loadDetailsStart(state: any, action: any): any {
                     firstName: "",
                     lastName: "",
                     middleName: "",
-                    username: ""
+                    username: "",
+                    userId: ""
                 }
             }
         }
@@ -91,7 +94,8 @@ function loadDetailsDone(state: any, action: any) : any{
                     firstName: _.get(action, 'response.data.name.first', ""),
                     lastName: _.get(action, "response.data.name.last", ""),
                     middleName: _.get(action, "response.data.name.middle", ""),
-                    username: _.get(action, "response.data.user.name", "")
+                    username: _.get(action, "response.data.user.name", ""),
+                    userId: _.get(action, "response.data.user.id", "")
                 }
             }
         }
@@ -113,7 +117,8 @@ function endAccountLink(state: any, action: any): any {
         }
     )
     
-    newState.details.data.username = _.get(action, "response.username", "");
+    newState.details.data.username = _.get(action, "response.data.user.name", "");
+    newState.details.data.userId = _.get(action, "response.data.user.id", "");
     
     return newState;
 }
@@ -134,7 +139,22 @@ function endAccountUnlink(state: any, action: any): any {
         }
     )
     newState.details.data.username = "";
+    newState.details.data.userId = "";
     
+    return newState;
+}
+
+function detailsSaveChangesEnd(state: any, action: any): any {
+    let newState: any = _.merge(
+        {},
+        state,
+        {
+            details: {
+                loading: false,
+            }
+        }
+    )
+        
     return newState;
 }
 
@@ -165,6 +185,10 @@ export default function (state: any = {data:[], sortFilter: ''}, action: any) : 
             return startAccountLink(state, action);
         case ACCOUNT_LINK_RESPONSE:
             return endAccountLink(state, action);
+        case DETAILS_SAVECHANGES_REQUEST:
+            
+        case DETAILS_SAVECHANGES_RESPONSE:
+            return detailsSaveChangesEnd(state, action);
     }
     return state
 }

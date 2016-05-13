@@ -226,32 +226,25 @@ export function detailsSaveChanges(id, data: { first: string, last: string, midd
         };
         
         return Fetch(request)
+
         .then(
             (result) => {
 
-                dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, DETAILS_SAVECHANGES_RESPONSE));
-                
+                /*
+                dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false));
+                */
                 dispatch({
-                    type: REDUXALERT_DISPLAY,
-                    id: 'nameDetailsFormAlert',
-                    options: {
-                        alertType: ReduxAlertType.Success,
-                        messageText: "Account updated"
-                    }
+                    type: DETAILS_SAVECHANGES_RESPONSE,
+                    id: id,
+                    name: data
                 })
                 
-                dispatch(getResults({}))
-                if (router) {
-                    router.transitionTo(SECTION_NAME);
-                    window.scrollTo(0, 0);
-                }
+                return Promise.resolve({firstName: data.first, lastName: data.last, middleName: data.middle});
             }
+            
+            
         )
-        .catch(
-            (result) => {
-                console.log(result.err);
-            }
-        )
+        
     };
 }
 
@@ -277,7 +270,7 @@ export function unlinkAccount(id: string): any {
                     }
                 })
                 dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, ACCOUNT_UNLINK_RESPONSE));
-                
+                return Promise.resolve(result.data)
             }
         )
         .catch(
@@ -334,6 +327,8 @@ export function linkAccount(id: string, username: string): any {
                     router.transitionTo(SECTION_NAME);
                     window.scrollTo(0, 0);
                 }
+                
+                return Promise.resolve(result.data);
             }
         )
         .catch(
@@ -348,6 +343,8 @@ export function linkAccount(id: string, username: string): any {
                         messageText: _.get(result, "data.message", "")
                     }
                 })
+                
+                return Promise.reject(new Error("User does not exist"));
             }
         )
     };

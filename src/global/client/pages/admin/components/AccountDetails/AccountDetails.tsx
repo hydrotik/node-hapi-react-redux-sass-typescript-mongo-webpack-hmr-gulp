@@ -15,7 +15,7 @@ import {
     unlinkAccount
 } from '../../actions'
 
-import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Well} from 'react-bootstrap';
+import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from 'react-bootstrap';
 import {TextControl} from '../../../../components/TextControl/TextControl';
 import UserLinkForm from './UserLinkForm';
 import NameDetailsForm from './NameDetailsForm';
@@ -27,28 +27,16 @@ import { reduxForm }  from 'redux-form';
 // Styles
 import './_AccountDetails.scss';
 
-interface IAccountDetailsState {
-    
-}
-interface IAccountDetailsProps {
+
+interface StateProps {
     // As expected from  mapStateToProps
-    data?: {
-        firstName?: string
-        lastName?: string
-        middleName?: string
-        username?: string
+    data: {
+        firstName: string
+        lastName: string
+        middleName: string
+        username: string
+        userId: string
     }
-    
-    // From MapDispatchToProps
-    onNameDetailsSubmit?: (func: any) => any
-    onUserUnlinkSubmit?: () => any
-    onUserLinkSubmit?: (username: string) => any
-    onDeleteAccountSubmit?: (func: any) => any
-    onLoadDetails?: (func: string) => any
-    
-    // From react-router
-    params?: any
-    location?: any
     
     // Other
     loading?: boolean
@@ -56,14 +44,27 @@ interface IAccountDetailsProps {
     successMsg?: string
 }
 
-const mapStateToProps = (state: any): IAccountDetailsProps => {
+interface DispatchProps {
+    onNameDetailsSubmit: (func: any) => any
+    onUserUnlinkSubmit: () => any
+    onUserLinkSubmit: (username: string) => any
+    onDeleteAccountSubmit: (func: any) => any
+    onLoadDetails: (func: string) => any
+}
+
+interface ReactRouterProps {
+    params: any
+    location: any
+}
+
+const mapStateToProps = (state: any): StateProps => {
     return {
-        data: _.get(state, 'accounts.details.data', {}),
+        data: _.get(state, 'accounts.details.data', { firstName: "", lastName: "", middleName: "", username: "", userId: "" }),
         loading: _.get(state, "accounts.details.loading", false)
     }
 }
 
-const mapDispatchToProps = (dispatch: (func: any) => any, ownProps: IAccountDetailsProps): IAccountDetailsProps => {
+const mapDispatchToProps = (dispatch: (func: any) => any, ownProps: ReactRouterProps): DispatchProps => {
     return {
         onLoadDetails: (id: string) => {
             return dispatch(detailsFetch(id))    
@@ -88,7 +89,7 @@ const mapDispatchToProps = (dispatch: (func: any) => any, ownProps: IAccountDeta
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export class AccountDetails extends React.Component<IAccountDetailsProps, IAccountDetailsState> {
+export class AccountDetails extends React.Component<StateProps & DispatchProps &ReactRouterProps, any> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -105,7 +106,8 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                 firstName,
                 lastName,
                 middleName,
-                username
+                username,
+                userId
             },
             loading,
             onUserLinkSubmit,
@@ -129,8 +131,7 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                 </div>
                 {!loading ?
                 <div className='row'>
-                    <Glyphicon glyph="glyphicon-refresh" />
-                    {this.props.errorMsg && <Well bsStyle="error">{this.props.errorMsg}</Well>}
+
                     <div className='col-sm-8'>
                         
                         <NameDetailsForm 
@@ -146,7 +147,7 @@ export class AccountDetails extends React.Component<IAccountDetailsProps, IAccou
                         
                         {/* Rule of thumb: ONLY pass props needed from parent to child. */}
                         
-                        <UserLinkForm initialValues={{username}} onUserUnlinkSubmit={onUserUnlinkSubmit} onUserLinkSubmit={onUserLinkSubmit} />
+                        <UserLinkForm initialValues={{username, userId}} onUserUnlinkSubmit={onUserUnlinkSubmit} onUserLinkSubmit={onUserLinkSubmit} />
                         
                         <DeleteAccountForm onSubmit={onDeleteAccountSubmit} />
                         
