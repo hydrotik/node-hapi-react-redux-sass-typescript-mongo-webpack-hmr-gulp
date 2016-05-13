@@ -44,7 +44,7 @@ reducers[actions.GET] = (state, action) => {
     
     return newState;
 }
-/*
+
 reducers[actions.UPDATE] = (state, action) => {
     let newState: any = _.merge(
         {},
@@ -65,7 +65,7 @@ reducers[actions.UPDATE] = (state, action) => {
     }
     
     return newState;
-}*/
+}
 
 reducers[actions.CHANGE_PASSWORD] = (state, action) => {
     return _.merge(
