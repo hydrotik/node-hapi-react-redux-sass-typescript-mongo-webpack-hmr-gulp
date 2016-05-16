@@ -43,8 +43,8 @@ interface ReduxFormProps extends BaseProps {
 function validate(values) {
     let errors = {};
     
-    if (!_.isEmpty(values.password) && values.password != '' && (values.password.length < 8 || values.password.length > 64)) {
-        errors['password'] = 'Password length must be at least 8 characters and no greater than 64 characters';
+    if (!_.isEmpty(values.password) && values.password != '' && (values.password.length < 6 || values.password.length > 64)) {
+        errors['password'] = 'Password length must be at least 6 characters and no greater than 64 characters';
     }
     else if (values.password != values.passwordConfirm) {
         errors['passwordConfirm'] = 'Password and confirmation fields do not match'

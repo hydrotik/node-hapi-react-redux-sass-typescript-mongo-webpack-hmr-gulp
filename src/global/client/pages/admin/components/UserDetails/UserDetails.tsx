@@ -12,6 +12,7 @@ import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from
 
 import {Spinner} from '../../../../components/Spinner/Spinner';
 
+import {REDUCER_NAME} from './reducers';
 import * as actions from './actions';
 
 import UserDeleteForm from './UserDeleteForm';
@@ -52,14 +53,14 @@ interface DispatchProps {
 
 function mapStateToProps(state): UserDetailsProps {
     return {
-        loading: _.get(state, 'users.userDetails.loading', false),
-        active: _.get(state, 'users.userDetails.data.isActive', false),
-        username: _.get(state, 'users.userDetails.data.username', ""),
-        email: _.get(state, 'users.userDetails.data.email', ""),
-        roleAccount: _.get(state, 'users.userDetails.data.roles.account.name', ""),
-        roleAccountId: _.get(state, 'users.userDetails.data.roles.account.id', ""),
-        roleAdmin: _.get(state, 'users.userDetails.data.roles.admin.name', ""),
-        roleAdminId: _.get(state, 'users.userDetails.data.roles.admin.id', "")
+        loading: _.get(state, REDUCER_NAME+'.loading', false),
+        active: _.get(state, REDUCER_NAME+'.data.isActive', false),
+        username: _.get(state, REDUCER_NAME+'.data.username', ""),
+        email: _.get(state, REDUCER_NAME+'.data.email', ""),
+        roleAccount: _.get(state, REDUCER_NAME+'.data.roles.account.name', ""),
+        roleAccountId: _.get(state, REDUCER_NAME+'.data.roles.account.id', ""),
+        roleAdmin: _.get(state, REDUCER_NAME+'.data.roles.admin.name', ""),
+        roleAdminId: _.get(state, REDUCER_NAME+'.data.roles.admin.id', "")
     };
 }
 

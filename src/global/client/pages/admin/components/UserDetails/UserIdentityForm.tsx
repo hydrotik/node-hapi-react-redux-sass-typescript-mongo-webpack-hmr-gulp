@@ -10,8 +10,6 @@ import * as _ from 'lodash';
 
 import {Glyphicon, Input, Label, MenuItem, Alert} from 'react-bootstrap';
 
-import {ReduxAlert, ReduxAlertType} from '../../../../components/ReduxAlert/ReduxAlert';
-
 interface ReduxFormProps {
     submitting: boolean
     handleSubmit: any
@@ -33,7 +31,7 @@ const validate = (values: any): any => {
     const emailRegex = /.+@.+/;
     const errors:any = {  };
     
-    const runValidations = (name: string, value?: string, isRequired: boolean = true, regex?: RegExp, maxLength: number = 32 ) => {
+    const runValidations = (name: string, value?: string, isRequired: boolean = true, regex?: RegExp, maxLength: number = 32, minLength: number = 3 ) => {
         
         if (!value && !isRequired) {
             return;
@@ -42,8 +40,8 @@ const validate = (values: any): any => {
         if (!value) {
             errors[name] = 'Required';
         }
-        else if (value.length > maxLength) {
-            errors[name] = "Must be less than 32 characters";
+        else if (value.length > maxLength || value.length < minLength) {
+            errors[name] = "Must be at least 3 characters and no more than 32 characters";
         }
         else if (!regex.test(value)) {
             errors[name] = 'Not formatted correctly';
@@ -88,7 +86,7 @@ class UserIdentityForm extends React.Component<any, any> {
                 (e) => {
                     return handleSubmit(e)
                     .then((result) => {
-                        this.setState({ 
+                        this.setState({
                             message: {
                                 visible: true,
                                 bsStyle: "success",
