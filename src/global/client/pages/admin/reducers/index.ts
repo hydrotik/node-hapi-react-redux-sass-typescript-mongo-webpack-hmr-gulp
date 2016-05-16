@@ -1,7 +1,6 @@
 /// <reference path="../../../../../../typings/main.d.ts" />
 import { Reducer, combineReducers } from 'redux';
 import {reducer as formReducer} from 'redux-form';
-import { reducer as reduxAlertReducer } from '../../../components/ReduxAlert/reducers'
 
 /* ******************************* */
 /* *********** GLOBALS *********** */
@@ -13,13 +12,14 @@ import { onExampleReducer, onNavBarReducer } from '../../../reducers';
 
 // Account Form
 import accounts from './accounts';
-import users from '../components/UserDetails/reducers';
+import * as userDetails from '../components/UserDetails/reducers';
+import * as userSearch from '../components/UserSearch/reducers';
 
 export const rootReducer: Reducer = combineReducers({
     form: formReducer,
     onNavBarReducer,
     accounts,
-    reduxAlertReducer,
-    users
+    [userDetails.REDUCER_NAME]: userDetails.reducer,
+    [userSearch.REDUCER_NAME]: userSearch.reducer,
 });
 

@@ -3,17 +3,17 @@
 import Fetch from '../../../../api/jsonfetch';
 import ParseValidation, { IValidation } from '../../../../api/parsevalidation';
 
-export const GET: string = 'users/GET';
+export const GET: string = 'userDetails/GET';
 
-export const UPDATE: string = 'users/UPDATE';
+export const UPDATE: string = 'userDetails/UPDATE';
 
-export const CHANGE_PASSWORD: string = 'users/CHANGE_PASSWORD';
+export const CHANGE_PASSWORD: string = 'userDetails/CHANGE_PASSWORD';
 
-export const LOADING: string = 'users/LOADING';
+export const LOADING: string = 'userDetails/LOADING';
 
-export const ERROR: string = 'users/ERROR';
+export const ERROR: string = 'userDetails/ERROR';
 
-export const MESSAGE: string = 'users/MESSAGE';
+export const MESSAGE: string = 'userDetails/MESSAGE';
 
 export const SECTION_NAME: string = 'users';
 

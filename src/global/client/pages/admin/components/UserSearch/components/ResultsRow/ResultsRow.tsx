@@ -25,15 +25,15 @@ export class ResultsRow extends React.Component<IResultsRowProps, IResultsRowSta
         super(props);
     }
 
-    public render(): React.ReactElement<{}> {
+    public render(): React.ReactElement<any> {
 
-        let rows: React.ReactElement<{}> = this.props.data.map((record: any) => {
+        let rows: React.ReactElement<any>[] = _.get(this.props, 'data', []).map((record: any): React.ReactElement<any> => {
                     return (
                         <tr key={record._id}>
                             <td>
                                 <Link
                                     className='btn btn-default btn-sm'
-                                    to={{ pathname: '/' + this.props.linkTo, query: { id: record._id } }}>
+                                    to={{ pathname: '/' + this.props.linkTo + '/' + record._id }}>
                                     Edit
                                 </Link>
                             </td>

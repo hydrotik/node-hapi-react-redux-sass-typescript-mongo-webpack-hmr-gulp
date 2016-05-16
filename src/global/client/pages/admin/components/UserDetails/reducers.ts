@@ -11,19 +11,17 @@ const reducers: IReducers = {
     
 }
 
-reducers[actions.LOADING] = (state, action) => {
+function loading(state, action) {
     return _.merge(
         {},
         state,
         {
-            userDetails: {
-                loading: true
-            }
+            loading: true
         }
     )
 }
 
-reducers[actions.GET] = (state, action) => {
+function get(state, action) {
     let newState: any = _.merge(
         {},
         state,
@@ -32,7 +30,7 @@ reducers[actions.GET] = (state, action) => {
         }
     )
     
-    newState.userDetails = {
+    newState = {
         loading: false,
         data: {
             username: action.data.username,
@@ -45,7 +43,7 @@ reducers[actions.GET] = (state, action) => {
     return newState;
 }
 
-reducers[actions.UPDATE] = (state, action) => {
+function update(state, action) {
     let newState: any = _.merge(
         {},
         state,
@@ -54,7 +52,7 @@ reducers[actions.UPDATE] = (state, action) => {
         }
     )
     
-    newState.userDetails = {
+    newState = {
         loading: false,
         data: {
             username: action.data.username,
@@ -67,21 +65,27 @@ reducers[actions.UPDATE] = (state, action) => {
     return newState;
 }
 
-reducers[actions.CHANGE_PASSWORD] = (state, action) => {
+function changePassword(state, action) {
     return _.merge(
         {},
         state,
         {
-            userDetails: {
-                loading: false
-            }
+            loading: false
         }
     )
 }
 
-export default function reducer(state: any = { userDetails: { loading: false } }, action) {
-    if (action.type in reducers) {
-        return reducers[action.type](state, action);
+export const REDUCER_NAME = 'userDetails';
+export function reducer(state: any = { loading: false }, action) {
+    switch (action.type) {
+        case actions.CHANGE_PASSWORD:
+            return changePassword(state, action);
+        case actions.LOADING:
+            return loading(state, action);
+        case actions.GET:
+            return get(state, action);
+        case actions.UPDATE:
+            return update(state, action);
     }
     return state;
 }
