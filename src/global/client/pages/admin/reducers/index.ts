@@ -14,6 +14,7 @@ import { onExampleReducer, onNavBarReducer } from '../../../reducers';
 import accounts from './accounts';
 import * as userDetails from '../components/UserDetails/reducers';
 import * as userSearch from '../components/UserSearch/reducers';
+import * as adminSearch from '../components/AdminSearch/reducers';
 
 export const rootReducer: Reducer = combineReducers({
     form: formReducer,
@@ -21,5 +22,6 @@ export const rootReducer: Reducer = combineReducers({
     accounts,
     [userDetails.REDUCER_NAME]: userDetails.reducer,
     [userSearch.REDUCER_NAME]: userSearch.reducer,
+    [adminSearch.REDUCER_NAME]: adminSearch.reducer
 });
 
