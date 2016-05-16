@@ -82,7 +82,11 @@ class Form extends React.Component<BaseProps,any> {
                 return handleSubmit(e)
                 .then((result) => {
                     this.setState({
-                        submitSucceeded: true
+                        message: {
+                            visible: true,
+                            bsStyle: "success",
+                            content: (<span>User created</span>)
+                        }
                     })
                     initializeForm({
                         username: "",
@@ -130,6 +134,7 @@ class Form extends React.Component<BaseProps,any> {
                 <TextControl
                     label="Password"
                     name="password"
+                    type="password"
                     disabled={submitting}
                     help={password.touched ? password.error : ""}
                     hasError={password.touched && password.error}

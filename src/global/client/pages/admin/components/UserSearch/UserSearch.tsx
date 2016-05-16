@@ -70,7 +70,8 @@ const mapDispatchToProps = (dispatch) => {
         onCreateNewSubmit: function(data: { username: string, email: string, password: string } ) {
             return dispatch(create(data.username, data.email, data.password))
             .then((result) => {
-                return dispatch(hideAddNew());
+                dispatch(hideAddNew());
+                dispatch(list());
             })
         },
         
@@ -111,7 +112,7 @@ export class UserSearch extends React.Component<BaseProps, any> {
         
         return (
             <section className='section-home container'>
-                <Modal show={addNew && addNew.visible} onHide={onHideModal}>
+                <Modal show={addNew && addNew.visible} onHide={undefined}>
                     <Modal.Header>
                         <Modal.Title>Create new</Modal.Title>
                     </Modal.Header>
@@ -125,15 +126,16 @@ export class UserSearch extends React.Component<BaseProps, any> {
                 </Modal>
             
                 <div className='row'>
+                    
+                    <h1 className='page-header'>
+                        User Search
+                    </h1>
                     <button
                         ref='createNew'
                         className='btn btn-default pull-right'
                         onClick={onShowModal.bind(this)}>
                         Create new
                     </button>
-                    <h1 className='page-header'>
-                        User Search
-                    </h1>
                 </div>
                 <FilterForm
                     ref='filters'

@@ -68,9 +68,12 @@ const mapDispatchToProps = (dispatch) => {
         
         onCreateNewSubmit: function(data: { lastName: string, firstName: string, middleName?: string } ) {
             return dispatch(create(data))
-            .then((result) => {
-                return dispatch(hideAddNew());
-            })
+            .then(
+                (result) => {
+                    dispatch(hideAddNew());
+                    return dispatch(list());
+                }
+            )
         },
         
         onFiltersChange: function() {
@@ -109,7 +112,7 @@ export class AdminSearch extends React.Component<BaseProps, any> {
         } = this.props as StateProps;
         return (
             <section className='section-home container'>
-                <Modal show={addNew && addNew.visible} onHide={onHideModal}>
+                <Modal show={addNew && addNew.visible} onHide={undefined}>
                     <Modal.Header>
                         <Modal.Title>Create new</Modal.Title>
                     </Modal.Header>
@@ -123,15 +126,17 @@ export class AdminSearch extends React.Component<BaseProps, any> {
                 </Modal>
             
                 <div className='row'>
+                    
+                    <h1 className='page-header'>
+                        Admin Search
+                    </h1>
                     <button
                         ref='createNew'
                         className='btn btn-default pull-right'
                         onClick={onShowModal.bind(this)}>
                         Create new
                     </button>
-                    <h1 className='page-header'>
-                        Admin Search
-                    </h1>
+                    
                 </div>
                 <FilterForm
                     ref='filters'

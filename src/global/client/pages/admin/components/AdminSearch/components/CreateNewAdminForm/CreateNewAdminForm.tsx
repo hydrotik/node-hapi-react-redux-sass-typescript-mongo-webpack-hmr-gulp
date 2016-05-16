@@ -73,27 +73,33 @@ class Form extends React.Component<BaseProps,any> {
         return (
             <form onSubmit={(e) => {
                 return handleSubmit(e)
-                .then((result) => {
-                    this.setState({
-                        submitSucceeded: true
+                .then(
+                    (result) => {
+                        this.setState({
+                            message: {
+                                visible: true,
+                                bsStyle: "success",
+                                content: (<span>Admin created</span>)
+                            }
+                        })
+                        initializeForm({
+                            lastName: "",
+                            firstName: "",
+                            middleName: ""
+                        })
+                        
+                        return Promise.resolve(result);
                     })
-                    initializeForm({
-                        lastName: "",
-                        firstName: "",
-                        middleName: ""
-                    })
-                    
-                    return Promise.resolve(result);
-                })
-                .catch((err) => {
-                    this.setState({
-                        message: {
-                            visible: true,
-                            bsStyle: "danger",
-                            content: (<span>{err.error}</span>)
-                        }
-                    })
-                })
+                    .catch((err) => {
+                        this.setState({
+                            message: {
+                                visible: true,
+                                bsStyle: "danger",
+                                content: (<span>{err.message}</span>)
+                            }
+                        })
+                    }
+                )
             }}>
                 <legend>Create new user</legend>
                 {
@@ -162,6 +168,7 @@ export const CreateNewAdminForm = reduxForm({
         lastName: "",
         firstName: "",
         middleName: ""
-    }
+    },
+    returnRejectedSubmitPromise: true
 })(Form);
 
