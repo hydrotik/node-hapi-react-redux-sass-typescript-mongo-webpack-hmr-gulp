@@ -15,9 +15,7 @@ interface BaseProps {
 
 interface ReduxFormProps extends BaseProps {
     fields: {
-        firstName: any
-        lastName: any
-        middleName: any
+        name: any
     }
     onSubmit: (data: any) => any
     handleSubmit: (any) => any
@@ -26,7 +24,7 @@ interface ReduxFormProps extends BaseProps {
 }
 
 const validate = (values) => {
-    const nameRegex = /^[a-zA-Z][a-zA-Z\-\.\'\ ]*$/;
+    const nameRegex = /^[a-zA-Z][a-zA-Z0-9]*$/;
     const errors:any = {  };
     
     const runValidations = (name: string, value?: string, isRequired: boolean = true) => {
@@ -45,9 +43,7 @@ const validate = (values) => {
             errors[name] = 'Invalid characters';
         }
     }
-    runValidations('firstName', values.firstName)
-    runValidations('lastName', values.lastName);
-    runValidations('middleName', values.middleName, false);
+    runValidations('name', values.name)
     
     return errors;
 }
@@ -61,9 +57,7 @@ class Form extends React.Component<BaseProps,any> {
     render(): React.ReactElement<any> {
         const {
             fields: {
-                firstName,
-                lastName,
-                middleName
+                name
             },
             handleSubmit,
             submitting,
@@ -79,13 +73,11 @@ class Form extends React.Component<BaseProps,any> {
                             message: {
                                 visible: true,
                                 bsStyle: "success",
-                                content: (<span>Admin created</span>)
+                                content: (<span>Admin group created</span>)
                             }
                         })
                         initializeForm({
-                            lastName: "",
-                            firstName: "",
-                            middleName: ""
+                            name: ""
                         })
                         
                         return Promise.resolve(result);
@@ -101,7 +93,7 @@ class Form extends React.Component<BaseProps,any> {
                     }
                 )
             }}>
-                <legend>Create new admin</legend>
+                <legend>Create new admin-group</legend>
                 {
                     this.state.message && this.state.message.visible &&
                     <Alert bsStyle={this.state.message.bsStyle} onDismiss={(e) => {this.setState({message: {visible: false}})}}>
@@ -109,32 +101,15 @@ class Form extends React.Component<BaseProps,any> {
                     </Alert>
                     }
                 <TextControl
-                    label="First name"
-                    name="firstName"
+                    label="Name"
+                    name="name"
                     disabled={submitting}
-                    help={firstName.touched ? firstName.error : ""}
-                    hasError={firstName.touched && firstName.error}
-                    value={firstName.value}
-                    {...firstName}
+                    help={name.touched ? name.error : ""}
+                    hasError={name.touched && name.error}
+                    value={name.value}
+                    {...name}
                 />
-                <TextControl
-                    label="Middle name"
-                    name="middleName"
-                    disabled={submitting}
-                    help={middleName.touched ? middleName.error : ""}
-                    hasError={middleName.touched && middleName.error}
-                    value={middleName.value}
-                    {...middleName}
-                />
-                <TextControl
-                    label="Last name"
-                    name="lastName"
-                    disabled={submitting}
-                    help={lastName.touched ? lastName.error : ""}
-                    hasError={lastName.touched && lastName.error}
-                    value={lastName.value}
-                    {...lastName}
-                />
+
                 
                 <div>
                     <Button 
@@ -160,15 +135,12 @@ class Form extends React.Component<BaseProps,any> {
     }
 }
 
-export const CreateNewAdminForm = reduxForm({
-    form: 'createNewAdminForm',
-    fields: ['lastName', 'firstName', 'middleName'],
+export const CreateNewAdminGroupForm = reduxForm({
+    form: 'createNewAdminGroupForm',
+    fields: ['name'],
     validate,
     initialValues: {
-        lastName: "",
-        firstName: "",
-        middleName: ""
+        name: ""
     },
     returnRejectedSubmitPromise: true
 })(Form);
-

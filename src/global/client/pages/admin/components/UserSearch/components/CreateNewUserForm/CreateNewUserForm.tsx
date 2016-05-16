@@ -174,6 +174,7 @@ export const CreateNewUserForm = reduxForm({
         username: "",
         email: "",
         password: ""
-    }
+    },
+    returnRejectedSubmitPromise: true
 })(Form);
 
