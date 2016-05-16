@@ -59,37 +59,43 @@ export function create(name: {lastName: string, firstName: string, middleName?: 
         let request: any = {
             method: 'POST',
             url: '/api/' + SECTION_NAME,
-            data: {
-                lastName,
-                firstName,
-                middleName
+            data: { 
+                name: {
+                    last: lastName,
+                    first: firstName,
+                    middle: middleName || undefined
+                }
+                
             },
             useAuth: true
         };
         
         return Fetch(request)
-        .then((result) => {
-            dispatch({
-                type: CREATE,
-                name: {
-                    lastName,
-                    firstName,
-                    middleName
-                }
+        .then(
+            (result) => {
+                dispatch({
+                    type: CREATE,
+                    name: {
+                        lastName,
+                        firstName,
+                        middleName
+                    }
+                })
+                
+                return Promise.resolve({
+                    name: {
+                        lastName,
+                        firstName,
+                        middleName
+                    }
+                })
             })
-            
-            return Promise.resolve({
-                name: {
-                    lastName,
-                    firstName,
-                    middleName
-                }
-            })
-        })
-        .catch((err) => {
+            .catch( 
+            (err) => {
 
-            return Promise.reject({error: "Could not create admin"});
-        })
+                return Promise.reject(new Error("Could not create admin"));
+            }
+        );
     }
 }
 

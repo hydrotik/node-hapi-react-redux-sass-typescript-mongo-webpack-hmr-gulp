@@ -95,7 +95,14 @@ internals.applyRoutes = function (server, next) {
             },
             validate: {
                 payload: {
-                    name: Joi.string().required().label('Name')
+                    name: Joi.alternatives([
+                        Joi.string().label('Name'),
+                        Joi.object().keys({
+                            first: Joi.string().required().label('First name'),
+                            last: Joi.string().required().label('Last name'),
+                            middle: Joi.string().optional().allow('').label('Middle name')
+                        })
+                    ])
                 }
             },
             pre: [
