@@ -9,7 +9,7 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {Alert} from 'react-bootstrap';
 import {AdminGroupNameForm} from './components/AdminGroupNameForm';
-import {AdminGroupPermissionsForm} from './components/AdminGroupPermissionsForm';
+import {PermissionsForm as AdminGroupPermissionsForm} from '../../../../components/PermissionsForm';
 import {AdminGroupDeleteForm} from './components/AdminGroupDeleteForm';
 import {Spinner} from '../../../../components/Spinner/Spinner';
 import {get, updateDetails, setPermissions} from './actions';

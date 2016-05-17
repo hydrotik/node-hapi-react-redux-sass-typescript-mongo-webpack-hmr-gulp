@@ -17,8 +17,9 @@ import {
 
 import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from 'react-bootstrap';
 import {TextControl} from '../../../../components/TextControl/TextControl';
-import UserLinkForm from './UserLinkForm';
-import NameDetailsForm from './NameDetailsForm';
+
+import {UserLinkForm} from '../../../../components/UserLinkForm';
+import {NameDetailsForm} from '../../../../components/NameDetailsForm';
 import DeleteAccountForm from './DeleteAccountForm';
 
 import { connect } from 'react-redux';
