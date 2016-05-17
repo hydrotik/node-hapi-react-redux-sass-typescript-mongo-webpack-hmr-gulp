@@ -1,6 +1,7 @@
 .modal {
     background: white;
     border-radius: $border-radius--default;
+    margin-bottom: em($base__line * 2);
     padding: em(20px);
     position: relative;
     

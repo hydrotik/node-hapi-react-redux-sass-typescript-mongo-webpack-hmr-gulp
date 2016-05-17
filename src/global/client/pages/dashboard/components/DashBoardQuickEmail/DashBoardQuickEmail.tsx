@@ -33,35 +33,23 @@ export class DashBoardQuickEmail extends React.Component<IDashBoardQuickEmailPro
     public render(): React.ReactElement<{}> {
 
         return (
-              <div className="box box-info">
-                <div className="box-header">
-                  <i className="fa fa-envelope" />
-                  <h3 className="box-title">Quick Email</h3>
-                  {/* tools box */}
-                  <div className="pull-right box-tools">
-                    <button type="button" className="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
-                      <i className="fa fa-times" /></button>
-                  </div>
-                  {/* /. tools */}
-                </div>
-                <div className="box-body">
-                  <form action="#" method="post">
-                    <div className="form-group">
-                      <input type="email" className="form-control" name="emailto" placeholder="Email to:" />
-                    </div>
-                    <div className="form-group">
-                      <input type="text" className="form-control" name="subject" placeholder="Subject" />
-                    </div>
-                    <div>
-                      <textarea className="textarea" placeholder="Message" style={{width: '100%', height: 125, fontSize: 14, lineHeight: 18, border: '1px solid #dddddd', padding: 10}} defaultValue={""} />
-                    </div>
-                  </form>
-                </div>
-                <div className="box-footer clearfix">
-                  <button type="button" className="pull-right btn btn-default" id="sendEmail">Send
-                    <i className="fa fa-arrow-circle-right" /></button>
-                </div>
-              </div>
+        <form className="form">
+            <h3 className="form__title">
+            <span className="font-awesome font-awesome--envelope font-awesome--left"/>
+            Quick Email
+            </h3>
+            <label className="form__label--hidden" htmlFor="name">Name:</label>
+            <input className="form__input" type="text" id="name" placeholder="Name"/>
+
+            <label className="form__label--hidden" htmlFor="email">Email:</label>
+            <input className="form__input" type="email" id="email" placeholder="email@website.com"/>
+
+            <label className="form__label--hidden" htmlFor="msg">Message:</label>
+            <textarea className="form__input" id="msg" placeholder="Message..." rows="7"></textarea>
+
+            <input className="btn--default" type="submit" value="Submit"/>
+            <input className="btn--reset" type="reset" value="Reset"/>
+        </form>
         );
     }
 }

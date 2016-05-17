@@ -35,10 +35,17 @@ export class DashBoardChatBox extends React.Component<IDashBoardChatBoxProps, ID
     public render(): React.ReactElement<{}> {
 
         return (
-              <div className="box box-success">
+          <div class="chat">
+          {/* Title */}
+                <h3 className="chat__title">
+                    <span className="font-awesome font-awesome--comments font-awesome--left" />
+                    Chat Box
+                    <span className="font-awesome font-awesome--bars font-awesome--btn font-awesome--right"/>                    
+                </h3>
+                
+              
+                {/* Tools Hidden
                 <div className="box-header">
-                  <i className="fa fa-comments-o" />
-                  <h3 className="box-title">Chat</h3>
                   <div className="box-tools pull-right" data-toggle="tooltip" title="Status">
                     <div className="btn-group" data-toggle="btn-toggle">
                       <button type="button" className="btn btn-default btn-sm active"><i className="fa fa-square text-green" />
@@ -47,39 +54,46 @@ export class DashBoardChatBox extends React.Component<IDashBoardChatBoxProps, ID
                     </div>
                   </div>
                 </div>
-                <div className="box-body chat" id="chat-box">
+                */}
+                
                   {/* chat item */}
-                  <div className="item">
-                    <img src="assets/dashboard/img/user4-128x128.jpg" alt="user image" className="online" />
-                    <p className="message">
-                      <a href="#" className="name">
-                        <small className="text-muted pull-right"><i className="fa fa-clock-o" /> 2:15</small>
-                        Mike Doe
+                  <div className="chat">
+                    <img src="http://cdn.movieweb.com/img.news/NELsIUPqBQIrQL_1_1.jpg" alt="user image" className="chat__avatar chat__avatar--online" />
+                      <a href="#">
+                        <h5 className="chat__user-name">Mike Doe</h5>
                       </a>
+                      <a href="#" >
+                        <div className="chat__time">
+                          <span className="font-awesome font-awesome--clock-o" /> 2:15 PM
+                        </div>
+                      </a>
+                    <p className="chat__message">
                       I would like to meet you to discuss the latest news about
                       the arrival of the new theme. They say it is going to be one the
                       best themes on the market
                     </p>
-                    <div className="attachment">
-                      <h4>Attachments:</h4>
+                    <div className="chat__attachment">
+                      Attachments:
                       <p className="filename">
                         Theme-thumbnail-image.jpg
                       </p>
-                      <div className="pull-right">
-                        <button type="button" className="btn btn-primary btn-sm btn-flat">Open</button>
-                      </div>
+                        <a href="#" className="btn--default">Open</a>
                     </div>
                     {/* /.attachment */}
                   </div>
                   {/* /.item */}
                   {/* chat item */}
-                  <div className="item">
-                    <img src="assets/dashboard/img/user3-128x128.jpg" alt="user image" className="offline" />
-                    <p className="message">
-                      <a href="#" className="name">
-                        <small className="text-muted pull-right"><i className="fa fa-clock-o" /> 5:15</small>
-                        Alexander Pierce
+                  <div className="chat">
+                    <img src="http://data2.whicdn.com/images/37531377/large.jpg" alt="user image" className="chat__avatar chat__avatar--offline" />
+                    <a href="#">
+                        <h5 className="chat__user-name"> Alexander Pierce</h5>
                       </a>
+                      <a href="#" >
+                        <div className="chat__time">
+                          <span className="font-awesome font-awesome--clock-o" /> 5:15 PM
+                        </div>
+                      </a>
+                      <p className="chat__message">
                       I would like to meet you to discuss the latest news about
                       the arrival of the new theme. They say it is going to be one the
                       best themes on the market
@@ -87,31 +101,33 @@ export class DashBoardChatBox extends React.Component<IDashBoardChatBoxProps, ID
                   </div>
                   {/* /.item */}
                   {/* chat item */}
-                  <div className="item">
-                    <img src="assets/dashboard/img/user2-160x160.jpg" alt="user image" className="offline" />
-                    <p className="message">
-                      <a href="#" className="name">
-                        <small className="text-muted pull-right"><i className="fa fa-clock-o" /> 5:30</small>
-                        Susan Doe
+                  <div className="chat">
+                    <img src="http://hsfnotes.com/litigation/wp-content/uploads/sites/7/2014/08/emily.russell@hsf.com_LGS.jpg" alt="user image" className="chat__avatar chat__avatar--offline" />
+                    <a href="#">
+                        <h5 className="chat__user-name"> Susan Doe</h5>
                       </a>
+                      <a href="#" >
+                        <div className="chat__time">
+                          <span className="font-awesome font-awesome--clock-o" /> 5:30 PM
+                        </div>
+                      </a>
+                      <p className="chat__message">
                       I would like to meet you to discuss the latest news about
                       the arrival of the new theme. They say it is going to be one the
                       best themes on the market
                     </p>
                   </div>
                   {/* /.item */}
-                </div>
+                
                 {/* /.chat */}
-                <div className="box-footer">
-                  <div className="input-group">
-                    <input className="form-control" placeholder="Type message..." />
-                    <div className="input-group-btn">
-                      <button type="button" className="btn btn-success"><i className="fa fa-plus" /></button>
-                    </div>
+                <div className="chat chat--align-right">
+                  <div className="form">
+                    <input className="form__input" placeholder="Type message..." />
+                    <input className="btn--default right" type="submit" value="Send" />
                   </div>
                 </div>
               </div>
+          
         );
     }
 }
-  

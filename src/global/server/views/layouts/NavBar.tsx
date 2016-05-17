@@ -12,7 +12,7 @@ class NavBar extends React.Component<INavBarProps, {}> {
     public render(): React.ReactElement<{}> {
 
         return (
-            <div className="navbar navbar-default navbar-fixed-top">
+            <div className="navbar navbar-default">
 
 
             <nav>

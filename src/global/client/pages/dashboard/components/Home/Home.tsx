@@ -182,15 +182,21 @@ export class Home extends React.Component<IHomeProps, IHomeState> implements IHo
               {/* /.nav-tabs-custom */}
 
               {/* Chat box */}
-              <DashBoardChatBox />
+              <Modal>
+                <DashBoardChatBox />
+              </Modal>
               {/* /.box (chat box) */}
 
               {/* TO DO List */}
+              <Modal>
               <DashBoardToDoList />
+              </Modal>
               {/* /.box (todo list) */}
 
               {/* quick email widget */}
+              <Modal>
               <DashBoardQuickEmail />
+              </Modal>
               {/* /.box (quick email widget) */}
 
             </section>

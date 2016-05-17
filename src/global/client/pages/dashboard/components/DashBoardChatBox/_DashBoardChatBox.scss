@@ -1,0 +1,63 @@
+// @import "../../../../../styles/base-uikit/utilities/index";
+// @import "../../../../../styles/base-uikit/modules/extends";
+
+@import "../../../../scss/base-uikit/utilities/index";
+@import "../../../../scss/base-uikit/modules/extends";
+
+.chat-box {
+    display: block;
+}
+
+.chat {
+
+    @include element(title) {
+        @extend %headline-underline;
+    }
+    
+    @include element(avatar) {
+        @extend %profile;
+        float: left;
+        height: 50px;
+        margin: 0 em(20px) em(20px) 0;
+        width: 50px;
+        
+        @include modifier(online) {
+            border: solid $green 2px;
+        }
+        
+        @include modifier(offline) {
+            border: solid $sunglo 2px;
+        }
+    }
+    
+    @include element(user-name) {
+        float: left;
+        margin: 0;
+        padding: 0;
+    }
+    
+    @include element(time) {
+        float: right;
+    }
+    
+    @include element(message) {
+        margin-left: em(55px);
+        padding-top: em(20px);
+    }
+    
+    @include element(attachment) {
+        border-radius: $border-radius--default;
+        padding: em(20px);
+        background-color: palette(grey,xx-light);
+        margin: 0 0 em(70px) em(70px);
+        box-sizing: border-box;
+        
+        [class^="btn--"] {
+            margin-bottom: 0;
+        }
+    }
+    
+    @include modifier(align-right) {
+        text-align: right;
+    }
+}

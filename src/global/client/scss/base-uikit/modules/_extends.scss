@@ -104,3 +104,10 @@
     line-height: 0;
     cursor: pointer;
 }
+
+// Profile Avatar
+
+%profile {
+    background-size: cover;
+    border-radius: $border-radius--round;
+}

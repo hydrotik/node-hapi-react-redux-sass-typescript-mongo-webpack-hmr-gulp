@@ -14,8 +14,7 @@
 
 [class^="grid__column--"] {
     @include media-query(small) {
-        margin-top: em(12px);
-        margin-bottom: em(12px);
+        margin-bottom: em(40px);
     }
 
     @include media-query(medium) {

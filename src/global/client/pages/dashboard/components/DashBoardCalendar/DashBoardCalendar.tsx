@@ -94,11 +94,11 @@ export class DashBoardCalendar extends React.Component<IDashBoardCalendarProps, 
             <div className="calendar">
                 
                 {/* Title */}
-                <h5 className="calendar__title">
+                <h3 className="calendar__title">
                     <span className="font-awesome font-awesome--calendar font-awesome--left" />
                     Calendar
                     <span className="font-awesome font-awesome--bars font-awesome--btn font-awesome--right"/>                    
-                </h5>
+                </h3>
                 
                 {/* Tools ? Menu ? */}
                 <div>

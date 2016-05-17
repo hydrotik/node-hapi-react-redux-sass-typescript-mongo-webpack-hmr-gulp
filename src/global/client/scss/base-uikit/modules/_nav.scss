@@ -41,12 +41,11 @@
     }
 
     @include element(profile) {
-        width: 50px;
-        height: 50px;
-        background-size: cover;
-        border-radius: $border-radius--round;
+        @extend %profile;
         display: inline-block;
+        height: 50px;
         vertical-align: middle;
+        width: 50px;
 
         a {
             display: block;
