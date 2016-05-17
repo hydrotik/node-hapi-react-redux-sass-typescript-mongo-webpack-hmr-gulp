@@ -9,8 +9,6 @@ import * as _ from 'lodash';
 
 import {ButtonToolbar, ButtonGroup, Button, DropdownButton, Glyphicon, Input, Label, MenuItem, Alert} from 'react-bootstrap';
 
-import {ReduxAlert, ReduxAlertType} from '../../../../components/ReduxAlert/ReduxAlert';
-
 
 function validate(values) {
     let errors = {};

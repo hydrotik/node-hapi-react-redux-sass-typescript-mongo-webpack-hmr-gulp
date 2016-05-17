@@ -2,7 +2,6 @@
 
 import Fetch from '../../../api/jsonfetch';
 import ParseValidation, { IValidation } from '../../../api/parsevalidation';
-import {ReduxAlertType, REDUXALERT_DISPLAY} from '../../../components/ReduxAlert/actions'
 
 export const GET_RESULTS_REQUEST: string = 'GET_RESULTS_REQUEST';
 export const GET_RESULTS_RESPONSE: string = 'GET_RESULTS_RESPONSE';
@@ -261,14 +260,7 @@ export function unlinkAccount(id: string): any {
         return Fetch(request)
         .then(
             (result) => {
-                dispatch({
-                    type: REDUXALERT_DISPLAY,
-                    id: "userLinkFormAlert",
-                    options: {
-                        alertType: ReduxAlertType.Success,
-                        messageText: "User unlinked"
-                    }
-                })
+                
                 dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, ACCOUNT_UNLINK_RESPONSE));
                 return Promise.resolve(result.data)
             }
@@ -277,14 +269,7 @@ export function unlinkAccount(id: string): any {
             (result) => {
                 dispatch(onResultsAction({success: false, data: result.data}, _.get(result, "data.message", ""), _.get(result, "data.error", {}), "help", false, false, ACCOUNT_UNLINK_RESPONSE));
                 
-                dispatch({
-                    type: REDUXALERT_DISPLAY,
-                    id: "userLinkFormAlert",
-                    options: {
-                        alertType: ReduxAlertType.Error,
-                        messageText: _.get(result, "data.message", "")
-                    }
-                })
+                
                 
                 
             }
@@ -313,14 +298,6 @@ export function linkAccount(id: string, username: string): any {
                 }
                 dispatch(onResultsAction({success: true, data: result.data, username}, "", false, "help", true, false, ACCOUNT_LINK_RESPONSE));
             
-                dispatch({
-                    type: REDUXALERT_DISPLAY,
-                    id: "userLinkFormAlert",
-                    options: {
-                        alertType: ReduxAlertType.Success,
-                        messageText: "User linked"
-                    }
-                })
                 
                 
                 if (router) {
@@ -335,14 +312,7 @@ export function linkAccount(id: string, username: string): any {
             (result) => {
                 dispatch(onResultsAction({success: false, data: result.data}, _.get(result, "data.message", ""), _.get(result, "data", {}), "help", false, false, ACCOUNT_LINK_RESPONSE));
                 
-                dispatch({
-                    type: REDUXALERT_DISPLAY,
-                    id: "userLinkFormAlert",
-                    options: {
-                        alertType: ReduxAlertType.Success,
-                        messageText: _.get(result, "data.message", "")
-                    }
-                })
+           
                 
                 return Promise.reject(new Error("User does not exist"));
             }
