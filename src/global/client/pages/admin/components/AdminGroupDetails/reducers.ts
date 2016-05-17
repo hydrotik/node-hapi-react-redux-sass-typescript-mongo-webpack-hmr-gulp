@@ -26,6 +26,7 @@ function get(state, action) {
         loading: false,
         data: {
             name: action.data.name,
+            permissions: action.data.permissions || undefined
         }
     }
     
@@ -88,10 +89,6 @@ export function reducer(state: any = { loading: false }, action) {
             return loading(state, action);
         case actions.GET:
             return get(state, action);
-        case actions.UPDATE:
-            return update(state, action);
-        case actions.ADD_PERMISSION:
-            return 
     }
     return state;
 }

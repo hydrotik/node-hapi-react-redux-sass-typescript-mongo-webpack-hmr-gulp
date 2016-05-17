@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import {reduxForm} from 'redux-form';
-
+import {Alert} from 'react-bootstrap';
 import {TextControl} from '../../../../../components/TextControl/TextControl';
 import {Spinner} from '../../../../../components/Spinner/Spinner';
 import {Button} from '../../../../../components/Button/Button';
@@ -30,6 +30,7 @@ const validate = (values) => {
 class Form extends React.Component<BaseProps, any> {
     constructor(props?: BaseProps) {
         super(props);
+        this.state = {};
     }
     
     render() : React.ReactElement<any> {
@@ -41,8 +42,36 @@ class Form extends React.Component<BaseProps, any> {
             }
         } = this.props as ReduxFormProps;
         return (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={
+                (e) => {
+                    return handleSubmit(e).
+                    then((result) => {
+                        this.setState({
+                            message: {
+                                visible: true,
+                                bsStyle: "success",
+                                content: (<span>Details updated</span>)
+                            }
+                        })
+                    })
+                    .catch((err) => {
+                        this.setState({
+                            message: {
+                                visible: true,
+                                bsStyle: "danger",
+                                content: (<span>{err.message}</span>)
+                            }
+                        })
+                    })
+                }
+            }>
                 <legend>Details</legend>
+                {
+                    this.state.message && this.state.message.visible &&
+                    <Alert bsStyle={this.state.message.bsStyle} onDismiss={(e) => {this.setState({message: {visible: false}})}}>
+                        {this.state.message.content}
+                    </Alert>
+                }
                 <TextControl
                     label="Name"
                     name="name"

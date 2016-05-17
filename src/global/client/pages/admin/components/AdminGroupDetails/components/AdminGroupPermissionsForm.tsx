@@ -2,7 +2,9 @@
 
 import * as React from 'react';
 import {reduxForm, change} from 'redux-form';
+import {Alert} from 'react-bootstrap';
 
+import {ControlGroup} from '../../../../../components/ControlGroup/ControlGroup';
 import {TextControl} from '../../../../../components/TextControl/TextControl';
 import {Spinner} from '../../../../../components/Spinner/Spinner';
 import {Button} from '../../../../../components/Button/Button';
@@ -23,21 +25,41 @@ interface ReduxFormProps extends BaseProps {
     }
     submitting: boolean
     handleSubmit: (any) => any
+    touch: (any) => any
     changeFieldValue: (field, value) => any
 }
 
 const validate = (values) => {
-    return {};
+    let errors = {};
+    let regex = /^[A-Za-z][A-Za-z0-9]*$/;
+    let sanitizedField = _.trim(_.lowerCase(values.newPermission));
+    
+    if (sanitizedField.length === 0) {
+        return errors;
+    }
+    
+    if (!regex.test(_.trim(values.newPermission))) {
+        errors['newPermission'] = 'Only letters and numbers are allowed';
+    }
+    else if (_.filter(values.permissions, (p: any) => { return p.name === sanitizedField }).length > 0) {
+        errors['newPermission'] = 'Already exists';
+    }
+    
+    
+    
+    return errors;
 }
 
 class Form extends React.Component<BaseProps, any> {
     constructor(props?: BaseProps) {
         super(props);
+        this.state = {};
     }
     
     render() : React.ReactElement<any> {
         const {
             handleSubmit,
+            touch,
             changeFieldValue,
             submitting,
             fields: {
@@ -48,36 +70,70 @@ class Form extends React.Component<BaseProps, any> {
         
         
         return (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={
+                (e) => {
+                    return handleSubmit(e).
+                    then((result) => {
+                        this.setState({
+                            message: {
+                                visible: true,
+                                bsStyle: "success",
+                                content: (<span>Details updated</span>)
+                            }
+                        })
+                    })
+                    .catch((err) => {
+                        this.setState({
+                            message: {
+                                visible: true,
+                                bsStyle: "danger",
+                                content: (<span>{err.message}</span>)
+                            }
+                        })
+                    })
+                }
+            }>
                 <legend>Permissions</legend>
-               
-                <strong>Add permission</strong>
+                        {
+                            this.state.message && this.state.message.visible &&
+                            <Alert bsStyle={this.state.message.bsStyle} onDismiss={(e) => {this.setState({message: {visible: false}})}}>
+                                {this.state.message.content}
+                            </Alert>
+                        }
+                                 
+                        <ControlGroup
+                            hasError={newPermission.touched && newPermission.error}
+                            help={newPermission.touched ? newPermission.error : ""}
+                            label="Add Permission">
+                            <div className="input-group">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="newPermission"
+                                    disabled={submitting}
+                                    {...newPermission}
+                                    />
+                                <span className="input-group-btn">
+                                    <Button 
+                                    type="button" 
+                                    inputClasses={{'btn-default': true}}
+                                    disabled={submitting || newPermission.pristine || (newPermission.error && newPermission.touched)}
+                                    onClick={(e) => {
+                                        touch(['newPermission']);
+                                        permissions.addField({name: _.trim(_.lowerCase(newPermission.value)), active: true});
+                                        changeFieldValue('newPermission', '');
 
-                <div className="row">
-                    <div className="input-group">
-                        <TextControl
-                            type={"text"}
-                            disabled={submitting}
-                            {...newPermission}>
-                        </TextControl>
-                        
-                        <span className="input-group-btn">
-                        <Button 
-                            type="button" 
-                            inputClasses={{'btn-default': true}}
-                            disabled={submitting}
-                            onClick={(e) => { 
-                                permissions.addField({name: newPermission.value, active: true});
-                                changeFieldValue('newPermission', '');
-                            }}
-                        >Add</Button>
-                        </span>
-                    </div>
-                </div>
-                <p><strong>Existing permissions</strong></p>
+                                        
+                                    }}
+                                    >Add</Button>
+                                </span>
+                            </div>
+                        </ControlGroup>
+
+                <ControlGroup
+                    label="Existing permissions">
                 {!permissions.length && <div>None</div>}
                 {permissions.map((p, index:number) => (
-                    <div className="row">
                         <div className="input-group">
                             <TextControl
                                 key={index}
@@ -106,8 +162,8 @@ class Form extends React.Component<BaseProps, any> {
                                         
                             </span>
                         </div>
-                    </div>
                 ))}
+                </ControlGroup>
                 <Button 
                     type="submit"
                     inputClasses={{'btn-primary': true}}

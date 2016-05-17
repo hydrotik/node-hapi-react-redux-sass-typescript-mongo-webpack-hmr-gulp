@@ -5,9 +5,9 @@ import ParseValidation, { IValidation } from '../../../../api/parsevalidation';
 
 export const GET: string = 'adminGroupDetails/GET';
 
-export const UPDATE: string = 'adminGroupDetails/UPDATE';
+export const UPDATE_DETAILS: string = 'adminGroupDetails/UPDATE_DETAILS';
 
-export const ADD_PERMISSION: string = 'adminGroupDetails/ADD_PERMISSION';
+export const SET_PERMISSIONS: string = 'adminGroupDetails/SET_PERMISSIONS';
 
 export const LOADING: string = 'adminGroupDetails/LOADING';
 
@@ -17,10 +17,30 @@ export const MESSAGE: string = 'adminGroupDetails/MESSAGE';
 
 export const SECTION_NAME: string = 'admin-groups';
 
-export function addPermission(name: string) {
-    return {
-        type: ADD_PERMISSION,
-        name
+export function setPermissions(id: string, permissions: any) {
+    
+    return (dispatch: any, getState: any) => {
+        let request: any = {
+            method: 'PUT',
+            url: '/api/' + SECTION_NAME + '/' + id + '/permissions',
+            data: {
+                permissions
+            },
+            useAuth: true
+        };
+        return Fetch(request)
+        .then((result) => {
+            dispatch({
+                type: SET_PERMISSIONS,
+                id,
+                permissions
+            })
+            
+            return Promise.resolve({id, permissions});
+        })
+        .catch((err) => {
+            return Promise.reject(new Error("Could not set permissions"));
+        })
     }
 }
 
@@ -58,7 +78,7 @@ export function doDelete(data: any, router: any): any {
 }
 
 
-export function update(id: string, name: string) {
+export function updateDetails(id: string, name: string) {
     // Should return Promise from redux...
     return (dispatch: any, getState: any): Promise<any> => {
         

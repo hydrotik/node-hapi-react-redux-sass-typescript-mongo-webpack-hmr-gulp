@@ -12,7 +12,7 @@ import {AdminGroupNameForm} from './components/AdminGroupNameForm';
 import {AdminGroupPermissionsForm} from './components/AdminGroupPermissionsForm';
 import {AdminGroupDeleteForm} from './components/AdminGroupDeleteForm';
 import {Spinner} from '../../../../components/Spinner/Spinner';
-import {get} from './actions';
+import {get, updateDetails, setPermissions} from './actions';
 import {REDUCER_NAME} from './reducers';
 // Styles
 import './_AdminGroupDetails.scss';
@@ -25,6 +25,8 @@ interface StateProps extends BaseProps {
     loading: boolean
     location: string
     onLoadDetails: (string) => any
+    onDetailsSubmit: (id: string, data: any) => any
+    onPermissionsSubmit: (id: string, data: any) => any
     params: any
     
     group: {
@@ -33,10 +35,29 @@ interface StateProps extends BaseProps {
     }
 }
 
+const toPermissionsArray = (permissionsObj: {[key: string]: boolean}): {name: string, active: boolean}[] => {
+    
+    if (_.isEmpty(permissionsObj)) {
+        return undefined;
+    }
+    
+    return _.map(permissionsObj, (v: boolean, k:string) => {
+        return { name: k, active: v };
+    })
+
+}
+
+const toPermissionsObject = (permissionsArr: {name: string, active: boolean}[]): {[key: string]: boolean} => {
+    if (_.isEmpty(permissionsArr)) {
+        return undefined;
+    }
+    return _.mapValues(_.groupBy(permissionsArr, (val: {name: string, active: boolean}) => { return val.name }), (val) => { return _.get(_.first(val), 'active');}) as {[key: string]: boolean};
+}
+
 const mapStateToProps = (state) => {
     return {
         loading: _.get(state, REDUCER_NAME + '.loading', false),
-        group: _.get(state, REDUCER_NAME + '.data', '')
+        group: _.get(state, REDUCER_NAME + '.data', {name: ""})
     }
 }
 
@@ -44,6 +65,12 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onLoadDetails: function(id: string) {
             return dispatch(get(id));
+        },
+        onDetailsSubmit: function(id: string, data: { name: string }) {
+            return dispatch(updateDetails(id, data.name));
+        },
+        onPermissionsSubmit: function(id: string, data: { newPermission: string, permissions: {name: string, active: boolean}[] }) {
+            return dispatch(setPermissions(id, toPermissionsObject(data.permissions)));
         }
     }
 }
@@ -66,7 +93,10 @@ export class AdminGroupDetails extends React.Component<{}, {}> {
     public render(): React.ReactElement<{}> {
         const {
             loading,
-            group
+            group,
+            onPermissionsSubmit,
+            onDetailsSubmit,
+            params
         } = this.props as StateProps;
         if (loading) {
             return (
@@ -94,8 +124,15 @@ export class AdminGroupDetails extends React.Component<{}, {}> {
                             Admin Group Details
                         </h1>
                         
-                        <AdminGroupNameForm initialValues={{ name: group.name }}/>
-                        <AdminGroupPermissionsForm initialValues={{ permissions: undefined }} />
+                        <AdminGroupNameForm
+                            initialValues={{ name: group.name }}
+                            onSubmit={onDetailsSubmit.bind(undefined, group.name)}
+                        />
+                        <AdminGroupPermissionsForm
+                            initialValues={{ permissions: toPermissionsArray(group.permissions) }}
+                            
+                            onSubmit={onPermissionsSubmit.bind(undefined, params.id)}
+                        />
                         <AdminGroupDeleteForm />
                     </div>
                 </div>
