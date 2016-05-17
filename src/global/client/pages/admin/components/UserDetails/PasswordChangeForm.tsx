@@ -9,7 +9,6 @@ import {Button} from '../../../../components/Button/Button';
 import {ButtonToolbar, ButtonGroup, Label, Input, Alert} from 'react-bootstrap';
 import * as _ from 'lodash';
 
-import {ReduxAlert, ReduxAlertType} from '../../../../components/ReduxAlert/ReduxAlert';
 
 interface BaseProps {
     onSubmit?: (data) => any

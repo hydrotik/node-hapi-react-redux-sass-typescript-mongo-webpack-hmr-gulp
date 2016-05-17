@@ -15,7 +15,7 @@ import {Spinner} from '../../../../components/Spinner/Spinner';
 import {REDUCER_NAME} from './reducers';
 import * as actions from './actions';
 
-import UserDeleteForm from './UserDeleteForm';
+import {DeleteForm as UserDeleteForm} from '../DeleteForm';
 import UserIdentityForm from './UserIdentityForm';
 import PasswordChangeForm from './PasswordChangeForm';
 import RolesForm from './RolesForm';

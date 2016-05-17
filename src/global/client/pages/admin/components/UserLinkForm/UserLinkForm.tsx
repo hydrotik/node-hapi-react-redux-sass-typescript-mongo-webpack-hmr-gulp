@@ -7,7 +7,7 @@ import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from
 import {TextControl} from '../../../../components/TextControl/TextControl';
 import { reduxForm }  from 'redux-form';
 
-interface IUserLinkFormProps extends React.Props<UserLinkForm> {
+interface IUserLinkFormProps {
     // From redux-form
     fields?: {
         userId: any
@@ -49,7 +49,7 @@ const validate = (values) => {
     return errors;
 }
 
-class UserLinkForm extends React.Component<IUserLinkFormProps, any> {
+class Form extends React.Component<IUserLinkFormProps, any> {
 
     constructor(props: IUserLinkFormProps) {
         super(props);
@@ -157,9 +157,9 @@ class UserLinkForm extends React.Component<IUserLinkFormProps, any> {
     }
 }
 
-export default reduxForm({
+export const UserLinkForm = reduxForm({
     form: 'userLinkForm',
     fields: ['username', 'userId'],
     validate,
     returnRejectedSubmitPromise: true
-})(UserLinkForm);
+})(Form);

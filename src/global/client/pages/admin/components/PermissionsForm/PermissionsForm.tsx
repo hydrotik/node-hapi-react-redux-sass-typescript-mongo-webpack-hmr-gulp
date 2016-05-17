@@ -1,13 +1,13 @@
-/// <reference path='../../../../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../../../typings/main.d.ts' />
 
 import * as React from 'react';
 import {reduxForm, change} from 'redux-form';
 import {Alert} from 'react-bootstrap';
 
-import {ControlGroup} from '../../../../../components/ControlGroup/ControlGroup';
-import {TextControl} from '../../../../../components/TextControl/TextControl';
-import {Spinner} from '../../../../../components/Spinner/Spinner';
-import {Button} from '../../../../../components/Button/Button';
+import {ControlGroup} from '../../../../components/ControlGroup/ControlGroup';
+import {TextControl} from '../../../../components/TextControl/TextControl';
+import {Spinner} from '../../../../components/Spinner/Spinner';
+import {Button} from '../../../../components/Button/Button';
 import * as _ from 'lodash';
 
 interface BaseProps {
@@ -78,7 +78,7 @@ class Form extends React.Component<BaseProps, any> {
                             message: {
                                 visible: true,
                                 bsStyle: "success",
-                                content: (<span>Details updated</span>)
+                                content: (<span>Permissions updated</span>)
                             }
                         })
                     })
@@ -175,9 +175,9 @@ class Form extends React.Component<BaseProps, any> {
     }
 }
 
-export const AdminGroupPermissionsForm = reduxForm(
+export const PermissionsForm = reduxForm(
     {
-        form: 'adminGroupPermissionsForm',
+        form: 'permissionsForm',
         fields: ['newPermission', 'permissions[].name', 'permissions[].active'],
         validate,
         returnRejectedSubmitPromise: true
@@ -189,7 +189,7 @@ export const AdminGroupPermissionsForm = reduxForm(
         // Allowing us to modify the toggle button on permissions
         // See: https://github.com/erikras/redux-form/issues/369#issuecomment-216733451
         changeFieldValue: function(field, value) {
-            dispatch(change('adminGroupPermissionsForm', field, value))
+            dispatch(change('permissionsForm', field, value))
         }
     }
     }

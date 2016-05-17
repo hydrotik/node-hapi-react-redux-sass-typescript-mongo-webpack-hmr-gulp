@@ -50,7 +50,7 @@ const validate = (values) => {
     return errors;
 }
 
-class NameDetailsForm extends React.Component<INameDetailsFormProps, any> {
+class Form extends React.Component<INameDetailsFormProps, any> {
     constructor(props: INameDetailsFormProps) {
         super(props);
         this.state = {};
@@ -148,9 +148,9 @@ class NameDetailsForm extends React.Component<INameDetailsFormProps, any> {
     }
 }
 
-export default reduxForm({
+export const NameDetailsForm = reduxForm({
     form: "nameDetailsForm",
     fields: ['lastName', 'firstName', 'middleName'],
     validate,
     returnRejectedSubmitPromise: true
-})(NameDetailsForm)
+})(Form)
