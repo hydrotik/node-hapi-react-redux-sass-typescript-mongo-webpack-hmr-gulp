@@ -18,9 +18,9 @@ import {
 import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from 'react-bootstrap';
 import {TextControl} from '../../../../components/TextControl/TextControl';
 
-import {UserLinkForm} from '../../../../components/UserLinkForm';
-import {NameDetailsForm} from '../../../../components/NameDetailsForm';
-import DeleteAccountForm from './DeleteAccountForm';
+import {UserLinkForm} from '../UserLinkForm';
+import {NameDetailsForm} from '../NameDetailsForm';
+import {DeleteForm} from '../DeleteForm';
 
 import { connect } from 'react-redux';
 import { reduxForm }  from 'redux-form';
@@ -150,7 +150,7 @@ export class AccountDetails extends React.Component<StateProps & DispatchProps &
                         
                         <UserLinkForm initialValues={{username, userId}} onUserUnlinkSubmit={onUserUnlinkSubmit} onUserLinkSubmit={onUserLinkSubmit} />
                         
-                        <DeleteAccountForm onSubmit={onDeleteAccountSubmit} />
+                        <DeleteForm onSubmit={onDeleteAccountSubmit} />
                         
                     </div>
                     <div className='col-sm-4'>

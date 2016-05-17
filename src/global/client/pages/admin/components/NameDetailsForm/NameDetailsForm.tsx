@@ -3,8 +3,8 @@ import * as React from 'react';
 import * as _ from 'lodash';
 
 import {ButtonToolbar, ButtonGroup, Button, Label, Input, Alert} from 'react-bootstrap';
-import {TextControl} from '../TextControl/TextControl';
-import {Spinner} from '../Spinner/Spinner';
+import {TextControl} from '../../../../components/TextControl/TextControl';
+import {Spinner} from '../../../../components/Spinner/Spinner';
 import { reduxForm }  from 'redux-form';
 
 interface INameDetailsFormProps {

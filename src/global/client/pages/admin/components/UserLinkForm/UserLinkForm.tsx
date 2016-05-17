@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from 'react-bootstrap';
 
-import {TextControl} from '../TextControl/TextControl';
+import {TextControl} from '../../../../components/TextControl/TextControl';
 import { reduxForm }  from 'redux-form';
 
 interface IUserLinkFormProps {

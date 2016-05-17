@@ -1,13 +1,13 @@
-/// <reference path='../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../../../typings/main.d.ts' />
 
 import * as React from 'react';
 import {reduxForm, change} from 'redux-form';
 import {Alert} from 'react-bootstrap';
 
-import {ControlGroup} from '../ControlGroup/ControlGroup';
-import {TextControl} from '../TextControl/TextControl';
-import {Spinner} from '../Spinner/Spinner';
-import {Button} from '../Button/Button';
+import {ControlGroup} from '../../../../components/ControlGroup/ControlGroup';
+import {TextControl} from '../../../../components/TextControl/TextControl';
+import {Spinner} from '../../../../components/Spinner/Spinner';
+import {Button} from '../../../../components/Button/Button';
 import * as _ from 'lodash';
 
 interface BaseProps {
