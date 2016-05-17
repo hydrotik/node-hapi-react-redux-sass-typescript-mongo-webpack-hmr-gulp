@@ -9,8 +9,6 @@ import {Spinner} from '../../../../components/Spinner/Spinner';
 import {Button} from '../../../../components/Button/Button';
 import * as _ from 'lodash';
 
-import {ReduxAlert, ReduxAlertType} from '../../../../components/ReduxAlert/ReduxAlert';
-
 interface BaseProps {
     onSubmit?: (data) => any
 }
