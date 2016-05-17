@@ -17,6 +17,7 @@ import * as userSearch from '../components/UserSearch/reducers';
 import * as adminSearch from '../components/AdminSearch/reducers';
 import * as adminGroupSearch from '../components/AdminGroupSearch/reducers';
 import * as adminGroupDetails from '../components/AdminGroupDetails/reducers';
+import * as adminDetails from '../components/AdminDetails/reducers';
 
 export const rootReducer: Reducer = combineReducers({
     form: formReducer,
@@ -26,6 +27,7 @@ export const rootReducer: Reducer = combineReducers({
     [userSearch.REDUCER_NAME]: userSearch.reducer,
     [adminSearch.REDUCER_NAME]: adminSearch.reducer,
     [adminGroupSearch.REDUCER_NAME]: adminGroupSearch.reducer,
-    [adminGroupDetails.REDUCER_NAME]: adminGroupDetails.reducer
+    [adminGroupDetails.REDUCER_NAME]: adminGroupDetails.reducer,
+    [adminDetails.REDUCER_NAME]: adminDetails.reducer
 });
 
