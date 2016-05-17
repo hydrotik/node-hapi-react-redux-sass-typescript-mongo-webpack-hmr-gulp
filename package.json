@@ -93,7 +93,7 @@
     "raster-tile-style": "^1.0.1",
     "react": "^0.14.7",
     "react-addons-create-fragment": "^0.14.3",
-    "react-bootstrap": "^0.28.5",
+    "react-bootstrap": "^0.29.4",
     "react-chartjs": "^0.7.3",
     "react-d3-basic": "^1.6.11",
     "react-d3-core": "^1.2.8",

@@ -32,7 +32,7 @@
     "react-slick": "file:./typings/main/ambient/react-slick/react-slick.d.ts",
     "react-sparklines": "file:./typings/main/ambient/react-sparklines/react-sparklines.d.ts",
     "redux": "github:DefinitelyTyped/DefinitelyTyped/redux/redux.d.ts#fc341765ebbb04b7109981a25dced01f488f4d94",
-    "redux-form": "github:dhsaks/typescript-definitions/redux-form/index.d.ts#993b12389e052cecd3366d1b838028e6d8d7e91e",
+    "redux-form": "github:dhsaks/typescript-definitions/redux-form/index.d.ts#fb383e4a25b8f5366e0498e9af2984dd7e6cf74e",
     "redux-logger": "github:DefinitelyTyped/DefinitelyTyped/redux-logger/redux-logger.d.ts#fc341765ebbb04b7109981a25dced01f488f4d94",
     "redux-thunk": "github:DefinitelyTyped/DefinitelyTyped/redux-thunk/redux-thunk.d.ts#fc341765ebbb04b7109981a25dced01f488f4d94",
     "xhr": "file:./typings/main/ambient/xhr/xhr.d.ts"
