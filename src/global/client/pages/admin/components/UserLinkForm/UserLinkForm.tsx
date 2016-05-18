@@ -123,7 +123,6 @@ class Form extends React.Component<IUserLinkFormProps, any> {
                     </Alert>
                 }
 
-                <div className="row">
                     <Input
                         type={"text"}
                         help={username.touched && username.error ? username.error : ""}
@@ -140,8 +139,7 @@ class Form extends React.Component<IUserLinkFormProps, any> {
                         }
                         {...username}>
                     </Input>
-                </div>
-                <div className="row">
+
                     <Button
                         bsStyle={null}
                         className={_.get(username, 'initialValue', undefined) ? "btn btn-danger" : "btn btn-primary"}
@@ -150,7 +148,7 @@ class Form extends React.Component<IUserLinkFormProps, any> {
                     >
                         {_.get(username, 'initialValue', undefined) ? 'Unlink user' : 'Link user'} {submitting? <Glyphicon className="rotate-forever" glyph="glyphicon-refresh" /> : null}
                     </Button>
-                </div>
+
             </form>
                         
         )
