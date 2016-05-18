@@ -55,16 +55,6 @@ function update(state, action) {
     return newState;
 }
 
-function changePassword(state, action) {
-    return _.merge(
-        {},
-        state,
-        {
-            loading: false
-        }
-    )
-}
-
 function addPermission(state, action) {
     let permissions = {
         [action.name]: true

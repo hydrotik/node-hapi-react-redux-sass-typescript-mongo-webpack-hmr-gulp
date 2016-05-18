@@ -88,7 +88,17 @@ class Form extends React.Component<INameDetailsFormProps, any> {
                             middleName: result.middleName
                         })
                     
-                    })}
+                    })
+                    .catch((err) => {
+                        this.setState({ 
+                                message: {
+                                    visible: true,
+                                    bsStyle: "danger",
+                                    content: (<span>{err.message}</span>)
+                                }
+                            });
+                    })
+                }
             }>
                 <legend>Details</legend>
                 {
@@ -98,7 +108,6 @@ class Form extends React.Component<INameDetailsFormProps, any> {
                     </Alert>
                 }
                 
-                <div className="row">
                     <TextControl 
                         help={firstName.touched && firstName.error ? firstName.error : ""}
                         hasError={lastName.touched && firstName.error }
@@ -109,8 +118,7 @@ class Form extends React.Component<INameDetailsFormProps, any> {
                         value={firstName.value}
                         {...firstName}>
                     </TextControl>
-                </div>
-                <div className="row">
+
                     <TextControl 
                         help={middleName.touched && middleName.error ? middleName.error : ""}
                         hasError={middleName.touched && middleName.error }
@@ -121,8 +129,8 @@ class Form extends React.Component<INameDetailsFormProps, any> {
                         value={middleName.value}
                         {...middleName}>
                     </TextControl>
-                </div>
-                <div className="row">
+
+
                     <TextControl 
                         help={lastName.touched && lastName.error ? lastName.error : ""}
                         hasError={lastName.touched && lastName.error }
@@ -133,8 +141,7 @@ class Form extends React.Component<INameDetailsFormProps, any> {
                         value={lastName.value}
                         {...lastName}>
                     </TextControl>
-                </div>
-                <div className="row">
+
                     <Button
                         bsStyle="primary"
                         disabled={submitting}
@@ -142,7 +149,7 @@ class Form extends React.Component<INameDetailsFormProps, any> {
                     >
                         Save changes <Spinner show={submitting} space="left" />
                     </Button>
-                </div>
+
             </form>
         )
     }
