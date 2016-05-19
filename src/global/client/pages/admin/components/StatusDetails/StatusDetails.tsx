@@ -1,9 +1,5 @@
 /// <reference path='../../../../../../../typings/main.d.ts' />
 
-/*
-    Maps to components/statuses/Details.jsx
-*/
-
 // Core Imports
 import * as React from 'react';
 import {connect} from 'react-redux';
@@ -11,7 +7,7 @@ import {connect} from 'react-redux';
 import {StatusDetailsForm} from './components/StatusDetailsForm';
 import {DeleteForm} from '../../components/DeleteForm';
 
-import {get, updateDetails} from './actions';
+import {get, updateDetails, deleteStatus} from './actions';
 import {REDUCER_NAME} from './reducers';
 
 // Styles
@@ -48,8 +44,8 @@ const mapDispatchToProps = (dispatch) => {
         onUpdateSubmit: function(id: string, data: {name: string}){
             return dispatch(updateDetails(id, data.name));
         },
-        onDeleteSubmit: function(id: string) {
-            
+        onDeleteSubmit: function(id: string, router: any, location: any) {
+            dispatch(deleteStatus(id, router, location));
         }
     }
 }
@@ -57,6 +53,13 @@ const mapDispatchToProps = (dispatch) => {
 @connect(mapStateToProps, mapDispatchToProps)
 export class StatusDetails extends React.Component<BaseProps, any> {
 
+    static contextTypes: React.ValidationMap<any> = {
+        router: React.PropTypes.object
+    }
+    context: {
+        router: any
+    }
+    
     public constructor(props?: BaseProps) {
         super(props);
     }
@@ -95,7 +98,7 @@ export class StatusDetails extends React.Component<BaseProps, any> {
                             onSubmit={onUpdateSubmit.bind(undefined, params.id)}
                         />
                         <DeleteForm 
-                            onSubmit={onDeleteSubmit.bind(undefined, params.id)}
+                            onSubmit={onDeleteSubmit.bind(undefined, params.id, this.context.router, location)}
                         />
                     </div>
                 </div>

@@ -11,39 +11,48 @@ export const LOADING: string = 'statusDetails/LOADING';
 
 export const ERROR: string = 'statusDetails/ERROR';
 
+export const DELETE: string = 'statusDetails/DELETE';
+
 export const SECTION_NAME: string = 'statuses';
 
-export function doDelete(data: any, router: any): any {
 
-    let validation: IValidation;
+export function deleteStatus(id: string, router: any, location: any): any {
 
     return (dispatch: any, getState: any) => {
-        //dispatch(onRequestAction(DELETE_REQUEST, data));
-
-        let id = data.id;
-        delete data.id;
 
         let request: any = {
             method: 'DELETE',
             url: '/api/' + SECTION_NAME + '/' + id,
-            data: data,
             useAuth: true
         };
 
-        Fetch(request, (err: any, response: any) => {
-
-            if (!err) {
-                response.success = true;
-
+        return Fetch(request)
+        .then((result) => {
+            
+            
+            return dispatch({
+                type: DELETE,
+                id
+            })
+            .then((result) => {
+                let newLocation = _.join(_.dropRight(_.split(location.pathname, '/'), 1), '/');
                 if (router) {
-                    router.transitionTo(SECTION_NAME);
+                    router.replace(newLocation);
                     window.scrollTo(0, 0);
                 }
-            }
-
-            // dispatch delete action
-        });
-    };
+                return Promise.resolve({id});
+            })
+            
+        })
+        .catch((err) => {
+            dispatch({
+                    type: ERROR,
+                    error: "Could not delete status"
+                })
+                
+                return Promise.reject(new Error("Could not delete status"));
+        })
+    }
 }
 
 
@@ -77,7 +86,6 @@ export function updateDetails(id: string, name: string) {
         // TODO: Need to consider how to translate Backend/Hapi error messages to redux-form compatible error messages
         .catch(
             (result) => {
-                console.log(result);
                 
                 dispatch({
                     type: ERROR,
