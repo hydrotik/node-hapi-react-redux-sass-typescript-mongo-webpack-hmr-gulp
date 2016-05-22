@@ -2,6 +2,7 @@
 
 // Core Imports
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import * as ClassNames from 'classnames';
 
 const ReactPlayer = require('react-player');
@@ -207,42 +208,44 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     }
 
     public toggleFullscreen = () => {
-        console.error('implementation needed!');
-        // let d: any = document;
+        // console.error('implementation needed!');
+        let d: any = document;
 
-        // this.setState({
-        //     fullScreen: !this.state.fullScreen
-        // }, function() {
-        //     if (this.state.fullScreen) {
+        this.setState({
+            fullScreen: !this.state.fullScreen
+        }, function() {
+            if (this.state.fullScreen) {
 
-        //         let docElm: any = d.documentElement;
-        //         if (docElm.requestFullscreen) {
-        //             this.getDOMNode().requestFullscreen();
-        //         }
-        //         if (docElm.webkitRequestFullScreen) {
-        //             this.getDOMNode().webkitRequestFullScreen();
-        //         }
-        //         if (docElm.mozRequestFullScreen) {
-        //             this.getDOMNode().mozRequestFullScreen();
-        //         }
-        //         if (docElm.msRequestFullscreen) {
-        //             this.getDOMNode().msRequestFullscreen();
-        //         }
-        //     } else {
-        //         if (d.exitFullscreen) {
-        //             d.exitFullscreen();
-        //         }
-        //         if (d.mozCancelFullScreen) {
-        //             d.mozCancelFullScreen();
-        //         }
-        //         if (d.webkitCancelFullScreen) {
-        //             d.webkitCancelFullScreen();
-        //         }
-        //         if (d.msExitFullscreen) {
-        //             d.msExitFullscreen();
-        //         }
-        //     }
-        // });
+                let docElm: any = d.documentElement;
+                if (docElm.requestFullscreen) {
+                    ReactDOM.findDOMNode(docElm).requestFullscreen();
+                }
+                if (docElm.webkitRequestFullScreen) {
+                    ReactDOM.findDOMNode(docElm).webkitRequestFullScreen();
+                }
+                if (docElm.mozRequestFullScreen) {
+                    console.error('FullScreen Mozilla implementation needed!');
+                    // ReactDOM.findDOMNode(docElm).mozRequestFullScreen();
+                }
+                if (docElm.msRequestFullscreen) {
+                    console.error('FullScreen Microsoft implementation needed!');
+                    // ReactDOM.findDOMNode(docElm).msRequestFullscreen();
+                }
+            } else {
+                if (d.exitFullscreen) {
+                    d.exitFullscreen();
+                }
+                if (d.mozCancelFullScreen) {
+                    d.mozCancelFullScreen();
+                }
+                if (d.webkitCancelFullScreen) {
+                    d.webkitCancelFullScreen();
+                }
+                if (d.msExitFullscreen) {
+                    d.msExitFullscreen();
+                }
+            }
+        });
     }
 
     public onConfigSubmit = () => {
@@ -278,7 +281,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         const elapsed: string = this.getTimeCompleted(duration, played);
         const remaining: string = this.getTimeRemaining(duration, played);
 
-        console.log(elapsed, remaining);
+        // console.log(elapsed, remaining);
 
 
         return (
