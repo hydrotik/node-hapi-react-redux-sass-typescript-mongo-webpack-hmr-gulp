@@ -15,7 +15,7 @@ import './_DurationDisplay.scss';
 interface IDurationProps {
     dispatch?: (func: any) => void;
     store?: any;
-    ms?: number;
+    time: string;
     className?: any;
 }
 
@@ -38,47 +38,10 @@ export class DurationDisplay extends React.Component<IDurationProps, IDurationSt
 
     }
 
-    public format (seconds: number): string {
-        const date: Date = new Date(seconds * 1000);
-        const hh: string = date.getHours().toString();
-        const mm: string = date.getMinutes().toString();
-        const ss: string = this.pad(date.getSeconds().toString());
-        if (hh) {
-            return `${hh}:${this.pad(mm)}:${ss}`;
-        }
-        return `${mm}:${ss}`;
-    }
-
-    public pad (str: string): string {
-        return ('0' + str).slice(-2);
-    }
-
-    public fromMilliseconds(ms: number): string {
-
-        let hours, minutes, seconds, group;
-        group = []
-
-        hours = Math.floor(ms / 3600);
-        minutes = Math.floor(ms % 3600 / 60);
-        seconds = Math.floor(ms % 3600 % 60);
-
-        //if (hours > 0) {
-            group.push((hours > 9) ? hours : '0' + hours);
-        //}
-        group.push((minutes > 9) ? minutes : '0' + minutes);
-        group.push((seconds > 9) ? seconds : '0' + seconds);
-
-        return group.join(':');
-
-    }
-
-
     public render(): React.ReactElement<{}> {
 
-        let time = this.fromMilliseconds(this.props.ms);
-
         return (
-            <span className={this.props.className}>{time}</span>
+            <span className={this.props.className}>{this.props.time}</span>
         );
     }
 }

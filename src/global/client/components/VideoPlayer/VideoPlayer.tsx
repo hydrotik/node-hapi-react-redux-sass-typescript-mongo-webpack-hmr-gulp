@@ -22,10 +22,12 @@ import { FullScreenToggleButton } from './components/FullScreenToggleButton/Full
 
 // Interfaces
 interface IVideoPlayerProps {
-
+    onPlayerEvent?: (event: IVideoPlayerEvent) => void;
 }
 
-interface IVideoPlayerState {
+
+
+export interface IVideoPlayerState {
     url?: string;
     playing?: boolean;
     volume?: number;
@@ -41,6 +43,23 @@ interface IVideoPlayerState {
     width?: number;
     height?: number;
     hovered?: boolean;
+}
+
+interface IVideoPlayerEvent {
+    url: string;
+    playing: boolean;
+    volume: number;
+    muted: boolean;
+    seeking: boolean;
+    fullScreen: boolean;
+    width: number;
+    height: number;
+    hovered: boolean;
+    timetotal: string;
+    timeremaining: string;
+    timecompleted: string;
+    percentloaded: number;
+    percentcomplete: number;
 }
 
 let canvas, context;
@@ -135,6 +154,58 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         }
     };
 
+    public onPlayerEvent = (state) => {
+        let { url, playing, volume, muted, seeking, fullScreen, width, height, hovered, played, duration, loaded }: IVideoPlayerState = state;
+        let e: IVideoPlayerEvent = {
+            url,
+            playing,
+            volume,
+            muted,
+            seeking,
+            fullScreen,
+            width,
+            height,
+            hovered,
+            timetotal: this.getTimeTotal(duration),
+            timeremaining: this.getTimeRemaining(duration, played),
+            timecompleted: this.getTimeCompleted(duration, played),
+            percentloaded: Math.round(loaded * 100),
+            percentcomplete: Math.round(played * 100)
+        };
+        this.props.onPlayerEvent(e);
+    };
+
+    public getTimeTotal = (duration: number) => {
+        return this.fromMilliseconds(duration);
+    }
+
+    public getTimeCompleted = (duration: number, played: number) => {
+        return this.fromMilliseconds(duration * played);
+    }
+
+    public getTimeRemaining = (duration: number, played: number) => {
+        return this.fromMilliseconds(duration * (1 - played));
+    }
+
+    public fromMilliseconds(ms: number): string {
+
+        let hours, minutes, seconds, group;
+        group = []
+
+        hours = Math.floor(ms / 3600);
+        minutes = Math.floor(ms % 3600 / 60);
+        seconds = Math.floor(ms % 3600 % 60);
+
+        //if (hours > 0) {
+        group.push((hours > 9) ? hours : '0' + hours);
+        //}
+        group.push((minutes > 9) ? minutes : '0' + minutes);
+        group.push((seconds > 9) ? seconds : '0' + seconds);
+
+        return group.join(':');
+
+    }
+
     public toggleFullscreen = () => {
         console.error('implementation needed!');
         // let d: any = document;
@@ -199,14 +270,16 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
 
         const { hovered, url, muted, playing, volume, played, loaded, duration, soundcloudConfig, vimeoConfig, youtubeConfig, width, height} = this.state;
 
-
-        const elapsed: number = duration * played;
-        const remaining: number = duration * (1 - played);
-
         let controlsClass = ClassNames({
             'video_controls': true,
             'hovered': hovered
         });
+
+        const elapsed: string = this.getTimeCompleted(duration, played);
+        const remaining: string = this.getTimeRemaining(duration, played);
+
+        console.log(elapsed, remaining);
+
 
         return (
             <div className="video-player" ref="videoWrapper" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
@@ -249,133 +322,11 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
                         <FullScreenToggleButton onToggleFullscreen={this.toggleFullscreen} />
                     </div>
                     <div className="time">
-                        <DurationDisplay ms={elapsed} className="elapsed" /> | <DurationDisplay ms={duration} className="duration" />
+                        <DurationDisplay time={this.getTimeCompleted(duration, played) } className="elapsed" /> | <DurationDisplay time={this.getTimeTotal(duration) } className="duration" />
                     </div>
                     <VolumeButton className="volume" muted={this.state.muted} level={volume} toggleVolume={this.toggleMute} changeVolume={this.setVolume} />
                 </div>
             </div>
         );
-
-        /*
-                    <table width="100%"><tbody>
-                        <tr>
-                        <th>Controls</th>
-                        <td>
-                        <button onClick={this.stop}>Stop</button>
-                        <button onClick={this.playPause}>{playing ? 'Pause' : 'Play'}</button>
-                        </td>
-                        </tr>
-                        <tr>
-                        <th>Seek</th>
-                        <td>
-                        <input
-                        type='range' min={0} max={1} step='any'
-                        value={played}
-                        onMouseDown={this.onSeekMouseDown}
-                        onChange={this.onSeekChange}
-                        onMouseUp={this.onSeekMouseUp}
-                        className="seek_slider-demo"
-                        />
-                        </td>
-                        </tr>
-                        <tr>
-                        <th>Volume</th>
-                        <td>
-                                <input type='range' min={0} max={1} step='any' value={volume} onChange={this.setVolume} className="volume_slider-demo" />
-                        </td>
-                        </tr>
-                        <tr>
-                        <th>Played</th>
-                        <td><progress max={1} value={played} /></td>
-                        </tr>
-                        <tr>
-                        <th>Loaded</th>
-                        <td><progress max={1} value={loaded} /></td>
-                        </tr>
-                    </tbody></table>
-                </section>
-                <section className='section'>
-                    <table><tbody>
-                        <tr>
-                        <th>YouTube</th>
-                        <td>
-                        {this.renderLoadButton('https://www.youtube.com/watch?v=oUFJJNQGwhk', 'Test A')}
-                        {this.renderLoadButton('https://www.youtube.com/watch?v=jNgP6d9HraI', 'Test B')}
-                        </td>
-                        </tr>
-                        <tr>
-                        <th>SoundCloud</th>
-                        <td>
-                        {this.renderLoadButton('https://soundcloud.com/miami-nights-1984/accelerated', 'Test A')}
-                        {this.renderLoadButton('https://soundcloud.com/bonobo/flashlight', 'Test B')}
-                        </td>
-                        </tr>
-                        <tr>
-                        <th>Vimeo</th>
-                        <td>
-                        {this.renderLoadButton('https://vimeo.com/90509568', 'Test A')}
-                        {this.renderLoadButton('https://vimeo.com/94502406', 'Test B')}
-                        </td>
-                        </tr>
-                        <tr>
-                        <th>Files</th>
-                        <td>
-                        {this.renderLoadButton('http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4', 'MP4')}
-                        {this.renderLoadButton('http://clips.vorwaerts-gmbh.de/big_buck_bunny.ogv', 'OGV')}
-                        {this.renderLoadButton('http://clips.vorwaerts-gmbh.de/big_buck_bunny.webm', 'WEBM')}
-                        </td>
-                        </tr>
-                        <tr>
-                        <th>Custom URL</th>
-                        <td>
-                        <input ref='url' type='text' placeholder='Enter URL' />
-                        <button onClick={() => this.setState({ url: this.refs.url.value })}>Load</button>
-                        </td>
-                        </tr>
-                        <tr>
-                        <th>Custom config</th>
-                        <td>
-                        <textarea ref='config' placeholder='Enter JSON'></textarea>
-                        <button onClick={this.onConfigSubmit}>Update Config</button>
-                        </td>
-                        </tr>
-                    </tbody></table>
-
-                    <h2>State</h2>
-
-                    <table><tbody>
-                        <tr>
-                        <th>url</th>
-                        <td className={!url ? 'faded' : ''}>{url || 'null'}</td>
-                        </tr>
-                        <tr>
-                        <th>playing</th>
-                        <td>{playing ? 'true' : 'false'}</td>
-                        </tr>
-                        <tr>
-                        <th>volume</th>
-                        <td>{volume.toFixed(3)}</td>
-                        </tr>
-                        <tr>
-                        <th>played</th>
-                        <td>{played.toFixed(3)}</td>
-                        </tr>
-                        <tr>
-                        <th>loaded</th>
-                        <td>{loaded.toFixed(3)}</td>
-                        </tr>
-                        <tr>
-                        <th>duration</th>
-                        <td><DurationDisplay ms={duration} className="duration" /></td>
-                        </tr>
-                        <tr>
-                        <th>elapsed</th>
-                        <td><DurationDisplay ms={elapsed} className="elapsed" /></td>
-                        </tr>
-                        <tr>
-                        <th>remaining</th>
-                        <td><DurationDisplay ms={remaining} className="remaining" /></td>
-                        </tr>
-                    </tbody></table>*/
     }
 }
