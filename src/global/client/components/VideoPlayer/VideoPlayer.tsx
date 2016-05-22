@@ -216,7 +216,8 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         }, function() {
             if (this.state.fullScreen) {
 
-                let docElm: any = d.documentElement;
+                let docElm: any = this.refs.videoWrapper;
+                
                 if (docElm.requestFullscreen) {
                     ReactDOM.findDOMNode(docElm).requestFullscreen();
                 }
