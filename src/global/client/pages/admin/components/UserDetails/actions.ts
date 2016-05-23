@@ -11,44 +11,49 @@ export const CHANGE_PASSWORD: string = 'userDetails/CHANGE_PASSWORD';
 
 export const LOADING: string = 'userDetails/LOADING';
 
-export const ERROR: string = 'userDetails/ERROR';
-
-export const MESSAGE: string = 'userDetails/MESSAGE';
+export const DELETE: string = 'userDetails/DELETE';
 
 export const SECTION_NAME: string = 'users';
 
 
-export function doDelete(data: any, router: any): any {
-
-    let validation: IValidation;
+export function deleteUser(id: string, router: any, location: any): any {
 
     return (dispatch: any, getState: any) => {
-        //dispatch(onRequestAction(DELETE_REQUEST, data));
-
-        let id = data.id;
-        delete data.id;
 
         let request: any = {
             method: 'DELETE',
             url: '/api/' + SECTION_NAME + '/' + id,
-            data: data,
             useAuth: true
         };
 
-        Fetch(request, (err: any, response: any) => {
+        return Fetch(request)
+        .then((result) => {
+            
+            
+            dispatch({
+                type: DELETE,
+                id
+            })
 
-            if (!err) {
-                response.success = true;
-
-                if (router) {
-                    router.transitionTo(SECTION_NAME);
-                    window.scrollTo(0, 0);
-                }
+            let newLocation = _.join(_.dropRight(_.split(location.pathname, '/'), 1), '/');
+            if (router) {
+                router.replace(newLocation);
+                window.scrollTo(0, 0);
             }
+            return Promise.resolve({id});
 
-            // dispatch delete action
-        });
-    };
+            
+        })
+        .catch((err) => {
+            dispatch({
+                type: DELETE,
+                id,
+                error: err
+            })
+                
+            return Promise.reject(err);
+        })
+    }
 }
 
 export function changePassword(id: string, password: string) {
@@ -70,7 +75,7 @@ export function changePassword(id: string, password: string) {
             (result) => {
                 
                 dispatch({
-                    type: GET,
+                    type: CHANGE_PASSWORD,
                     data: result.data
                 })
                 
@@ -84,11 +89,12 @@ export function changePassword(id: string, password: string) {
                 console.log(result);
                 
                 dispatch({
-                    type: ERROR,
-                    error: "Could not change password"
+                    type: CHANGE_PASSWORD,
+                    data: result.data,
+                    error: new Error("Could not change password")
                 })
                 
-                return Promise.reject({error: "Could not change password"});
+                return Promise.reject(new Error("Could not change password"));
             }
 
         )
@@ -130,11 +136,12 @@ export function update(id: string, active: boolean, username: string, email: str
                 console.log(result);
                 
                 dispatch({
-                    type: ERROR,
-                    error: "Could not update user"
+                    type: GET,
+                    data: result.data,
+                    error: new Error("Could not update user")
                 })
                 
-                return Promise.reject({error: "Could not update user"});
+                return Promise.reject(new Error("Could not update user"));
             }
 
         )
@@ -172,14 +179,14 @@ export function get(id: string) {
         // TODO: Need to consider how to translate Backend/Hapi error messages to redux-form compatible error messages
         .catch(
             (result) => {
-                console.log(result);
                 
                 dispatch({
-                    type: ERROR,
-                    error: "Could not load user " + id
+                    type: GET,
+                    data: result.data,
+                    error: new Error("Could not load user " + id)
                 })
                 
-                return Promise.reject({error: "Could not load user " + id});
+                return Promise.reject(new Error("Could not load user " + id));
             }
 
         )

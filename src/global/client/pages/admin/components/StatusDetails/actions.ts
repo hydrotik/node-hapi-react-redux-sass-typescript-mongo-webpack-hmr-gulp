@@ -11,39 +11,49 @@ export const LOADING: string = 'statusDetails/LOADING';
 
 export const ERROR: string = 'statusDetails/ERROR';
 
+export const DELETE: string = 'statusDetails/DELETE';
+
 export const SECTION_NAME: string = 'statuses';
 
-export function doDelete(data: any, router: any): any {
 
-    let validation: IValidation;
+export function deleteStatus(id: string, router: any, location: any): any {
 
     return (dispatch: any, getState: any) => {
-        //dispatch(onRequestAction(DELETE_REQUEST, data));
-
-        let id = data.id;
-        delete data.id;
 
         let request: any = {
             method: 'DELETE',
             url: '/api/' + SECTION_NAME + '/' + id,
-            data: data,
             useAuth: true
         };
 
-        Fetch(request, (err: any, response: any) => {
+        return Fetch(request)
+        .then((result) => {
+            
+            
+            dispatch({
+                type: DELETE,
+                id
+            })
 
-            if (!err) {
-                response.success = true;
-
-                if (router) {
-                    router.transitionTo(SECTION_NAME);
-                    window.scrollTo(0, 0);
-                }
+            let newLocation = _.join(_.dropRight(_.split(location.pathname, '/'), 1), '/');
+            if (router) {
+                router.replace(newLocation);
+                window.scrollTo(0, 0);
             }
+            return Promise.resolve({id});
 
-            // dispatch delete action
-        });
-    };
+            
+        })
+        .catch((err) => {
+            dispatch({
+                type: DELETE,
+                id,
+                error: err
+            })
+                
+            return Promise.reject(err);
+        })
+    }
 }
 
 
@@ -66,7 +76,7 @@ export function updateDetails(id: string, name: string) {
             (result) => {
                 
                 dispatch({
-                    type: GET,
+                    type: UPDATE_DETAILS,
                     data: result.data
                 })
                 
@@ -77,11 +87,11 @@ export function updateDetails(id: string, name: string) {
         // TODO: Need to consider how to translate Backend/Hapi error messages to redux-form compatible error messages
         .catch(
             (result) => {
-                console.log(result);
                 
                 dispatch({
-                    type: ERROR,
-                    error: "Could not update status"
+                    type: UPDATE_DETAILS,
+                    data: result.data,
+                    error: new Error("Could not update status")
                 })
                 
                 return Promise.reject(new Error("Could not update status"));
@@ -122,11 +132,11 @@ export function get(id: string) {
         // TODO: Need to consider how to translate Backend/Hapi error messages to redux-form compatible error messages
         .catch(
             (result) => {
-                console.log(result);
                 
                 dispatch({
-                    type: ERROR,
-                    error: "Could not load status " + id
+                    type: GET,
+                    data: result.data,
+                    error: new Error("Could not load status " + id)
                 })
                 
                 return Promise.reject(new Error("Could not load status " + id));

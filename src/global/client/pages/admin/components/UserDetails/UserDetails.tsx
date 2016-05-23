@@ -8,6 +8,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import {connect} from 'react-redux';
+import {Link} from 'react-router';
 import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from 'react-bootstrap';
 
 import {Spinner} from '../../../../components/Spinner/Spinner';
@@ -33,6 +34,7 @@ interface ReactRouterProps {
 }
 
 interface UserDetailsProps {
+    loadFailed: boolean
     loading: boolean
     active: boolean
     username: string
@@ -48,11 +50,12 @@ interface DispatchProps {
     onLoadingUser: (id: string) => any
     onUserDetailsSubmit: (id: string, data: { active: boolean, username: string, email: string}) => any
     onUserChangePasswordSubmit: (id: string, data: { password: string }) => any
-    onUserDeleteSubmit: (data) => any
+    onUserDeleteSubmit: (id: string, router: any, location: any) => any
 }
 
 function mapStateToProps(state): UserDetailsProps {
     return {
+        loadFailed: _.get(state, REDUCER_NAME+'.loadFailed', false),
         loading: _.get(state, REDUCER_NAME+'.loading', false),
         active: _.get(state, REDUCER_NAME+'.data.isActive', false),
         username: _.get(state, REDUCER_NAME+'.data.username', ""),
@@ -77,8 +80,8 @@ function mapDispatchToProps(dispatch): DispatchProps {
             return dispatch(actions.changePassword(id, data.password));
             
         },
-        onUserDeleteSubmit: function(data) {
-            
+        onUserDeleteSubmit: function(id: string, router: any, location: any) {
+            dispatch(actions.deleteUser(id, router, location));
         }
     }
 }
@@ -91,6 +94,14 @@ export class UserDetails extends React.Component<UserDetailsProps & DispatchProp
 
     }
 
+    static contextTypes: React.ValidationMap<any> = {
+        router: React.PropTypes.object
+    }
+    
+    context: {
+        router: any
+    }
+    
     refs: {
         [key: string]: (Element | React.Component<any,any>);
         passwordChangeForm: (React.Component<any,any>);
@@ -114,7 +125,8 @@ export class UserDetails extends React.Component<UserDetailsProps & DispatchProp
             roleAdmin,
             roleAdminId,
             params,
-            loading
+            loading,
+            loadFailed
         } = this.props;
         
         if (loading) {
@@ -134,7 +146,7 @@ export class UserDetails extends React.Component<UserDetailsProps & DispatchProp
                 </section>
             )
         }
-3
+
             return (
                 <section className='section-home container'>
                     <div className='row'>
@@ -142,6 +154,19 @@ export class UserDetails extends React.Component<UserDetailsProps & DispatchProp
                             <h1 className='page-header'>
                                 User Details
                             </h1>
+                            
+                            { 
+                                loadFailed && 
+                                <Alert bsStyle="danger">
+                                    <h4>Could not load {params.id}</h4>
+                                    <Link className="btn btn-default" to={_.join(_.dropRight(_.split(location.pathname, '/'), 1), '/')}>
+                                        Back to search page
+                                    </Link>
+                                </Alert>
+                            }
+                            
+                            { !loading && !loadFailed && 
+                            <div>
                             <UserIdentityForm 
                                 initialValues={
                                     {
@@ -171,8 +196,10 @@ export class UserDetails extends React.Component<UserDetailsProps & DispatchProp
                             />
                             
                             <UserDeleteForm 
-                                onSubmit={onUserDeleteSubmit.bind(this)}
+                                onSubmit={onUserDeleteSubmit.bind(this, params.id, this.context.router, location)}
                             />
+                            </div>
+                            }
                         </div>
                     </div>
                 </section>

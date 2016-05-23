@@ -16,6 +16,7 @@ function loading(state, action) {
         {},
         state,
         {
+            loadingFailed: false,
             loading: true
         }
     )
@@ -32,6 +33,7 @@ function get(state, action) {
     
     newState = {
         loading: false,
+        loadFailed: !_.isUndefined(action.error),
         data: {
             username: action.data.username,
             email: action.data.email,
@@ -52,15 +54,7 @@ function update(state, action) {
         }
     )
     
-    newState = {
-        loading: false,
-        data: {
-            username: action.data.username,
-            email: action.data.email,
-            roles: action.data.roles,
-            isActive: action.data.isActive
-        }
-    }
+    newState.data = action.data;
     
     return newState;
 }

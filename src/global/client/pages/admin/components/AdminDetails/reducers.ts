@@ -9,6 +9,7 @@ function loading(state, action) {
         {},
         state,
         {
+            loadFailed: false,
             loading: true
         }
     )
@@ -20,6 +21,7 @@ function get(state, action) {
         {},
         state,
         {
+            loadFailed: !_.isUndefined(action.error),
             loading: false,
             data: {}
         }
@@ -38,7 +40,6 @@ function unlinkUser(state, action) {
         {},
         state,
         {
-            loading: false,
             data: {}
         }
     )
@@ -52,7 +53,6 @@ function linkUser(state, action) {
         {},
         state,
         {
-            loading: false,
             data: {}
         }
     )
@@ -66,7 +66,6 @@ function getGroups(state, action) {
         {},
         state,
         {
-            loading: false,
             data: {}
         }
     )
@@ -81,7 +80,6 @@ function setPermissions(state, action) {
         {},
         state,
         {
-            loading: false,
             data: {}
         }
     );
@@ -96,7 +94,6 @@ function setGroups(state, action) {
         {},
         state,
         {
-            loading: false,
             data: {}
         }
     );
