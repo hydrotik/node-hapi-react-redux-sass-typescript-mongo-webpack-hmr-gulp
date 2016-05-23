@@ -336,11 +336,7 @@ export function detailsFetch(id: string): any {
         .then(
             (result) => {
                 dispatch(onResultsAction({success: true, data: result.data}, "", false, "help", true, false, GET_DETAILS_RESPONSE));
-            
-                if (router) {
-                    router.transitionTo(SECTION_NAME);
-                    window.scrollTo(0, 0);
-                }
+
             }
         )
         .catch(

@@ -3,6 +3,7 @@
 // Core Imports
 import * as React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router';
 
 import {StatusDetailsForm} from './components/StatusDetailsForm';
 import {DeleteForm} from '../../components/DeleteForm';
@@ -10,6 +11,7 @@ import {DeleteForm} from '../../components/DeleteForm';
 import {get, updateDetails, deleteStatus} from './actions';
 import {REDUCER_NAME} from './reducers';
 
+import {Alert} from 'react-bootstrap';
 // Styles
 import './_StatusDetails.scss';
 
@@ -21,6 +23,7 @@ interface StateProps extends BaseProps{
     name: string
     pivot: string
     loading: boolean
+    loadFailed: boolean
     location: string
     onLoadDetails: (string) => any
     onUpdateSubmit: (id: string, data: any) => any
@@ -31,6 +34,7 @@ interface StateProps extends BaseProps{
 const mapStateToProps = (state) => {
     return {
         loading: _.get(state, REDUCER_NAME+'.loading', false),
+        loadFailed: _.get(state, REDUCER_NAME+'.loadFailed', false),
         name: _.get(state, REDUCER_NAME+'.data.name', undefined),
         pivot: _.get(state, REDUCER_NAME+'.data.pivot', undefined)
     }
@@ -69,12 +73,13 @@ export class StatusDetails extends React.Component<BaseProps, any> {
             params,
             onLoadDetails
         } = this.props as StateProps;
-        onLoadDetails(params.id);
+        onLoadDetails(params.id)
     }
 
     public render(): React.ReactElement<any> {
         const {
             loading,
+            loadFailed,
             name,
             pivot,
             params,
@@ -89,6 +94,20 @@ export class StatusDetails extends React.Component<BaseProps, any> {
                         <h1 className='page-header'>
                             Status Details
                         </h1>
+                        
+                        {
+                            loadFailed && 
+                            <Alert bsStyle="danger">
+                                <h4>Could not load {params.id}</h4>
+                                <Link
+                                    className='btn btn-default btn-sm'
+                                    to={_.join(_.dropRight(_.split(location.pathname, '/'), 1), '/')}>
+                                    Back to Search
+                                </Link>
+                            </Alert>
+                        }
+                        {
+                            !loading && !loadFailed &&
                         <StatusDetailsForm
                             initialValues={{
                                 name,
@@ -97,9 +116,14 @@ export class StatusDetails extends React.Component<BaseProps, any> {
                             
                             onSubmit={onUpdateSubmit.bind(undefined, params.id)}
                         />
+                        }
+                        {
+                            !loading && !loadFailed &&
                         <DeleteForm 
                             onSubmit={onDeleteSubmit.bind(undefined, params.id, this.context.router, location)}
                         />
+                        }
+
                     </div>
                 </div>
             </section>

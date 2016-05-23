@@ -30,27 +30,28 @@ export function deleteStatus(id: string, router: any, location: any): any {
         .then((result) => {
             
             
-            return dispatch({
+            dispatch({
                 type: DELETE,
                 id
             })
-            .then((result) => {
-                let newLocation = _.join(_.dropRight(_.split(location.pathname, '/'), 1), '/');
-                if (router) {
-                    router.replace(newLocation);
-                    window.scrollTo(0, 0);
-                }
-                return Promise.resolve({id});
-            })
+
+            let newLocation = _.join(_.dropRight(_.split(location.pathname, '/'), 1), '/');
+            if (router) {
+                router.replace(newLocation);
+                window.scrollTo(0, 0);
+            }
+            return Promise.resolve({id});
+
             
         })
         .catch((err) => {
             dispatch({
-                    type: ERROR,
-                    error: "Could not delete status"
-                })
+                type: DELETE,
+                id,
+                error: err
+            })
                 
-                return Promise.reject(new Error("Could not delete status"));
+            return Promise.reject(err);
         })
     }
 }
@@ -75,7 +76,7 @@ export function updateDetails(id: string, name: string) {
             (result) => {
                 
                 dispatch({
-                    type: GET,
+                    type: UPDATE_DETAILS,
                     data: result.data
                 })
                 
@@ -88,8 +89,9 @@ export function updateDetails(id: string, name: string) {
             (result) => {
                 
                 dispatch({
-                    type: ERROR,
-                    error: "Could not update status"
+                    type: UPDATE_DETAILS,
+                    data: result.data,
+                    error: new Error("Could not update status")
                 })
                 
                 return Promise.reject(new Error("Could not update status"));
@@ -130,11 +132,11 @@ export function get(id: string) {
         // TODO: Need to consider how to translate Backend/Hapi error messages to redux-form compatible error messages
         .catch(
             (result) => {
-                console.log(result);
                 
                 dispatch({
-                    type: ERROR,
-                    error: "Could not load status " + id
+                    type: GET,
+                    data: result.data,
+                    error: new Error("Could not load status " + id)
                 })
                 
                 return Promise.reject(new Error("Could not load status " + id));

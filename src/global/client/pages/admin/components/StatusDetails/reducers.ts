@@ -8,7 +8,8 @@ function loading(state, action) {
         {},
         state,
         {
-            loading: true
+            loading: true,
+            loadFailed: false
         }
     )
 }
@@ -24,6 +25,7 @@ function get(state, action) {
     
     newState = {
         loading: false,
+        loadFailed: !_.isUndefined(action.error),
         data: {
             name: action.data.name,
             pivot: action.data.pivot
