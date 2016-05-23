@@ -42,7 +42,12 @@ export function get(id: string) {
             })
             return Promise.resolve(result.data);
         })
-        .catch((err) => {
+        .catch((result) => {
+            dispatch({
+                type: GET,
+                data: result.data,
+                error: new Error('Could not load admin details')
+            })
             return Promise.reject(new Error('Could not load admin details'));
         })
     }
@@ -71,7 +76,10 @@ export function getGroups() {
             return Promise.resolve(result.data.data);
         })
         .catch((err) => {
-            console.log(err);
+            dispatch({
+                type: GET_GROUPS,
+                error: new Error('Could not load admin-groups')
+            })
             return Promise.reject(new Error('Could not load admin-groups'));
         })
     }
@@ -110,7 +118,12 @@ export function updateName(id: string, name: {lastName: string, firstName: strin
                 middleName: _.get(result.data, 'name.middle', '')
             });
         })
-        .catch((err) => {
+        .catch((result) => {
+            dispatch({
+                type: GET,
+                data: result.data,
+                error: new Error('Could not update admin details')
+            })
             return Promise.reject(new Error('Could not update admin details'));
         })
     }
@@ -135,7 +148,12 @@ export function linkUser(id: string, username: string) {
             })
             return Promise.resolve(result.data);
         })
-        .catch((err) => {
+        .catch((result) => {
+            dispatch({
+                type: LINK_USER,
+                data: result.data,
+                error: new Error('Could not link user')
+            })
             return Promise.reject(new Error('Could not link user'));
         })
     }
@@ -157,7 +175,12 @@ export function unlinkUser(id: string) {
             })
             return Promise.resolve(result.data);
         })
-        .catch((err) => {
+        .catch((result) => {
+            dispatch({
+                type: UNLINK_USER,
+                data: result.data,
+                error: new Error('Could not link user')
+            })
             return Promise.reject(new Error('Could not link user'));
         })
     }
@@ -185,6 +208,12 @@ export function setPermissions(id: string, permissions: any) {
             return Promise.resolve({id, permissions});
         })
         .catch((err) => {
+            dispatch({
+                type: SET_PERMISSIONS,
+                id,
+                permissions,
+                error: new Error("Could not set permissions")
+            })
             return Promise.reject(new Error("Could not set permissions"));
         })
     }
@@ -211,11 +240,53 @@ export function setGroups(id: string, groups: any) {
             return Promise.resolve({id, groups});
         })
         .catch((err) => {
+            dispatch({
+                type: SET_GROUPS,
+                id,
+                groups,
+                error: new Error("Could not set groups")
+            })
             return Promise.reject(new Error("Could not set groups"));
         })
     }
 }
 
-export function deleteAdmin(id: string) {
-    
+export function deleteAdmin(id: string, router: any, location: any): any {
+
+    return (dispatch: any, getState: any) => {
+
+        let request: any = {
+            method: 'DELETE',
+            url: '/api/' + SECTION_NAME + '/' + id,
+            useAuth: true
+        };
+
+        return Fetch(request)
+        .then((result) => {
+            
+            
+            dispatch({
+                type: DELETE,
+                id
+            })
+
+            let newLocation = _.join(_.dropRight(_.split(location.pathname, '/'), 1), '/');
+            if (router) {
+                router.replace(newLocation);
+                window.scrollTo(0, 0);
+            }
+            return Promise.resolve({id});
+
+            
+        })
+        .catch((err) => {
+            dispatch({
+                type: DELETE,
+                id,
+                error: err
+            })
+                
+            return Promise.reject(err);
+        })
+    }
 }

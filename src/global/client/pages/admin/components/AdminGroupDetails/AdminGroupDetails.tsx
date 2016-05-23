@@ -8,11 +8,12 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {Alert} from 'react-bootstrap';
+import {Link} from 'react-router';
 import {AdminGroupNameForm} from './components/AdminGroupNameForm';
 import {PermissionsForm as AdminGroupPermissionsForm} from '../PermissionsForm';
 import {DeleteForm as AdminGroupDeleteForm} from '../DeleteForm';
 import {Spinner} from '../../../../components/Spinner/Spinner';
-import {get, updateDetails, setPermissions} from './actions';
+import {get, updateDetails, setPermissions, deleteAdminGroup} from './actions';
 import {REDUCER_NAME} from './reducers';
 // Styles
 import './_AdminGroupDetails.scss';
@@ -23,10 +24,12 @@ interface BaseProps {
 
 interface StateProps extends BaseProps {
     loading: boolean
+    loadFailed: boolean
     location: string
     onLoadDetails: (string) => any
     onDetailsSubmit: (id: string, data: any) => any
     onPermissionsSubmit: (id: string, data: any) => any
+    onDeleteSubmit: (id: string, router: any, location: any) => any
     params: any
     
     group: {
@@ -56,6 +59,7 @@ const toPermissionsObject = (permissionsArr: {name: string, active: boolean}[]):
 
 const mapStateToProps = (state) => {
     return {
+        loadFailed: _.get(state, REDUCER_NAME + '.loadFailed', false),
         loading: _.get(state, REDUCER_NAME + '.loading', false),
         group: _.get(state, REDUCER_NAME + '.data', {name: ""})
     }
@@ -71,6 +75,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onPermissionsSubmit: function(id: string, data: { newPermission: string, permissions: {name: string, active: boolean}[] }) {
             return dispatch(setPermissions(id, toPermissionsObject(data.permissions)));
+        },
+        onDeleteSubmit: function(id: string, router: any, location: any) {
+            return dispatch(deleteAdminGroup(id, router, location));
         }
     }
 }
@@ -79,6 +86,14 @@ export class AdminGroupDetails extends React.Component<{}, {}> {
 
     public constructor(props: any = {}) {
         super(props);
+    }
+    
+    static contextTypes: React.ValidationMap<any> = {
+        router: React.PropTypes.object
+    }
+    
+    context: {
+        router: any
     }
     
     componentWillMount(): any {
@@ -92,10 +107,12 @@ export class AdminGroupDetails extends React.Component<{}, {}> {
 
     public render(): React.ReactElement<{}> {
         const {
+            loadFailed,
             loading,
             group,
             onPermissionsSubmit,
             onDetailsSubmit,
+            onDeleteSubmit,
             params
         } = this.props as StateProps;
         if (loading) {
@@ -123,7 +140,20 @@ export class AdminGroupDetails extends React.Component<{}, {}> {
                         <h1 className='page-header'>
                             Admin Group Details
                         </h1>
+                        {
+                            loadFailed &&
+                            <Alert bsStyle="danger">
+                                <h4>Could not load {params.id}</h4>
+                                <Link
+                                    className='btn btn-default btn-sm'
+                                    to={_.join(_.dropRight(_.split(location.pathname, '/'), 1), '/')}>
+                                    Back to Search
+                                </Link>
+                            </Alert>
+                        }
                         
+                        { !loading && !loadFailed &&
+                        <div>
                         <AdminGroupNameForm
                             initialValues={{ name: group.name }}
                             onSubmit={onDetailsSubmit.bind(undefined, group.name)}
@@ -133,7 +163,11 @@ export class AdminGroupDetails extends React.Component<{}, {}> {
                             
                             onSubmit={onPermissionsSubmit.bind(undefined, params.id)}
                         />
-                        <AdminGroupDeleteForm />
+                        <AdminGroupDeleteForm 
+                            onSubmit={onDeleteSubmit.bind(undefined, params.id, this.context.router, location)}
+                        />
+                        </div>
+                        }
                     </div>
                 </div>
             </section>

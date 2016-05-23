@@ -8,6 +8,7 @@ function loading(state, action) {
         {},
         state,
         {
+            loadFailed: false,
             loading: true
         }
     )
@@ -24,6 +25,7 @@ function get(state, action) {
     
     newState = {
         loading: false,
+        loadFailed: !_.isUndefined(action.error),
         data: {
             name: action.data.name,
             permissions: action.data.permissions || undefined

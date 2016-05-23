@@ -7,11 +7,14 @@
 // Core Imports
 import * as React from 'react';
 import {connect} from 'react-redux';
+import {Alert} from 'react-bootstrap';
+import {Link} from 'react-router';
 import {AdminGroupsForm} from './components/AdminGroupsForm';
 import {PermissionsForm} from '../PermissionsForm';
 import {NameDetailsForm} from '../NameDetailsForm'; 
 import {UserLinkForm} from '../UserLinkForm';
 import {DeleteForm} from '../DeleteForm';
+import {Spinner} from '../../../../components/Spinner/Spinner';
 import {get, unlinkUser, linkUser, updateName, setPermissions, setGroups, getGroups, deleteAdmin} from './actions';
 import {REDUCER_NAME} from './reducers';
 // Styles
@@ -22,14 +25,16 @@ interface BaseProps {
 }
 
 interface StateProps extends BaseProps {
-    loading: boolean,
-    params: any,
+    loading: boolean
+    loadFailed: boolean
+    params: any
     onLoadDetails: (id: string) => any
     onNameSubmit: (id: string, data: any) => any
     onUserLinkSubmit: (id: string, user: any) => any
     onUserUnlinkSubmit: (id: string) => any
     onPermissionsSubmit: (id: string, data: any) => any
     onGroupsSubmit: (id: string, data: any) => any
+    onDeleteSubmit: (id: string, router: any, location: any) => any
     name: {
         firstName: string
         lastName: string
@@ -90,6 +95,7 @@ const mapStateToProps = (state) => {
     let name: any = _.get(state, REDUCER_NAME+'.data.name', {});
     
     return {
+        loadFailed: _.get(state, REDUCER_NAME+'.loadFailed', false),
         loading: _.get(state, REDUCER_NAME+'.loading', false),
         name: { lastName: name.last, firstName: name.first, middleName: name.middle},
         permissions: _.get(state, REDUCER_NAME+'.data.permissions', undefined),
@@ -103,9 +109,11 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onLoadDetails: function(id: string) {
             return dispatch(get(id))
+            /*
             .then((result) => {
                 return dispatch(getGroups());
             });
+            */
         },
         onNameSubmit: function(id: string, data: {firstName: string, lastName: string, middleName:string}) {
             return dispatch(updateName(id, data))
@@ -121,6 +129,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onGroupsSubmit: function(id: string, data: { selectedGroups: any }) {
             return dispatch(setGroups(id, toGroupsObject(data.selectedGroups)));
+        },
+        onDeleteSubmit: function(id: string, router: any, location: any) {
+            return dispatch(deleteAdmin(id, router, location));
         }
     }
 }
@@ -130,6 +141,14 @@ export class AdminDetails extends React.Component<BaseProps, any> {
 
     public constructor(props?: BaseProps) {
         super(props);
+    }
+    
+    static contextTypes: React.ValidationMap<any> = {
+        router: React.PropTypes.object
+    }
+    
+    context: {
+        router: any
     }
     
     componentWillMount(): any {
@@ -142,6 +161,7 @@ export class AdminDetails extends React.Component<BaseProps, any> {
 
     public render(): React.ReactElement<{}> {
         const {
+            loadFailed,
             loading,
             name,
             user,
@@ -153,9 +173,26 @@ export class AdminDetails extends React.Component<BaseProps, any> {
             onPermissionsSubmit,
             onGroupsSubmit,
             onUserLinkSubmit,
-            onUserUnlinkSubmit
+            onUserUnlinkSubmit,
+            onDeleteSubmit
         } = this.props as StateProps;
-        
+        if (loading) {
+            return (
+                <section className='section-home container'>
+                    <div className='row'>
+                        <div className='col-sm-7'>
+                            <h1 className='page-header'>
+                                Admin Details
+                            </h1>
+                            <Alert bsStyle="info">
+                                <span>Loading...</span>
+                                <Spinner show={true} space="left" />
+                            </Alert>
+                        </div>
+                    </div>
+                </section>
+            )
+        }
         return (
             <section className='section-home container'>
                 <div className='row'>
@@ -163,6 +200,21 @@ export class AdminDetails extends React.Component<BaseProps, any> {
                         <h1 className='page-header'>
                             Admin Details
                         </h1>
+                        {
+                            loadFailed &&
+                            <Alert bsStyle="danger">
+                                <h4>Could not load {params.id}</h4>
+                                <Link
+                                    className='btn btn-default btn-sm'
+                                    to={_.join(_.dropRight(_.split(location.pathname, '/'), 1), '/')}>
+                                    Back to Search
+                                </Link>
+                            </Alert>
+                        }
+                        {
+                           !loading && !loadFailed && 
+                        
+                        <div>
                         <NameDetailsForm 
                             initialValues={{
                                 firstName: name.firstName,
@@ -198,7 +250,12 @@ export class AdminDetails extends React.Component<BaseProps, any> {
                             
                             onSubmit={onPermissionsSubmit.bind(undefined, params.id)}
                         />
-                        <DeleteForm />
+                        <DeleteForm 
+                            onSubmit={onDeleteSubmit.bind(undefined, params.id, this.context.router, location)}
+                        />
+                        
+                        </div>
+                        }
                     </div>
                 </div>
             </section>
