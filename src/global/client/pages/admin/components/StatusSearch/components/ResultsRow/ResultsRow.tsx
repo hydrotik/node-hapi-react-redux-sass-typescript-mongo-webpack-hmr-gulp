@@ -27,7 +27,7 @@ export class ResultsRow extends React.Component<IResultsRowProps, IResultsRowSta
 
     public render(): React.ReactElement<{}> {
 
-        let rows: React.ReactElement<{}> = this.props.data.map((record: any) => {
+        let rows: React.ReactElement<any>[] = _.get(this.props, 'data', []).map((record: any): React.ReactElement<any> => {
                     return (
                         <tr key={record._id}>
                             <td>
