@@ -12,6 +12,8 @@ import {Glyphicon, Input, Label, MenuItem, Alert} from 'react-bootstrap';
 
 interface ReduxFormProps {
     submitting: boolean
+    invalid: boolean
+    pristine: boolean
     handleSubmit: any
     onSubmit: any
     fields: {
@@ -66,6 +68,8 @@ class UserIdentityForm extends React.Component<any, any> {
                     username,
                     email
                 },
+                invalid,
+                pristine,
                 loading,
                 submitting,
                 handleSubmit
@@ -150,6 +154,7 @@ class UserIdentityForm extends React.Component<any, any> {
                     <Button 
                         type="submit"
                         inputClasses={{'btn-primary': true}}
+                        disabled={invalid || submitting || pristine}
                     >
                         Save changes <Spinner show={submitting} space="left" />
                     </Button>

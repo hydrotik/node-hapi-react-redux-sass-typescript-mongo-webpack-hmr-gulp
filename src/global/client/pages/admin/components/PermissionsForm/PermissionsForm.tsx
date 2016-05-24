@@ -13,7 +13,7 @@ import * as _ from 'lodash';
 interface BaseProps {
     initialValues?: {
         permissions: { name: string, active: boolean}[]
-
+        
     }
     onSubmit?: (any) => any
 }
@@ -22,11 +22,19 @@ interface ReduxFormProps extends BaseProps {
     fields: {
         newPermission: any
         permissions: any
+        
+        // touched is a hack for deep form arrays.
+        // Possibly upgrade to v6 to resolve.
+        // See: https://github.com/erikras/redux-form/issues/391
+        touched: any 
     }
     submitting: boolean
+    invalid: boolean
+    pristine: boolean
     handleSubmit: (any) => any
     touch: (any) => any
     changeFieldValue: (field, value) => any
+    initializeForm: (any) => any
 }
 
 const validate = (values) => {
@@ -58,13 +66,19 @@ class Form extends React.Component<BaseProps, any> {
     
     render() : React.ReactElement<any> {
         const {
+            initializeForm,
+            initialValues,
             handleSubmit,
             touch,
             changeFieldValue,
             submitting,
+            pristine,
+            invalid,
+            fields,
             fields: {
                 newPermission,
-                permissions
+                permissions,
+                touched
             }
         } = this.props as ReduxFormProps;
         
@@ -81,6 +95,8 @@ class Form extends React.Component<BaseProps, any> {
                                 content: (<span>Permissions updated</span>)
                             }
                         })
+                        changeFieldValue('touched', false);
+                        
                     })
                     .catch((err) => {
                         this.setState({
@@ -119,9 +135,11 @@ class Form extends React.Component<BaseProps, any> {
                                     inputClasses={{'btn-default': true}}
                                     disabled={submitting || newPermission.pristine || (newPermission.error && newPermission.touched)}
                                     onClick={(e) => {
-                                        touch(['newPermission']);
+                                   
                                         permissions.addField({name: _.trim(_.lowerCase(newPermission.value)), active: true});
                                         changeFieldValue('newPermission', '');
+                                        changeFieldValue('touched', true);
+                                        
 
                                         
                                     }}
@@ -150,7 +168,7 @@ class Form extends React.Component<BaseProps, any> {
                                     onClick={
                                         (e) => {
                                             changeFieldValue('permissions['+index+'].active', !p.active.value);
-                                            
+                                            changeFieldValue('touched', true);
                                         }
                                     }
                                 >
@@ -158,7 +176,17 @@ class Form extends React.Component<BaseProps, any> {
                                     ></i>
                                 </Button>
 
-                                <Button type="button" inputClasses={{"btn-warning": true}} disabled={submitting} onClick={(e) => {permissions.removeField(index)}}>Remove</Button>
+                                <Button 
+                                    type="button"
+                                    inputClasses={{"btn-warning": true}}
+                                    disabled={submitting}
+                                    onClick={
+                                        (e) => {
+                                            permissions.removeField(index);
+                                            changeFieldValue('touched', true);
+                                        }
+                                    }
+                                >Remove</Button>
                                         
                             </span>
                         </div>
@@ -167,6 +195,7 @@ class Form extends React.Component<BaseProps, any> {
                 <Button 
                     type="submit"
                     inputClasses={{'btn-primary': true}}
+                    disabled={submitting || !touched.value}
                 >
                     Save changes <Spinner show={submitting} space="left" />
                 </Button>
@@ -178,7 +207,7 @@ class Form extends React.Component<BaseProps, any> {
 export const PermissionsForm = reduxForm(
     {
         form: 'permissionsForm',
-        fields: ['newPermission', 'permissions[].name', 'permissions[].active'],
+        fields: ['newPermission', 'touched', 'permissions[].name', 'permissions[].active'],
         validate,
         returnRejectedSubmitPromise: true
     },

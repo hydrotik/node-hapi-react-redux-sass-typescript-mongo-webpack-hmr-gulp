@@ -21,7 +21,7 @@ import {REDUCER_NAME} from './reducers';
 import './_AdminDetails.scss';
 
 interface BaseProps {
-    
+
 }
 
 interface StateProps extends BaseProps {

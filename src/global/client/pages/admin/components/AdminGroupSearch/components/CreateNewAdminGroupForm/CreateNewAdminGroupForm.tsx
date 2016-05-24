@@ -21,6 +21,8 @@ interface ReduxFormProps extends BaseProps {
     handleSubmit: (any) => any
     initializeForm: (any) => any
     submitting: boolean
+    invalid: boolean
+    pristine: boolean
 }
 
 const validate = (values) => {
@@ -59,6 +61,8 @@ class Form extends React.Component<BaseProps,any> {
             fields: {
                 name
             },
+            invalid,
+            pristine,
             handleSubmit,
             submitting,
             initializeForm,
@@ -115,6 +119,7 @@ class Form extends React.Component<BaseProps,any> {
                     <Button 
                             type="submit"
                             inputClasses={{'btn-primary': true}}
+                            disabled={submitting || invalid || pristine}
                     >
                         Create new <Spinner show={submitting} space="left" />
                     </Button>
@@ -125,6 +130,7 @@ class Form extends React.Component<BaseProps,any> {
                             type="button"
                             inputClasses={{'btn-default': true}}
                             onClick={onCancel}
+                            disabled={submitting}
                         >
                             Cancel
                         </Button>
