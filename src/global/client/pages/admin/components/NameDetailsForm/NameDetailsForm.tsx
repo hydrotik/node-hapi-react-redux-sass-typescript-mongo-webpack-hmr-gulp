@@ -21,6 +21,8 @@ interface INameDetailsFormProps {
     onSubmit?: (data) => any
     initializeForm?: (data) => any
     error?: string
+    invalid?: boolean
+    pristine?: boolean
 }
 
 const validate = (values) => {
@@ -65,6 +67,8 @@ class Form extends React.Component<INameDetailsFormProps, any> {
                 lastName,
                 middleName,
             },
+            invalid,
+            pristine,
             submitting,
             initializeForm
         } = this.props;
@@ -144,7 +148,7 @@ class Form extends React.Component<INameDetailsFormProps, any> {
 
                     <Button
                         bsStyle="primary"
-                        disabled={submitting}
+                        disabled={submitting || invalid || pristine}
                         type={"submit"}
                     >
                         Save changes <Spinner show={submitting} space="left" />

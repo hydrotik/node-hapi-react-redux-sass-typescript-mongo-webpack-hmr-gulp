@@ -18,12 +18,19 @@ interface BaseProps {
 }
 
 interface ReduxFormProps extends BaseProps {
+    invalid: boolean
+    pristine: boolean
     submitting: boolean
     handleSubmit: (any) => any
     changeFieldValue: (field: any, value: any) => any
     fields: {
         addGroup: any
         selectedGroups: any
+        
+        // touched is a hack for deep form arrays.
+        // Possibly upgrade to v6 to resolve.
+        // See: https://github.com/erikras/redux-form/issues/391
+        touched: any 
     }
 }
 
@@ -42,12 +49,16 @@ class Form extends React.Component<BaseProps, any> {
     render(): React.ReactElement<any> {
         const {
             submitting,
+            pristine,
+            
+            invalid,
             handleSubmit,
             changeFieldValue,
             allGroups,
             fields: {
                 addGroup,
-                selectedGroups
+                selectedGroups,
+                touched
             }
         } = this.props as ReduxFormProps;
         return (
@@ -62,6 +73,8 @@ class Form extends React.Component<BaseProps, any> {
                                 content: (<span>Groups updated</span>)
                             }
                         });
+                        
+                        changeFieldValue('touched', false);
                     })
                     .catch((err) => {
                         this.setState({
@@ -115,6 +128,7 @@ class Form extends React.Component<BaseProps, any> {
                                         selectedGroups.addField({id: group.id, name: group.name});
                                     }
                                     changeFieldValue('addGroup', '');
+                                    changeFieldValue('touched', true);
                                 }
                             }
                         >
@@ -148,6 +162,7 @@ class Form extends React.Component<BaseProps, any> {
                                     onClick={
                                         (e) => {
                                             selectedGroups.removeField(index);
+                                            changeFieldValue('touched', true);
                                         }
                                     }
                                 >
@@ -161,6 +176,7 @@ class Form extends React.Component<BaseProps, any> {
                 <Button
                     type="submit"
                     inputClasses={{"btn-primary": true}}
+                    disabled={invalid || submitting || !touched.value}
                 >
                     Save changes
                 </Button>
@@ -171,7 +187,7 @@ class Form extends React.Component<BaseProps, any> {
 
 export const AdminGroupsForm = reduxForm({
     form: 'adminGroupsForm',
-    fields: ['addGroup', 'selectedGroups[].id', 'selectedGroups[].name'],
+    fields: ['addGroup', 'touched', 'selectedGroups[].id', 'selectedGroups[].name'],
     validate,
     returnRejectedSubmitPromise: true
 },

@@ -19,6 +19,8 @@ interface ReduxFormProps extends BaseProps {
     fields: {
         name: any
     }
+    pristine: boolean
+    invalid: boolean
     submitting: boolean
     handleSubmit: (any) => any
 }
@@ -37,6 +39,8 @@ class Form extends React.Component<BaseProps, any> {
         const {
             handleSubmit,
             submitting,
+            pristine,
+            invalid,
             fields: {
                 name
             }
@@ -83,6 +87,7 @@ class Form extends React.Component<BaseProps, any> {
                 <Button 
                     type="submit"
                     inputClasses={{'btn-primary': true}}
+                    disabled={submitting || invalid || pristine}
                 >
                     Save changes <Spinner show={submitting} space="left" />
                 </Button>
