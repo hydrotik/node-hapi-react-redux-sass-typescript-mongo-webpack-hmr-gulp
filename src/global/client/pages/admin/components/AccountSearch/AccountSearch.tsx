@@ -20,12 +20,13 @@ import { ResultsRow } from './components/ResultsRow/ResultsRow';
 import { FilterFormRow } from './components/FilterFormRow/FilterFormRow';
 import {Button} from '../../../../components/Button/Button';
 import {TextControl} from '../../../../components/TextControl/TextControl';
-import CreateNewAccountForm from './components/CreateNewAccountForm/CreateNewAccountForm';
+import {CreateNewAccountForm} from '../../components/CreateNewAccountForm';
 import {Overlay, Modal, ButtonToolbar, ButtonGroup} from 'react-bootstrap';
 
 // Actions
-import {IAccountsRequest, IAccountsResponse, getResults, setSortFilter, createNewAsync, createNewShowModal, createNewHideModal} from '../../actions'
+import {showAddNew, hideAddNew, list, create, setSortFilter} from './actions';
 
+import {REDUCER_NAME} from './reducers';
 
 // Interfaces
 interface IAccountSearchProps {
@@ -36,10 +37,15 @@ interface IAccountSearchProps {
     data?: any;
     sortFilter: string;
     results?: any;
-    addNewAccount?: any;
+    addNew?: any;
     location?: any;
     loading?: boolean;
     submitting?: boolean;
+    onLoadAccounts?: () => any
+    onHideModal?: (any) => any
+    onShowModal?: (any) => any
+    onCreateNewSubmit?: (any) => any
+    onFiltersChange?: (any) => any
 }
 
 interface IAccountSearchState {
@@ -56,14 +62,44 @@ interface IRouterContext {
 
 function mapStateToProps(state : any) : IAccountSearchProps {
     return {
-        sortFilter: state.accounts['sortFilter'],
-        data: state.accounts['data'],
-        addNewAccount: state.accounts['addNewAccount'],
-        loading: _.get(state, "accounts.loading", false)
+        addNew: _.get(state, REDUCER_NAME+'.addNew', {visible: false}), 
+        sortFilter: _.get(state, REDUCER_NAME+'.sortFilter', ""),
+        data: _.get(state, REDUCER_NAME+'.data', []),
+        loading: _.get(state, REDUCER_NAME+'.loading', false),
     }
 }
 
-@connect(mapStateToProps)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onHideModal: function(e: any) {
+            return dispatch(hideAddNew());
+        },
+        
+        onShowModal: function(e: any) {
+            return dispatch(showAddNew());
+        },
+        
+        onCreateNewSubmit: function(data: { name: { lastName: string, middleName: string, firstName: string } } ) {
+            return dispatch(create(data.name))
+            .then(
+                (result) => {
+                    dispatch(hideAddNew());
+                    return dispatch(list());
+                }
+            )
+        },
+        
+        onFiltersChange: function(e) {
+            dispatch(setSortFilter(e.target.value));
+        },
+        
+        onLoadAccounts: function() {
+            return dispatch(list());
+        }
+    }
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export class AccountSearch extends React.Component<IAccountSearchProps, IAccountSearchState> {
     
     public constructor(props: IAccountSearchProps) {
@@ -80,8 +116,8 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
     };
 
     public componentDidMount(): void {
-        const {dispatch} : IAccountSearchProps = this.props
-        dispatch(getResults({}))
+        const {onLoadAccounts} : IAccountSearchProps = this.props
+        onLoadAccounts();
     }
 
     public getData(): any {
@@ -98,23 +134,6 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
         }
         return this.props.data
     }
-    
-    //public context: IRouterContext;
-
-    public onFiltersChange(e): void {
-        const {dispatch}: IAccountSearchProps = this.props;
-        dispatch(setSortFilter(e.target.value));
-    }
-
-    public onNewClick(): void {
-        const {dispatch}: IAccountSearchProps = this.props;
-        dispatch(createNewShowModal())
-    }
-    
-    public onCancelClick(): void {
-        const {dispatch}: IAccountSearchProps = this.props;
-        dispatch(createNewHideModal());
-    }
 
     public sortHelper(field, reverse, primer) {
        let key = primer ? function(x) {return primer(x[field])} : function(x) {return x[field]};
@@ -130,25 +149,17 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
            return a = key(a), b = key(b), reverse * (+(a > b) - +(b > a));
          } 
     }
-
-    createNew() {
-        this.refs.createnewform.submit();
-    }
-    
-    createNewOnSubmit(values) {
-        const {dispatch} : IAccountSearchProps = this.props;
-        const {lastName, firstName, middleName} = values;
-        
-        return dispatch(createNewAsync({last: lastName, first: firstName, middle: middleName}));
-    }
-    
-    hideModal() {
-        
-    }
     
     public render(): React.ReactElement<{}> {
 
-        let { query } = this.props.location;
+        const {
+            addNew,
+            location,
+            onHideModal,
+            onShowModal,
+            onCreateNewSubmit,
+            onFiltersChange
+        } = this.props;
 
         let loading: boolean = false;
 
@@ -156,56 +167,34 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
             <section className='section-accounts container'>
             
                 
-                <Modal show={this.props.addNewAccount && this.props.addNewAccount.active} onHide={this.hideModal.bind(this)}>
+                <Modal show={addNew && addNew.visible} onHide={onHideModal.bind(this)}>
                          <Modal.Header>
                              <Modal.Title>Create new</Modal.Title>
                          </Modal.Header>
                          <Modal.Body>
                             <CreateNewAccountForm 
                                 ref={"createnewform"}
-                                onSubmit={this.createNewOnSubmit.bind(this)}
-                                {...this.props} />
-                            <ButtonToolbar>
-                            <ButtonGroup>
-                            <Button
-                                type={"submit"}
-                                inputClasses={{"btn-primary": true}}
-                                name={"create"}
-                                value={"Create new"}
-                                onClick={this.createNew.bind(this)}
-                                disabled={this.props.submitting}>
-                                Create new
-                            </Button>
-                            </ButtonGroup>
-                            <ButtonGroup>
-                            <Button
-                                type={"submit"}
-                                inputClasses={{"btn-default": true}}
-                                name={"cancel"}
-                                value={"Cancel"}
-                                onClick={this.onCancelClick.bind(this)}
-                                disabled={this.props.submitting}>
-                                Cancel
-                            </Button>
-                            </ButtonGroup>
-                            </ButtonToolbar>
+                                onCancel={onHideModal}
+                                onSubmit={onCreateNewSubmit.bind(this)}
+                            />
                          </Modal.Body>
                      </Modal>
                     
                 <div className='page-header'>
+                    <h1>Accounts</h1>
                     <button
                         ref='createNew'
                         className='btn btn-default pull-right'
-                        onClick={this.onNewClick.bind(this)}>
+                        onClick={onShowModal.bind(this)}>
                         Create new
                     </button>
-                    <h1>Accounts</h1>
+                    
                 </div>
                 <FilterForm
                     ref='filters'
-                    query={query}
+                    query={location.query}
                     loading={loading}
-                    onChange={this.onFiltersChange.bind(this)}>
+                    onChange={onFiltersChange.bind(this)}>
                         <FilterFormRow />
                 </FilterForm>
                 <Results waiting={this.props.loading}>

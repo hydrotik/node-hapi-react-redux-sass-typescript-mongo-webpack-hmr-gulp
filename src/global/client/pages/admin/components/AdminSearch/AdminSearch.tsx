@@ -15,7 +15,7 @@ import {REDUCER_NAME} from './reducers';
 
 import {Button} from '../../../../components/Button/Button';
 import {TextControl} from '../../../../components/TextControl/TextControl';
-import {CreateNewAdminForm} from './components/CreateNewAdminForm';
+import {CreateNewAccountForm} from '../../components/CreateNewAccountForm';
 import {Overlay, Modal, ButtonToolbar, ButtonGroup} from 'react-bootstrap';
 import {FilterFormRow} from './components/FilterFormRow/FilterFormRow';
 import { Results } from '../Results/Results';
@@ -117,7 +117,7 @@ export class AdminSearch extends React.Component<BaseProps, any> {
                         <Modal.Title>Create new</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    <CreateNewAdminForm 
+                    <CreateNewAccountForm 
                         ref={"createnewform"}
                         onCancel={onHideModal}
                         onSubmit={onCreateNewSubmit.bind(this)}

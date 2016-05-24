@@ -1,10 +1,10 @@
-/// <reference path='../../../../../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../../../typings/main.d.ts' />
 import * as React from 'react';
 import {reduxForm} from 'redux-form';
 
-import {Spinner} from '../../../../../../components/Spinner/Spinner';
-import {TextControl} from '../../../../../../components/TextControl/TextControl';
-import {Button} from '../../../../../../components/Button/Button';
+import {Spinner} from '../../../../components/Spinner/Spinner';
+import {TextControl} from '../../../../components/TextControl/TextControl';
+import {Button} from '../../../../components/Button/Button';
 
 import {Alert} from 'react-bootstrap';
 
@@ -160,8 +160,8 @@ class Form extends React.Component<BaseProps,any> {
     }
 }
 
-export const CreateNewAdminForm = reduxForm({
-    form: 'createNewAdminForm',
+export const CreateNewAccountForm = reduxForm({
+    form: 'createNewAccountForm',
     fields: ['lastName', 'firstName', 'middleName'],
     validate,
     initialValues: {

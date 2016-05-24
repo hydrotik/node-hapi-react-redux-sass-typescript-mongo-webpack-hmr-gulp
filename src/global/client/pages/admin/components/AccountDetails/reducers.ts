@@ -2,10 +2,10 @@
 import * as _ from 'lodash';
 import * as actions from './actions';
 
-export const REDUCER_NAME:string = 'adminDetails';
+export const REDUCER_NAME:string = 'accountDetails';
 
 function loading(state, action) {
-    let newState = _.merge(
+    return _.merge(
         {},
         state,
         {
@@ -13,7 +13,6 @@ function loading(state, action) {
             loading: true
         }
     )
-    return newState;
 }
 
 function get(state, action) {
@@ -61,49 +60,7 @@ function linkUser(state, action) {
     return newState;
 }
 
-function getGroups(state, action) {
-    let newState:any = _.merge(
-        {},
-        state,
-        {
-            data: {}
-        }
-    )
-    
-    newState.allGroups = action.allGroups;
-    
-    return newState;
-}
-
-function setPermissions(state, action) {
-    let newState = _.merge(
-        {},
-        state,
-        {
-            data: {}
-        }
-    );
-    
-    newState.data.permissions = action.permissions;
-    
-    return newState;
-}
-
-function setGroups(state, action) {
-    let newState = _.merge(
-        {},
-        state,
-        {
-            data: {}
-        }
-    );
-    
-    newState.data.groups = action.groups;
-    
-    return newState;
-}
-
-export function reducer(state = {}, action) {
+export function reducer(state: any = { loading: false }, action) {
     switch(action.type) {
         case actions.LOADING: 
             return loading(state, action);
@@ -113,8 +70,6 @@ export function reducer(state = {}, action) {
             return linkUser(state, action);
         case actions.UNLINK_USER:
             return unlinkUser(state, action);
-        case actions.GET_GROUPS:
-            return getGroups(state, action);
     }
     return state;
 }
