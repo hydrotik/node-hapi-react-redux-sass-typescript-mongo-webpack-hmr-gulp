@@ -24,10 +24,7 @@ interface ICarouselProps {
     store?: any;
 }
 
-interface ICarouselState {
-    slides?: any;
-    isFetching?: boolean;
-    lastUpdated?: number;
+interface ICarouselState extends ICarouselProps{
 }
 
 function select(state: { carouselContent: ICarouselAction }): ICarouselState {
@@ -49,8 +46,7 @@ function select(state: { carouselContent: ICarouselAction }): ICarouselState {
  * @class Carousel
  * @augments {React.Component}
  */
-@connect(select)
-export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
+class Form extends React.Component<ICarouselProps, ICarouselState> {
 
     public constructor(props: any) {
         super(props);
@@ -94,3 +90,5 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
         );
     }
 }
+
+export const Carousel = connect(select)(Form);

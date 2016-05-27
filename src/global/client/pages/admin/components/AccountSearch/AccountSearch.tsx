@@ -7,6 +7,7 @@
 // Core Imports
 import * as React from 'react';
 import {connect, Provider} from 'react-redux';
+import * as _ from 'lodash';
 
 // Styles
 import './_AccountSearch.scss';
@@ -69,7 +70,7 @@ function mapStateToProps(state : any) : IAccountSearchProps {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) : any => {
     return {
         onHideModal: function(e: any) {
             return dispatch(hideAddNew());
@@ -99,8 +100,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class AccountSearch extends React.Component<IAccountSearchProps, IAccountSearchState> {
+class Container extends React.Component<IAccountSearchProps, IAccountSearchState> {
     
     public constructor(props: IAccountSearchProps) {
         super(props);
@@ -214,5 +214,5 @@ export class AccountSearch extends React.Component<IAccountSearchProps, IAccount
     }
 }
 
-
+export const AccountSearch = connect(mapStateToProps, mapDispatchToProps)(Container);
 

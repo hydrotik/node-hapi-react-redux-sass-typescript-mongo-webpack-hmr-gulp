@@ -17,6 +17,7 @@ import {DeleteForm} from '../DeleteForm';
 import {Spinner} from '../../../../components/Spinner/Spinner';
 import {get, unlinkUser, linkUser, updateName, setPermissions, setGroups, getGroups, deleteAdmin} from './actions';
 import {REDUCER_NAME} from './reducers';
+import * as _ from 'lodash';
 // Styles
 import './_AdminDetails.scss';
 
@@ -91,7 +92,7 @@ const toGroupsObject = (groupsArr: {id: string, name: string}[]): {[key: string]
     return _.mapValues(_.groupBy(groupsArr, (val: {id: string, name: string}) => { return val.id }), (val) => { return _.get(_.first(val), 'name');}) as {[key: string]: string};
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state): any => {
     let name: any = _.get(state, REDUCER_NAME+'.data.name', {});
     
     return {
@@ -105,7 +106,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch): any => {
     return {
         onLoadDetails: function(id: string) {
             return dispatch(get(id))
@@ -136,8 +137,8 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class AdminDetails extends React.Component<BaseProps, any> {
+
+class Container extends React.Component<BaseProps, any> {
 
     public constructor(props?: BaseProps) {
         super(props);
@@ -262,3 +263,5 @@ export class AdminDetails extends React.Component<BaseProps, any> {
         );
     }
 }
+
+export const AdminDetails = connect(mapStateToProps, mapDispatchToProps)(Container);

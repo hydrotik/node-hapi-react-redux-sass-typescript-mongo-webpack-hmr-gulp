@@ -2,6 +2,8 @@
 
 import Fetch from '../../../api/jsonfetch';
 import ParseValidation, { IValidation } from '../../../api/parsevalidation';
+import * as _ from 'lodash';
+import {Promise} from 'es6-promise';
 
 export const GET_RESULTS_REQUEST: string = 'GET_RESULTS_REQUEST';
 export const GET_RESULTS_RESPONSE: string = 'GET_RESULTS_RESPONSE';

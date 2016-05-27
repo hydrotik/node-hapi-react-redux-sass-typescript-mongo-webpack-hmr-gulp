@@ -1,6 +1,7 @@
 /// <reference path='../../../../../../../../../typings/main.d.ts' />
 import * as React from 'react';
 import {reduxForm} from 'redux-form';
+import {Promise} from 'es6-promise';
 
 import {Spinner} from '../../../../../../components/Spinner/Spinner';
 import {TextControl} from '../../../../../../components/TextControl/TextControl';

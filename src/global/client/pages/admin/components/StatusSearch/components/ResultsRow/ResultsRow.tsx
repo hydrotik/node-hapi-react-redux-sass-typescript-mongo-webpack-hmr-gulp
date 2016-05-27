@@ -1,5 +1,6 @@
 /// <reference path='../../../../../../../../../typings/main.d.ts' />
 import { Link } from 'react-router';
+import * as _ from 'lodash';
 
 /*
     Row include for admin/components/Results/Results.jsx

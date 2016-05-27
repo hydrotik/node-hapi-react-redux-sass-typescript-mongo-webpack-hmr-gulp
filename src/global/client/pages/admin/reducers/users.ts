@@ -1,5 +1,5 @@
 /// <reference path="../../../../../../typings/main.d.ts" />
-import * as lodash from 'lodash';
+import * as _ from 'lodash';
 
 import * as actions from '../actions/users';
 

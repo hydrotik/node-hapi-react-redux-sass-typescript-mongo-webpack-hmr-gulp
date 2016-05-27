@@ -12,6 +12,8 @@ import {get, updateDetails, deleteStatus} from './actions';
 import {REDUCER_NAME} from './reducers';
 
 import {Alert} from 'react-bootstrap';
+import * as _ from 'lodash';
+
 // Styles
 import './_StatusDetails.scss';
 
@@ -31,7 +33,7 @@ interface StateProps extends BaseProps{
     params: any
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state): any => {
     return {
         loading: _.get(state, REDUCER_NAME+'.loading', false),
         loadFailed: _.get(state, REDUCER_NAME+'.loadFailed', false),
@@ -40,7 +42,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch): any => {
     return {
         onLoadDetails: function(id: string) {
             return dispatch(get(id));
@@ -54,8 +56,8 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class StatusDetails extends React.Component<BaseProps, any> {
+
+class Container extends React.Component<BaseProps, any> {
 
     static contextTypes: React.ValidationMap<any> = {
         router: React.PropTypes.object
@@ -130,3 +132,5 @@ export class StatusDetails extends React.Component<BaseProps, any> {
         );
     }
 }
+
+export const StatusDetails = connect(mapStateToProps, mapDispatchToProps)(Container);

@@ -69,8 +69,8 @@ function select(state: { login: ILoginMapping; }): IHomeProps {
     };
 
 }
-@connect(select)
-export class Home extends React.Component<IHomeProps, IHomeState> {
+
+class Form extends React.Component<IHomeProps, IHomeState> {
 
 
 
@@ -180,3 +180,5 @@ export class Home extends React.Component<IHomeProps, IHomeState> {
         );
     }
 }
+
+export const Home = connect(select)(Form);

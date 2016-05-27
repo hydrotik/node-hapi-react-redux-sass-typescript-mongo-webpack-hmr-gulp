@@ -100,8 +100,8 @@ const mapDispatchToProps = (dispatch: (func: any) => any, ownProps: ReactRouterP
     }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class AccountDetails extends React.Component<StateProps & DispatchProps &ReactRouterProps, any> {
+
+class Container extends React.Component<StateProps & DispatchProps &ReactRouterProps, any> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -202,3 +202,5 @@ export class AccountDetails extends React.Component<StateProps & DispatchProps &
         );
     }
 }
+
+export const AccountDetails = connect(mapStateToProps, mapDispatchToProps)(Container);

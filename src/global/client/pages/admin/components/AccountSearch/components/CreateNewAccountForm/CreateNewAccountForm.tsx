@@ -3,6 +3,8 @@ import {Button} from '../../../../../../components/Button/Button';
 import {TextControl} from '../../../../../../components/TextControl/TextControl'
 import {reduxForm} from 'redux-form';
 
+import {Promise} from 'es6-promise';
+
 interface ICreateNewAccountFormProps {
     fields?: {
         lastName: any,

@@ -112,10 +112,15 @@ module.exports = {
         extractCSS,
         new webpack.optimize.DedupePlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new ForkCheckerPlugin()
+        new ForkCheckerPlugin(),
+        new webpack.ProvidePlugin({
+            'Promise': 'es6-promise',
+            '_': 'lodash'
+        })
     ],
     resolve: {
-        extensions: ['', '.js', '.json', '.jsx', '.scss', '.ts', '.tsx'],
+        // Do NOT put .js or .jsx files here! ONLY Typescript Allowed!
+        extensions: ['', '.json', '.js', '.scss', '.ts', '.tsx'],
         root: [`${__dirname}/src/global/client/`],
         fallback: path.join(__dirname, "node_modules"),
         alias: {

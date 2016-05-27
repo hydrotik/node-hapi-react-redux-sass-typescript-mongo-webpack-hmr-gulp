@@ -1,6 +1,7 @@
 // Core Imports
 import * as React from 'react';
 import * as _ from 'lodash';
+import {Promise} from 'es6-promise';
 
 import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from 'react-bootstrap';
 

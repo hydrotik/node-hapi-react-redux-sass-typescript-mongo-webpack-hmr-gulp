@@ -14,7 +14,7 @@ interface IHeaderProps {
     on?: boolean;
 }
 
-interface IHeaderState {
+interface IHeaderState extends IHeaderProps {
     on?: boolean;
 }
 
@@ -30,8 +30,7 @@ function select(state: { toggle: IToggleAction }): IHeaderState {
     };
 }
 
-@connect(select)
-export class Header extends React.Component<IHeaderProps, IHeaderState> {
+class Container extends React.Component<IHeaderProps, IHeaderState> {
 
     public handleToggleMouseDown: any = (event: any) => {
         event.preventDefault();
@@ -74,3 +73,5 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
         );
     }
 }
+
+export const Header = connect(select)(Container);

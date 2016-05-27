@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import {reduxForm} from 'redux-form';
+import * as _ from 'lodash';
 
 import {Alert} from 'react-bootstrap';
 import {ControlGroup} from '../../../../../components/ControlGroup/ControlGroup';

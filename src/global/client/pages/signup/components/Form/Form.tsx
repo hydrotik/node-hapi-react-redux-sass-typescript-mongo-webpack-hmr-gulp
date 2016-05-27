@@ -35,16 +35,12 @@ interface IFormProps {
     password?: string;
     email?: string;
 }
-interface IFormState {
+interface IFormState extends IFormProps {
     success?: boolean;
     errormessage?: string;
     hasError?: any;
     help?: any;
     loading?: boolean;
-    name?: string;
-    username?: string;
-    password?: string;
-    email?: string;
     field?: string;
     value?: string;
 }
@@ -82,8 +78,7 @@ function select(state: { formSignup: IFormMapping; }): IFormState {
 
 }
 
-@connect(select)
-export class Form extends React.Component<IFormProps, IFormState> {
+class F extends React.Component<IFormProps, IFormState> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -219,3 +214,6 @@ export class Form extends React.Component<IFormProps, IFormState> {
         );
     }
 }
+
+export const Form = connect(select)(F);
+

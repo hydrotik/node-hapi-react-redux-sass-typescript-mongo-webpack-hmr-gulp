@@ -46,7 +46,7 @@ interface StateProps extends BaseProps {
     }]
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state): any => {
     return {
         addNew: _.get(state, REDUCER_NAME+'.addNew', {visible: false}), 
         data: _.get(state, REDUCER_NAME+'.results.data', []),
@@ -54,7 +54,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch): any => {
     return {
         onHideModal: function(e: any) {
             return dispatch(hideAddNew());
@@ -84,10 +84,10 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class StatusSearch extends React.Component<{}, {}> {
 
-    public constructor(props: any = {}) {
+class Container extends React.Component<BaseProps, any> {
+
+    public constructor(props?: BaseProps) {
         super(props);
     }
     
@@ -149,3 +149,4 @@ export class StatusSearch extends React.Component<{}, {}> {
         );
     }
 }
+export const StatusSearch = connect(mapStateToProps, mapDispatchToProps)(Container);

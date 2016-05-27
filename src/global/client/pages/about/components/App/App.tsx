@@ -24,10 +24,8 @@ interface IAppProps {
     editorial?: any;
     store?: any;
 }
-interface IAppState {
-    editorial?: any;
-    isFetching?: boolean;
-    lastUpdated?: number;
+interface IAppState extends IAppProps {
+
 }
 
 // Decorators
@@ -46,8 +44,8 @@ function select(state: { editorialContent: IEditorialAction; }): IAppState {
     };
 }
 
-@connect(select)
-export class App extends React.Component<IAppProps, IAppState> {
+
+class Container extends React.Component<IAppProps, IAppState> {
 
     public constructor(props: any) {
         super(props);
@@ -69,3 +67,6 @@ export class App extends React.Component<IAppProps, IAppState> {
         );
     }
 }
+
+export const App = connect(select)(Container);
+

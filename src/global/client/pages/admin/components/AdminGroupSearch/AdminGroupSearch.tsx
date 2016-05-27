@@ -46,7 +46,7 @@ interface StateProps extends BaseProps {
     }]
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state): any => {
     return {
         addNew: _.get(state, REDUCER_NAME+'.addNew', {visible: false}), 
         data: _.get(state, REDUCER_NAME+'.results.data', []),
@@ -54,7 +54,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch): any => {
     return {
         onHideModal: function(e: any) {
             return dispatch(hideAddNew());
@@ -84,8 +84,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class AdminGroupSearch extends React.Component<{}, {}> {
+class Container extends React.Component<{}, {}> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -152,3 +151,5 @@ export class AdminGroupSearch extends React.Component<{}, {}> {
         );
     }
 }
+
+export const AdminGroupSearch = connect(mapStateToProps, mapDispatchToProps)(Container);

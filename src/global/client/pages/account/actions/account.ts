@@ -2,6 +2,7 @@
 
 import Fetch from '../../../api/jsonfetch';
 import ParseValidation, { IValidation } from '../../../api/parsevalidation';
+import * as _ from 'lodash';
 
 export const FORM_INIT: string = 'FORM_INIT';
 export const FORM_RESET: string = 'FORM_RESET';

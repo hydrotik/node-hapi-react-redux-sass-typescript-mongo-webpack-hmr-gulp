@@ -35,7 +35,7 @@ interface IPasswordFormProps {
     loading?: boolean;
 }
 
-interface IPasswordFormState {
+interface IPasswordFormState extends IPasswordFormProps {
 
 }
 
@@ -64,8 +64,7 @@ function select(state: { account: IAccountMapping; }): IPasswordFormState {
 
 }
 
-@connect(select)
-export class PasswordForm extends React.Component<IPasswordFormProps, IPasswordFormState> {
+class Form extends React.Component<IPasswordFormProps, IPasswordFormState> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -168,3 +167,4 @@ export class PasswordForm extends React.Component<IPasswordFormProps, IPasswordF
         );
     }
 }
+export const PasswordForm = connect(select)(Form);

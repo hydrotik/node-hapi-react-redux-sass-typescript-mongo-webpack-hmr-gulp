@@ -27,17 +27,16 @@ import {
 } from '../../actions';
 
 // Interfaces
-interface INavBarProps {
-    dispatch?: (func: any) => void;
-    store?: any;
+interface BaseProps {
     navBarOpen?: boolean;
-
     pages?: any;
-    navStyle: string;
+    navStyle?: string;
 }
 
-interface INavBarState {
-    navBarOpen: boolean;
+interface StateProps extends BaseProps {
+    dispatch: (any) => any;
+    onResetMenu: (any) => any;
+    onToggleMenu: (any) => any;
 }
 
 
@@ -47,7 +46,7 @@ const NavLink: any = ac('li');
 
 
 // Decorators
-function select(state: { onNavBarReducer: INavBarAction; }): INavBarState {
+const mapStateToProps = (state: any): any => {
     const { onNavBarReducer }: { onNavBarReducer: INavBarAction; } = state;
     const {
         navBarOpen
@@ -59,23 +58,44 @@ function select(state: { onNavBarReducer: INavBarAction; }): INavBarState {
 
 }
 
-@connect(select)
-export class NavBar extends React.Component<INavBarProps, INavBarState> {
+const mapDispatchToProps = (dispatch: (any) => any) => {
+    return {
+        onResetMenu: (event: any): void => {
+            dispatch(collapseNavBar());
+        },
+        onToggleMenu: (event: any): void => {
+            dispatch(this.props.navBarOpen ? collapseNavBar() : openNavBar())
+        }
+    }
+    
+}
 
-    public constructor(props: INavBarProps = { navBarOpen: false, pages: {}, navStyle: 'navbar-default'}) {
-        super(props);
+class Container extends React.Component<BaseProps, any> {
 
+    public constructor(props?: BaseProps) {
+        super({
+            navBarOpen: props.navBarOpen || false,
+            pages: props.pages || {},
+            navStyle: props.navStyle || 'navbar-default'
+        });
+        
         browserHistory.listen(this.resetMenu);
     }
 
-    public resetMenu: any = (event: any): void => {
-        const { dispatch }: INavBarProps = this.props
-        dispatch(collapseNavBar());
+    public resetMenu(event: any): any {
+        const {
+            onResetMenu
+        } = this.props as StateProps;
+        
+        return onResetMenu(event);
     }
 
-    public toggleMenu: any = (event: any): void => {
-        const { dispatch }: INavBarProps = this.props
-        dispatch(this.props.navBarOpen ? collapseNavBar() : openNavBar())
+    public toggleMenu(event: any): any {
+        const {
+            onToggleMenu
+        } = this.props as StateProps;
+        
+        return onToggleMenu(event);
     }
 
     public createNavItem(object: any, i: number): any {
@@ -88,7 +108,16 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
     public render(): React.ReactElement<{}> {
 
-        const { navBarOpen }: INavBarProps = this.props;
+        const {
+            navBarOpen,
+            pages,
+            navStyle
+        } = this.props;
+        
+        const {
+            onToggleMenu,
+            onResetMenu
+        } = this.props as StateProps;
 
         let navBarCollapse: any = ClassNames({
             'navbar-collapse': !navBarOpen,
@@ -112,7 +141,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                         </a>
                         <button
                             className="navbar-toggle collapsed"
-                            onClick={this.toggleMenu}>
+                            onClick={onToggleMenu}>
 
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
@@ -121,7 +150,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                     </div>
                     <div className={navBarCollapse}>
                         {
-                              this.props.pages ? <NavElementPages {...this.props} /> : null
+                              this.props.pages ? <NavElementPages pages navBarOpen /> : null
                         }
 
                         { this.props.children }
@@ -142,3 +171,8 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
         );
     }
 }
+
+// TODO: Understand this...
+// Seems I have to explicitly type connect here. I don't know why, yet...
+// See: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/6237
+export const NavBar = connect<any, any, BaseProps>(mapStateToProps, mapDispatchToProps)(Container);

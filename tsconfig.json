@@ -10,6 +10,7 @@
     "sourceRoot": "src/global"
   },
   "exclude": [
+    "typings/main",
     "typings/browser.d.ts",
     "typings/browser",
     "node_modules"
