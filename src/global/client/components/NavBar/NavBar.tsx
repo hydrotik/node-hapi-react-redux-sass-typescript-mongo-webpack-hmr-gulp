@@ -1,4 +1,4 @@
-
+/// <reference path='../../../../../typings/index.d.ts' />
 
 // Core Imports
 import * as React from 'react';
@@ -51,7 +51,7 @@ const mapStateToProps = (state: any): any => {
     const {
         navBarOpen
     }: INavBarAction = onNavBarReducer;
-
+    
     return {
         navBarOpen
     };
@@ -79,7 +79,6 @@ class Container extends React.Component<BaseProps, any> {
             navStyle: _.get(props, 'navStyle', 'navbar-default')
         });
         
-        
     }
     
     componentDidMount() {
@@ -95,8 +94,7 @@ class Container extends React.Component<BaseProps, any> {
         } = this.props as StateProps;
         
         return onResetMenu(event);
-        
-        
+
     }
 
     public toggleMenu(event: any): any {
@@ -150,7 +148,7 @@ class Container extends React.Component<BaseProps, any> {
                         </a>
                         <button
                             className="navbar-toggle collapsed"
-                            onClick={onToggleMenu}>
+                            onClick={onToggleMenu.bind(this)}>
 
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>

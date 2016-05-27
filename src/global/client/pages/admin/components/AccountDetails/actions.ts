@@ -1,4 +1,4 @@
-/// <reference path="../../../../../../../typings/main.d.ts" />
+/// <reference path="../../../../../../../typings/index.d.ts" />
 import Fetch from '../../../../api/jsonfetch';
 import * as _ from 'lodash';
 import {Promise} from 'es6-promise';

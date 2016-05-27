@@ -1,4 +1,4 @@
-/// <reference path="../../../../typings/main.d.ts" />
+/// <reference path="../../../../typings/index.d.ts" />
 
 import * as Xhr from 'xhr';
 import * as Cookie from 'cookie';

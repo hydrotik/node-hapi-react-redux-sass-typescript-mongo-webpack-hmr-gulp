@@ -1,4 +1,4 @@
-/// <reference path='../../../../../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../../../../../typings/index.d.ts' />
 
 //  Ported from:
 //  Timeline.js v0.1 / 2011-05-01

@@ -1,3 +1,5 @@
+/// <reference path='../../../../../../typings/index.d.ts' />
+
 import * as React from 'react';
 import { map } from 'lodash';
 import * as ClassNames from 'classnames';
