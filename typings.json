@@ -2,6 +2,7 @@
   "name": "scalable-stack-framework",
   "version": false,
   "dependencies": {
+    "es6-promise": "registry:npm/es6-promise#3.0.0+20160211003958",
     "lodash": "registry:npm/lodash#4.0.0+20160416211519",
     "react-map-gl": "github:dhsaks/typescript-definitions/react-map-gl/index.d.ts#055bb4b3bc7805e6bfaa0009d471c677bc6131f9",
     "react-router": "registry:npm/react-router#2.0.0+20160214194820",

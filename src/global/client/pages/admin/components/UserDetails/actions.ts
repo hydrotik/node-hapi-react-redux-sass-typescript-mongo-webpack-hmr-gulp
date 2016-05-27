@@ -1,5 +1,3 @@
-/// <reference path="../../../../../../../typings/main.d.ts" />
-
 import Fetch from '../../../../api/jsonfetch';
 import ParseValidation, { IValidation } from '../../../../api/parsevalidation';
 import {Promise} from 'es6-promise';

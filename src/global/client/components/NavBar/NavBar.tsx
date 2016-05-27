@@ -1,9 +1,9 @@
-/// <reference path='../../../../../typings/main.d.ts' />
+
 
 // Core Imports
 import * as React from 'react';
 import * as ClassNames from 'classnames';
-import { map } from 'lodash';
+import * as _ from 'lodash';
 
 import { browserHistory } from 'react-router';
 
@@ -74,12 +74,19 @@ class Container extends React.Component<BaseProps, any> {
 
     public constructor(props?: BaseProps) {
         super({
-            navBarOpen: props.navBarOpen || false,
-            pages: props.pages || {},
-            navStyle: props.navStyle || 'navbar-default'
+            navBarOpen: _.get(props, 'navBarOpen', false),
+            pages: _.get(props, 'pages', {}),
+            navStyle: _.get(props, 'navStyle', 'navbar-default')
         });
         
-        browserHistory.listen(this.resetMenu);
+        
+    }
+    
+    componentDidMount() {
+        const {
+            onResetMenu
+        } = this.props as StateProps;
+        browserHistory.listen(onResetMenu);
     }
 
     public resetMenu(event: any): any {
@@ -88,6 +95,8 @@ class Container extends React.Component<BaseProps, any> {
         } = this.props as StateProps;
         
         return onResetMenu(event);
+        
+        
     }
 
     public toggleMenu(event: any): any {
@@ -150,7 +159,7 @@ class Container extends React.Component<BaseProps, any> {
                     </div>
                     <div className={navBarCollapse}>
                         {
-                              this.props.pages ? <NavElementPages pages navBarOpen /> : null
+                              this.props.pages ? <NavElementPages pages={pages} navBarOpen={navBarOpen} /> : null
                         }
 
                         { this.props.children }
