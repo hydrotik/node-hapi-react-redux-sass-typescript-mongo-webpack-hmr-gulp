@@ -7,7 +7,7 @@
     "inlineSourceMap": false,
     "inlineSources": false,
     "sourceMap": true,
-    "sourceRoot": "src/global"
+    "sourceRoot": "/src/global"
   },
   "exclude": [
     "typings/main",

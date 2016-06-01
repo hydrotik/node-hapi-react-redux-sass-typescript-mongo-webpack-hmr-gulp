@@ -98,7 +98,7 @@ cssLoader = [
 
 
 module.exports = {
-    devtool: 'source-map',
+    devtool: 'cheap-module-eval-source-map',
     entry: Entries,
     output: {
         path: path.join(buildDir, 'pages'),
@@ -112,14 +112,10 @@ module.exports = {
         extractCSS,
         new webpack.optimize.DedupePlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new ForkCheckerPlugin(),
-        new webpack.ProvidePlugin({
-            'Promise': 'es6-promise',
-            '_': 'lodash'
-        })
+        new ForkCheckerPlugin()
     ],
     resolve: {
-        // Do NOT put .js or .jsx files here! ONLY Typescript Allowed!
+        // Do NOT put .jsx files here! ONLY React-Typescript Allowed!
         extensions: ['', '.json', '.js', '.scss', '.ts', '.tsx'],
         root: [`${__dirname}/src/global/client/`],
         fallback: path.join(__dirname, "node_modules"),
@@ -135,7 +131,7 @@ module.exports = {
         fs: "empty"
     },
     module: {
-        preloaders: [{
+        preLoaders: [{
             test: /\.ts(x?)$/,
             loader: 'tslint'
         }],
@@ -164,7 +160,7 @@ module.exports = {
             exclude: /node_modules/
         }, {
             test: /\.ts(x?)$/,
-            loader: 'react-hot!awesome-typescript-loader',
+            loader: 'react-hot!source-map-loader!ts-loader',
             exclude: [/bower_components/, /node_modules/]
         },{
             test: /\.js$/,
@@ -175,28 +171,5 @@ module.exports = {
             include: path.resolve(__dirname, 'node_modules/webworkify/index.js'),
             loader: 'worker'
         }]
-    },
-    tslint: {
-        configuration: {
-
-        },
-
-        // tslint errors are displayed by default as warnings
-        // set emitErrors to true to display them as errors
-        emitErrors: false,
-
-        // tslint does not interrupt the compilation by default
-        // if you want any file with tslint errors to fail
-        // set failOnHint to true
-        failOnHint: true,
-
-
-        //rulesDirectory: 'node_modules/tslint-eslint-rules/dist/rules',
-
-        // name of your formatter (optional)
-        //formatter: "yourformatter",
-
-        // path to directory containing formatter (optional)
-        formattersDirectory: "node_modules/tslint-loader/formatters/"
     }
 };
