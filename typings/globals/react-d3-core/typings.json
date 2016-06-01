@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "https://raw.githubusercontent.com/dhsaks/typescript-definitions/66fdaab8fd24902429204d7c269387ca011c1428/react-d3-core/index.d.ts",
-    "raw": "github:dhsaks/typescript-definitions/react-d3-core/index.d.ts#66fdaab8fd24902429204d7c269387ca011c1428",
-    "typings": "https://raw.githubusercontent.com/dhsaks/typescript-definitions/66fdaab8fd24902429204d7c269387ca011c1428/react-d3-core/index.d.ts"
-  }
-}

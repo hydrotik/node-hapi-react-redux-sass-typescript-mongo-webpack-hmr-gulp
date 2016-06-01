@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "https://raw.githubusercontent.com/dhsaks/typescript-definitions/e85e2d5ad761066f1cc3d43cbb392af8b562b5c6/react-sparklines/index.d.ts",
-    "raw": "github:dhsaks/typescript-definitions/react-sparklines/index.d.ts#e85e2d5ad761066f1cc3d43cbb392af8b562b5c6",
-    "typings": "https://raw.githubusercontent.com/dhsaks/typescript-definitions/e85e2d5ad761066f1cc3d43cbb392af8b562b5c6/react-sparklines/index.d.ts"
-  }
-}

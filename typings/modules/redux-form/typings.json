@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "https://raw.githubusercontent.com/dhsaks/typescript-definitions/99c95d2c0e32ae9bb81c263d61952a8b8d3b2513/redux-form/index.d.ts",
-    "raw": "github:dhsaks/typescript-definitions/redux-form/index.d.ts#99c95d2c0e32ae9bb81c263d61952a8b8d3b2513",
-    "typings": "https://raw.githubusercontent.com/dhsaks/typescript-definitions/99c95d2c0e32ae9bb81c263d61952a8b8d3b2513/redux-form/index.d.ts"
-  }
-}

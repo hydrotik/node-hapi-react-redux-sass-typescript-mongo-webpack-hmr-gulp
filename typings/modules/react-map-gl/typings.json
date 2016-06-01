@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "https://raw.githubusercontent.com/dhsaks/typescript-definitions/055bb4b3bc7805e6bfaa0009d471c677bc6131f9/react-map-gl/index.d.ts",
-    "raw": "github:dhsaks/typescript-definitions/react-map-gl/index.d.ts#055bb4b3bc7805e6bfaa0009d471c677bc6131f9",
-    "typings": "https://raw.githubusercontent.com/dhsaks/typescript-definitions/055bb4b3bc7805e6bfaa0009d471c677bc6131f9/react-map-gl/index.d.ts"
-  }
-}
