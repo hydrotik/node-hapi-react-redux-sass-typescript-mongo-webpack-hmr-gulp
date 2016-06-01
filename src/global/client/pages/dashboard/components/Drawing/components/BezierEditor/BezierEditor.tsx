@@ -1,4 +1,4 @@
-/// <reference path='../../../../../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../../../../../typings/index.d.ts' />
 
 // Ported from
 // Bezier Tool Canvas Commands Generator

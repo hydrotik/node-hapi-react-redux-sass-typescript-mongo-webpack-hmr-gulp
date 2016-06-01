@@ -1,4 +1,4 @@
-/// <reference path='../../../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../../../typings/index.d.ts' />
 
 // Core Imports
 import * as React from 'react';
@@ -80,8 +80,8 @@ function select(state: { login: IResetMapping; }): IResetProps {
     };
 
 }
-@connect(select)
-export class Reset extends React.Component<IResetProps, IResetState> {
+
+class Form extends React.Component<IResetProps, IResetState> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -198,3 +198,5 @@ export class Reset extends React.Component<IResetProps, IResetState> {
         );
     }
 }
+
+export const Reset = connect(select)(Form);

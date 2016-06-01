@@ -1,4 +1,4 @@
-/// <reference path='../../../../typings/main.d.ts' />
+/// <reference path='../../../../typings/index.d.ts' />
 
 let repeat: (str: string, times: number) => string = function repeat(str: string, times: number): string {
   return new Array(times + 1).join(str);

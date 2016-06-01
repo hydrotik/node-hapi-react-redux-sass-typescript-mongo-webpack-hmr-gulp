@@ -1,15 +1,15 @@
-/// <reference path='../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../typings/index.d.ts' />
 
 // Core Imports
 import * as React from 'react';
 import * as ClassNames from 'classnames';
-import { map } from 'lodash';
+import * as _ from 'lodash';
 
 import { browserHistory } from 'react-router';
 
 // https://github.com/insin/react-router-active-component
 import * as activeComponent from 'react-router-active-component';
-import { connect } from 'react-redux';
+import { connect, MergeProps } from 'react-redux';
 
 // Child components of the NavBar
 import {NavElementPages} from './NavElementPages/NavElementPages';
@@ -18,7 +18,6 @@ import './_NavBar.scss';
 
 // Page Components
 
-
 // Behaviors and Actions
 import {
     INavBarAction,
@@ -26,20 +25,21 @@ import {
     openNavBar
 } from '../../actions';
 
-// Interfaces
-interface INavBarProps {
-    dispatch?: (func: any) => void;
-    store?: any;
+interface TProps {
+    pages: any;
+    navStyle?: string;
+}
+
+interface TMapStateToProps {
     navBarOpen?: boolean;
-
-    pages?: any;
-    navStyle: string;
 }
 
-interface INavBarState {
-    navBarOpen: boolean;
+interface TDispatchProps {
+    onResetMenu?: (event: any) => any;
+    onToggleMenu?: (event: any, navBarOpen: boolean) => any;
 }
 
+type TConnectedProps = TMapStateToProps & TDispatchProps;
 
 
 let ac: any = activeComponent;
@@ -47,35 +47,61 @@ const NavLink: any = ac('li');
 
 
 // Decorators
-function select(state: { onNavBarReducer: INavBarAction; }): INavBarState {
+const mapStateToProps = (state: any): TMapStateToProps => {
     const { onNavBarReducer }: { onNavBarReducer: INavBarAction; } = state;
     const {
         navBarOpen
     }: INavBarAction = onNavBarReducer;
-
+    
     return {
         navBarOpen
     };
 
 }
 
-@connect(select)
-export class NavBar extends React.Component<INavBarProps, INavBarState> {
+const mapDispatchToProps = (dispatch: any, ownProps: any): TDispatchProps => {
+    return {
+        onResetMenu: (event: any): void => {
+            dispatch(collapseNavBar());
+        },
+        onToggleMenu: (event: any, navBarOpen: boolean): void => {
+            console.log(navBarOpen);
+            dispatch(navBarOpen ? collapseNavBar() : openNavBar())
+        }
+    }
+    
+}
 
-    public constructor(props: INavBarProps = { navBarOpen: false, pages: {}, navStyle: 'navbar-default'}) {
+class Container extends React.Component<TConnectedProps & TProps, any> {
+
+    public constructor(props: TProps) {
         super(props);
-
-        browserHistory.listen(this.resetMenu);
+        
+    }
+    
+    componentDidMount() {
+        const {
+            onResetMenu
+        } = this.props;
+        browserHistory.listen(onResetMenu);
     }
 
-    public resetMenu: any = (event: any): void => {
-        const { dispatch }: INavBarProps = this.props
-        dispatch(collapseNavBar());
+    public resetMenu(event: any): any {
+        const {
+            onResetMenu
+        } = this.props;
+        
+        return onResetMenu(event);
+
     }
 
-    public toggleMenu: any = (event: any): void => {
-        const { dispatch }: INavBarProps = this.props
-        dispatch(this.props.navBarOpen ? collapseNavBar() : openNavBar())
+    public toggleMenu(event: any): any {
+        const {
+            onToggleMenu,
+            navBarOpen
+        } = this.props;
+        
+        return onToggleMenu(event, navBarOpen);
     }
 
     public createNavItem(object: any, i: number): any {
@@ -87,9 +113,15 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
     }
 
     public render(): React.ReactElement<{}> {
+        const {
+            navBarOpen,
+            pages,
+            navStyle,
+            onToggleMenu,
+            onResetMenu
+        } = this.props;
 
-        const { navBarOpen }: INavBarProps = this.props;
-
+        
         let navBarCollapse: any = ClassNames({
             'navbar-collapse': !navBarOpen,
             collapse: !navBarOpen
@@ -98,10 +130,8 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
         let navStyleMain: any = ClassNames(
             'navbar',
             'navbar-fixed-top',
-            this.props.navStyle
+            navStyle
         );
-
-        
 
         return (
             <div className={navStyleMain}>
@@ -112,7 +142,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                         </a>
                         <button
                             className="navbar-toggle collapsed"
-                            onClick={this.toggleMenu}>
+                            onClick={this.toggleMenu.bind(this)}>
 
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
@@ -121,7 +151,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                     </div>
                     <div className={navBarCollapse}>
                         {
-                              this.props.pages ? <NavElementPages {...this.props} /> : null
+                              pages ? <NavElementPages pages={pages} navBarOpen={navBarOpen} /> : null
                         }
 
                         { this.props.children }
@@ -142,3 +172,5 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
         );
     }
 }
+
+export const NavBar = connect(mapStateToProps, mapDispatchToProps)(Container);

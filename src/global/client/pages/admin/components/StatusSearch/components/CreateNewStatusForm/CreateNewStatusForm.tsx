@@ -1,9 +1,10 @@
-/// <reference path='../../../../../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../../../../../typings/index.d.ts' />
 
 import * as React from 'react';
 import {reduxForm} from 'redux-form';
 import {ControlGroup} from '../../../../../../components/ControlGroup/ControlGroup';
 import {Alert} from 'react-bootstrap';
+import * as _ from 'lodash';
 
 interface BaseProps {
     onCancel?: (any) => any

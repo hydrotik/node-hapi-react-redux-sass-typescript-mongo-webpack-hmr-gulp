@@ -1,4 +1,4 @@
-/// <reference path='../../../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../../../typings/index.d.ts' />
 
 /*
     Maps to components/users/Details.jsx
@@ -86,8 +86,7 @@ function mapDispatchToProps(dispatch): DispatchProps {
     }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class UserDetails extends React.Component<UserDetailsProps & DispatchProps & ReactRouterProps, any> {
+class Container extends React.Component<UserDetailsProps & DispatchProps & ReactRouterProps, any> {
 
     public constructor(props?: any) {
         super(props);
@@ -207,3 +206,5 @@ export class UserDetails extends React.Component<UserDetailsProps & DispatchProp
         
     }
 }
+
+export const UserDetails = connect(mapStateToProps, mapDispatchToProps)(Container);

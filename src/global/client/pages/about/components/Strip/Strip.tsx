@@ -1,4 +1,4 @@
-/// <reference path="../../../../../../../typings/main.d.ts" />
+/// <reference path="../../../../../../../typings/index.d.ts" />
 
 import * as React from 'react';
 
@@ -13,7 +13,7 @@ interface IStripProps {
     store?: any;
 }
 
-interface IStripState {
+interface IStripState extends IStripProps {
     payload?: any[];
 }
 
@@ -28,8 +28,7 @@ function select(state: { onExampleReducer: IExampleAction }): IStripState {
     };
 }
 
-@connect(select)
-export class Strip extends React.Component<IStripProps, IStripState> {
+class Container extends React.Component<IStripProps, IStripState> {
 
     public constructor(props: any) {
         super(props);
@@ -49,3 +48,5 @@ export class Strip extends React.Component<IStripProps, IStripState> {
         );
     }
 }
+
+export const Strip = connect(select)(Container);

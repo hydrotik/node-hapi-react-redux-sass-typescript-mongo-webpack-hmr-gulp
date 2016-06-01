@@ -1,4 +1,4 @@
-/// <reference path='../../../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../../../typings/index.d.ts' />
 
 // Core Imports
 import * as React from 'react';
@@ -29,14 +29,14 @@ interface IUserFormProps {
     error?: boolean;
     usersuccess?:  boolean;
     userhydrated?: boolean;
-    username?: boolean;
+    username?: string;
     email?: string;
     hasError?: any;
     help?: any;
     loading?: boolean;
 }
 
-interface IUserFormState {
+interface IUserFormState extends IUserFormProps {
 
 }
 
@@ -67,8 +67,7 @@ function select(state: { account: IAccountMapping; }): IUserFormState {
 
 }
 
-@connect(select)
-export class UserForm extends React.Component<IUserFormProps, IUserFormState> {
+class Form extends React.Component<IUserFormProps, IUserFormState> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -186,3 +185,5 @@ export class UserForm extends React.Component<IUserFormProps, IUserFormState> {
         );
     }
 }
+
+export const UserForm = connect(select)(Form);

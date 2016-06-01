@@ -1,4 +1,4 @@
-/// <reference path="../../../../../../../typings/main.d.ts" />
+/// <reference path="../../../../../../../typings/index.d.ts" />
 
 import * as React from 'react';
 
@@ -24,7 +24,7 @@ interface ICarouselProps {
     store?: any;
 }
 
-interface ICarouselState {
+interface ICarouselState extends ICarouselProps{
     slides?: any;
     isFetching?: boolean;
     lastUpdated?: number;
@@ -49,8 +49,8 @@ function select(state: { carouselContent: ICarouselAction }): ICarouselState {
  * @class Carousel
  * @augments {React.Component}
  */
-@connect(select)
-export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
+
+class Container extends React.Component<ICarouselProps, any> {
 
     public constructor(props: any) {
         super(props);
@@ -94,3 +94,5 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
         );
     }
 }
+
+export const Carousel = connect(select)(Container);

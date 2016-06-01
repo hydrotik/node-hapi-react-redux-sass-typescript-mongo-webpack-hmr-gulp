@@ -1,4 +1,4 @@
-/// <reference path='../../../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../../../typings/index.d.ts' />
 
 // Core Imports
 import * as React from 'react';
@@ -67,9 +67,8 @@ function select(state: { forgot: IForgotMapping; }): IForgotProps {
     };
 
 }
-@connect(select)
 
-export class Forgot extends React.Component<IForgotProps, IForgotState> {
+class Form extends React.Component<IForgotProps, IForgotState> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -169,3 +168,5 @@ export class Forgot extends React.Component<IForgotProps, IForgotState> {
         );
     }
 }
+
+export const Forgot = connect(select)(Form);

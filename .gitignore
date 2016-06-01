@@ -43,3 +43,9 @@ test/artifacts/*
 /config.js
 
 assets/*
+
+# -----------------------
+# Typings generated files
+# -----------------------
+typings/*
+

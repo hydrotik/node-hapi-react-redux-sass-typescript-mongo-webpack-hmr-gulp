@@ -1,4 +1,4 @@
-/// <reference path='../../../../../../../typings/main.d.ts' />
+/// <reference path='../../../../../../../typings/index.d.ts' />
 
 // Core Imports
 import * as React from 'react';
@@ -38,7 +38,7 @@ interface IAccountFormProps {
     loading?: boolean;
 }
 
-interface IAccountFormState {
+interface IAccountFormState extends IAccountFormProps {
 
 }
 
@@ -71,8 +71,7 @@ function select(state: { account: IAccountMapping; }): IAccountFormState {
 
 }
 
-@connect(select)
-export class AccountForm extends React.Component<IAccountFormProps, IAccountFormState> {
+class Container extends React.Component<IAccountFormProps, IAccountFormState> {
 
     public constructor(props: any = {}) {
         super(props);
@@ -216,3 +215,5 @@ export class AccountForm extends React.Component<IAccountFormProps, IAccountForm
         );
     }
 }
+
+export const AccountForm = connect(select)(Container);
