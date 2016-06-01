@@ -98,6 +98,8 @@ cssLoader = [
 
 
 module.exports = {
+    // cheap-module-eval-source-map will create sourcemaps that get line-numbers correct.
+    // That should be good enough for most debug situations
     devtool: 'cheap-module-eval-source-map',
     entry: Entries,
     output: {
@@ -160,7 +162,7 @@ module.exports = {
             exclude: /node_modules/
         }, {
             test: /\.ts(x?)$/,
-            loader: 'react-hot!source-map-loader!ts-loader',
+            loader: 'react-hot!source-map-loader!babel?cacheDirectory!ts-loader',
             exclude: [/bower_components/, /node_modules/]
         },{
             test: /\.js$/,
