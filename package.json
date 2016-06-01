@@ -31,8 +31,7 @@
     "test-chromedriver-stop": "bash ./script/chromedriver.sh stop",
     "typings-install": "typings install",
     "watch-client": "node ./webpack.server.client-hot.js --verbose --colors --display-error-details --config webpack.config.client-hot.js --projectpath $PROJECTPATH",
-    "watch": "npm run mongo-start; npm run lint-es; npm run typings-install; node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client\" \"npm run start -- --include $INCLUDE --exclude $EXCLUDE\"",
-    "watch2": "npm run mongo-start; npm run lint-es; npm run typings-install; npm run watch-client && npm run start -- --include $INCLUDE --exclude $EXCLUDE"
+    "watch": "npm run mongo-start; npm run lint-es; npm run typings-install; node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client\" \"npm run start -- --include $INCLUDE --exclude $EXCLUDE\""
   },
   "author": "Donovan Adams, Ozgur Uksal, Kenny Pascal",
   "license": "MIT",
