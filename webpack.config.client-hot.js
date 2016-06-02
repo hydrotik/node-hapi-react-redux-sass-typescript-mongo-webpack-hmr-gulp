@@ -113,8 +113,7 @@ module.exports = {
     plugins: [
         extractCSS,
         new webpack.optimize.DedupePlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new ForkCheckerPlugin()
+        new webpack.HotModuleReplacementPlugin()
     ],
     resolve: {
         // Do NOT put .jsx files here! ONLY React-Typescript Allowed!
@@ -162,7 +161,11 @@ module.exports = {
             exclude: /node_modules/
         }, {
             test: /\.ts(x?)$/,
-            loader: 'react-hot!source-map-loader!babel?cacheDirectory!ts-loader',
+            loaders: [
+                'react-hot',
+                'babel?cacheDirectory',
+                'ts-loader'
+            ],
             exclude: [/bower_components/, /node_modules/]
         },{
             test: /\.js$/,
