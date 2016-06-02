@@ -12,6 +12,7 @@ class Index extends React.Component<IIndexProps, {}> {
     public render(): React.ReactElement<{}> {
         
         const styles = [
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />,
             <link type="text/css" key="font-awesome" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />,
             <link type="text/css" key="ionicons" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />,
             <link type="text/css" key="dashboard" rel="stylesheet" href="/assets/dashboard/dashboard.min.css" />,

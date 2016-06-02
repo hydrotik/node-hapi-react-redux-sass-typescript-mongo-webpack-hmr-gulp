@@ -61,6 +61,9 @@ module.exports = {
         // proxy calls to api to our own node server backend
         proxy: {
             '/app/*': 'http://localhost:8000/'
+        },
+        headers: {
+            "Access-Control-Allow-Origin": "*"
         }
     },
     context: path.join(__dirname, './src/global/client'),
@@ -75,11 +78,6 @@ module.exports = {
             path: path.resolve(__dirname, 'hot'),
             filename: 'bundle.js'
         },*/
-    devServer: {
-        headers: {
-            "Access-Control-Allow-Origin": "*"
-        }
-    },
     output: {
         path: path.resolve(pkg.config.buildDir),
         filename: jsBundle,
