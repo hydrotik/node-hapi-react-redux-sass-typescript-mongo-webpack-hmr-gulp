@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target" : "es5",
-    "jsx" : "react",
+    "target" : "es2015",
+    "jsx" : "preserve",
     "experimentalDecorators": true,
     "module" : "commonjs",
     "inlineSourceMap": false,
     "inlineSources": false,
     "sourceMap": true,
-    "sourceRoot": "src/global"
+    "sourceRoot": "/src/global"
   },
   "exclude": [
     "typings/main",

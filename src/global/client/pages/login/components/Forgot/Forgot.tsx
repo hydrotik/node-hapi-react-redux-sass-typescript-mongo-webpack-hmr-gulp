@@ -1,18 +1,18 @@
-/// <reference path='../../../../../../../typings/index.d.ts' />
+/// <reference path="../../../../../../../typings/index.d.ts" />
 
 // Core Imports
-import * as React from 'react';
-import * as activeComponent from 'react-router-active-component';
-import { connect } from 'react-redux';
+import * as React from "react";
+import * as activeComponent from "react-router-active-component";
+import { connect } from "react-redux";
 
 // Styles
-import './_Forgot.scss';
+import "./_Forgot.scss";
 
 // Page Components
-import { ControlGroup } from '../../../../components/ControlGroup/ControlGroup';
-import { TextControl } from '../../../../components/TextControl/TextControl';
-import { Button } from '../../../../components/Button/Button';
-import { Spinner } from '../../../../components/Spinner/Spinner';
+import { ControlGroup } from "../../../../components/ControlGroup/ControlGroup";
+import { TextControl } from "../../../../components/TextControl/TextControl";
+import { Button } from "../../../../components/Button/Button";
+import { Spinner } from "../../../../components/Spinner/Spinner";
 
 // Behaviors and Actions
 import {
@@ -20,7 +20,7 @@ import {
     doForgot,
     onFormUpdate,
     onFormReset,
-} from '../../actions';
+} from "../../actions";
 
 // Interfaces
 interface IForgotProps {
@@ -40,7 +40,7 @@ interface IForgotState {
 }
 
 let ac: any = activeComponent;
-const NavLink: any = ac('li');
+const NavLink: any = ac("li");
 
 // Decorators
 
@@ -118,14 +118,14 @@ class Form extends React.Component<IForgotProps, IForgotState> {
 
 
         if (success) {
-            alerts.push(<div key='success'>
-                <div className='alert alert-success'>
+            alerts.push(<div key="success">
+                <div className="alert alert-success">
                     If an account matched that address, an email will be sent with instructions.
                 </div>
-                <NavLink to='/login' className='btn btn-link'>Back to login</NavLink>
+                <NavLink to="/login" className="btn btn-link">Back to login</NavLink>
             </div>);
         } else if (message) {
-            alerts.push(<div key='danger' className='alert alert-danger'>
+            alerts.push(<div key="danger" className="alert alert-danger">
                 {message}
             </div>);
         }
@@ -134,9 +134,9 @@ class Form extends React.Component<IForgotProps, IForgotState> {
         if (!success) {
             formElements = <fieldset>
                 <TextControl
-                        name='email'
-                        label='What\'s your email?'
-                        ref='email'
+                        name="email"
+                        label="What's your email?"
+                        ref="email"
                         hasError={hasError.email}
                         value={email}
                         onChange={ (e: any) => this.handleChange(e) }
@@ -145,21 +145,21 @@ class Form extends React.Component<IForgotProps, IForgotState> {
                         />
                 <ControlGroup hideLabel={true} hideHelp={true}>
                     <Button
-                        type='submit'
-                        inputClasses={{ 'btn-primary': true }}
+                        type="submit"
+                        inputClasses={{ "btn-primary": true }}
                         disabled={loading}>
 
                         Send reset
-                        <Spinner space='left' show={loading} />
+                        <Spinner space="left" show={loading} />
                     </Button>
-                    <NavLink to='/login' className='btn btn-link'>Back to login</NavLink>
+                    <NavLink to="/login" className="btn btn-link">Back to login</NavLink>
                 </ControlGroup>
             </fieldset>;
         }
 
         return (
             <section>
-                <h1 className='page-header'>Forgot your password?</h1>
+                <h1 className="page-header">Forgot your password?</h1>
                 <form onSubmit={(e: any) => this.onSubmit(e) }>
                     {alerts}
                     {formElements}

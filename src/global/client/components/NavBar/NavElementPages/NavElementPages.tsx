@@ -19,7 +19,7 @@ export class NavElementPages extends React.Component<INavElementPages, {}> {
         super(props);
 
     }
-    
+
     public createNavItem(object: any, i: number): any {
         if( object.hasOwnProperty('onlyActiveOnIndex') && object.onlyActiveOnIndex ){
             return <NavLink onlyActiveOnIndex to={object.path} key={i}>{object.title}</NavLink>;
@@ -27,15 +27,15 @@ export class NavElementPages extends React.Component<INavElementPages, {}> {
             return <NavLink to={object.path} key={i}>{object.title}</NavLink>;
         }
     }
-    
+
     public render() : React.ReactElement<{}> {
         let {navBarOpen} = this.props;
-        
+
         let navBarCollapse: any = ClassNames({
             'navbar-collapse': !navBarOpen,
             collapse: !navBarOpen
         });
-        
+
         return (
             <ul className="nav navbar-nav">
                 { map(this.props.pages, this.createNavItem) }
