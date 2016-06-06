@@ -2,7 +2,6 @@ var Composer = require('./index');
 var dateFormat = require('dateformat');
 var format = "dd mmm HH:MM:ss";
 var opn = require('opn');
-var pkg = require('./package.json');
 var util = require('util');
 var Config = require('./config');
 

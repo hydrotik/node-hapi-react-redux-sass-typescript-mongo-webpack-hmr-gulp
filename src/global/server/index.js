@@ -2,7 +2,7 @@ var Glue = require('glue');
 var Manifest = require('./manifest.js');
 
 var options = {
-	relativeTo: __dirname + '/src'
+	relativeTo: __dirname
 };
 
 

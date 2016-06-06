@@ -33,7 +33,7 @@
     "typings-install": "typings install",
     "watch-client": "node ./webpack.server.client-hot.js --verbose --colors --display-error-details --projectpath $PROJECTPATH",
     "watch-server": "node ./webpack.config.server.js --verbose --colors --display-error-details",
-    "watch": "bash ./script/copyfiles.sh; npm run mongo-start; npm run lint-es; npm run typings-install; node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client\" \"node server.js\""
+    "watch": "bash ./script/copyfiles.sh; npm run mongo-start; npm run lint-es; npm run typings-install; node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client\" \"node src/global/server/server.js\""
   },
   "author": "Donovan Adams, Ozgur Uksal, Kenny Pascal",
   "license": "MIT",

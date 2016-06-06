@@ -1,3 +1,4 @@
+var path = require('path');
 // Config Helper with delimeters for scafollding support
 function ConfigPages() {
     // Me
@@ -14,7 +15,7 @@ function ConfigPages() {
         {
             route: {
                 plugin: {
-                    register: './global/server/misc/build',
+                    register: './misc/build',
                     options: {
                     }
                 }
@@ -30,7 +31,7 @@ function ConfigPages() {
         {
             route: {
                 plugin: {
-                    register: './global/server/misc/assets',
+                    register: './misc/assets',
                     options: {
                     }
                 }
@@ -46,7 +47,7 @@ function ConfigPages() {
         {
             route: {
                 plugin: {
-                    register: './global/server/views/home',
+                    register: './views/home',
                     options: {
                         bundleName: 'app'
                     }
@@ -54,7 +55,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'home',
-                src: './src/global/client/pages/home/index'
+                src: path.join(__dirname, '../client/pages/home/index')
             }
         },
         // %END PAGE%
@@ -63,7 +64,7 @@ function ConfigPages() {
         {
             route: {
                 plugin: {
-                    register: './global/server/views/about',
+                    register: './views/about',
                     options: {
                         bundleName: 'app'
                     }
@@ -71,7 +72,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'about',
-                src: './src/global/client/pages/about/index'
+                src: path.join(__dirname, '../client/pages/about/index')
             }
         },
         // %END PAGE%
@@ -80,7 +81,7 @@ function ConfigPages() {
         {
             route: {
                 plugin: {
-                    register: './global/server/views/contact',
+                    register: './views/contact',
                     options: {
                         bundleName: 'app'
                     }
@@ -88,7 +89,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'contact',
-                src: './src/global/client/pages/contact/index'
+                src: path.join(__dirname, '../client/pages/contact/index')
             }
         },
         // %END PAGE%
@@ -97,7 +98,7 @@ function ConfigPages() {
         {
             route: {
                 plugin: {
-                    register: './global/server/views/signup',
+                    register: './views/signup',
                     options: {
                         bundleName: 'app'
                     }
@@ -105,7 +106,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'signup',
-                src: './src/global/client/pages/signup/index'
+                src: path.join(__dirname, '../client/pages/signup/index')
             }
         },
         // %END PAGE%
@@ -114,7 +115,7 @@ function ConfigPages() {
         {
             route: {
                 plugin: {
-                    register: './global/server/views/account',
+                    register: './views/account',
                     options: {
                         bundleName: 'app'
                     }
@@ -122,7 +123,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'account',
-                src: './src/global/client/pages/account/index'
+                src: path.join(__dirname, '../client/pages/account/index')
             }
         },
         // %END PAGE%
@@ -131,7 +132,7 @@ function ConfigPages() {
         {
             route: {
                 plugin: {
-                    register: './global/server/views/admin',
+                    register: './views/admin',
                     options: {
                         bundleName: 'app'
                     }
@@ -139,7 +140,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'admin',
-                src: './src/global/client/pages/admin/index'
+                src: path.join(__dirname, '../client/pages/admin/index')
             }
         },
         // %END PAGE%
@@ -148,7 +149,7 @@ function ConfigPages() {
         {
             route: {
                 plugin: {
-                    register: './global/server/views/login',
+                    register: './views/login',
                     options: {
                         bundleName: 'app'
                     }
@@ -156,7 +157,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'login',
-                src: './src/global/client/pages/login/index'
+                src: path.join(__dirname, '../client/pages/login/index')
             }
         },
         // %END PAGE%
@@ -165,7 +166,7 @@ function ConfigPages() {
         {
             route: {
                 plugin: {
-                    register: './global/server/views/dashboard',
+                    register: './views/dashboard',
                     options: {
                         bundleName: 'app'
                     }
@@ -173,7 +174,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'dashboard',
-                src: './src/global/client/pages/dashboard/index'
+                src: path.join(__dirname, '../client/pages/dashboard/index')
             }
         }
         // %END PAGE%

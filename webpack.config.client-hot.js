@@ -2,13 +2,13 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
-var Config = require('./config');
+var Config = require('./src/global/server/config');
 var pkg = require('./package.json');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var util = require('util');
 var webpack = require('webpack');
-var Pages = require('./config.pages').getConfig();
+var Pages = require('./src/global/server/config.pages').getConfig();
 
 var processEntries = function(pages){
     var entry = {}, webpack, src, id;
@@ -39,7 +39,7 @@ var processEntries = function(pages){
 
 var Entries = processEntries(Pages);
 
-var buildDir = path.resolve(Config.get('/buildDir'));
+var buildDir = path.resolve('./build');
 
 var DEBUG = process.env.NODE_ENV === 'development';
 var PRODUCTION = process.env.NODE_ENV === 'production';
@@ -97,7 +97,7 @@ module.exports = {
         path: path.join(buildDir, 'global/client'),
         filename: 'js/[name].min.js',
         sourceMapFilename: 'js/[name].min.map',
-        publicPath: "/",
+        publicPath: "http://localhost:8080/",
         devtoolModuleFilenameTemplate: "../[resource-path]",
         devtoolFallbackModuleFilenameTemplate:"../[resource-path]"
     },
@@ -128,14 +128,15 @@ module.exports = {
             loader: 'tslint'
         }, {
             test: /\.css$/,
-            loader: 'csslint'
+            loader: 'csslint',
+            exclude: [/dashboard.min.css/]
         }],
         loaders: [{
             test: /\.html$/,
             loader: htmlLoader
         }, {
             test: /\.css$/,
-            loader: PRODUCTION ? extractCSS.extract('style-loader', 'css-loader', 'postcss-loader') : 'style-loader!css-loader?sourceMap!postcss-loader'
+            loader: PRODUCTION ? extractCSS.extract('style-loader', 'css-loader', 'postcss-loader') : 'style-loader!css-loader!postcss-loader'
         }, {
             test: /\.scss$/,
             loader: PRODUCTION ? extractCSS.extract('style-loader', sassLoader) : 'style-loader!' +sassLoader

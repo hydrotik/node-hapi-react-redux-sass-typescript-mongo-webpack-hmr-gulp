@@ -1,6 +1,6 @@
 var Hoek = require('hoek');
 // TODO: config or buildDir should be accessible through options or server...confirm and/or fix3
-var Config = require('../../../../config.js');
+var Config = require('../config.js');
 var path = require('path');
 
 exports.register = function (server, options, next) {

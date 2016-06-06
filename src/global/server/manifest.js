@@ -2,8 +2,9 @@ var Confidence = require('confidence');
 var Hoek = require('hoek');
 var Config = require('./config');
 var Pages = require('./config.pages').getConfig();
-var pkg = require('./package');
+var pkg = require('../../../package');
 var HapiTypescriptViews = require('hapi-typescript-views');
+var path = require('path');
 
 var criteria = {
     env: process.env.NODE_ENV
@@ -83,7 +84,7 @@ var manifest = {
                         useNodeJsx: false
                     },
                     relativeTo: __dirname,
-                    path: './src/global/server/views/'
+                    path: './views/'
                 }
             }
         },
@@ -93,13 +94,13 @@ var manifest = {
                 options: {
                     mongodb: Config.get('/hapiMongoModels/mongodb'),
                     models: {
-                        Account: './src/global/server/models/account',
-                        AdminGroup: './src/global/server/models/admin-group',
-                        Admin: './src/global/server/models/admin',
-                        AuthAttempt: './src/global/server/models/auth-attempt',
-                        Session: './src/global/server/models/session',
-                        Status: './src/global/server/models/status',
-                        User: './src/global/server/models/user'
+                        Account: path.join(__dirname, 'models/account'),
+                        AdminGroup: path.join(__dirname, 'models/admin-group'),
+                        Admin: path.join(__dirname, 'models/admin'),
+                        AuthAttempt: path.join(__dirname, 'models/auth-attempt'),
+                        Session: path.join(__dirname, 'models/session'),
+                        Status: path.join(__dirname, 'models/status'),
+                        User: path.join(__dirname, 'models/user')
                     },
                     autoIndex: Config.get('/hapiMongoModels/autoIndex')
                 }
@@ -107,81 +108,81 @@ var manifest = {
         },
 
         {
-            plugin: './global/server/auth'
+            plugin: './auth'
         },
 
         {
-            plugin: './global/server/mailer'
+            plugin: './mailer'
         },
 
         {
-            plugin: './global/server/api/accounts',
+            plugin: './api/accounts',
             options: {
                 routes: { prefix: '/api' }
             }
         },
         {
-            plugin: './global/server/api/admin-groups',
+            plugin: './api/admin-groups',
             options: {
                 routes: { prefix: '/api' }
             }
         },
         {
-            plugin: './global/server/api/admins',
+            plugin: './api/admins',
             options: {
                 routes: { prefix: '/api' }
             }
         },
         {
-            plugin: './global/server/api/auth-attempts',
+            plugin: './api/auth-attempts',
             options: {
                 routes: { prefix: '/api' }
             }
         },
         {
-            plugin: './global/server/api/contact',
+            plugin: './api/contact',
             options: {
                 routes: { prefix: '/api' }
             }
         },
         {
-            plugin: './global/server/api/index',
+            plugin: './api/index',
             options: {
                 routes: { prefix: '/api' }
             }
         },
         {
-            plugin: './global/server/api/login',
+            plugin: './api/login',
             options: {
                 routes: { prefix: '/api' }
             }
         },
         {
-            plugin: './global/server/api/logout',
+            plugin: './api/logout',
             options: {
                 routes: { prefix: '/api' }
             }
         },
         {
-            plugin: './global/server/api/sessions',
+            plugin: './api/sessions',
             options: {
                 routes: { prefix: '/api' }
             }
         },
         {
-            plugin: './global/server/api/signup',
+            plugin: './api/signup',
             options: {
                 routes: { prefix: '/api' }
             }
         },
         {
-            plugin: './global/server/api/statuses',
+            plugin: './api/statuses',
             options: {
                 routes: { prefix: '/api' }
             }
         },
         {
-            plugin: './global/server/api/users',
+            plugin: './api/users',
             options: {
                 routes: { prefix: '/api' }
             }
