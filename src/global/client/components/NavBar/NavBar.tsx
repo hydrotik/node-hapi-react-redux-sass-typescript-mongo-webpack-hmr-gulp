@@ -24,6 +24,8 @@ import {
     openNavBar,
 } from '../../actions';
 
+const logo = require('../../media/logo-square.png');
+
 interface IProps {
     pages: any;
     navStyle?: string;
@@ -135,7 +137,8 @@ class Container extends React.Component<TConnectedProps & IProps, any> {
                 <div className="container">
                     <div className="navbar-header">
                         <a className="navbar-brand" href="/">
-                            <img className="navbar-logo" src="/assets/logo-square.png" height="64" width="64" />
+                            <img className="navbar-logo" src={logo} height="64" width="64" />
+
                         </a>
                         <button
                             className="navbar-toggle collapsed"

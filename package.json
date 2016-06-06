@@ -12,7 +12,8 @@
   },
   "engineStrict": true,
   "scripts": {
-    "build-production-client": "NODE_ENV=production bash -c 'gulp clean; gulp media; gulp sass; ./node_modules/.bin/webpack -p --verbose --colors --display-error-details --config webpack.config.client-hot.js'",
+    "build-production-client": "NODE_ENV=production bash -c 'npm run clean; npm run lint-es; npm run typings-install; ./node_modules/.bin/webpack -p --verbose --colors --display-error-details --config webpack.config.client-hot.js'",
+    "clean": "bash -c 'rm -rf ./build'",
     "lint-ts": "tslint --config tslint.json --ext .ts,.tsx",
     "lint-jsc": "jscs . --config .jscsrc",
     "lint-es": "./node_modules/.bin/eslint --config .eslintrc --ignore-path .eslintignore --ext .js,.jsx,.es6 .",
@@ -213,6 +214,7 @@
     "tslint-loader": "^2.1.1",
     "typescript": "^1.8.9",
     "uglify-js": "^2.6.1",
+    "url-loader": "^0.5.7",
     "webdriverio": "^3.3.0",
     "webdriverrtc": "^0.1.0",
     "webpack": "^1.13.0",

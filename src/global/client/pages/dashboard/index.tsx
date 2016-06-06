@@ -24,6 +24,8 @@ import { createLogger } from '../../utils/redux-logger';
 import { thunkMiddleware } from '../../utils/redux-thunk';
 // import { promiseMiddleware } from './utils/redux-promise';
 
+require("./dashboard.min.css");
+
 const logger: any = createLogger();
 
 interface IHotModule {

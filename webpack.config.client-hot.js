@@ -45,15 +45,11 @@ var DEBUG = process.env.NODE_ENV === 'development';
 var PRODUCTION = process.env.NODE_ENV === 'production';
 var TEST = process.env.NODE_ENV === 'test';
 
-var cssBundle = path.join('css', util.format('app.%s.css', pkg.version));
-var jsBundle = path.join('js', util.format('app.%s.js', pkg.version));
-var jsMapBundle = path.join('js', 'index.js.map');
-
 var extractCSS = new ExtractTextPlugin(
-    '[name].min.css',
+    'css/[name].min.css',
     {
         allChunks: true,
-        publicPath: 'http://localhost:8080/'
+        publicPath: '/'
     }
 )
 
@@ -61,7 +57,7 @@ var extractCSS = new ExtractTextPlugin(
 var jsxLoader;
 var sassLoader;
 var cssLoader;
-var fileLoader = 'file-loader?name=[path][name].[ext]';
+
 var htmlLoader = [
     'file-loader?name=[path][name].[ext]',
     'template-html-loader?' + [
@@ -72,7 +68,6 @@ var htmlLoader = [
         'debug=' + DEBUG
     ].join('&')
 ].join('!');
-var jsonLoader = ['json-loader'];
 
 var sassParams = [
     'outputStyle=expanded',
@@ -80,9 +75,6 @@ var sassParams = [
     'includePaths[]=' + path.resolve(__dirname, './node_modules')
 ];
 
-jsxLoader = [];
-jsxLoader.push('react-hot');
-jsxLoader.push('babel-loader');
 sassParams.push('sourceMap', 'sourceMapContents=true');
 sassLoader = [
     'css-loader?sourceMap',
@@ -92,8 +84,7 @@ sassLoader = [
 cssLoader = [
     'style-loader',
     'css-loader',
-    'postcss-loader',
-    'csslint'
+    'postcss-loader'
 ].join('!');
 
 
@@ -103,10 +94,10 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry: Entries,
     output: {
-        path: path.join(buildDir, 'pages'),
+        path: path.join(buildDir, 'global/client'),
         filename: 'js/[name].min.js',
         sourceMapFilename: 'js/[name].min.map',
-        publicPath: "http://localhost:8080/",
+        publicPath: "/",
         devtoolModuleFilenameTemplate: "../[resource-path]",
         devtoolFallbackModuleFilenameTemplate:"../[resource-path]"
     },
@@ -116,7 +107,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin()
     ],
     resolve: {
-        // Do NOT put .jsx files here! ONLY React-Typescript Allowed!
+        // Do NOT put .jsx files here! ONLY Typescript is allowed for react code.
         extensions: ['', '.json', '.js', '.scss', '.ts', '.tsx'],
         root: [`${__dirname}/src/global/client/`],
         fallback: path.join(__dirname, "node_modules"),
@@ -135,30 +126,35 @@ module.exports = {
         preLoaders: [{
             test: /\.ts(x?)$/,
             loader: 'tslint'
+        }, {
+            test: /\.css$/,
+            loader: 'csslint'
         }],
         loaders: [{
             test: /\.html$/,
             loader: htmlLoader
         }, {
             test: /\.css$/,
-            loader: 'style!css'
+            loader: PRODUCTION ? extractCSS.extract('style-loader', 'css-loader', 'postcss-loader') : 'style-loader!css-loader?sourceMap!postcss-loader'
         }, {
             test: /\.scss$/,
             loader: PRODUCTION ? extractCSS.extract('style-loader', sassLoader) : 'style-loader!' +sassLoader
         }, {
-            test: /\.jpe?g$|\.gif$|\.png$|\.ico|\.svg$|\.woff$|\.ttf$|\.eot$/,
-            loader: fileLoader
+            test: /\.jpe?g$|\.gif$|\.png$|\.ico|\.svg$/,
+            loader: 'url-loader?name=img/[name].[ext]&limit=4096'
+        }, {
+            test: /\.woff$|\.woff2$|\.ttf$|\.eot$/,
+            loader: 'url-loader?name=fonts/[name].[ext]&limit=4096'//32768
         }, {
             test: /\.json$/,
-            loaders: jsonLoader
-        }, {
-            test: /\.(jsx|es6)$/,
-            loaders: jsxLoader,
-            exclude: /node_modules/
-        }, {
-            include: /\.js$/,
-            loaders: ["babel"],
-            exclude: /node_modules/
+            loader: 'json-loader'
+        },{
+            test: /\.(js|jsx|es6)$/,
+            loaders: [
+                'react-hot',
+                'babel?cacheDirectory',
+            ],
+            exclude: [/bower_components/, /node_modules/]
         }, {
             test: /\.ts(x?)$/,
             loaders: [
