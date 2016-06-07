@@ -1,13 +1,14 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
-var Config = require('./src/global/server/config');
-var pkg = require('./package.json');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var util = require('util');
 var webpack = require('webpack');
+
+var pkg = require('./package.json');
+// Configs from global app
+var Config = require('./src/global/server/config');
 var Pages = require('./src/global/server/config.pages').getConfig();
 
 var processEntries = function(pages){
