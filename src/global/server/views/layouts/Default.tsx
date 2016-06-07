@@ -35,19 +35,19 @@ class Layout extends React.Component<IDefaultProps, {}> {
                     <div className="footer">
                         <ul className="nav nav-inline">
                             <li className="nav-item">
-                                <span className="nav-link">&copy; 2014 Acme, Inc.</span>
+                                <span className="nav-link">&copy; 2014 Watts, Inc.</span>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Link</a>
+                            <li className={"nav-item"}>
+                                <a className="nav-link" href="/">Home</a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Link</a>
+                            <li className={"nav-item"}>
+                                <a className="nav-link" href="/about">About</a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Another link</a>
+                            <li className={"nav-item"}>
+                                <a className="nav-link" href="/signup">Sign up</a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link disabled" href="#">Disabled</a>
+                            <li className={"nav-item"}>
+                                <a className="nav-link" href="/contact">Contact</a>
                             </li>
                         </ul>
                     </div>
