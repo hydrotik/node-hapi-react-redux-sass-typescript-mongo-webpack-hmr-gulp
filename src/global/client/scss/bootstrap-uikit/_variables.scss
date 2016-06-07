@@ -1,0 +1,41 @@
+$brand-primary:             #3c8dbc;
+$brand-success:             #5ece7f;
+$brand-info:                #8DC9DB;
+$brand-warning:             #ffB800;
+$brand-danger:              #e67478;
+
+$line-height:                2 !default;
+
+$font-url-google:           'http://fonts.googleapis.com/css?family=Open+Sans:100,300,400,700,900';
+$font-family-sans-serif:    'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+$font-size-lg:               1.15rem !default;
+$font-size-sm:               .875rem !default;
+$font-size-xs:               .75rem !default;
+
+$headings-font-weight:       300;
+
+$border-radius:             .15rem;
+$border-radius-lg:          .2rem;
+$border-radius-sm:          .1rem;
+
+// Buttons
+
+$btn-padding-x:             1rem;
+$btn-padding-y:             .5rem;
+
+$btn-padding-x-sm:          .75rem;
+$btn-padding-y-sm:          .25rem;
+
+$btn-padding-x-lg:          1.25rem;
+$btn-padding-y-lg:          .75rem;
+
+// Transitions
+$default-transition-duration: 0.2s;
+$default-transition: all $default-transition-duration ease-in-out;
+
+
+// Shadows
+$enable-shadows:            false;
+$enable-transitions:        true;
+

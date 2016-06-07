@@ -1,0 +1,8 @@
+.modal-content, 
+.modal-header {
+    border: none;
+}
+
+.modal-content {
+    @include box-shadow(2.5px 5px 10px rgba(0,0,0,.05));
+}

@@ -1,0 +1,35 @@
+ 
+@import 'variables';
+@import 'mixins/mixins';
+@import "../../../../../node_modules/bootstrap/scss/bootstrap";
+@import 'buttons';
+@import 'forms';
+@import 'modal';
+@import 'navbar';
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {    
+    @include font-smoothing; 
+    margin-bottom: 120px;
+}
+
+.footer {
+    background-color: #f5f5f5;
+    bottom: 0;
+    padding: 0 20px;
+    position: absolute;
+    height: 60px;
+    width: 100%;
+    
+    .nav {
+        padding-top: 15px;
+        font-size: 0.9em;
+    }
+}
+
+
+
