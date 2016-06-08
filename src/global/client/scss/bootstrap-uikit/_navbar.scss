@@ -1,7 +1,8 @@
 .navbar {
-    border-bottom: thin solid $gray-lighter;
+    // border-bottom: thin solid $gray-lighter;
     margin-bottom: 4em;
 }
+
 .navbar-nav {
   .nav-link {
     display: block;
@@ -9,3 +10,23 @@
     padding-bottom: .825rem;
   }
 }
+
+.navbar-light {
+  .navbar-nav {
+    .open > .nav-link,
+    .active > .nav-link,
+    .nav-link.open,
+    .nav-link.active {
+      border-bottom: solid 2px $navbar-light-hover-color;
+    }
+  }
+}
+
+.navbar-dark {
+    .open > .nav-link,
+    .active > .nav-link,
+    .nav-link.open,
+    .nav-link.active {
+      border-bottom: solid 2px $navbar-dark-hover-color;
+    }
+  }
