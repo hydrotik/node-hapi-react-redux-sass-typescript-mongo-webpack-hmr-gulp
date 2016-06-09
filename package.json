@@ -4,7 +4,6 @@
   "description": "Webpack, Typescript, React, Redux, Hapi, Sass, Node, MongoDB, Falcor, Mongoose, Susy, Breakpoint",
   "main": "./src/global/server/server.js",
   "directories": {
-    "clientBuild": "./www",
     "doc": "docs"
   },
   "engines": {
@@ -14,7 +13,7 @@
   "engineStrict": true,
   "scripts": {
     "build-client": "NODE_ENV=production bash -c 'npm run clean; npm run lint-es; npm run typings-install; ./node_modules/.bin/webpack -p --verbose --colors --display-error-details --config webpack.config.client-hot.js'",
-    "clean": "bash -c 'rm -rf ./www'",
+    "clean": "node ./script/clean.js",
     "lint-ts": "tslint --config tslint.json --ext .ts,.tsx",
     "lint-jsc": "jscs . --config .jscsrc",
     "lint-es": "./node_modules/.bin/eslint --config .eslintrc --ignore-path .eslintignore --ext .js,.jsx,.es6 .",
@@ -199,7 +198,7 @@
     "redux-thunk": "^1.0.0",
     "require-dir": "^0.3.0",
     "resolve-url-loader": "^1.4.3",
-    "rimraf": "^2.4.3",
+    "rimraf": "^2.5.2",
     "rx-lite": "^4.0.7",
     "sass-loader": "^3.1.2",
     "sinon": "^1.17.2",
