@@ -9,8 +9,8 @@ var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 var pkg = require('./package.json');
 // Configs from global app
-var Config = require('./src/global/server/config');
-var Pages = require('./src/global/server/config.pages').getConfig();
+var Config = require('./config');
+var Pages = require('./config.pages').getConfig();
 
 var processEntries = function(pages){
     var entry = {}, webpack, src, id;

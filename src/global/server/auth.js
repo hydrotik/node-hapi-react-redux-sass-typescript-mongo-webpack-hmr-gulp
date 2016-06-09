@@ -1,5 +1,5 @@
 const Async = require('async');
-const Config = require('./config');
+const Config = require('./config').Config;
 
 
 exports.register = function (server, options, next) {

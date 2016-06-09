@@ -3,7 +3,7 @@ var dateFormat = require('dateformat');
 var format = "dd mmm HH:MM:ss";
 var opn = require('opn');
 var util = require('util');
-var Config = require('./config');
+var Config = require('./config').Config;
 
 // require("amd-loader");
 

@@ -1,5 +1,5 @@
 var Hoek = require('hoek');
-var Config = require('../config.js');
+var Config = require('../config.js').Config;
 var path = require('path');
 
 exports.register = function (server, options, next) {
