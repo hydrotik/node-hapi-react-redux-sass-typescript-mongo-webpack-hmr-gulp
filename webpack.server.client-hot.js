@@ -18,6 +18,15 @@ new WebpackDevServer(webpack(config), {
     stats: {
         colors: true,
         chunks: false
+    },
+    proxy: {
+        "*" : {
+            target: "http://localhost:8000",
+            secure: false,
+            bypass: function(req, res, proxyOptions) {
+
+            }
+        }
     }
 }).listen(8080, 'localhost', function (err, stats) {
   if (err) {
