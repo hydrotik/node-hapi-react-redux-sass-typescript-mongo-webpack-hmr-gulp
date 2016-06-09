@@ -11,7 +11,7 @@ var criteria = {
 };
 
 var helpers = {
-    artifactRoot : (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') ? '/global/' : 'http://' + Config.get('/devHost') + ':' + Config.get('/webpackPort') + '/'
+    artifactRoot : (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') ? '/global/' : 'http://' + Config.get('/devHost') + ':' + Config.get('/webpackPort') + '/global/'
 }
 
 var processRoutes = function(pages){

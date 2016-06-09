@@ -5,6 +5,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var util = require('util');
 var webpack = require('webpack');
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 var pkg = require('./package.json');
 // Configs from global app
@@ -103,7 +104,8 @@ module.exports = {
     plugins: [
         extractCSS,
         new webpack.optimize.DedupePlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new OpenBrowserPlugin({ url: 'http://localhost:8080/dashboard' })
     ],
     resolve: {
         // Do NOT put .jsx files here! ONLY Typescript is allowed for react code.
