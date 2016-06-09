@@ -41,7 +41,7 @@ export class SideNavigation extends React.Component<ISideNavigationProps, ISideN
                 {/* Sidebar user panel */}
                 <div className="user-panel">
                   <div className="pull-left image">
-                    <img src="assets/dashboard/img/user2-160x160.jpg" className="img-circle" alt="User Image" />
+                    <img src={require("../../img/user2-160x160.jpg")} className="img-circle" alt="User Image" />
                   </div>
                   <div className="pull-left info">
                     <p>Alexander Pierce</p>

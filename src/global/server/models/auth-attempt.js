@@ -4,7 +4,7 @@ const Joi = require('joi');
 const Async = require('async');
 const ObjectAssign = require('object-assign');
 const BaseModel = require('hapi-mongo-models').BaseModel;
-const Config = require('../../../../config');
+const Config = require('../config');
 
 
 const AuthAttempt = BaseModel.extend({

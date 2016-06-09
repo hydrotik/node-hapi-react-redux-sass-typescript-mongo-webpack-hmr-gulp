@@ -50,7 +50,7 @@ export class DashBoardChatBox extends React.Component<IDashBoardChatBoxProps, ID
                 <div className="box-body chat" id="chat-box">
                   {/* chat item */}
                   <div className="item">
-                    <img src="assets/dashboard/img/user4-128x128.jpg" alt="user image" className="online" />
+                    <img src={require("../../img/user4-128x128.jpg")} alt="user image" className="online" />
                     <p className="message">
                       <a href="#" className="name">
                         <small className="text-muted pull-right"><i className="fa fa-clock-o" /> 2:15</small>
@@ -74,7 +74,7 @@ export class DashBoardChatBox extends React.Component<IDashBoardChatBoxProps, ID
                   {/* /.item */}
                   {/* chat item */}
                   <div className="item">
-                    <img src="assets/dashboard/img/user3-128x128.jpg" alt="user image" className="offline" />
+                    <img src={require("../../img/user3-128x128.jpg")} alt="user image" className="offline" />
                     <p className="message">
                       <a href="#" className="name">
                         <small className="text-muted pull-right"><i className="fa fa-clock-o" /> 5:15</small>
@@ -88,7 +88,7 @@ export class DashBoardChatBox extends React.Component<IDashBoardChatBoxProps, ID
                   {/* /.item */}
                   {/* chat item */}
                   <div className="item">
-                    <img src="assets/dashboard/img/user2-160x160.jpg" alt="user image" className="offline" />
+                    <img src={require("../../img/user2-160x160.jpg")} alt="user image" className="offline" />
                     <p className="message">
                       <a href="#" className="name">
                         <small className="text-muted pull-right"><i className="fa fa-clock-o" /> 5:30</small>

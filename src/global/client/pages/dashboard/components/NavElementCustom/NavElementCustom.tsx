@@ -27,7 +27,7 @@ export class NavElementCustom extends React.Component<INavElementCustomProps, {}
                           <li>{/* start message */}
                             <a href="#">
                               <div className="pull-left">
-                                <img src="assets/dashboard/img/user2-160x160.jpg" className="img-circle" alt="User Image" />
+                                <img src={require("../../img/user2-160x160.jpg")} className="img-circle" alt="User Image" />
                               </div>
                               <h4>
                                 Support Team
@@ -40,7 +40,7 @@ export class NavElementCustom extends React.Component<INavElementCustomProps, {}
                           <li>
                             <a href="#">
                               <div className="pull-left">
-                                <img src="assets/dashboard/img/user3-128x128.jpg" className="img-circle" alt="User Image" />
+                                <img src={require("../../img/user3-128x128.jpg")} className="img-circle" alt="User Image" />
                               </div>
                               <h4>
                                 AdminLTE Design Team
@@ -52,7 +52,7 @@ export class NavElementCustom extends React.Component<INavElementCustomProps, {}
                           <li>
                             <a href="#">
                               <div className="pull-left">
-                                <img src="assets/dashboard/img/user4-128x128.jpg" className="img-circle" alt="User Image" />
+                                <img src={require("../../img/user4-128x128.jpg")} className="img-circle" alt="User Image" />
                               </div>
                               <h4>
                                 Developers
@@ -64,7 +64,7 @@ export class NavElementCustom extends React.Component<INavElementCustomProps, {}
                           <li>
                             <a href="#">
                               <div className="pull-left">
-                                <img src="assets/dashboard/img/user3-128x128.jpg" className="img-circle" alt="User Image" />
+                                <img src={require("../../img/user3-128x128.jpg")} className="img-circle" alt="User Image" />
                               </div>
                               <h4>
                                 Sales Department
@@ -76,7 +76,7 @@ export class NavElementCustom extends React.Component<INavElementCustomProps, {}
                           <li>
                             <a href="#">
                               <div className="pull-left">
-                                <img src="assets/dashboard/img/user4-128x128.jpg" className="img-circle" alt="User Image" />
+                                <img src={require("../../img/user4-128x128.jpg")} className="img-circle" alt="User Image" />
                               </div>
                               <h4>
                                 Reviewers
@@ -209,13 +209,13 @@ export class NavElementCustom extends React.Component<INavElementCustomProps, {}
                   {/* User Account: style can be found in dropdown.less */}
                   <li className="dropdown user user-menu">
                     <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                      <img src="assets/dashboard/img/user2-160x160.jpg" className="user-image" alt="User Image" />
+                      <img src={require("../../img/user2-160x160.jpg")} className="user-image" alt="User Image" />
                       <span className="hidden-xs">Alexander Pierce</span>
                     </a>
                     <ul className="dropdown-menu">
                       {/* User image */}
                       <li className="user-header">
-                        <img src="assets/dashboard/img/user2-160x160.jpg" className="img-circle" alt="User Image" />
+                        <img src={require("../../img/user2-160x160.jpg")} className="img-circle" alt="User Image" />
                         <p>
                           Alexander Pierce - Web Developer
                           <small>Member since Nov. 2012</small>

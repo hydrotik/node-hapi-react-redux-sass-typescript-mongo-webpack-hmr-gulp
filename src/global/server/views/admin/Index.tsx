@@ -10,13 +10,14 @@ interface IIndexProps {
 class Index extends React.Component<IIndexProps, {}> {
 
     public render(): React.ReactElement<{}> {
-        
-        const styles = [
-            <link key="layout" rel="stylesheet" href="layouts/default.min.css" />,
-            <link key="page" rel="stylesheet" href="pages/admin.min.css" />
+
+        const styles: React.ReactElement<{}>[] = [
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />,
+
+            <link key="page" rel="stylesheet" href="pages/admin.min.css" />,
         ];
-        
-        const script = <script src={this.props.js}></script>;
+
+        const script: React.ReactElement<{}> = <script src={this.props.js}></script>;
 
         return (
             <Layout
