@@ -39,6 +39,7 @@ mongod.pid
 
 static/*
 public/*
+www/*
 test/artifacts/*
 /config.js
 

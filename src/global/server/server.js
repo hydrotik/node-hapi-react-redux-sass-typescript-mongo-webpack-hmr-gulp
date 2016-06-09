@@ -15,7 +15,7 @@ Composer(function (err, server) {
     }
 
     server.start(function () {
-
+        console.log(process.env.NODE_ENV);
         console.info('==> ' + dateFormat(new Date(), format));
         console.info("==> ✅  Server is listening");
         var url = util.format('http://%s:%d', Config.get('/devHost'), Config.get('/devPort'));

@@ -40,14 +40,12 @@ var processEntries = function(pages){
 
 var Entries = processEntries(Pages);
 
-var buildDir = path.resolve('./build');
-
 var DEBUG = process.env.NODE_ENV === 'development';
 var PRODUCTION = process.env.NODE_ENV === 'production';
 var TEST = process.env.NODE_ENV === 'test';
 
 var extractCSS = new ExtractTextPlugin(
-    'css/[name].min.css',
+    'global/css/[name].min.css',
     {
         allChunks: true,
         publicPath: '/'
@@ -95,10 +93,10 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry: Entries,
     output: {
-        path: path.join(buildDir, 'global/client'),
-        filename: 'js/[name].min.js',
-        sourceMapFilename: 'js/[name].min.map',
-        publicPath: "http://localhost:8080/",
+        path: path.resolve(pkg.directories.clientBuild),
+        filename: 'global/js/[name].min.js',
+        sourceMapFilename: 'global/js/[name].min.map',
+        publicPath: "/",
         devtoolModuleFilenameTemplate: "../[resource-path]",
         devtoolFallbackModuleFilenameTemplate:"../[resource-path]"
     },
@@ -143,10 +141,10 @@ module.exports = {
             loader: PRODUCTION ? extractCSS.extract('style-loader', sassLoader) : 'style-loader!' +sassLoader
         }, {
             test: /\.jpe?g$|\.gif$|\.png$|\.ico|\.svg$/,
-            loader: 'url-loader?name=img/[name].[ext]&limit=4096'
+            loader: 'url-loader?name=global/img/[name].[ext]&limit=4096'
         }, {
             test: /\.woff$|\.woff2$|\.ttf$|\.eot$/,
-            loader: 'url-loader?name=fonts/[name].[ext]&limit=4096'//32768
+            loader: 'url-loader?name=global/fonts/[name].[ext]&limit=4096'//32768
         }, {
             test: /\.json$/,
             loader: 'json-loader'

@@ -1,9 +1,10 @@
 {
-  "name": "scalable-stack-framework",
+  "name": "watts",
   "version": "0.1.0",
   "description": "Webpack, Typescript, React, Redux, Hapi, Sass, Node, MongoDB, Falcor, Mongoose, Susy, Breakpoint",
-  "main": "server.js",
+  "main": "./src/global/server/server.js",
   "directories": {
+    "clientBuild": "./www",
     "doc": "docs"
   },
   "engines": {
@@ -12,15 +13,15 @@
   },
   "engineStrict": true,
   "scripts": {
-    "build-production-client": "NODE_ENV=production bash -c 'npm run clean; npm run lint-es; npm run typings-install; ./node_modules/.bin/webpack -p --verbose --colors --display-error-details --config webpack.config.client-hot.js'",
-    "clean": "bash -c 'rm -rf ./build'",
+    "build-client": "NODE_ENV=production bash -c 'npm run clean; npm run lint-es; npm run typings-install; ./node_modules/.bin/webpack -p --verbose --colors --display-error-details --config webpack.config.client-hot.js'",
+    "clean": "bash -c 'rm -rf ./www'",
     "lint-ts": "tslint --config tslint.json --ext .ts,.tsx",
     "lint-jsc": "jscs . --config .jscsrc",
     "lint-es": "./node_modules/.bin/eslint --config .eslintrc --ignore-path .eslintignore --ext .js,.jsx,.es6 .",
     "mongo-start": "bash ./script/mongod.sh start",
     "mongo-stop": "bash ./script/mongod.sh stop",
     "mongo-setup": "bash ./script/mongod.sh setup",
-    "start": "gulp --include $INCLUDE --exclude $EXCLUDE",
+    "start": "node ./src/global/server/server.js",
     "setup": "bash ./script/setup.sh",
     "setup-config": "./setup.js",
     "test": "bash ./script/test.sh",

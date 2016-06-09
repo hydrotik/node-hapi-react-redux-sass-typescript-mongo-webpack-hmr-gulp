@@ -1,5 +1,5 @@
 var Confidence = require('confidence');
-
+var pkg = require('../../../package.json');
 var criteria = {
     env: process.env.NODE_ENV
 };
@@ -8,7 +8,7 @@ var criteria = {
 var config = {
     $meta: 'This file configures the plot device.',
     projectName: 'WattsProject',
-    buildDir: '../../../build',
+    buildDir: pkg.directories.clientBuild,
     buildDirTests: '../../../build_tests',
     devHost: 'localhost',
     devPort: 8000,
