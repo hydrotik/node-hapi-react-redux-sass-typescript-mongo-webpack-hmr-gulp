@@ -9,11 +9,13 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'GET',
-        path: '/build/{param*}',
+        path: '/{param*}',
         handler: {
             directory: {
-                path: 'build'
+                path: path.resolve(Config.get('/buildDir')),
+                listing: true
             }
+            
         },
         config: {
             cors: true

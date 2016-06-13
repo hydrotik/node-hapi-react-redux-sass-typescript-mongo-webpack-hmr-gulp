@@ -29,7 +29,7 @@ exports.register = function (plugin, options, next) {
             var props = {
                 title: 'Admin',
                 js: js,
-                css: css
+                css: process.env.NODE_ENV === 'production' ? css : undefined
             }
 
             // Hook into typescript generated files

@@ -5,6 +5,7 @@ import Layout from '../layouts/Plain';
 
 interface IIndexProps {
     js?: string;
+    css?: string;
 }
 
 class Index extends React.Component<IIndexProps, {}> {
@@ -14,15 +15,16 @@ class Index extends React.Component<IIndexProps, {}> {
         const styles: React.ReactElement<{}>[] = [
             <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />,
 
-            <link key="page" rel="stylesheet" href="pages/admin.min.css" />,
         ];
+        
+        const css = this.props.css ?  [<link rel="stylesheet" href={this.props.css} />] : [];
 
         const script: React.ReactElement<{}> = <script src={this.props.js}></script>;
 
         return (
             <Layout
                 title="Admin"
-                styles={styles}
+                styles={[].concat(styles).concat(css)}
                 script={script}>
 
                 <div id="app"></div>

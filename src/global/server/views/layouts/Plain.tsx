@@ -20,7 +20,7 @@ class Component extends React.Component<IDefaultProps, {}> {
                     {
                     // <link rel="stylesheet" href="/core.min.css" />
                     }
-                    <link rel="shortcut icon" href="media/favicon.ico" />
+                    <link rel="shortcut icon" href="/favicon.ico" />
                     {this.props.styles}
                     </head>
                 <body className="hold-transition skin-blue sidebar-mini">

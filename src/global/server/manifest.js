@@ -68,9 +68,6 @@ var manifest = {
             plugin: 'lout'
         },
         {
-            plugin: 'inert'
-        },
-        {
             plugin: 'vision'
         },
         {
