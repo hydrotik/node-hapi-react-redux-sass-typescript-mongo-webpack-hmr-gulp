@@ -19,8 +19,8 @@ exports.register = function (plugin, options, next) {
 
             var props = {
                 title: 'About',
-                js: js,
-                css: css
+                js: [js],
+                css: [css]
             }
 
             reply.view('about/Index.tsx', props);

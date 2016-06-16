@@ -6,6 +6,7 @@ var util = require('util');
 var Config = require('./config').Config;
 
 // require("amd-loader");
+require("core-js");
 
 
 Composer(function (err, server) {

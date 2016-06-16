@@ -46,6 +46,7 @@
     "animate.css": "^3.4.0",
     "async": "^1.5.2",
     "autotrace": "0.0.1",
+    "babel-polyfill": "^6.9.1",
     "bcrypt": "^0.8.5",
     "boom": "^3.1.2",
     "bootstrap": "^4.0.0-alpha.2",
