@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Layout from '../layouts/Plain';
+const objectAssign = require('object-assign');
 
 interface IIndexProps {
     js?: string[];
@@ -13,7 +14,7 @@ class Index extends React.Component<IIndexProps, {}> {
     private scripts: React.ReactElement<any>[];
 
     constructor(props?: IIndexProps) {
-        super(Object.assign(
+        super(objectAssign(
             { css: [], js: [] },
             props
         ));
