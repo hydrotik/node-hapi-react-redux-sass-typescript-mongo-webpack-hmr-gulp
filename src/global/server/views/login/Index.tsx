@@ -1,22 +1,42 @@
 /// <reference path="../../../../../typings/index.d.ts" />
 
 import * as React from 'react';
-import Layout from '../layouts/Default';
-
+import Layout from '../layouts/Plain';
+const objectAssign = require('object-assign');
 interface IIndexProps {
-    js?: string;
+    js?: string[];
+    css?: string[];
 }
 
-class Index extends React.Component<IIndexProps, {}> {
+class Index extends React.Component<IIndexProps, any> {
+    private styles: React.ReactElement<any>[];
+    private scripts: React.ReactElement<any>[];
 
-    public render(): React.ReactElement<{}> {
+    constructor(props?: IIndexProps) {
+        super(objectAssign(
+            { css: [], js: [] },
+            props
+        ));
 
-        const script = <script src={this.props.js}></script>;
+        this.styles = Layout.defaultStylesheets.concat(
+            this.props.css.map((s) => {
+                return <link rel="stylesheet" href={s} />;
+            })
+        );
+
+        this.scripts = Layout.defaultScripts.concat(
+            this.props.js.map((s) => {
+                return <script src={s}></script>;
+            })
+        );
+    }
+    public render(): React.ReactElement<any> {
 
         return (
             <Layout
                 title="Sign In"
-                script={script}
+                script={this.scripts}
+                styles={this.styles}
                 activeTab="login">
 
                 <div className="row">

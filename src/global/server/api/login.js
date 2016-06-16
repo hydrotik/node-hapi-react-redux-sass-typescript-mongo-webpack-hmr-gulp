@@ -4,7 +4,7 @@ const Boom = require('boom');
 const Joi = require('joi');
 const Async = require('async');
 const Bcrypt = require('bcrypt');
-const Config = require('../config');
+const Config = require('../config').Config;
 
 
 const internals = {};

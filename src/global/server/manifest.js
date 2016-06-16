@@ -1,8 +1,8 @@
 var Confidence = require('confidence');
 var Hoek = require('hoek');
-var Config = require('./config');
-var Pages = require('./config.pages').getConfig();
-var pkg = require('../../../package');
+var Config = require('./config').Config;
+var Pages = require('./config').Pages;
+var pkg = require('./config').Pkg;
 var HapiTypescriptViews = require('hapi-typescript-views');
 var path = require('path');
 
@@ -66,9 +66,6 @@ var manifest = {
         },
         {
             plugin: 'lout'
-        },
-        {
-            plugin: 'inert'
         },
         {
             plugin: 'vision'

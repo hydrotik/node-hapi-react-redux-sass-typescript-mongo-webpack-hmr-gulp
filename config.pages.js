@@ -55,7 +55,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'home',
-                src: path.join(__dirname, '../client/pages/home/index')
+                src: './src/global/client/pages/home/index'
             }
         },
         // %END PAGE%
@@ -72,7 +72,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'about',
-                src: path.join(__dirname, '../client/pages/about/index')
+                src: './src/global/client/pages/about/index'
             }
         },
         // %END PAGE%
@@ -89,7 +89,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'contact',
-                src: path.join(__dirname, '../client/pages/contact/index')
+                src: './src/global/client/pages/contact/index'
             }
         },
         // %END PAGE%
@@ -106,7 +106,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'signup',
-                src: path.join(__dirname, '../client/pages/signup/index')
+                src: './src/global/client/pages/signup/index'
             }
         },
         // %END PAGE%
@@ -123,7 +123,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'account',
-                src: path.join(__dirname, '../client/pages/account/index')
+                src: './src/global/client/pages/account/index'
             }
         },
         // %END PAGE%
@@ -140,7 +140,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'admin',
-                src: path.join(__dirname, '../client/pages/admin/index')
+                src: './src/global/client/pages/admin/index'
             }
         },
         // %END PAGE%
@@ -157,7 +157,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'login',
-                src: path.join(__dirname, '../client/pages/login/index')
+                src: './src/global/client/pages/login/index'
             }
         },
         // %END PAGE%
@@ -174,7 +174,7 @@ function ConfigPages() {
             },
             webpack: {
                 id: 'dashboard',
-                src: path.join(__dirname, '../client/pages/dashboard/index')
+                src: './src/global/client/pages/dashboard/index'
             }
         }
         // %END PAGE%

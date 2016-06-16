@@ -2,27 +2,42 @@
 
 import * as React from 'react';
 import Layout from '../layouts/Plain';
+const objectAssign = require('object-assign');
 
 interface IIndexProps {
-    js?: string;
+    js?: string[];
+    css?: string[];
 }
 
 class Index extends React.Component<IIndexProps, {}> {
+    private styles: React.ReactElement<any>[];
+    private scripts: React.ReactElement<any>[];
+
+    constructor(props?: IIndexProps) {
+        super(objectAssign(
+            { css: [], js: [] },
+            props
+        ));
+
+        this.styles = Layout.defaultStylesheets.concat(
+            this.props.css.map((s) => {
+                return <link rel="stylesheet" href={s} />;
+            })
+        );
+
+        this.scripts = Layout.defaultScripts.concat(
+            this.props.js.map((s) => {
+                return <script src={s}></script>;
+            })
+        );
+    }
 
     public render(): React.ReactElement<{}> {
-        
-        const styles = [
-            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />,
-            <link key="page" rel="stylesheet" href="pages/account.min.css" />
-        ];
-        
-        const script = <script src={this.props.js}></script>;
-
         return (
             <Layout
                 title="Account"
-                styles={styles}
-                script={script}>
+                styles={this.styles}
+                script={this.scripts}>
 
                 <div id="app"></div>
             </Layout>

@@ -5,7 +5,7 @@ const Fs = require('fs');
 const Handlebars = require('handlebars');
 const Nodemailer = require('nodemailer');
 const Markdown = require('nodemailer-markdown').markdown;
-const Config = require('./config');
+const Config = require('./config').Config;
 
 
 const internals = {};

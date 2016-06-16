@@ -28,8 +28,8 @@ exports.register = function (plugin, options, next) {
 
             var props = {
                 title: 'Admin',
-                js: js,
-                css: css
+                js: [js],
+                css: [css]
             }
 
             // Hook into typescript generated files

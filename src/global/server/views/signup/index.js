@@ -21,8 +21,8 @@ exports.register = function (plugin, options, next) {
 
             var props = {
                 title: 'Signup',
-                js: js,
-                css: css
+                js: [js],
+                css: [css]
             }
 
             // Hook into typescript generated files

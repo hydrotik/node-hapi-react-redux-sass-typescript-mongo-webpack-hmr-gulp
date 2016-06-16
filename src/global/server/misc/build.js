@@ -1,7 +1,7 @@
 var Hoek = require('hoek');
 var path = require('path');
 // TODO: config or buildDir should be accessible through options or server...confirm and/or fix3
-var Config = require('../config.js');
+var Config = require('../config.js').Config;
 
 exports.register = function (server, options, next) {
 
@@ -9,11 +9,13 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'GET',
-        path: '/build/{param*}',
+        path: '/{param*}',
         handler: {
             directory: {
-                path: 'build'
+                path: path.resolve(Config.get('/buildDir')),
+                listing: true
             }
+            
         },
         config: {
             cors: true

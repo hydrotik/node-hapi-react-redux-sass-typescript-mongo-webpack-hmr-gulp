@@ -11,7 +11,7 @@ exports.register = function (plugin, options, next) {
 
     options = Hoek.applyToDefaults({ basePath: '' }, options);
 
-    var js = options.artifactRoot + path.join('js', 'login.min.js')
+    var js = options.artifactRoot + path.join('js', 'login.min.js');
     var css = options.artifactRoot + path.join('css', 'login.min.css');
 
     plugin.route({
@@ -42,8 +42,8 @@ exports.register = function (plugin, options, next) {
 
             var props = {
                 title: 'Login',
-                js: js,
-                css: css
+                js: [js],
+                css: [css]
             }
 
             const response = reply.view('login/Index.tsx', props);

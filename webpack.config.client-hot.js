@@ -9,8 +9,8 @@ var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 var pkg = require('./package.json');
 // Configs from global app
-var Config = require('./src/global/server/config');
-var Pages = require('./src/global/server/config.pages').getConfig();
+var Config = require('./config');
+var Pages = require('./config.pages').getConfig();
 
 var processEntries = function(pages){
     var entry = {}, webpack, src, id;
@@ -27,7 +27,7 @@ var processEntries = function(pages){
             }
             else {
                 entry[id] = [
-                    'webpack-dev-server/client?http://localhost:8080',
+                    'webpack-dev-server/client?http://' + Config.get('/devHost') + ':' + Config.get('/webpackPort'),
                     'webpack/hot/only-dev-server',
                     path.resolve(__dirname, src),
                 ]
@@ -94,7 +94,7 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry: Entries,
     output: {
-        path: path.resolve(pkg.directories.clientBuild),
+        path: path.resolve(Config.get('/buildDir')),
         filename: 'global/js/[name].min.js',
         sourceMapFilename: 'global/js/[name].min.map',
         publicPath: "/",

@@ -6,11 +6,11 @@ var commandLineArgs = require("command-line-args");
 
 console.info("==> ✅  Webpack is starting");
 
-var config = require('./webpack.config.client-hot');
+var webpackConfig = require('./webpack.config.client-hot');
+var Config = require('./config');
 
 
-
-new WebpackDevServer(webpack(config), {
+new WebpackDevServer(webpack(webpackConfig), {
     contentBase: path.resolve(__dirname, './'),
     hot: true,
     historyApiFallback: true,
@@ -21,19 +21,19 @@ new WebpackDevServer(webpack(config), {
     },
     proxy: {
         "*" : {
-            target: "http://localhost:8000",
+            target: "http://" + Config.get('/devHost') + ':' + Config.get('/devPort'),
             secure: false,
             bypass: function(req, res, proxyOptions) {
 
             }
         }
     }
-}).listen(8080, 'localhost', function (err, stats) {
+}).listen(Config.get('/webpackPort'), Config.get('/devHost'), function (err, stats) {
   if (err) {
     console.log(err); //eslint-disable-line no-console
   }
 
-  console.info("==> ✅  Webpack is listening on 8080");
+  console.info("==> ✅  Webpack is listening on " + Config.get('/devHost') + ':' + Config.get('/webpackPort'));
 });
 
 // Add opn in here or communicate with Nodemon

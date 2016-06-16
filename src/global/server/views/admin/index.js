@@ -10,7 +10,7 @@ exports.register = function (plugin, options, next) {
 
     options = Hoek.applyToDefaults({ basePath: '' }, options);
 
-    var js = options.artifactRoot + path.join('js', 'admin.min.js')
+    var js = options.artifactRoot + path.join('js', 'admin.min.js');
     var css = options.artifactRoot + path.join('css', 'admin.min.css');
 
     plugin.route({
@@ -28,8 +28,8 @@ exports.register = function (plugin, options, next) {
 
             var props = {
                 title: 'Admin',
-                js: js,
-                css: css
+                js: [js],
+                css: process.env.NODE_ENV === 'production' ? [css] : undefined
             }
 
             // Hook into typescript generated files
