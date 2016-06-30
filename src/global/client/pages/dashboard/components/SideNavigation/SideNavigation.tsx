@@ -70,6 +70,7 @@ export class SideNavigation extends React.Component<ISideNavigationProps, ISideN
                       <NavLink to="/dashboard"><i className="fa fa-circle-o" /> Dashboard v1</NavLink>
                       <li><a href="index2.html"><i className="fa fa-circle-o" /> Dashboard v2</a></li>
                       <NavLink to="/dashboard/video"><i className="fa fa-circle-o" /> Video Player </NavLink>
+                      <NavLink to="/dashboard/videoeditor"><i className="fa fa-circle-o" /> Video Editor </NavLink>
                       <NavLink to="/dashboard/drawing"><i className="fa fa-circle-o" /> Drawing </NavLink>
                     </ul>
                   </li>

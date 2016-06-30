@@ -31,7 +31,7 @@ export class Video extends React.Component<IVideoPageProps, IVideoPageState> {
 
 
     public componentDidMount(): void {
-
+        
     }
 
     public componentWillUnmount(): void {
