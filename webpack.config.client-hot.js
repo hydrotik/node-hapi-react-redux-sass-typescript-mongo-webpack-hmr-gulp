@@ -105,7 +105,7 @@ module.exports = {
         extractCSS,
         new webpack.optimize.DedupePlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new OpenBrowserPlugin({ url: 'http://localhost:8080/dashboard' })
+        //new OpenBrowserPlugin({ url: 'http://localhost:8080/dashboard' })
     ],
     resolve: {
         // Do NOT put .jsx files here! ONLY Typescript is allowed for react code.
@@ -154,14 +154,14 @@ module.exports = {
             test: /\.(js|jsx|es6)$/,
             loaders: [
                 'react-hot',
-                'babel?cacheDirectory',
+                'babel?cacheDirectory=/tmp/',
             ],
             exclude: [/bower_components/, /node_modules/]
         }, {
             test: /\.ts(x?)$/,
             loaders: [
                 'react-hot',
-                'babel?cacheDirectory',
+                'babel?cacheDirectory=/tmp/',
                 'ts-loader'
             ],
             exclude: [/bower_components/, /node_modules/]
