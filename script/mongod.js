@@ -4,7 +4,7 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const path = require('path');
 
-var mongoDataDir = path.resolve(__dirname + '/../data/db');
+var mongoDataDir = path.resolve('/data/db');
 var pidFile = path.resolve(__dirname + '/../mongod.pid');
 
 function runMongo() {

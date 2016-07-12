@@ -1,4 +1,9 @@
-*
+.git
 node_modules
 typings
 build
+chromedriver
+selenium-server-standalone-2.48.2.jar
+data
+.vscode
+www
