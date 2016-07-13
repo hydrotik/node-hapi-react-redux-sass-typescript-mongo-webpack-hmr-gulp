@@ -17,7 +17,7 @@ CMD ["/sbin/my_init"]
 # ...put your own build instructions here.
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
-RUN source ~/.nvm/nvm.sh && nvm install 4.4.7 && npm install -g npm@3.10.5 && npm install -g typings@1.3.1
+RUN source ~/.nvm/nvm.sh && nvm install 4.4.7 && npm install -g npm@3.10.5 && npm install -g typings@1.3.1 && npm install -g mocha
 RUN curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-3.2.7.tgz
 RUN tar -zxvf mongodb-linux-x86_64-ubuntu1604-3.2.7.tgz
 RUN mkdir -p /opt/mongodb
