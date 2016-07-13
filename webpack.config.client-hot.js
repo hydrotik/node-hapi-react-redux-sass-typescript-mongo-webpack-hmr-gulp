@@ -72,12 +72,14 @@ var htmlLoader = [
 var sassParams = [
     'outputStyle=expanded',
     'includePaths[]=' + path.resolve(__dirname, './src/global/client/scss'),
+    //'includePaths[]=' + path.resolve(__dirname, './node_modules/breakpoint-sass/stylesheets')
     'includePaths[]=' + path.resolve(__dirname, './node_modules')
 ];
 
 sassParams.push('sourceMap', 'sourceMapContents=true');
 sassLoader = [
-    'css-loader?sourceMap',
+    //'css-loader?sourceMap',
+    'raw-loader',
     'resolve-url',
     'sass-loader?' + sassParams.join('&')
 ].join('!');
@@ -91,7 +93,7 @@ cssLoader = [
 module.exports = {
     // cheap-module-eval-source-map will create sourcemaps that get line-numbers correct.
     // That should be good enough for most debug situations
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'eval',
     entry: Entries,
     output: {
         path: path.resolve(Config.get('/buildDir')),
@@ -105,6 +107,8 @@ module.exports = {
         extractCSS,
         new webpack.optimize.DedupePlugin(),
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.PrefetchPlugin('./node_modules/react-bootstrap/lib/index.js'),
+        new webpack.PrefetchPlugin('./src/global/client/components/VideoPlayer/VideoPlayer.tsx'),
         //new OpenBrowserPlugin({ url: 'http://localhost:8080/dashboard' })
     ],
     resolve: {
@@ -124,14 +128,14 @@ module.exports = {
         fs: "empty"
     },
     module: {
-        preLoaders: [{
+        /*preLoaders: [{
             test: /\.ts(x?)$/,
             loader: 'tslint'
         }, {
             test: /\.css$/,
             loader: 'csslint',
             exclude: [/dashboard.min.css/]
-        }],
+        }],*/
         loaders: [{
             test: /\.html$/,
             loader: htmlLoader

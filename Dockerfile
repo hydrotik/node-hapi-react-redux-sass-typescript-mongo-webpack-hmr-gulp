@@ -5,6 +5,8 @@
 # for a list of version numbers.
 FROM phusion/baseimage:0.9.19
 
+ENV MONGO_DATA_DIR /data/db
+
 #WORKDIR /code
 #ADD . /code
 RUN mkdir -p /data/db

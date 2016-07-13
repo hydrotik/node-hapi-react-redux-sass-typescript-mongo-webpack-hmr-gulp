@@ -4,32 +4,16 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const path = require('path');
 
-var mongoDataDir = path.resolve('/data/db');
+// Warning do not put data directory for mongodb in a docker/virtualbox shared folder 
+// https://github.com/mvertes/docker-alpine-mongo/issues/1
+var mongoDataDir = path.resolve(process.env.MONGO_DATA_DIR || __dirname + '/../data/db');
 var pidFile = path.resolve(__dirname + '/../mongod.pid');
 
 function runMongo() {
-    var mongoRunning = false;
-    if (fs.existsSync(pidFile)) {
-        var pid = fs.readFileSync(pidFile);
-        
-        try {
-            process.kill(pid, 0);
-            console.log("mongod process " + pid + " already exists");
-            mongoRunning = true;
-        }
-        catch(ex) {
-            // process does not exist, destroy pid file.
-            console.log("mongod process " + pid + " does not exist");
-            fs.unlinkSync(pidFile);
-            mongoRunning = false;
-        }
-        
-    }
 
-    if (!mongoRunning) {
         const mongoProc = spawn(
             'mongod', 
-            ['--dbpath', mongoDataDir],
+            ['--dbpath', mongoDataDir, '--pidfilepath', pidFile],
             {
                 detached: true,
                 stdio: ['ignore']
@@ -50,14 +34,6 @@ function runMongo() {
 
         mongoProc.unref();
 
-        fs.writeFileSync(
-            path.resolve(pidFile),
-            mongoProc.pid,
-            {
-                mode: "0755"
-            }
-        )
-    }
     process.exit(0);
 }
 
