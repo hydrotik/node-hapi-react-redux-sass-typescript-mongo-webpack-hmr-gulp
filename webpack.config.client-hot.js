@@ -4,7 +4,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var util = require('util');
-var webpack = require('webpack');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 var pkg = require('./package.json');
@@ -78,9 +77,10 @@ var sassParams = [
 
 sassParams.push('sourceMap', 'sourceMapContents=true');
 sassLoader = [
-    //'css-loader?sourceMap',
-    'raw-loader',
+    'css-loader?sourceMap',
+    //'raw-loader',
     'resolve-url',
+    //'sass-loader'
     'sass-loader?' + sassParams.join('&')
 ].join('!');
 cssLoader = [
@@ -108,6 +108,9 @@ module.exports = {
         new webpack.optimize.DedupePlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.PrefetchPlugin('./node_modules/react-bootstrap/lib/index.js'),
+        new webpack.PrefetchPlugin('./node_modules/react-map-gl/src/index.js'),
+        new webpack.PrefetchPlugin('./node_modules/react-map-gl/src/map.react.js'),
+        new webpack.PrefetchPlugin('./node_modules/fabric-browserify/dist/fabric.js'),
         new webpack.PrefetchPlugin('./src/global/client/components/VideoPlayer/VideoPlayer.tsx'),
         //new OpenBrowserPlugin({ url: 'http://localhost:8080/dashboard' })
     ],
@@ -165,7 +168,7 @@ module.exports = {
             test: /\.ts(x?)$/,
             loaders: [
                 'react-hot',
-                'babel?cacheDirectory=/tmp/',
+                //'babel?cacheDirectory=/tmp/',
                 'ts-loader'
             ],
             exclude: [/bower_components/, /node_modules/]
