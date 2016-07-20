@@ -6,9 +6,7 @@
     "module" : "commonjs",
     "inlineSourceMap": false,
     "inlineSources": false,
-    "sourceMap": true,
-    "sourceRoot": "/src/global",
-    "watch": true
+    "sourceMap": true
   },
   "exclude": [
     "typings/main",
