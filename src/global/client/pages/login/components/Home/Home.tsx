@@ -170,12 +170,16 @@ class Form extends React.Component<IHomeProps, IHomeState> {
         }
 
         return (
-            <section>
-                <h1 className='page-header'>Sign in</h1>
-                <form onSubmit={(e: any) => this.onSubmit(e) }>
-                    {alerts}
-                    {formElements}
-                </form>
+            <section className="container">
+                <div className='row'>
+                    <div className='col-sm-7'>
+                        <h1 className='page-header'>Sign in</h1>
+                        <form onSubmit={(e: any) => this.onSubmit(e) }>
+                            {alerts}
+                            {formElements}
+                        </form>
+                    </div>
+                </div>
             </section>
         );
     }

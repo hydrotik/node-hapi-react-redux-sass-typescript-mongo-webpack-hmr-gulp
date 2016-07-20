@@ -128,7 +128,7 @@ class Container extends React.Component<TConnectedProps & IProps, any> {
 
         let navStyleMain: any = ClassNames(
             'navbar',
-            'navbar-fixed-top',
+            //'navbar-fixed-top',
             navStyle
         );
 

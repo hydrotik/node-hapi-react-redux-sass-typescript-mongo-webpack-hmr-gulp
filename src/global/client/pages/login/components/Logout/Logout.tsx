@@ -93,10 +93,14 @@ export class Logout extends React.Component<ILogoutProps, ILogoutState> {
         }
 
         return (
-            <section>
-                <h1 className='page-header'>Sign out</h1>
-                {alerts}
-                <NavLink className='btn btn-link' to='/login'>Back to login</NavLink>
+            <section className="container">
+                <div className='row'>
+                    <div className='col-sm-7'>
+                        <h1 className='page-header'>Sign out</h1>
+                        {alerts}
+                        <NavLink className='btn btn-link' to='/login'>Back to login</NavLink>
+                    </div>
+                </div>
             </section>
         );
     }

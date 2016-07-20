@@ -13,18 +13,16 @@ import {
     deleteAccount,
     linkUser,
     unlinkUser,
-    updateName
-} from './actions'
+    updateName,
+} from './actions';
 
-import {ButtonToolbar, ButtonGroup, Button, Glyphicon, Label, Input, Alert} from 'react-bootstrap';
-import {TextControl} from '../../../../components/TextControl/TextControl';
+import {Alert} from 'react-bootstrap';
 import {Spinner} from '../../../../components/Spinner/Spinner';
 import {UserLinkForm} from '../UserLinkForm';
 import {NameDetailsForm} from '../NameDetailsForm';
 import {DeleteForm} from '../DeleteForm';
 
 import { connect } from 'react-redux';
-import { reduxForm }  from 'redux-form';
 import {Link} from 'react-router';
 
 import {REDUCER_NAME} from './reducers';
@@ -140,7 +138,7 @@ class Container extends React.Component<StateProps & DispatchProps &ReactRouterP
             location
         } = this.props;
         
-        const viewBtn = <Button>View</Button>;
+        const viewBtn = <button>View</button>;
         
         return (
             <section className='section-account-details container'>
