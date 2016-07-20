@@ -4,6 +4,8 @@ import * as Xhr from 'xhr';
 import * as Cookie from 'cookie';
 import * as Qs from 'qs';
 import {Promise} from 'es6-promise';
+import * as fetch from 'isomorphic-fetch';
+
 
 export interface IJSONFetch {
     url: string;
@@ -18,12 +20,15 @@ export default function jsonFetch(options: IJSONFetch, callback?: (error: Error,
         let cookies: any = Cookie.parse(typeof(document)!== "undefined"? document.cookie: "");
 
         let config: any = {
-            url: options.url,
-            method: options.method,
+
+            credentials: 'same-origin',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
+            mode: 'no-cors',
+            method: options.method,
+            url: options.url,
         };
 
         if (cookies.crumb) {
@@ -39,7 +44,7 @@ export default function jsonFetch(options: IJSONFetch, callback?: (error: Error,
         }
 
         // TODO Clean this up
-        let x: any = Xhr;
+        let x: any = fetch;
         
             
         
@@ -51,29 +56,35 @@ export default function jsonFetch(options: IJSONFetch, callback?: (error: Error,
                 }
                 
                 reject({ err });
-            } else if (response.statusCode >= 200 && response.statusCode < 300) {
+            } else if (response.status >= 200 && response.status < 300) {
                 if (response.headers.hasOwnProperty('x-auth-required')) {
                     // RedirectActions.saveReturnUrl();
                     window.location.href = '/login';
                 } else {
-                    let data = JSON.parse(body);
+                    let data = body;
                     if (callback) {
                         callback(null, data);
                     }
                     
-                    resolve({ status: response.statusCode, data })
+                    resolve({ status: response.status, data })
                 }
             } else {
-                let httpErr: Error = new Error(response.rawRequest.statusText);
-                let data = JSON.parse(body);
+                let httpErr: Error = new Error(response.statusText);
                 if (callback) {
-                    callback(httpErr, data);
+                    callback(httpErr);
                 }
                 
-                reject({err: httpErr, data});
+                reject({err: httpErr});
             }
         };
 
-        x(config, cb);
+        var p:any = x(config.url, config);
+
+        p.then((response) => { 
+            return response.json()
+            .then((data) => { cb(undefined, response, data); });
+        })
+        
+        .catch((err) => { cb(err); });
     });
 }
