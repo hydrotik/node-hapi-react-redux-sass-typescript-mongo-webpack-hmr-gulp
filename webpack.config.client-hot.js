@@ -71,16 +71,13 @@ var htmlLoader = [
 var sassParams = [
     'outputStyle=expanded',
     'includePaths[]=' + path.resolve(__dirname, './src/global/client/scss'),
-    //'includePaths[]=' + path.resolve(__dirname, './node_modules/breakpoint-sass/stylesheets')
     'includePaths[]=' + path.resolve(__dirname, './node_modules')
 ];
 
 sassParams.push('sourceMap', 'sourceMapContents=true');
 sassLoader = [
     'css-loader?sourceMap',
-    //'raw-loader',
     'resolve-url',
-    //'sass-loader'
     'sass-loader?' + sassParams.join('&')
 ].join('!');
 cssLoader = [
@@ -93,7 +90,7 @@ cssLoader = [
 module.exports = {
     // cheap-module-eval-source-map will create sourcemaps that get line-numbers correct.
     // That should be good enough for most debug situations
-    devtool: 'eval',
+    devtool: '#eval-cheap-module-source-map',
     entry: Entries,
     output: {
         path: path.resolve(Config.get('/buildDir')),
@@ -150,10 +147,10 @@ module.exports = {
             loader: PRODUCTION ? extractCSS.extract('style-loader', sassLoader) : 'style-loader!' +sassLoader
         }, {
             test: /\.jpe?g$|\.gif$|\.png$|\.ico|\.svg$/,
-            loader: 'url-loader?name=global/img/[name].[ext]&limit=4096'
+            loader: 'url-loader?name=global/img/[name].[ext]&limit=32768'
         }, {
             test: /\.woff$|\.woff2$|\.ttf$|\.eot$/,
-            loader: 'url-loader?name=global/fonts/[name].[ext]&limit=4096'//32768
+            loader: 'url-loader?name=global/fonts/[name].[ext]&limit=32768'
         }, {
             test: /\.json$/,
             loader: 'json-loader'
@@ -168,7 +165,6 @@ module.exports = {
             test: /\.ts(x?)$/,
             loaders: [
                 'react-hot',
-                //'babel?cacheDirectory=/tmp/',
                 'ts-loader'
             ],
             exclude: [/bower_components/, /node_modules/]
