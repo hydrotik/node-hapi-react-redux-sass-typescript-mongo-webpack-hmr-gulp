@@ -4,7 +4,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var util = require('util');
-var webpack = require('webpack');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 var pkg = require('./package.json');
@@ -72,13 +71,16 @@ var htmlLoader = [
 var sassParams = [
     'outputStyle=expanded',
     'includePaths[]=' + path.resolve(__dirname, './src/global/client/scss'),
+    //'includePaths[]=' + path.resolve(__dirname, './node_modules/breakpoint-sass/stylesheets')
     'includePaths[]=' + path.resolve(__dirname, './node_modules')
 ];
 
 sassParams.push('sourceMap', 'sourceMapContents=true');
 sassLoader = [
     'css-loader?sourceMap',
+    //'raw-loader',
     'resolve-url',
+    //'sass-loader'
     'sass-loader?' + sassParams.join('&')
 ].join('!');
 cssLoader = [
@@ -91,7 +93,7 @@ cssLoader = [
 module.exports = {
     // cheap-module-eval-source-map will create sourcemaps that get line-numbers correct.
     // That should be good enough for most debug situations
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'eval',
     entry: Entries,
     output: {
         path: path.resolve(Config.get('/buildDir')),
@@ -105,7 +107,12 @@ module.exports = {
         extractCSS,
         new webpack.optimize.DedupePlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new OpenBrowserPlugin({ url: 'http://localhost:8080/dashboard' })
+        new webpack.PrefetchPlugin('./node_modules/react-bootstrap/lib/index.js'),
+        new webpack.PrefetchPlugin('./node_modules/react-map-gl/src/index.js'),
+        new webpack.PrefetchPlugin('./node_modules/react-map-gl/src/map.react.js'),
+        new webpack.PrefetchPlugin('./node_modules/fabric-browserify/dist/fabric.js'),
+        new webpack.PrefetchPlugin('./src/global/client/components/VideoPlayer/VideoPlayer.tsx'),
+        //new OpenBrowserPlugin({ url: 'http://localhost:8080/dashboard' })
     ],
     resolve: {
         // Do NOT put .jsx files here! ONLY Typescript is allowed for react code.
@@ -124,14 +131,14 @@ module.exports = {
         fs: "empty"
     },
     module: {
-        preLoaders: [{
+        /*preLoaders: [{
             test: /\.ts(x?)$/,
             loader: 'tslint'
         }, {
             test: /\.css$/,
             loader: 'csslint',
             exclude: [/dashboard.min.css/]
-        }],
+        }],*/
         loaders: [{
             test: /\.html$/,
             loader: htmlLoader
@@ -154,14 +161,14 @@ module.exports = {
             test: /\.(js|jsx|es6)$/,
             loaders: [
                 'react-hot',
-                'babel?cacheDirectory',
+                'babel?cacheDirectory=/tmp/',
             ],
             exclude: [/bower_components/, /node_modules/]
         }, {
             test: /\.ts(x?)$/,
             loaders: [
                 'react-hot',
-                'babel?cacheDirectory',
+                //'babel?cacheDirectory=/tmp/',
                 'ts-loader'
             ],
             exclude: [/bower_components/, /node_modules/]
