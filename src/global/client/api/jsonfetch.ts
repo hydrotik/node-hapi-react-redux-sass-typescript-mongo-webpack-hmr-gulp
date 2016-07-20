@@ -15,7 +15,7 @@ export interface IJSONFetch {
 export default function jsonFetch(options: IJSONFetch, callback?: (error: Error, result?: string) => any): Promise<any> {
     
     return new Promise((resolve, reject) => { 
-        let cookies: any = Cookie.parse(document.cookie);
+        let cookies: any = Cookie.parse(typeof(document)!== "undefined"? document.cookie: "");
 
         let config: any = {
             url: options.url,
