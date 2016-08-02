@@ -12,7 +12,8 @@
   },
   "engineStrict": true,
   "scripts": {
-    "build-client": "npm run clean; npm run lint-es; npm run typings-install; cross-env NODE_ENV=production ./node_modules/.bin/webpack -p --verbose --colors --display-error-details --config webpack.config.client-hot.js",
+    "postinstall": "node node_modules/typings/dist/bin.js install",
+    "build-client": "npm run clean; npm run lint-es; cross-env NODE_ENV=production ./node_modules/.bin/webpack -p --verbose --colors --display-error-details --config webpack.config.client-hot.js",
     "clean": "node ./script/clean.js",
     "lint-ts": "tslint --config tslint.json --ext .ts,.tsx",
     "lint-jsc": "jscs . --config .jscsrc",
