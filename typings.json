@@ -2,7 +2,6 @@
   "name": "scalable-stack-framework",
   "version": false,
   "dependencies": {
-    "es6-promise": "registry:npm/es6-promise#3.0.0+20160211003958",
     "lodash": "registry:npm/lodash#4.0.0+20160416211519",
     "react-map-gl": "github:dhsaks/typescript-definitions/react-map-gl/index.d.ts#055bb4b3bc7805e6bfaa0009d471c677bc6131f9",
     "react-router": "registry:npm/react-router#2.0.0+20160214194820",
@@ -13,6 +12,7 @@
     "classnames": "registry:dt/classnames#0.0.0+20160316155526",
     "cookie": "registry:dt/cookie#0.1.2+20160316155526",
     "d3": "registry:dt/d3#0.0.0+20160514171929",
+    "es6-promise": "registry:dt/es6-promise#0.0.0+20160614011821",
     "fabricjs": "registry:dt/fabricjs#1.5.0+20160317120654",
     "index": "github:dhsaks/typescript-definitions/react-router-active-component/index.d.ts#66fdaab8fd24902429204d7c269387ca011c1428",
     "mocha": "registry:dt/mocha#2.2.5+20160619032855",
