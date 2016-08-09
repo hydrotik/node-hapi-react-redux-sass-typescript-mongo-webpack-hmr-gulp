@@ -41,7 +41,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
         return (
             <div className='wrapper'>
-                <NavBary pages={Sections} navStyle='navbar-inverse'>
+                <NavBary pages={Sections} navStyle='navbar-inverse navbar-fixed-top'>
                     <NavElementCustom {...this.props} />
                 </NavBary>
                 <SideNavigation />

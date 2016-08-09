@@ -6,7 +6,7 @@
 
 // Core Imports
 import * as React from 'react';
-import {connect, Provider} from 'react-redux';
+import {connect} from 'react-redux';
 import * as _ from 'lodash';
 
 // Styles
@@ -19,10 +19,8 @@ import { FilterForm } from '../FilterForm/FilterForm';
 import { ResultsHead } from './components/ResultsHead/ResultsHead';
 import { ResultsRow } from './components/ResultsRow/ResultsRow';
 import { FilterFormRow } from './components/FilterFormRow/FilterFormRow';
-import {Button} from '../../../../components/Button/Button';
-import {TextControl} from '../../../../components/TextControl/TextControl';
 import {CreateNewAccountForm} from '../../components/CreateNewAccountForm';
-import {Overlay, Modal, ButtonToolbar, ButtonGroup} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
 
 // Actions
 import {showAddNew, hideAddNew, list, create, setSortFilter} from './actions';
@@ -42,11 +40,11 @@ interface IAccountSearchProps {
     location?: any;
     loading?: boolean;
     submitting?: boolean;
-    onLoadAccounts?: () => any
-    onHideModal?: (any) => any
-    onShowModal?: (any) => any
-    onCreateNewSubmit?: (any) => any
-    onFiltersChange?: (any) => any
+    onLoadAccounts?: () => any;
+    onHideModal?: (any) => any;
+    onShowModal?: (any) => any;
+    onCreateNewSubmit?: (any) => any;
+    onFiltersChange?: (any) => any;
 }
 
 interface IAccountSearchState {
@@ -61,25 +59,17 @@ interface IRouterContext {
     router: IRouter;
 }
 
-function mapStateToProps(state : any) : IAccountSearchProps {
+function mapStateToProps(state: any): IAccountSearchProps {
     return {
-        addNew: _.get(state, REDUCER_NAME+'.addNew', {visible: false}), 
-        sortFilter: _.get(state, REDUCER_NAME+'.sortFilter', ""),
-        data: _.get(state, REDUCER_NAME+'.data', []),
-        loading: _.get(state, REDUCER_NAME+'.loading', false),
-    }
+        addNew: _.get(state, REDUCER_NAME + '.addNew', {visible: false}),
+        data: _.get(state, REDUCER_NAME + '.data', []),
+        loading: _.get(state, REDUCER_NAME + '.loading', false),
+        sortFilter: _.get(state, REDUCER_NAME + '.sortFilter', ''),
+    };
 }
 
-const mapDispatchToProps = (dispatch) : any => {
+const mapDispatchToProps: any = (dispatch): any => {
     return {
-        onHideModal: function(e: any) {
-            return dispatch(hideAddNew());
-        },
-        
-        onShowModal: function(e: any) {
-            return dispatch(showAddNew());
-        },
-        
         onCreateNewSubmit: function(data: { name: { lastName: string, middleName: string, firstName: string } } ) {
             return dispatch(create(data.name))
             .then(
@@ -87,29 +77,39 @@ const mapDispatchToProps = (dispatch) : any => {
                     dispatch(hideAddNew());
                     return dispatch(list());
                 }
-            )
+            );
         },
-        
-        onFiltersChange: function(e) {
+
+        onFiltersChange: function(e: any): any {
             dispatch(setSortFilter(e.target.value));
         },
-        
-        onLoadAccounts: function() {
+
+        onHideModal: function(e: any): any {
+            return dispatch(hideAddNew());
+        },
+
+        onLoadAccounts: function(): any {
             return dispatch(list());
-        }
-    }
-}
+        },
+
+        onShowModal: function(e: any): any {
+            return dispatch(showAddNew());
+        },
+    };
+};
 
 class Container extends React.Component<IAccountSearchProps, IAccountSearchState> {
-    
+
+    public refs: {
+        [key: string]: (Element);
+        createnewform: (any);
+    };
+
     public constructor(props: IAccountSearchProps) {
         super(props);
     }
+
     
-    refs: {
-        [key: string]: (Element);
-        createnewform: (any);
-    }
 
     static contextTypes: React.ValidationMap<any> = {
       //router: React.PropTypes.func.isRequired
