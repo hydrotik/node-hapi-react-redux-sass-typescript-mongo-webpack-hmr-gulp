@@ -1,0 +1,12 @@
+[submodule "plugins/auth_plugin"]
+	path = plugins/auth_plugin
+	url = https://www.github.com/dhsaks/auth_plugin
+[submodule "plugins/navbobulator"]
+	path = plugins/navbobulator
+	url = https://github.com/dhsaks/navbobulator.git
+[submodule "plugins/dashboard-component"]
+	path = plugins/dashboard-component
+	url = https://www.github.com/dhsaks/dashboard-component
+[submodule "plugins/contentedit"]
+	path = plugins/contentedit
+	url = https://github.com/dhsaks/contentedit.git

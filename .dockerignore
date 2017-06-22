@@ -7,3 +7,8 @@ selenium-server-standalone-2.48.2.jar
 data
 .vscode
 www
+
+# new
+**/node_modules
+**/typings
+**/npm-debug.log

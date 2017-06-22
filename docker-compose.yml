@@ -1,0 +1,25 @@
+version: "2"
+services:
+
+  csione:
+    image: 974359815377.dkr.ecr.us-east-1.amazonaws.com/csi-one:latest
+    build: './'
+    restart: always
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://admin:admin@mongo:27017/watts?authSource=admin
+    container_name: csione
+
+  mongo:
+   image: 974359815377.dkr.ecr.us-east-1.amazonaws.com/csi-mongo:test
+   ports:
+    - "27017:27017"
+   restart: always
+   container_name: mongo
