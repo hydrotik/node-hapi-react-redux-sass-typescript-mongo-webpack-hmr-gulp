@@ -100,7 +100,7 @@ let config = {
        {
             "plugin": {
                 "register": "../../node_modules/navbobulator",
-                "select": ["admin"],
+                "select": ["web"],
                 "routes": {
                     "prefix": "/navbobulator"
                 },
