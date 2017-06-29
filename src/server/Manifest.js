@@ -90,7 +90,7 @@ let config = {
                 "options": {
                     "ldapUrl": 'ldap://ldap.saksinc.com:389'
                 },
-                "select": ['admin'],
+                "select": ['web'],
                 "routes": {
                     "prefix": "/auth"
                 }
@@ -100,7 +100,7 @@ let config = {
        {
             "plugin": {
                 "register": "../../node_modules/navbobulator",
-                "select": ["web"],
+                "select": ["admin"],
                 "routes": {
                     "prefix": "/navbobulator"
                 },
