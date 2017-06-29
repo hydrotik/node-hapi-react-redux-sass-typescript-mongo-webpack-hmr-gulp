@@ -1,6 +1,6 @@
 FROM node:7.10-alpine
 
-ARG GIT_BRANCH=new-develop
+ARG GIT_BRANCH="new-develop"
 
 # Create app directory
 RUN mkdir -p /opt/app
