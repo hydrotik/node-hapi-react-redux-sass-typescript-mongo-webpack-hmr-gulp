@@ -30,7 +30,9 @@ const Poop = require('poop');
 
 const Promise = require('bluebird');
 
-var MongoClient = require('mongodb').MongoClient
+const MongoClient = require('mongodb').MongoClient
+
+const CircuitBreaker = require('opossum');
 
 //############################################################################
 //
@@ -78,23 +80,57 @@ const glueOptions = {
             }
             server.log([], "Logging started");
             if (process.env.MONGO_URI) {
-                MongoClient.connect(process.env.MONGO_URI, function(err, db) {
-                    if (!err) {
-                        server.log([], "Connected to mongo");
-                        server.app.wattsDb = db;
-                        let serverCollection = db.collection('header');
-                        serverCollection.find({}).toArray(function(err, docs) {
-                            if (err) {
-                                server.log([], err);
-                                db.close();
-                                return;
+
+                var mongoBreaker = CircuitBreaker(() => {
+                    return new Promise((resolve, reject) => {
+                        MongoClient.connect(process.env.MONGO_URI, function(err, db) {
+                            if (!err) {
+                                return resolve(db);
+                            }
+                            else {
+                                return reject(err);
                             }
                         });
-                        
-                    }
-                    else {
-                        server.log([], err);
-                    }
+                    });
+                },
+                {
+                    timeout: 3000,
+                    maxFailures: 3,
+                    resetTimeout: 10000,
+                    Promise: Promise
+                });
+
+                mongoBreaker.on('open', () => {
+                    server.log(['error'], 'Mongo connection failure. Circuit-breaker is opened.');
+                });
+
+                mongoBreaker.on('timeout', (err) => {
+                    server.log(['warn'], 'Mongo connection has timed-out.');
+                });
+
+                mongoBreaker.on('failure', (err) => {
+                    server.log(['error'], 'Mongo connection failed.');
+                });
+
+                mongoBreaker.on('success', () => {
+                    server.log(['info'], 'Mongo connection success.');
+                });
+
+                mongoBreaker.on('close', () => {
+                    server.log(['info'], 'Mongo connection has restored. Circuit-breaker is closed.');
+                });
+
+                mongoBreaker.fire()
+                .then((db) => {
+                    server.app.wattsDb = db;
+                })
+                .catch((err) => {
+                    setTimeout(() => {
+                        mongoBreaker.fire()
+                        .then((db) => {
+                            server.app.wattsDb = db;
+                        })
+                    }, 3000)
                 });
             }
             else {

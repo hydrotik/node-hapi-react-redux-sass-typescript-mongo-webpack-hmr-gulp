@@ -19,7 +19,12 @@ services:
 
   mongo:
    image: 974359815377.dkr.ecr.us-east-1.amazonaws.com/csi-mongo:test
+   build: 
+    context: './mongo'
+    args:
+      - USERADMIN_PASS=admin
+      - ADMIN_PASS=admin
    ports:
     - "27017:27017"
-   restart: always
+   restart: always    
    container_name: mongo

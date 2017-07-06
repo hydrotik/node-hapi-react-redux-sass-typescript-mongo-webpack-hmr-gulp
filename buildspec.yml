@@ -18,7 +18,7 @@ phases:
       - aws ecr batch-delete-image --repository-name $IMAGE_REPO_NAME --image-ids imageTag=$IMAGE_TAG
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - echo deleting Dockerfile
-      - rm Dockerfile.codebuild
+      - rm Dockerfile
 
 artifacts:
   files:
