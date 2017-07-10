@@ -4,8 +4,9 @@
   "description": "Content Engineering CMS",
   "main": "src/server/index.js",
   "scripts": {
-    "dev": "NODE_ENV=development MONGO_URI=mongodb://admin:admin@localhost:27017/watts?authSource=admin node --debug src/server/index.js",
+    "dev": "docker-compose up -d mongo && NODE_ENV=development MONGO_URI=mongodb://admin:admin@localhost:27017/watts?authSource=admin node --debug src/server/index.js",
     "docker": "docker-compose up",
+    "mongo": "docker-compose up -d mongo",
     "start": "node ./src/server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
