@@ -1,11 +1,11 @@
-FROM node:7.10-alpine
+FROM node:boron
 
 # Create app directory
 RUN mkdir -p /opt/app
 WORKDIR /opt/app
 
 # Install app dependencies (Doing this first takes advantage of Docker's caching of layers)
-RUN apk add --no-cache make gcc g++ python git
+RUN apt-get install -y make gcc g++ python git
 COPY package.json /opt/app/
 COPY plugins/auth_plugin/package.json /opt/app/plugins/auth_plugin/
 COPY plugins/navbobulator/package.json /opt/app/plugins/navbobulator/
