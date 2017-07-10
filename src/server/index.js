@@ -80,8 +80,7 @@ const glueOptions = {
             }
             server.log([], "Logging started");
             if (process.env.MONGO_URI) {
-
-                var mongoBreaker = CircuitBreaker(() => {
+                var mongoBreaker = server.app.mongoBreaker = CircuitBreaker(() => {
                     return new Promise((resolve, reject) => {
                         MongoClient.connect(process.env.MONGO_URI, function(err, db) {
                             if (!err) {
@@ -154,7 +153,13 @@ const glueOptions = {
                 method: 'GET',
                 path: '/',
                 handler: function (request, reply) {
-                    return reply('Hello Wrold!');
+                    request.server.app.wattsDb.collection('hello').findOne({}, function(err, docs) {
+                        if (err) {
+                            return reply(Boom.serverUnavailable());
+                        }
+                        return reply('Hello, ' + docs.name);
+                    });
+                    
                 }
             })
 
