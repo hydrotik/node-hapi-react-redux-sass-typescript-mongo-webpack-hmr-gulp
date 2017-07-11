@@ -77,6 +77,21 @@ let config = {
                 "options": {}
             }
         },
+        {
+            "plugin": {
+                "register": "hapi-mongo-models",
+                "options": {
+                    "mongodb": {
+                        "uri": process.env.MONGO_URI || 'mongodb://localhost:27017/watts',
+                        "options": {},
+                    },
+                    "autoIndex": false,
+                    "models": {
+                        
+                    }
+                }
+            }
+        },
 
 
 // ============================================================================
@@ -103,6 +118,18 @@ let config = {
                 "select": ["web"],
                 "routes": {
                     "prefix": "/navbobulator"
+                },
+                "options": {
+                }
+            }
+        },
+
+        {
+            "plugin": {
+                "register": "../../node_modules/contentedit",
+                "select": ["web"],
+                "routes": {
+                    "prefix": "/contentedit"
                 },
                 "options": {
                 }

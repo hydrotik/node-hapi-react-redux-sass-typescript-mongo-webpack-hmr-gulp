@@ -3,6 +3,7 @@
 const csi = require('./common');
 const Path = require('path');
 const Hapi = require('hapi');
+const HapiMongoModels = require('hapi-mongo-models');
 
 // hapijs server and plugin composition
 const Glue = require('glue');
@@ -79,62 +80,6 @@ const glueOptions = {
                 throw err;
             }
             server.log([], "Logging started");
-            if (process.env.MONGO_URI) {
-                var mongoBreaker = server.app.mongoBreaker = CircuitBreaker(() => {
-                    return new Promise((resolve, reject) => {
-                        MongoClient.connect(process.env.MONGO_URI, function(err, db) {
-                            if (!err) {
-                                return resolve(db);
-                            }
-                            else {
-                                return reject(err);
-                            }
-                        });
-                    });
-                },
-                {
-                    timeout: 3000,
-                    maxFailures: 3,
-                    resetTimeout: 10000,
-                    Promise: Promise
-                });
-
-                mongoBreaker.on('open', () => {
-                    server.log(['error'], 'Mongo connection failure. Circuit-breaker is opened.');
-                });
-
-                mongoBreaker.on('timeout', (err) => {
-                    server.log(['warn'], 'Mongo connection has timed-out.');
-                });
-
-                mongoBreaker.on('failure', (err) => {
-                    server.log(['error'], 'Mongo connection failed.');
-                });
-
-                mongoBreaker.on('success', () => {
-                    server.log(['info'], 'Mongo connection success.');
-                });
-
-                mongoBreaker.on('close', () => {
-                    server.log(['info'], 'Mongo connection has restored. Circuit-breaker is closed.');
-                });
-
-                mongoBreaker.fire()
-                .then((db) => {
-                    server.app.wattsDb = db;
-                })
-                .catch((err) => {
-                    setTimeout(() => {
-                        mongoBreaker.fire()
-                        .then((db) => {
-                            server.app.wattsDb = db;
-                        })
-                    }, 3000)
-                });
-            }
-            else {
-                server.log(['error'], "No mongo defined");
-            }
 
 // ============================================================================
 //
@@ -149,17 +94,30 @@ const glueOptions = {
 //      });
 // ============================================================================
 
+            server.app.getMongo = function() {
+                return new Promise((resolve, reject) => {
+                    let hapiMongoModels = server.plugins['hapi-mongo-models'];
+
+                    if (hapiMongoModels.MongoModels && hapiMongoModels.MongoModels.db) {
+                        resolve(hapiMongoModels.MongoModels.db);
+                    }
+                    else {
+                        reject("Error getting db from hapi-mongo-models");
+                    }
+                });
+            }
             server.route({
                 method: 'GET',
                 path: '/',
                 handler: function (request, reply) {
-                    request.server.app.wattsDb.collection('hello').findOne({}, function(err, docs) {
-                        if (err) {
-                            return reply(Boom.serverUnavailable());
-                        }
-                        return reply('Hello, ' + docs.name);
-                    });
-                    
+                    server.app.getMongo().then((db) => {
+                        db.collection('hello').findOne({}, function(err, docs) {
+                            if (err) {
+                                return reply('Hello');
+                            }
+                            return reply('Hello, ' + docs.name);
+                        });
+                    })
                 }
             })
 

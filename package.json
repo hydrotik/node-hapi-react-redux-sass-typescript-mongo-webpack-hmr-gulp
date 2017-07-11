@@ -24,9 +24,11 @@
     "hapi": "^16.1.0",
     "hapi-auth-cookie": "^6.1.1",
     "hapi-auth-jwt2": "^7.2.4",
+    "hapi-mongo-models": "^6.0.0",
     "inert": "^4.2.0",
     "joi": "^10.2.2",
     "lout": "^9.2.0",
+    "mongo-models": "^1.3.1",
     "mongodb": "^2.2.26",
     "opossum": "^0.5.0",
     "poop": "^2.0.2",
@@ -34,6 +36,7 @@
   },
   "optionalDependencies": {
     "auth_plugin": "file:./plugins/auth_plugin",
-    "navbobulator": "file:./plugins/navbobulator"
+    "navbobulator": "file:./plugins/navbobulator",
+    "contentedit": "file:./plugins/contentedit"
   }
 }
