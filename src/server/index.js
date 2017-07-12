@@ -29,6 +29,8 @@ const Crumb = require('crumb');
 // hapijs plugin for uncaught exceptions
 const Poop = require('poop');
 
+const Hoek = require('hoek');
+
 const Promise = require('bluebird');
 
 const MongoClient = require('mongodb').MongoClient
@@ -175,6 +177,8 @@ Glue.compose(Manifest, glueOptions, (err, server) => {
                     return reject(err);
                 }
                 else {
+                    server.log(['debug'], process.env.AWS_ACCESS_KEY_ID);
+                    server.log(['debug'], process.env.AWS_SECRET_KEY);
                     server.connections.map((curr, idx, arr) => {
                         server.log(['debug'], curr.settings.labels + ' running at: ' + server.select(curr.settings.labels[0]).info.uri);
                     });
