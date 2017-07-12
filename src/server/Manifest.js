@@ -122,6 +122,18 @@ let config = {
                 "options": {
                 }
             }
+        },
+
+        {
+            "plugin": {
+                "register": "../../node_modules/contentedit",
+                "select": ["web"],
+                "routes": {
+                    "prefix": "/contentedit"
+                },
+                "options": {
+                }
+            }
         }
     ]
 }

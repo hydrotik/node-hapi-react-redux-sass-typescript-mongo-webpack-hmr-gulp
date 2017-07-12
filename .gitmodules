@@ -7,3 +7,6 @@
 [submodule "plugins/navbobulator"]
 	path = plugins/navbobulator
 	url = https://github.com/dhsaks/navbobulator
+[submodule "plugins/contentedit"]
+	path = plugins/contentedit
+	url = https://github.com/dhsaks/contentedit
