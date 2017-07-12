@@ -4,12 +4,11 @@
     {
       "name": "csione",
       "image": "974359815377.dkr.ecr.us-east-1.amazonaws.com/csi-one:test",
-      "links": ["mongo"],
+      "links": [],
       "update": "true",
       "environment" : [
           { "name" : "NODE_ENV", "value" : "production" },
-          { "name" : "SECRET_KEY", "value": "D+ofT03hsADRNKkyQ2X5kdwwlhb30tD4EyNYIwyQby0=" },
-          { "name": "MONGO_URI", "value": "mongodb://admin:admin@mongo:27017/watts?authSource=admin" }
+          { "name" : "SECRET_KEY", "value": "D+ofT03hsADRNKkyQ2X5kdwwlhb30tD4EyNYIwyQby0=" }
       ],
       "essential": true,
       "memory": 128,
@@ -21,20 +20,6 @@
         {
           "containerPort": 8001,
           "hostPort": 443
-        }
-      ]
-    },
-    {
-      "name": "mongo",
-      "image": "974359815377.dkr.ecr.us-east-1.amazonaws.com/csi-mongo:test",
-      "update": "true",
-      "environment" : [
-      ],
-      "essential": true,
-      "memory": 256,
-      "portMappings": [
-        {
-          "containerPort": 27017
         }
       ]
     }
