@@ -7,8 +7,7 @@
       "links": [],
       "update": "true",
       "environment" : [
-          { "name" : "NODE_ENV", "value" : "production" },
-          { "name" : "SECRET_KEY", "value": "D+ofT03hsADRNKkyQ2X5kdwwlhb30tD4EyNYIwyQby0=" }
+          { "name" : "NODE_ENV", "value" : "production" }
       ],
       "essential": true,
       "memory": 128,
