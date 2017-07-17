@@ -4,7 +4,8 @@
   "description": "Content Engineering CMS",
   "main": "src/server/index.js",
   "scripts": {
-    "dev": "docker-compose up -d mongo && NODE_ENV=development MONGO_URI=mongodb://admin:admin@localhost:27017/watts?authSource=admin node --debug src/server/index.js",
+    "devAddUserToDB": "MONGO_URI=mongodb://admin:admin@localhost:27017/watts?authSource=admin node --debug ./node_modules/auth_plugin/addUserToDB.js",
+    "dev": "docker-compose up -d mongo && NODE_ENV=development LDAP_URI=ldap://ldap.saksinc.com:389 SECRET_KEY=secret MONGO_URI=mongodb://admin:admin@localhost:27017/watts?authSource=admin node --debug src/server/index.js",
     "docker": "docker-compose up",
     "mongo": "docker-compose up -d mongo",
     "start": "node ./src/server/index.js",
@@ -25,6 +26,7 @@
     "hapi-auth-cookie": "^6.1.1",
     "hapi-auth-jwt2": "^7.2.4",
     "hapi-mongo-models": "^6.0.0",
+    "hoek": "^4.1.1",
     "inert": "^4.2.0",
     "joi": "^10.2.2",
     "lout": "^9.2.0",

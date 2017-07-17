@@ -103,7 +103,7 @@ let config = {
             "plugin": {
                 "register": "../../node_modules/auth_plugin",
                 "options": {
-                    "ldapUrl": 'ldap://ldap.saksinc.com:389'
+                    "ldapUrl": process.env.LDAP_URI || 'ldap://localhost:389' //'ldap://ldap.saksinc.com:389'
                 },
                 "select": ['web'],
                 "routes": {

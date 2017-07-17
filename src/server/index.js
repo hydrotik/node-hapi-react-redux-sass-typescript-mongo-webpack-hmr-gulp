@@ -173,12 +173,21 @@ Glue.compose(Manifest, glueOptions, (err, server) => {
             });
 
             server.start((err) => {
+                
+                // Check for required environment variables
+                if (!process.env.NODE_ENV || !['production', 'development', 'test'].includes(process.env.NODE_ENV)) {
+                    return reject(new Error("NODE_ENV environment variable is required, and must be one of (production, development, test)"));
+                }
+
+                if (!process.env.SECRET_KEY || process.env.SECRET_KEY === "") {
+                    return reject(new Error("SECRET_KEY environment variable is required"));
+                }
+
                 if (err) {
                     return reject(err);
                 }
                 else {
-                    server.log(['debug'], process.env.AWS_ACCESS_KEY_ID);
-                    server.log(['debug'], process.env.AWS_SECRET_KEY);
+                    
                     server.connections.map((curr, idx, arr) => {
                         server.log(['debug'], curr.settings.labels + ' running at: ' + server.select(curr.settings.labels[0]).info.uri);
                     });
