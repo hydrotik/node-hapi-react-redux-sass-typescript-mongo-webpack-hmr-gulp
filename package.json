@@ -5,7 +5,7 @@
   "main": "src/server/index.js",
   "scripts": {
     "devAddUserToDB": "MONGO_URI=mongodb://admin:admin@localhost:27017/watts?authSource=admin node --debug ./node_modules/auth_plugin/addUserToDB.js",
-    "dev": "docker-compose up -d mongo && NODE_ENV=development LDAP_URI=ldap://ldap.saksinc.com:389 SECRET_KEY=secret MONGO_URI=mongodb://admin:admin@localhost:27017/watts?authSource=admin node --debug src/server/index.js",
+    "dev": "docker-compose up -d mongo && NODE_ENV=development SECRET_KEY=secret MONGO_URI=mongodb://admin:admin@localhost:27017/watts?authSource=admin node --debug src/server/index.js",
     "docker": "docker-compose up",
     "mongo": "docker-compose up -d mongo",
     "start": "node ./src/server/index.js",
