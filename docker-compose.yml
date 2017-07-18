@@ -15,6 +15,7 @@ services:
     environment:
       - NODE_ENV=development
       - MONGO_URI=mongodb://admin:admin@mongo:27017/watts?authSource=admin
+      - SECRET_KEY=secret
     container_name: csione
 
   mongo:
