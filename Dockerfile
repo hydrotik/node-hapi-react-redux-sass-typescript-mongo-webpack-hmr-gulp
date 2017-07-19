@@ -9,6 +9,7 @@ RUN apt-get install -y make gcc g++ python git
 COPY package.json /opt/app/
 COPY plugins/auth_plugin/package.json /opt/app/plugins/auth_plugin/
 COPY plugins/navbobulator/package.json /opt/app/plugins/navbobulator/
+COPY plugins/contentedit/package.json /opt/app/plugins/contentedit/
 RUN npm install
 
 
@@ -16,7 +17,8 @@ RUN npm install
 COPY . /opt/app
 RUN cd plugins/auth_plugin && npm link && cd ../../
 RUN cd plugins/navbobulator && npm link && cd ../../
-RUN npm link auth_plugin navbobulator
+RUN cd plugins/contentedit && npm link && cd ../../
+RUN npm link auth_plugin navbobulator contentedit
 
 
 EXPOSE 8000
