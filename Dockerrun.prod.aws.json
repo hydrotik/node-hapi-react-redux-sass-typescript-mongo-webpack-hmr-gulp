@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "csione",
-      "image": "974359815377.dkr.ecr.us-east-1.amazonaws.com/csi-one:test",
+      "image": "974359815377.dkr.ecr.us-east-1.amazonaws.com/csi-one:prod",
       "links": [],
       "update": "true",
       "environment" : [
