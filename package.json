@@ -1,6 +1,6 @@
 {
   "name": "csi-one",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-alpha.1",
   "description": "Content Engineering CMS",
   "main": "src/server/index.js",
   "scripts": {
