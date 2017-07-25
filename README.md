@@ -1,7 +1,7 @@
 # BASIC INSTALL STEPS
 1. Clone repo with `git clone https://github.com/dhsaks/csione --recursive`
 2. Run `npm install`
-3. Run `npm run dev` and visit http://localhost:8000/ or http://localhost:8001/ for password-protected projects
+3. Run `npm run dev` and visit http://localhost:8000/
 
 # CREATING A PLUGIN
 Assuming you have created a git repo for your plugin, you'll use git submodules to develop it
