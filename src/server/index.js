@@ -180,8 +180,8 @@ Glue.compose(Manifest, glueOptions, (err, server) => {
                     return reject(new Error("NODE_ENV environment variable is required, and must be one of (production, development, test)"));
                 }
 
-                if (!process.env.SECRET_KEY || process.env.SECRET_KEY === "") {
-                    return reject(new Error("SECRET_KEY environment variable is required"));
+                if (!process.env.SECRET_KEY || process.env.SECRET_KEY === "" || process.env.SECRET_KEY.length < 32) {
+                    return reject(new Error("SECRET_KEY environment variable is required, and must be at least 32 characters"));
                 }
 
                 if (err) {
