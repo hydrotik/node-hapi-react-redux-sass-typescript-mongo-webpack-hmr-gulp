@@ -112,12 +112,13 @@ const glueOptions = {
                 method: 'GET',
                 path: '/',
                 handler: function (request, reply) {
+                    
                     server.app.getMongo().then((db) => {
                         db.collection('hello').findOne({}, function(err, docs) {
                             if (err) {
-                                return reply('Hello');
+                                return reply('Hello from ' + (process.env.COLOR || 'server'));
                             }
-                            return reply('Hello, ' + docs.name);
+                            return reply('Hello, ' + docs.name + ' from ' + (process.env.COLOR || 'server'));
                         });
                     })
                 }
