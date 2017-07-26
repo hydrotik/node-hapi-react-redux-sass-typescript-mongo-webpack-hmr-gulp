@@ -129,7 +129,7 @@ const glueOptions = {
     }
 };
 
-Glue.compose(Manifest, glueOptions, (err, server) => {
+Glue.compose(Manifest.manifest, glueOptions, (err, server) => {
     if (err) {
         throw err;
     }

@@ -3,7 +3,32 @@
 const csi = require('./common');
 let env = process.env.NODE_ENV;
 
-let config = {
+let custom = {
+    cors: { 
+        origin: [
+            "hbc.com",
+            "*.hbc.com",
+            "lordandtaylor.com",
+            "*.lordandtaylor.com",
+            "saks.com",
+            "*.saks.com",
+            "saksdirect.com",
+            "*.saksdirect.com",
+            "saksfifthavenue.com",
+            "*.saksfifthavenue.com",
+            "saksoff5th.com",
+            "*.saksoff5th.com"
+        ],
+        maxAge: 3600,
+        credentials: true
+    }
+}
+
+if (env === "development") {
+    custom.cors.origin = ["*"];
+}
+
+let manifest = {
     "server": {
         "app": {
             "slogan": "CSI-ONE"
@@ -138,4 +163,7 @@ let config = {
     ]
 }
 
-module.exports = config;
+module.exports = {
+    manifest,
+    custom
+};
