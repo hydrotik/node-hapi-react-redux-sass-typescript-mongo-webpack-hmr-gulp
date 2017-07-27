@@ -1,5 +1,5 @@
 # BASIC INSTALL STEPS
-1. Clone repo with `git clone https://github.com/dhsaks/csione --recursive`
+1. Clone repo with `git clone https://github.com/hydrotik/node-hapi-react-redux-sass-typescript-mongo-webpack-hmr-gulp --recursive`
 2. Run `npm install`
 3. Run `npm run dev` and visit http://localhost:8000/
 
