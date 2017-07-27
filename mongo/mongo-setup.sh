@@ -14,6 +14,8 @@ done
 mongo admin --port 27017 -u userAdmin -p ${USERADMIN_PASS} --authenticationDatabase "admin" --eval 'db.createUser({"user":"admin", "pwd":"'${ADMIN_PASS}'", "roles": [ "dbAdminAnyDatabase", "readWriteAnyDatabase" ] })'
 mongo watts --port 27017 -u admin -p ${ADMIN_PASS} --authenticationDatabase "admin" db.js
 
-mongoimport -u admin -p ${ADMIN_PASS} --authenticationDatabase "admin" --db watts --collection headers --jsonArray --drop --file ./header.data.json
+mongoimport -u admin -p ${ADMIN_PASS} --authenticationDatabase "admin" --db watts --collection headers --jsonArray --file ./header.data.json
+mongoimport -u admin -p ${ADMIN_PASS} --authenticationDatabase "admin" --db watts --collection schemas --file ./EditorialPanelFiftyFiftyFullWidth.json
+mongoimport -u admin -p ${ADMIN_PASS} --authenticationDatabase "admin" --db watts --collection schemas --file ./EditorialPanelSkinnyBanner.json
 
 mongod --shutdown --dbpath=/containerdb
