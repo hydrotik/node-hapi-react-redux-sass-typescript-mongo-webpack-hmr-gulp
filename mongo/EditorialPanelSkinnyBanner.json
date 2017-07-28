@@ -1,0 +1,92 @@
+{
+  "title": "Editorial Panel: Skinny Banner",
+  "description": "A slim editorial module",
+  "type": "object",
+  "required": [
+    "image_path"
+  ],
+  "properties": {
+    "background_color": {
+      "type": "string",
+      "title": "Background Color",
+      "default": "#9dd2e4"
+    },
+    "headline": {
+      "type": "string",
+      "title": "Headline"
+    },
+    "headline_color": {
+      "type": "string",
+      "title": "Headline Color",
+      "default": "#000000"
+    },
+    "headline_font": {
+      "type": "string",
+      "title": "Headline Font",
+      "default": "acumin"
+    },
+    "image_path": {
+      "type": "string",
+      "title": "Image Path"
+    },
+    "image_alt_text": {
+      "type": "string",
+      "title": "Image Alt Text"
+    },
+    "body_copy1": {
+      "type": "string",
+      "title": "Body Copy"
+    },
+    "cta1_url": {
+      "type": "string",
+      "title": "Click-to-Action (CTA) 1 URL"
+    },
+    "cta1_mobile_url": {
+      "type": "string",
+      "title": "CTA 1 Mobile URL"
+    },
+    "cta1_label": {
+      "type": "string",
+      "title": "CTA 1 Label"
+    },
+    "cta1_target": {
+      "type": "string",
+      "title": "CTA 1 Target",
+      "default": "_self"
+    },
+    "cta2_url": {
+      "type": "string",
+      "title": "Click-to-Action (CTA) 2 URL"
+    },
+    "cta2_mobile_url": {
+      "type": "string",
+      "title": "CTA 2 Mobile URL"
+    },
+    "cta2_label": {
+      "type": "string",
+      "title": "CTA 2 Label"
+    },
+    "cta2_target": {
+      "type": "string",
+      "title": "CTA 2 Target",
+      "default": "_self"
+    },
+    "default_cta": {
+      "type": "string",
+      "title": "Default CTA",
+      "enum": [
+        "cta1", "cta2"
+      ],
+      "uniqueItems": true,
+      "default": "cta1"
+    },
+    "footnote_marker": {
+      "type": "string",
+      "title": "Footnote Marker"
+    },
+    "disclaimer_text": {
+      "type": "string",
+      "title": "Disclaimer Text"
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "title": "Editorial Panel: 50/50 or Full Width",
+  "description": "An editorial module, either split down the middle (50/50) or full-width, based on the Component Type chosen.",
+  "type": "object",
+  "required": [
+    "component_type", "image_path"
+  ],
+  "properties": {
+    "component_type": {
+      "type": "string",
+      "title": "Component Type",
+      "enum": [
+        "EditorialPanelFiftyFifty", "EditorialPanelFullWidth"
+      ],
+      "uniqueItems": true,
+      "default": "EditorialPanelFiftyFifty"
+    },
+    "headline": {
+      "type": "string",
+      "title": "Headline"
+    },
+    "headline_color": {
+      "type": "string",
+      "title": "Headline Color",
+      "default": "#4a7cff"
+    },
+    "headline_font": {
+      "type": "string",
+      "title": "Headline Font",
+      "default": "acumin"
+    },
+    "image_path": {
+      "type": "string",
+      "title": "Image Path"
+    },
+    "image_alt_text": {
+      "type": "string",
+      "title": "Image Alt Text"
+    },
+    "body_copy1": {
+      "type": "string",
+      "title": "Body Copy 1"
+    },
+    "body_copy2": {
+      "type": "string",
+      "title": "Body Copy 2"
+    },
+    "cta1_url": {
+      "type": "string",
+      "title": "Click-to-Action (CTA) 1 URL"
+    },
+    "cta1_mobile_url": {
+      "type": "string",
+      "title": "CTA 1 Mobile URL"
+    },
+    "cta1_label": {
+      "type": "string",
+      "title": "CTA 1 Label"
+    },
+    "cta1_target": {
+      "type": "string",
+      "title": "CTA 1 Target",
+      "default": "_self"
+    },
+    "cta2_url": {
+      "type": "string",
+      "title": "Click-to-Action (CTA) 2 URL"
+    },
+    "cta2_mobile_url": {
+      "type": "string",
+      "title": "CTA 2 Mobile URL"
+    },
+    "cta2_label": {
+      "type": "string",
+      "title": "CTA 2 Label"
+    },
+    "cta2_target": {
+      "type": "string",
+      "title": "CTA 2 Target",
+      "default": "_self"
+    },
+    "default_cta": {
+      "type": "string",
+      "title": "Default CTA",
+      "enum": [
+        "cta1", "cta2"
+      ],
+      "uniqueItems": true,
+      "default": "cta1"
+    },
+    "subhead1": {
+      "type": "string",
+      "title": "Subheading 1"
+    },
+    "subhead2": {
+      "type": "string",
+      "title": "Subheading 2"
+    },
+    "subhead3": {
+      "type": "string",
+      "title": "Subheading 3"
+    },
+    "live_copy_position": {
+      "type": "string",
+      "title": "Live Copy Position",
+      "enum": [
+        "left", "right"
+      ],
+      "uniqueItems": true,
+      "default": "right"
+    },
+    "live_copy_font_color": {
+      "type": "string",
+      "title": "Live Copy Font Color",
+      "enum": [
+        "white", "black"
+      ],
+      "uniqueItems": true,
+      "default": "black"
+    },
+    "footnote_marker": {
+      "type": "string",
+      "title": "Footnote Marker"
+    },
+    "disclaimer_text": {
+      "type": "string",
+      "title": "Disclaimer Text"
+    }
+  }
+}
