@@ -1,4 +1,5 @@
 {
+  "name": "fifty-fifty-full-width",
   "title": "Editorial Panel: 50/50 or Full Width",
   "description": "An editorial module, either split down the middle (50/50) or full-width, based on the Component Type chosen.",
   "type": "object",
