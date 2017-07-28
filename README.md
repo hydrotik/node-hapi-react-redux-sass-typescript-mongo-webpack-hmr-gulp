@@ -23,6 +23,9 @@ Go to the src/server/Manifest.js file and adding something like the below will u
     }
 }
 ```
+# GLOBALLY AVAILABLE FUNCTIONS THAT ARE ADDED TO server.app 
+`server.app.getMongo()` Returns a Promise that resolves with the MongoClient db object
+`server.app.getManifest()` Returns a JSON object containing the Manifest which contains global configuration
 
 # PLUGIN CODE
 See plugins/dashboard-component/src/server/index.js for an example of plugin code and see the hapi.js documentation

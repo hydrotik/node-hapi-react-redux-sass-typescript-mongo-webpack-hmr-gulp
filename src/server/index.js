@@ -56,6 +56,9 @@ const glueOptions = {
     
     // Register globally necessary plugins
     preRegister: (server, next) => {
+        server.app.getManifest = function() {
+            return Manifest;
+        }
         server.register([
             {
                 "register": Good,
@@ -133,7 +136,7 @@ Glue.compose(Manifest.manifest, glueOptions, (err, server) => {
     if (err) {
         throw err;
     }
-
+    
     // Connection labels for admin and web are required!
     let adminExists = false;
     let webExists = false;
