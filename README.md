@@ -28,4 +28,4 @@ Go to the src/server/Manifest.js file and adding something like the below will u
 See plugins/dashboard-component/src/server/index.js for an example of plugin code and see the hapi.js documentation
 
 # INCLUDED PLUGINS
-*contentedit* https://github.com/dhsask/contentedit
+*contentedit* https://github.com/dhsaks/contentedit
