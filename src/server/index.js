@@ -47,8 +47,6 @@ const CircuitBreaker = require('opossum');
 //############################################################################
 const Manifest = require('./Manifest');
 
-const isDevMode = process.env.NODE_ENV === 'development';
-
 const glueOptions = {
 
     // paths for plugins relative to the current directory
@@ -98,7 +96,6 @@ const glueOptions = {
 //          }
 //      });
 // ============================================================================
-
             server.app.getMongo = function() {
                 return new Promise((resolve, reject) => {
                     let hapiMongoModels = server.plugins['hapi-mongo-models'];
