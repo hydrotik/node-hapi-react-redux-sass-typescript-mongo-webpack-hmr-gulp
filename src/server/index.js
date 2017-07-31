@@ -37,6 +37,7 @@ const MongoClient = require('mongodb').MongoClient
 
 const CircuitBreaker = require('opossum');
 
+
 //############################################################################
 //
 // Use Glue to compose plugins and configuration
