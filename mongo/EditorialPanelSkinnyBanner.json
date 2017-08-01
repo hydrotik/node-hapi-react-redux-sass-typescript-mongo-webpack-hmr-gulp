@@ -1,93 +1,187 @@
 {
-  "name": "skinny-banner",
-  "title": "Editorial Panel: Skinny Banner",
-  "description": "A slim editorial module",
-  "type": "object",
-  "required": [
-    "image_path"
-  ],
-  "properties": {
-    "background_color": {
-      "type": "string",
-      "title": "Background Color",
-      "default": "#9dd2e4"
+    "name" : "skinny-banner",
+    "schema" : {
+        "name" : "skinny-banner",
+        "title" : "Editorial Panel: Skinny Banner",
+        "description" : "A slim editorial module",
+        "type" : "object",
+        "required" : [ 
+            "image_path"
+        ],
+        "properties" : {
+            "background_color" : {
+                "type" : "string",
+                "title" : "Background Color",
+                "default" : "#9dd2e4"
+            },
+            "headline" : {
+                "type" : "string",
+                "title" : "Headline"
+            },
+            "headline_color" : {
+                "type" : "string",
+                "title" : "Headline Color",
+                "default" : "#000000"
+            },
+            "headline_font" : {
+                "type" : "string",
+                "title" : "Headline Font",
+                "default" : "acumin"
+            },
+            "image_path" : {
+                "type" : "string",
+                "title" : "Image Path"
+            },
+            "image_alt_text" : {
+                "type" : "string",
+                "title" : "Image Alt Text"
+            },
+            "body_copy1" : {
+                "type" : "string",
+                "title" : "Body Copy"
+            },
+            "cta1_url" : {
+                "type" : "string",
+                "title" : "Click-to-Action (CTA) 1 URL"
+            },
+            "cta1_mobile_url" : {
+                "type" : "string",
+                "title" : "CTA 1 Mobile URL"
+            },
+            "cta1_label" : {
+                "type" : "string",
+                "title" : "CTA 1 Label"
+            },
+            "cta1_target" : {
+                "type" : "string",
+                "title" : "CTA 1 Target",
+                "default" : "_self"
+            },
+            "cta2_url" : {
+                "type" : "string",
+                "title" : "Click-to-Action (CTA) 2 URL"
+            },
+            "cta2_mobile_url" : {
+                "type" : "string",
+                "title" : "CTA 2 Mobile URL"
+            },
+            "cta2_label" : {
+                "type" : "string",
+                "title" : "CTA 2 Label"
+            },
+            "cta2_target" : {
+                "type" : "string",
+                "title" : "CTA 2 Target",
+                "default" : "_self"
+            },
+            "default_cta" : {
+                "type" : "string",
+                "title" : "Default CTA",
+                "enum" : [ 
+                    "cta1", 
+                    "cta2"
+                ],
+                "uniqueItems" : true,
+                "default" : "cta1"
+            },
+            "footnote_marker" : {
+                "type" : "string",
+                "title" : "Footnote Marker"
+            },
+            "disclaimer_text" : {
+                "type" : "string",
+                "title" : "Disclaimer Text"
+            }
+        }
     },
-    "headline": {
-      "type": "string",
-      "title": "Headline"
+    "uiSchema" : {
+        "component_type" : {
+            "ui:emptyValue" : ""
+        },
+        "headline" : {
+            "ui:emptyValue" : ""
+        },
+        "headline_color" : {
+            "ui:emptyValue" : ""
+        },
+        "headline_font" : {
+            "ui:emptyValue" : ""
+        },
+        "image_path" : {
+            "ui:emptyValue" : ""
+        },
+        "image_alt_text" : {
+            "ui:emptyValue" : ""
+        },
+        "body_copy1" : {
+            "ui:emptyValue" : ""
+        },
+        "body_copy2" : {
+            "ui:emptyValue" : ""
+        },
+        "cta1_url" : {
+            "ui:emptyValue" : ""
+        },
+        "cta1_mobile_url" : {
+            "ui:emptyValue" : ""
+        },
+        "cta1_label" : {
+            "ui:emptyValue" : ""
+        },
+        "cta1_target" : {
+            "ui:emptyValue" : ""
+        },
+        "cta2_url" : {
+            "ui:emptyValue" : ""
+        },
+        "cta2_mobile_url" : {
+            "ui:emptyValue" : ""
+        },
+        "cta2_label" : {
+            "ui:emptyValue" : ""
+        },
+        "cta2_target" : {
+            "ui:emptyValue" : ""
+        },
+        "default_cta" : {
+            "ui:emptyValue" : ""
+        },
+        "subhead1" : {
+            "ui:emptyValue" : ""
+        },
+        "subhead2" : {
+            "ui:emptyValue" : ""
+        },
+        "subhead3" : {
+            "ui:emptyValue" : ""
+        },
+        "live_copy_position" : {
+            "ui:emptyValue" : ""
+        },
+        "live_copy_font_color" : {
+            "ui:emptyValue" : ""
+        },
+        "footnote_marker" : {
+            "ui:emptyValue" : ""
+        },
+        "disclaimer_text" : {
+            "ui:emptyValue" : ""
+        }
     },
-    "headline_color": {
-      "type": "string",
-      "title": "Headline Color",
-      "default": "#000000"
-    },
-    "headline_font": {
-      "type": "string",
-      "title": "Headline Font",
-      "default": "acumin"
-    },
-    "image_path": {
-      "type": "string",
-      "title": "Image Path"
-    },
-    "image_alt_text": {
-      "type": "string",
-      "title": "Image Alt Text"
-    },
-    "body_copy1": {
-      "type": "string",
-      "title": "Body Copy"
-    },
-    "cta1_url": {
-      "type": "string",
-      "title": "Click-to-Action (CTA) 1 URL"
-    },
-    "cta1_mobile_url": {
-      "type": "string",
-      "title": "CTA 1 Mobile URL"
-    },
-    "cta1_label": {
-      "type": "string",
-      "title": "CTA 1 Label"
-    },
-    "cta1_target": {
-      "type": "string",
-      "title": "CTA 1 Target",
-      "default": "_self"
-    },
-    "cta2_url": {
-      "type": "string",
-      "title": "Click-to-Action (CTA) 2 URL"
-    },
-    "cta2_mobile_url": {
-      "type": "string",
-      "title": "CTA 2 Mobile URL"
-    },
-    "cta2_label": {
-      "type": "string",
-      "title": "CTA 2 Label"
-    },
-    "cta2_target": {
-      "type": "string",
-      "title": "CTA 2 Target",
-      "default": "_self"
-    },
-    "default_cta": {
-      "type": "string",
-      "title": "Default CTA",
-      "enum": [
-        "cta1", "cta2"
-      ],
-      "uniqueItems": true,
-      "default": "cta1"
-    },
-    "footnote_marker": {
-      "type": "string",
-      "title": "Footnote Marker"
-    },
-    "disclaimer_text": {
-      "type": "string",
-      "title": "Disclaimer Text"
+    "formData" : {
+        "background_color" : "#9dd2e4",
+        "headline" : "ENJOY AN EXTRA 20% OFF",
+        "headline_color" : "#FFFFFF",
+        "headline_font" : "acumin",
+        "image_path" : "//content.hbc.com/content/dam/saksoff5th/homepage/21_062117_PUB/HP/21_062117_HP_CP_SUB_5.jpg",
+        "image_alt_text" : "Take 20% off your first purchase from gilt.com with code OFF20",
+        "body_copy1" : "T&Cs apply.",
+        "cta1_url" : "http://www.gilt.com/siteoff5th",
+        "cta1_mobile_url" : "http://www.gilt.com/siteoff5th",
+        "cta1_label" : "SHOP GILT",
+        "cta1_target" : "_self",
+        "cta2_target" : "_self",
+        "default_cta" : "cta1",
+        "footnote_marker" : "††"
     }
-  }
 }
