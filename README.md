@@ -1,3 +1,8 @@
+# PREREQUISITES
+1. Unix-based environment (Mac OSX, Linux)
+2. Node version 6.0+ and NPM version 3.0+
+3. Docker with the docker-compose command
+
 # BASIC INSTALL STEPS
 1. Clone repo with `git clone https://github.com/hydrotik/node-hapi-react-redux-sass-typescript-mongo-webpack-hmr-gulp --recursive`
 2. Run `npm install`
@@ -25,6 +30,7 @@ Go to the src/server/Manifest.js file and adding something like the below will u
 ```
 # GLOBALLY AVAILABLE FUNCTIONS THAT ARE ADDED TO server.app 
 `server.app.getMongo()` Returns a Promise that resolves with the MongoClient db object
+
 `server.app.getManifest()` Returns a JSON object containing the Manifest which contains global configuration
 
 # PLUGIN CODE
