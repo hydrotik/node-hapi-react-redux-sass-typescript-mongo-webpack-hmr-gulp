@@ -1,6 +1,6 @@
 # PREREQUISITES
 1. Unix-based environment (Mac OSX, Linux)
-2. Node version 6.0+ and NPM version 3.0+
+2. node.js version 6.0+ and npm version 3.0+, use [nvm](https://github.com/creationix/nvm) to manage multiple node.js versions
 3. Docker with the docker-compose command
 
 # BASIC INSTALL STEPS
