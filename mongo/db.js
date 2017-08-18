@@ -4,6 +4,10 @@ print("Collections found: " + db.getCollectionNames().length);
 db.createCollection('footers');
 db.createCollection('hello');
 db.createCollection('user');
+db.createCollection('objects');
+db.createCollection('schemas');
+db.createCollection('pages');
+
 db.user.createIndex( { "username": 1 }, { unique: true } );
 db.user.insert({
     "username": "admin",
@@ -12,5 +16,6 @@ db.user.insert({
 })
 db.hello.insert({name: 'watts'});
 
+db.objects.createIndex({ "data.title": "text", "data.description": "text", "data.story": "text"});
 
 print("Collections found: " + db.getCollectionNames().length);

@@ -17,5 +17,6 @@ mongo watts --port 27017 -u admin -p ${ADMIN_PASS} --authenticationDatabase "adm
 mongoimport -u admin -p ${ADMIN_PASS} --authenticationDatabase "admin" --db watts --collection headers --jsonArray --file ./header.data.json
 mongoimport -u admin -p ${ADMIN_PASS} --authenticationDatabase "admin" --db watts --collection schemas --file ./EditorialPanelFiftyFiftyFullWidth.json
 mongoimport -u admin -p ${ADMIN_PASS} --authenticationDatabase "admin" --db watts --collection schemas --file ./EditorialPanelSkinnyBanner.json
+mongoimport -u admin -p ${ADMIN_PASS} --authenticationDatabase "admin" --db watts --collection schemas --file ./MensDossierStory.json
 
 mongod --shutdown --dbpath=/containerdb

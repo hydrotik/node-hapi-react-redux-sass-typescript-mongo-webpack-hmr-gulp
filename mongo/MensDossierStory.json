@@ -1,0 +1,25 @@
+{
+    "name" : "mens-dossier-story",
+    "schema" : {
+        "title" : "Mens Dossier Stories",
+        "description" : "",
+        "type" : "object",
+        "properties" : {
+            "title" : {
+                "type" : "string"
+            },
+            "story" : {
+                "type" : "string"
+            }
+        }
+    },
+    "uiSchema" : {
+        "story" : {
+            "ui:widget" : "textarea",
+            "ui:options" : {
+                "rows" : 5
+            }
+        }
+    },
+    "formData" : {}
+}
