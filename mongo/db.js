@@ -16,6 +16,6 @@ db.user.insert({
 })
 db.hello.insert({name: 'watts'});
 
-db.objects.createIndex({ "data.title": "text", "data.description": "text", "data.story": "text"});
+db.objects.ensureIndex({ "data.title": "text", "data.description": "text", "data.story": "text"}, { "default_language": "none" });
 
 print("Collections found: " + db.getCollectionNames().length);
